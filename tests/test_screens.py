@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 import sys
 import threading
 
 import pytest
 
 from textual import work
+from textual._async import get_runtime, with_task_context
 from textual.app import App, ComposeResult, ScreenStackError
 from textual.events import MouseMove
 from textual.geometry import Offset
@@ -51,9 +51,10 @@ async def test_installed_screens():
             pilot.app.pop_screen()
 
 
+@with_task_context
 async def test_screens():
     app = App()
-    app._loop = asyncio.get_running_loop()
+    app._runtime = get_runtime()
     app._thread_id = threading.get_ident()
     # There should be nothing in the children since the app hasn't run yet
     assert not app._nodes

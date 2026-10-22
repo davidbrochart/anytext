@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import asyncio
 from functools import partial
 from inspect import isawaitable, signature
 from typing import TYPE_CHECKING, Any, Callable
+
+import anyio
 
 from textual import active_app
 
@@ -85,12 +86,22 @@ async def invoke(callback: Callable[..., Any], *params: object) -> Any:
                 f"Callback {callback} is still pending after {INVOKE_TIMEOUT_WARNING} seconds"
             )
 
-        call_later_handle = asyncio.get_running_loop().call_later(
-            INVOKE_TIMEOUT_WARNING, log_slow
-        )
-        try:
-            return await _invoke(callback, *params)
-        finally:
-            call_later_handle.cancel()
+        async def warn_slow() -> None:
+            await anyio.sleep(INVOKE_TIMEOUT_WARNING)
+            log_slow()
+
+        error: BaseException | None = None
+        result: Any = None
+        async with anyio.create_task_group() as group:
+            group.start_soon(warn_slow)
+            try:
+                result = await _invoke(callback, *params)
+            except BaseException as caught:
+                error = caught
+            finally:
+                group.cancel_scope.cancel()
+        if error is not None:
+            raise error
+        return result
     else:
         return await _invoke(callback, *params)

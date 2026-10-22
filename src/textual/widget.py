@@ -5,7 +5,6 @@ This module contains the `Widget` class, the base class for all widgets.
 
 from __future__ import annotations
 
-from asyncio import create_task, gather, wait
 from collections import Counter
 from contextlib import asynccontextmanager
 from fractions import Fraction
@@ -42,6 +41,7 @@ from rich.style import Style
 from rich.text import Text
 from typing_extensions import Self
 
+from textual._async import create_task, gather, wait
 from textual.css.styles import StylesBase
 
 if TYPE_CHECKING:
@@ -510,7 +510,7 @@ class Widget(DOMNode):
             self.border_subtitle = self.BORDER_SUBTITLE
 
         self.lock = RLock()
-        """`asyncio` lock to be used to synchronize the state of the widget.
+        """re-entrant lock to be used to synchronize the state of the widget.
 
         Two different tasks might call methods on a widget at the same time, which
         might result in a race condition.

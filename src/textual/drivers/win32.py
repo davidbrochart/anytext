@@ -4,7 +4,6 @@ import ctypes
 import msvcrt
 import sys
 import threading
-from asyncio import AbstractEventLoop, run_coroutine_threadsafe
 from ctypes import Structure, Union, byref, wintypes
 from ctypes.wintypes import BOOL, CHAR, DWORD, HANDLE, SHORT, UINT, WCHAR, WORD
 from typing import IO, TYPE_CHECKING, Callable, List, Optional
@@ -214,12 +213,10 @@ class EventMonitor(threading.Thread):
 
     def __init__(
         self,
-        loop: AbstractEventLoop,
         app: App,
         exit_event: threading.Event,
         process_event: Callable[[Event], None],
     ) -> None:
-        self.loop = loop
         self.app = app
         self.exit_event = exit_event
         self.process_event = process_event
@@ -301,4 +298,4 @@ class EventMonitor(threading.Thread):
         """Called when terminal size changes."""
         size = Size(width, height)
         event = Resize(size, size)
-        run_coroutine_threadsafe(self.app._post_message(event), loop=self.loop)
+        self.app.post_message(event)

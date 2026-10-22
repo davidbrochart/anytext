@@ -10,9 +10,7 @@ A `MessagePump` is a base class for any object which processes messages, which i
 
 from __future__ import annotations
 
-import asyncio
 import threading
-from asyncio import CancelledError, QueueEmpty, Task, create_task
 from contextlib import contextmanager
 from functools import partial
 from time import perf_counter
@@ -29,14 +27,17 @@ from typing import (
 )
 from weakref import WeakSet, ref
 
-from textual import Logger, events, log, messages
+import anyio
+
+from textual import Logger, _async, events, log, messages
+from textual._async import Task, create_task
 from textual._callback import invoke
 from textual._compat import cached_property
 from textual._context import NoActiveAppError, active_app, active_message_pump
 from textual._context import message_hook as message_hook_context_var
 from textual._context import prevent_message_types_stack
 from textual._on import OnNoWidget
-from textual._queue import Queue
+from textual._queue import Queue, QueueEmpty
 from textual._time import time
 from textual.constants import SLOW_THRESHOLD
 from textual.css.match import match
@@ -157,8 +158,8 @@ class MessagePump(metaclass=_MessagePumpMeta):
         return Queue()
 
     @cached_property
-    def _mounted_event(self) -> asyncio.Event:
-        return asyncio.Event()
+    def _mounted_event(self) -> _async.Event:
+        return _async.Event()
 
     @property
     def _prevent_message_types_stack(self) -> list[set[type[Message]]]:
@@ -251,7 +252,7 @@ class MessagePump(metaclass=_MessagePumpMeta):
                 The current app.
 
             Raises:
-                NoActiveAppError: if no active app could be found for the current asyncio context
+                NoActiveAppError: if no active app could be found for the current async context
             """
             try:
                 return active_app.get()
@@ -480,9 +481,9 @@ class MessagePump(metaclass=_MessagePumpMeta):
         assert (
             self._task is not None
         ), "Node must be running before calling wait_for_refresh"
-        if asyncio.current_task() is self._task:
+        if _async.current_task() is self._task:
             return False
-        refreshed_event = asyncio.Event()
+        refreshed_event = _async.Event()
         self.call_after_refresh(refreshed_event.set)
         await refreshed_event.wait()
         return True
@@ -535,7 +536,7 @@ class MessagePump(metaclass=_MessagePumpMeta):
             self._timers.clear()
         Reactive._reset_object(self)
         self._message_queue.put_nowait(None)
-        if wait and self._task is not None and asyncio.current_task() != self._task:
+        if wait and self._task is not None and _async.current_task() != self._task:
             try:
                 running_widget = active_message_pump.get()
             except LookupError:
@@ -544,7 +545,7 @@ class MessagePump(metaclass=_MessagePumpMeta):
             if running_widget is None or running_widget is not self:
                 try:
                     await self._task
-                except CancelledError:
+                except anyio.get_cancelled_exc_class():
                     pass
 
     def _start_messages(self) -> None:
@@ -569,7 +570,7 @@ class MessagePump(metaclass=_MessagePumpMeta):
 
             try:
                 await self._process_messages_loop()
-            except CancelledError:
+            except anyio.get_cancelled_exc_class():
                 pass
             finally:
                 self._running = False
@@ -635,13 +636,13 @@ class MessagePump(metaclass=_MessagePumpMeta):
         """Process messages until the queue is closed."""
         _rich_traceback_guard = True
         self._thread_id = threading.get_ident()
-        await asyncio.sleep(0)
+        await _async.sleep(0)
         while not self._closed:
             try:
                 message = await self._get_message()
             except MessagePumpClosed:
                 break
-            except CancelledError:
+            except anyio.get_cancelled_exc_class():
                 raise
             except Exception as error:
                 raise error from None
@@ -661,7 +662,7 @@ class MessagePump(metaclass=_MessagePumpMeta):
 
             try:
                 await self._dispatch_message(message)
-            except CancelledError:
+            except anyio.get_cancelled_exc_class():
                 raise
             except Exception as error:
                 self._mounted_event.set()
@@ -879,9 +880,9 @@ class MessagePump(metaclass=_MessagePumpMeta):
         # Add a copy of the prevented message types to the message
         # This is so that prevented messages are honoured by the event's handler
         message._prevent.update(self._get_prevented_messages())
-        if self._thread_id != threading.get_ident() and self.app._loop is not None:
+        if self._thread_id != threading.get_ident() and self.app._runtime is not None:
             # If we're not calling from the same thread, make it threadsafe
-            loop = self.app._loop
+            loop = self.app._runtime
             loop.call_soon_threadsafe(self._message_queue.put_nowait, message)
         else:
             self._message_queue.put_nowait(message)

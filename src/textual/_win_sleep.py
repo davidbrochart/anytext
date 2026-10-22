@@ -6,9 +6,12 @@ This should only be imported on Windows.
 
 from __future__ import annotations
 
-import asyncio
 from time import sleep as time_sleep
 from typing import Coroutine
+
+import anyio
+
+from textual import _async
 
 __all__ = ["sleep"]
 
@@ -21,7 +24,7 @@ TIMER_ALL_ACCESS = 0x1F0003
 
 async def time_sleep_coro(secs: float):
     """Coroutine wrapper around `time.sleep`."""
-    await asyncio.sleep(secs)
+    await _async.sleep(secs)
 
 
 try:
@@ -90,12 +93,8 @@ else:
             """Sets the cancel event so we know we can stop waiting for the timer."""
             kernel32.SetEvent(cancel_event)
 
-        async def cancel():
-            """Cancels the timer by setting the cancel event."""
-            await asyncio.get_running_loop().run_in_executor(None, cancel_inner)
-
         def wait_inner():
-            """Function responsible for waiting for the timer or the cancel event."""
+            """Wait until the timer fires or cancellation wakes the thread."""
             if (
                 kernel32.WaitForMultipleObjects(
                     2,
@@ -108,12 +107,24 @@ else:
                 time_sleep(sleep_for)
 
         async def wait():
-            """Wraps the actual sleeping so we can detect if the thread was cancelled."""
+            """Keep native handles alive until the waiting thread has finished."""
+            finished = anyio.Event()
+
+            async def wait_in_thread():
+                # Cancellation wakes the native wait via cancel_event. Shielding
+                # ensures we join it even if cancellation arrives before startup.
+                with anyio.CancelScope(shield=True):
+                    await anyio.to_thread.run_sync(wait_inner)
+                finished.set()
+
             try:
-                await asyncio.get_running_loop().run_in_executor(None, wait_inner)
-            except asyncio.CancelledError:
-                await cancel()
-                raise
+                async with anyio.create_task_group() as group:
+                    group.start_soon(wait_in_thread)
+                    try:
+                        await finished.wait()
+                    except anyio.get_cancelled_exc_class():
+                        cancel_inner()
+                        raise
             finally:
                 kernel32.CloseHandle(timer)
                 kernel32.CloseHandle(cancel_event)

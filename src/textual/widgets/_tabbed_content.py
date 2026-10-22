@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from asyncio import gather
 from dataclasses import dataclass
 from itertools import zip_longest
 from typing import Awaitable
@@ -9,6 +8,7 @@ from rich.repr import Result
 from typing_extensions import Final
 
 from textual import events
+from textual._async import gather
 from textual.app import ComposeResult
 from textual.await_complete import AwaitComplete
 from textual.content import ContentText, ContentType

@@ -7,7 +7,6 @@ Textual isn't a game engine exactly, but it wasn't hard to build this.
 
 from __future__ import annotations
 
-from asyncio import sleep
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import product
@@ -18,6 +17,7 @@ from rich.console import ConsoleRenderable
 from rich.syntax import Syntax
 
 from textual import containers, events, on, work
+from textual._async import sleep
 from textual._loop import loop_last
 from textual.app import ComposeResult
 from textual.binding import Binding

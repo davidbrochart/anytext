@@ -8,12 +8,13 @@ Timer objects are created by [set_interval][textual.message_pump.MessagePump.set
 from __future__ import annotations
 
 import weakref
-from asyncio import CancelledError, Event, Task, create_task, gather
 from typing import Any, Awaitable, Callable, Iterable, Union
 
+import anyio
 from rich.repr import Result, rich_repr
 
 from textual import _time, events
+from textual._async import Event, Task, create_task, gather
 from textual._callback import invoke
 from textual._compat import cached_property
 from textual._context import active_app
@@ -118,7 +119,7 @@ class Timer:
                 timer._task.cancel()
                 try:
                     await timer._task
-                except CancelledError:
+                except anyio.get_cancelled_exc_class():
                     pass
                 timer._task = None
 
@@ -144,7 +145,7 @@ class Timer:
         """Run the timer task."""
         try:
             await self._run()
-        except CancelledError:
+        except anyio.get_cancelled_exc_class():
             pass
 
     async def _run(self) -> None:
@@ -187,7 +188,7 @@ class Timer:
         if self._callback is not None:
             try:
                 await invoke(self._callback)
-            except CancelledError:
+            except anyio.get_cancelled_exc_class():
                 # https://github.com/Textualize/textual/pull/2895
                 # Re-raise CancelledErrors that would be caught by the following exception block in Python 3.7
                 raise

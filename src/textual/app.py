@@ -7,7 +7,6 @@ See [app basics](/guide/app) for how to build Textual apps.
 
 from __future__ import annotations
 
-import asyncio
 import importlib
 import inspect
 import io
@@ -18,8 +17,6 @@ import sys
 import threading
 import uuid
 import warnings
-from asyncio import AbstractEventLoop, Task, create_task
-from concurrent.futures import Future
 from contextlib import (
     asynccontextmanager,
     contextmanager,
@@ -51,6 +48,7 @@ from typing import (
 )
 from weakref import WeakKeyDictionary, WeakSet
 
+import anyio
 import rich
 import rich.repr
 from platformdirs import user_downloads_path
@@ -64,6 +62,7 @@ from textual import (
     Logger,
     LogGroup,
     LogVerbosity,
+    _async,
     actions,
     constants,
     events,
@@ -74,6 +73,8 @@ from textual import (
 from textual._animator import DEFAULT_EASING, Animatable, Animator, EasingFunction
 from textual._ansi_sequences import SYNC_END, SYNC_START
 from textual._ansi_theme import ALABASTER, MONOKAI
+from textual._async import Future as AsyncFuture
+from textual._async import Task, create_task
 from textual._callback import invoke
 from textual._compat import cached_property
 from textual._compositor import CompositorUpdate
@@ -149,12 +150,9 @@ if TYPE_CHECKING:
 
 WINDOWS = sys.platform == "win32"
 
-# asyncio will warn against resources not being cleared
+# Warn about resources that have not been cleared
 if constants.DEBUG:
     warnings.simplefilter("always", ResourceWarning)
-
-# `asyncio.get_event_loop()` is deprecated since Python 3.10:
-_ASYNCIO_GET_EVENT_LOOP_IS_DEPRECATED = sys.version_info >= (3, 10, 0)
 
 ComposeResult = Iterable[Widget]
 RenderResult: TypeAlias = "RenderableType | Visual | SupportsVisual"
@@ -770,7 +768,7 @@ class App(Generic[ReturnType], DOMNode):
                 self.devtools = DevtoolsClient(constants.DEVTOOLS_HOST)
                 self._devtools_redirector = StdoutRedirector(self.devtools)
 
-        self._loop: asyncio.AbstractEventLoop | None = None
+        self._runtime: _async.Runtime | None = None
         self._return_value: ReturnType | None = None
         """Internal attribute used to set the return value for the app."""
         self._return_code: int | None = None
@@ -905,9 +903,9 @@ class App(Generic[ReturnType], DOMNode):
         return self.devtools is not None and self.devtools.is_connected
 
     @cached_property
-    def _exception_event(self) -> asyncio.Event:
+    def _exception_event(self) -> _async.Event:
         """An event that will be set when the first exception is encountered."""
-        return asyncio.Event()
+        return _async.Event()
 
     def __init_subclass__(cls, *args, **kwargs) -> None:
         for variable_name, screen_collection in (
@@ -1793,7 +1791,7 @@ class App(Generic[ReturnType], DOMNode):
     ) -> CallThreadReturnType:
         """Run a callable from another thread, and return the result.
 
-        Like asyncio apps in general, Textual apps are not thread-safe. If you call methods
+        Textual apps are not thread-safe. If you call methods
         or set attributes on Textual objects from a thread, you may get unpredictable results.
 
         This method will ensure that your code runs within the correct context.
@@ -1815,7 +1813,7 @@ class App(Generic[ReturnType], DOMNode):
             The result of the callback.
         """
 
-        if self._loop is None:
+        if self._runtime is None:
             raise RuntimeError("App is not running")
 
         if self._thread_id == threading.get_ident():
@@ -1830,12 +1828,7 @@ class App(Generic[ReturnType], DOMNode):
             with self._context():
                 return await invoke(callback_with_args)
 
-        # Post the message to the main loop
-        future: Future[CallThreadReturnType] = asyncio.run_coroutine_threadsafe(
-            run_callback(), loop=self._loop
-        )
-        result = future.result()
-        return result
+        return self._runtime.call_from_thread(run_callback)
 
     def action_change_theme(self) -> None:
         """An [action](/guide/actions) to change the current theme."""
@@ -2050,7 +2043,7 @@ class App(Generic[ReturnType], DOMNode):
         for key in keys:
             if key.startswith("wait:"):
                 _, wait_ms = key.split(":")
-                await asyncio.sleep(float(wait_ms) / 1000)
+                await _async.sleep(float(wait_ms) / 1000)
                 await app._animator.wait_until_complete()
             else:
                 if len(key) == 1 and not key.isalnum():
@@ -2166,57 +2159,61 @@ class App(Generic[ReturnType], DOMNode):
         """
         from textual.pilot import Pilot
 
-        app = self
-        app._disable_tooltips = not tooltips
-        app._disable_notifications = not notifications
-        app_ready_event = asyncio.Event()
+        async with _async.task_context():
+            app = self
+            app._disable_tooltips = not tooltips
+            app._disable_notifications = not notifications
+            app_ready_event = _async.Event()
 
-        def on_app_ready() -> None:
-            """Called when app is ready to process events."""
-            app_ready_event.set()
+            def on_app_ready() -> None:
+                """Called when app is ready to process events."""
+                app_ready_event.set()
 
-        async def run_app(app: App[ReturnType]) -> None:
-            """Run the apps message loop.
+            async def run_app(app: App[ReturnType]) -> None:
+                """Run the apps message loop.
 
-            Args:
-                app: App to run.
-            """
+                Args:
+                    app: App to run.
+                """
 
+                with app._context():
+                    try:
+                        if message_hook is not None:
+                            message_hook_context_var.set(message_hook)
+                        app._runtime = _async.get_runtime()
+                        app._thread_id = threading.get_ident()
+                        await app._process_messages(
+                            ready_callback=on_app_ready,
+                            headless=headless,
+                            terminal_size=size,
+                        )
+                    finally:
+                        app_ready_event.set()
+
+            # Launch the app in the "background"
+
+            self._task = app_task = create_task(run_app(app), name=f"run_test {app}")
+
+            # Wait until the app has performed all startup routines.
+            await app_ready_event.wait()
             with app._context():
+                # Context manager returns pilot object to manipulate the app
                 try:
-                    if message_hook is not None:
-                        message_hook_context_var.set(message_hook)
-                    app._loop = asyncio.get_running_loop()
-                    app._thread_id = threading.get_ident()
-                    await app._process_messages(
-                        ready_callback=on_app_ready,
-                        headless=headless,
-                        terminal_size=size,
-                    )
+                    pilot = Pilot(app)
+                    await pilot._wait_for_screen()
+                    yield pilot
                 finally:
-                    app_ready_event.set()
+                    # Shutdown the app cleanly
+                    with anyio.CancelScope(shield=True):
+                        await app._shutdown()
+                        await app_task
+                    app._runtime = None
+                    app._thread_id = 0
+                    # Re-raise the exception which caused panic so test frameworks are aware
+                    if self._exception:
+                        raise self._exception
 
-        # Launch the app in the "background"
-
-        self._task = app_task = create_task(run_app(app), name=f"run_test {app}")
-
-        # Wait until the app has performed all startup routines.
-        await app_ready_event.wait()
-        with app._context():
-            # Context manager returns pilot object to manipulate the app
-            try:
-                pilot = Pilot(app)
-                await pilot._wait_for_screen()
-                yield pilot
-            finally:
-                await asyncio.sleep(0)
-                # Shutdown the app cleanly
-                await app._shutdown()
-                await app_task
-                # Re-raise the exception which caused panic so test frameworks are aware
-                if self._exception:
-                    raise self._exception
-
+    @_async.with_task_context
     async def run_async(
         self,
         *,
@@ -2278,9 +2275,7 @@ class App(Generic[ReturnType], DOMNode):
 
         self._thread_init()
 
-        loop = app._loop = asyncio.get_running_loop()
-        if hasattr(asyncio, "eager_task_factory"):
-            loop.set_task_factory(asyncio.eager_task_factory)
+        app._runtime = _async.get_runtime()
         with app._context():
             try:
                 await app._process_messages(
@@ -2297,11 +2292,11 @@ class App(Generic[ReturnType], DOMNode):
                         await auto_pilot_task
                 finally:
                     try:
-                        await asyncio.shield(app._shutdown())
-                    except asyncio.CancelledError:
-                        pass
-                app._loop = None
-                app._thread_id = 0
+                        with anyio.CancelScope(shield=True):
+                            await app._shutdown()
+                    finally:
+                        app._runtime = None
+                        app._thread_id = 0
 
         return app.return_value
 
@@ -2314,7 +2309,9 @@ class App(Generic[ReturnType], DOMNode):
         mouse: bool = True,
         size: tuple[int, int] | None = None,
         auto_pilot: AutopilotCallbackType | None = None,
-        loop: AbstractEventLoop | None = None,
+        loop: Any | None = None,
+        backend: str = "asyncio",
+        backend_options: dict[str, Any] | None = None,
     ) -> ReturnType | None:
         """Run the app.
 
@@ -2326,7 +2323,9 @@ class App(Generic[ReturnType], DOMNode):
             size: Force terminal size to `(WIDTH, HEIGHT)`,
                 or None to auto-detect.
             auto_pilot: An auto pilot coroutine.
-            loop: Asyncio loop instance, or `None` to use default.
+            loop: Optional legacy event loop instance.
+            backend: AnyIO backend ("asyncio" or "trio").
+            backend_options: Options passed to the AnyIO backend.
         Returns:
             App return value.
         """
@@ -2342,24 +2341,11 @@ class App(Generic[ReturnType], DOMNode):
                 auto_pilot=auto_pilot,
             )
 
-        if loop is None:
-            if _ASYNCIO_GET_EVENT_LOOP_IS_DEPRECATED:
-                # N.B. This does work with Python<3.10, but global Locks, Events, etc
-                # eagerly bind the event loop, and result in Future bound to wrong
-                # loop errors.
-                return asyncio.run(run_app())
-            try:
-                global_loop = asyncio.get_event_loop()
-            except RuntimeError:
-                # the global event loop may have been destroyed by someone running
-                # asyncio.run(), or asyncio.set_event_loop(None), in which case
-                # we need to use asyncio.run() also. (We run this outside the
-                # context of an exception handler)
-                pass
-            else:
-                return global_loop.run_until_complete(run_app())
-            return asyncio.run(run_app())
-        return loop.run_until_complete(run_app())
+        if loop is not None:
+            if backend != "asyncio" or backend_options:
+                raise ValueError("loop cannot be combined with backend options")
+            return loop.run_until_complete(run_app())
+        return anyio.run(run_app, backend=backend, backend_options=backend_options)
 
     async def _on_css_change(self) -> None:
         """Callback for the file monitor, called when CSS files change."""
@@ -2890,7 +2876,7 @@ class App(Generic[ReturnType], DOMNode):
             wait_for_dismiss: Literal[True] = True,
             *,
             mode: str | None = None,
-        ) -> asyncio.Future[ScreenResultType]: ...
+        ) -> AsyncFuture[ScreenResultType]: ...
 
     def push_screen(
         self,
@@ -2899,7 +2885,7 @@ class App(Generic[ReturnType], DOMNode):
         wait_for_dismiss: bool = False,
         *,
         mode: str | None = None,
-    ) -> AwaitMount | asyncio.Future[ScreenResultType]:
+    ) -> AwaitMount | AsyncFuture[ScreenResultType]:
         """Push a new [screen](/guide/screens) on the screen stack, making it the current screen.
 
         Args:
@@ -2913,7 +2899,7 @@ class App(Generic[ReturnType], DOMNode):
             NoActiveWorker: If using `wait_for_dismiss` outside of a worker.
 
         Returns:
-            An optional awaitable that awaits the mounting of the screen and its children, or an asyncio Future
+            An optional awaitable that awaits the mounting of the screen and its children, or a result awaitable
                 to await the result of the screen.
         """
         if not isinstance(screen, (Screen, str)):
@@ -2921,13 +2907,7 @@ class App(Generic[ReturnType], DOMNode):
                 f"push_screen requires a Screen instance or str; not {screen!r}"
             )
 
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            # Mainly for testing, when push_screen isn't called in an async context
-            future: asyncio.Future[ScreenResultType] = asyncio.Future()
-        else:
-            future = loop.create_future()
+        future: AsyncFuture[ScreenResultType] = AsyncFuture()
 
         if mode is None:
             mode = self._current_mode
@@ -2994,7 +2974,7 @@ class App(Generic[ReturnType], DOMNode):
         """
         await self._flush_next_callbacks()
         # The shield prevents the cancellation of the current task from canceling the push_screen awaitable
-        return await asyncio.shield(
+        return await _async.shield(
             self.push_screen(screen, wait_for_dismiss=True, mode=mode)
         )
 
@@ -3381,7 +3361,7 @@ class App(Generic[ReturnType], DOMNode):
             """
             await self._init_devtools()
             self.log.system("---")
-            self.log.system(loop=asyncio.get_running_loop())
+            self.log.system(loop=_async.get_runtime())
             self.log.system(features=self.features)
             if constants.LOG_FILE is not None:
                 _log_path = os.path.abspath(constants.LOG_FILE)
@@ -3459,7 +3439,7 @@ class App(Generic[ReturnType], DOMNode):
 
             try:
                 await self._process_messages_loop()
-            except asyncio.CancelledError:
+            except anyio.get_cancelled_exc_class():
                 pass
             finally:
                 self.workers.cancel_all()

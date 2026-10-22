@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import os
 import selectors
 import signal
@@ -13,7 +12,7 @@ from typing import TYPE_CHECKING, Any
 
 import rich.repr
 
-from textual import events
+from textual import _async, events
 from textual._loop import loop_last
 from textual._parser import ParseError
 from textual._xterm_parser import XTermParser
@@ -177,7 +176,6 @@ class LinuxInlineDriver(Driver):
                 pass
 
     def start_application_mode(self) -> None:
-        loop = asyncio.get_running_loop()
 
         def send_size_event(clear: bool = False) -> None:
             """Send the resize event, optionally clearing the screen.
@@ -196,10 +194,7 @@ class LinuxInlineDriver(Driver):
                     self.write("\x1b[2J")
                 await self._app._post_message(event)
 
-            asyncio.run_coroutine_threadsafe(
-                update_size(),
-                loop=loop,
-            )
+            _async.create_task(update_size())
 
         def on_terminal_resize(signum, stack) -> None:
             send_size_event(clear=True)

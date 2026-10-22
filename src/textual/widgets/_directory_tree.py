@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-import asyncio
-from asyncio import Queue
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable, ClassVar, Iterable, Iterator
 
+import anyio
 from rich.style import Style
 from rich.text import Text, TextType
 
 from textual import work
+from textual._queue import Queue
 from textual.await_complete import AwaitComplete
 from textual.message import Message
 from textual.reactive import var
@@ -565,7 +565,7 @@ class DirectoryTree(Tree[DirEntry]):
         dir_entry = event.node.data
         if dir_entry is None:
             return
-        if await asyncio.to_thread(self._safe_is_dir, dir_entry.path):
+        if await anyio.to_thread.run_sync(self._safe_is_dir, dir_entry.path):
             if event.node.data is not None:
                 await self._add_to_load_queue(event.node)
         else:
@@ -577,7 +577,7 @@ class DirectoryTree(Tree[DirEntry]):
         dir_entry = event.node.data
         if dir_entry is None:
             return
-        if await asyncio.to_thread(self._safe_is_dir, dir_entry.path):
+        if await anyio.to_thread.run_sync(self._safe_is_dir, dir_entry.path):
             if event.node.data is not None:
                 self.post_message(self.DirectorySelected(event.node, dir_entry.path))
         else:

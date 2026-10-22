@@ -1,7 +1,7 @@
-import asyncio
 import sys
-from asyncio import sleep as asyncio_sleep
 from time import monotonic, perf_counter
+
+from anyio import sleep as anyio_sleep
 
 WINDOWS = sys.platform == "win32"
 
@@ -25,7 +25,7 @@ if WINDOWS:
         Args:
             secs: Number of seconds to sleep for.
         """
-        await asyncio.create_task(win_sleep(secs))
+        await win_sleep(secs)
 
 else:
 
@@ -35,12 +35,11 @@ else:
         Args:
             secs: Number of seconds to sleep for.
         """
-        # From practical experiments, asyncio.sleep sleeps for at least half a millisecond too much
-        # Presumably there is overhead asyncio itself which accounts for this
+        # Compensate for scheduling overhead in animation timers.
         # We will reduce the sleep to compensate, and also don't sleep at all for less than half a millisecond
         sleep_for = secs - 0.0005
         if sleep_for > 0:
-            await asyncio_sleep(sleep_for)
+            await anyio_sleep(sleep_for)
 
 
 get_time = time

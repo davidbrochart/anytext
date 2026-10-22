@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import re
 import weakref
 from contextlib import suppress
@@ -9,11 +8,13 @@ from pathlib import Path, PurePath
 from typing import Callable, Iterable, Optional
 from urllib.parse import unquote
 
+import anyio
 from markdown_it import MarkdownIt
 from markdown_it.token import Token
 from rich.text import Text
 from typing_extensions import TypeAlias
 
+from textual import _async
 from textual._slug import TrackedSlugs, slug_for_tcss_id
 from textual.app import ComposeResult
 from textual.await_complete import AwaitComplete
@@ -53,8 +54,8 @@ class MarkdownStream:
             markdown_widget: Markdown widget to update.
         """
         self.markdown_widget = markdown_widget
-        self._task: asyncio.Task | None = None
-        self._new_markup = asyncio.Event()
+        self._task: _async.Task | None = None
+        self._new_markup = _async.Event()
         self._pending: list[str] = []
         self._stopped = False
 
@@ -65,7 +66,7 @@ class MarkdownStream:
 
         """
         if self._task is None:
-            self._task = asyncio.create_task(self._run())
+            self._task = _async.create_task(self._run())
 
     async def stop(self) -> None:
         """Stop the stream and await its finish."""
@@ -90,7 +91,7 @@ class MarkdownStream:
         self._pending.append(markdown_fragment)
         self._new_markup.set()
         # Allow the task to wake up and actually display the new markdown
-        await asyncio.sleep(0)
+        await _async.sleep(0)
 
     async def _run(self) -> None:
         """Run a task to append markdown fragments when available."""
@@ -99,14 +100,14 @@ class MarkdownStream:
                 new_markdown = "".join(self._pending)
                 self._pending.clear()
                 self._new_markup.clear()
-                await asyncio.shield(self.markdown_widget.append(new_markdown))
-        except asyncio.CancelledError:
+                await _async.shield(self.markdown_widget.append(new_markdown))
+        except anyio.get_cancelled_exc_class():
             # Task has been cancelled, add any outstanding markdown
             pass
 
         new_markdown = "".join(self._pending)
         if new_markdown:
-            await self.markdown_widget.append(new_markdown)
+            await _async.shield(self.markdown_widget.append(new_markdown))
 
 
 class Navigator:
@@ -1249,9 +1250,7 @@ class Markdown(Widget):
             those that can be raised by calling [`Path.read_text`][pathlib.Path.read_text].
         """
         path, anchor = self.sanitize_location(str(path))
-        data = await asyncio.get_running_loop().run_in_executor(
-            None, partial(path.read_text, encoding="utf-8")
-        )
+        data = await anyio.to_thread.run_sync(partial(path.read_text, encoding="utf-8"))
         await self.update(data)
         if anchor:
             self.goto_anchor(anchor)
@@ -1400,9 +1399,7 @@ class Markdown(Widget):
 
             # Lock so that you can't update with more than one document simultaneously
             async with self.lock:
-                tokens = await asyncio.get_running_loop().run_in_executor(
-                    None, parser.parse, markdown
-                )
+                tokens = await anyio.to_thread.run_sync(parser.parse, markdown)
 
                 # Remove existing blocks for the first batch only
                 removed: bool = False

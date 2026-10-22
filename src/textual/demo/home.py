@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import asyncio
 from importlib.metadata import version
+
+from textual import _async
 
 try:
     import httpx
@@ -104,7 +105,7 @@ A large [library of builtin widgets](https://textual.textualize.io/widget_galler
 
 ## Async support
 
-Built on asyncio, you can easily integrate async libraries while keeping your UI responsive.
+Built on AnyIO, you can easily integrate async libraries while keeping your UI responsive.
 
 ## Concurrency
 
@@ -183,7 +184,7 @@ class StarCount(Vertical):
             return
         self.loading = True
         try:
-            await asyncio.sleep(1)  # Time to admire the loading indicator
+            await _async.sleep(1)  # Time to admire the loading indicator
             async with httpx.AsyncClient() as client:
                 repository_json = (
                     await client.get("https://api.github.com/repos/textualize/textual")

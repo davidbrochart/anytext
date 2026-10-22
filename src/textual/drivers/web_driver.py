@@ -11,7 +11,6 @@ Arbitrary payload.
 
 from __future__ import annotations
 
-import asyncio
 import json
 import os
 import signal
@@ -139,17 +138,13 @@ class WebDriver(Driver):
     def start_application_mode(self) -> None:
         """Start application mode."""
 
-        loop = asyncio.get_running_loop()
-
         def do_exit() -> None:
             """Callback to force exit."""
-            asyncio.run_coroutine_threadsafe(
-                self._app._post_message(messages.ExitApp()), loop=loop
-            )
+            self._app.post_message(messages.ExitApp())
 
         if not WINDOWS:
             for _signal in (signal.SIGINT, signal.SIGTERM):
-                loop.add_signal_handler(_signal, do_exit)
+                signal.signal(_signal, lambda *_: do_exit())
 
         self._write(b"__GANGLION__\n")
 
@@ -161,10 +156,7 @@ class WebDriver(Driver):
 
         size = Size(80, 24) if self._size is None else Size(*self._size)
         event = events.Resize(size, size)
-        asyncio.run_coroutine_threadsafe(
-            self._app._post_message(event),
-            loop=loop,
-        )
+        self._app.post_message(event)
 
         self._request_terminal_sync_mode_support()
         self._enable_bracketed_paste()

@@ -8,15 +8,6 @@ See the guide on the [Command Palette](../guide/command_palette.md) for full det
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from asyncio import (
-    CancelledError,
-    Queue,
-    Task,
-    TimeoutError,
-    create_task,
-    wait,
-    wait_for,
-)
 from dataclasses import dataclass
 from functools import total_ordering
 from inspect import isclass
@@ -33,12 +24,20 @@ from typing import (
     NamedTuple,
 )
 
+import anyio
 import rich.repr
 from rich.align import Align
 from rich.text import Text
 from typing_extensions import Final, TypeAlias
 
 from textual import on, work
+from textual._async import (
+    Task,
+    create_task,
+    wait,
+    wait_for,
+)
+from textual._queue import Queue
 from textual.binding import Binding, BindingType
 from textual.containers import Horizontal, Vertical
 from textual.content import Content
@@ -975,7 +974,7 @@ class CommandPalette(SystemModalScreen[None]):
                 # A timeout is fine. We're just going to go back round again
                 # and see if anything else has turned up.
                 pass
-            except CancelledError:
+            except anyio.get_cancelled_exc_class():
                 # A cancelled error means things are being aborted.
                 aborted = True
             else:

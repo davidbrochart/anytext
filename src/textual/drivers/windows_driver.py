@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import sys
 from threading import Event, Thread
 from typing import TYPE_CHECKING, Callable
@@ -85,7 +84,6 @@ class WindowsDriver(Driver):
 
     def start_application_mode(self) -> None:
         """Start application mode."""
-        loop = asyncio.get_running_loop()
 
         self._restore_console = win32.enable_application_mode()
 
@@ -101,7 +99,7 @@ class WindowsDriver(Driver):
         self._enable_bracketed_paste()
 
         self._event_thread = win32.EventMonitor(
-            loop, self._app, self.exit_event, self.process_message
+            self._app, self.exit_event, self.process_message
         )
         self._event_thread.start()
 

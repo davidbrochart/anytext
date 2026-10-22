@@ -385,3 +385,20 @@ If you run this app and press the ++t++ key, you should see the header update ac
 ## What's next
 
 In the following chapter we will learn more about how to apply styles to your widgets and app.
+
+## Async backends
+
+Textual uses [AnyIO](https://anyio.readthedocs.io/) for concurrency. By default,
+`App.run()` uses AnyIO's asyncio backend. To run without asyncio, install Trio
+(`pip install trio`) and select it when starting your app:
+
+```python
+app.run(backend="trio")
+```
+
+You can pass `backend_options` to configure the selected AnyIO backend. When
+embedding an app in existing asynchronous code, await `app.run_async()`; it uses
+the backend already running. `app.run_test()` also works with either backend.
+Async libraries called by your app and its workers must support that backend.
+Screen results are reusable awaitables rather than asyncio futures. The optional
+`textual-dev` client currently requires the asyncio backend.
