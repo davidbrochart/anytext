@@ -1,7 +1,7 @@
 # Getting started with Anytext
 
 Anytext is a fork of [Textual](https://github.com/Textualize/textual) for building
-terminal user interfaces. It requires Python 3.9 or later and runs on Linux,
+terminal user interfaces. It requires Python 3.11 or later and runs on Linux,
 macOS, and Windows.
 
 ## Installation
