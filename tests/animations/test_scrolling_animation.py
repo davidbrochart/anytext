@@ -20,17 +20,22 @@ async def test_scrolling_animates_on_full() -> None:
     app.animation_level = "full"
 
     async with app.run_test() as pilot:
+        # Complete initial layout before measuring the scroll range.
+        await pilot.pause()
         vertical_scroll = app.query_one(VerticalScroll)
+        assert vertical_scroll.max_scroll_y > 0
         animator = app.animator
         # Freeze time at 0 before triggering the animation.
         animator._get_time = lambda *_: 0
-        vertical_scroll.scroll_end(duration=10000)
-        await pilot.pause()
+        # Exercise animation levels without depending on a deferred refresh.
+        # Do not yield between starting the animation and advancing its clock.
+        vertical_scroll.scroll_end(duration=1, immediate=True)
         # Freeze time after the animation start and before animation end.
-        animator._get_time = lambda *_: 0.01
+        animator._get_time = lambda *_: 0.5
         # Move to the next frame.
         animator()
         assert animator.is_being_animated(vertical_scroll, "scroll_y")
+        assert 0 < vertical_scroll.scroll_y < vertical_scroll.max_scroll_y
 
 
 async def test_scrolling_animates_on_basic() -> None:
@@ -38,17 +43,22 @@ async def test_scrolling_animates_on_basic() -> None:
     app.animation_level = "basic"
 
     async with app.run_test() as pilot:
+        # Complete initial layout before measuring the scroll range.
+        await pilot.pause()
         vertical_scroll = app.query_one(VerticalScroll)
+        assert vertical_scroll.max_scroll_y > 0
         animator = app.animator
         # Freeze time at 0 before triggering the animation.
         animator._get_time = lambda *_: 0
-        vertical_scroll.scroll_end(duration=10000)
-        await pilot.pause()
+        # Exercise animation levels without depending on a deferred refresh.
+        # Do not yield between starting the animation and advancing its clock.
+        vertical_scroll.scroll_end(duration=1, immediate=True)
         # Freeze time after the animation start and before animation end.
-        animator._get_time = lambda *_: 0.01
+        animator._get_time = lambda *_: 0.5
         # Move to the next frame.
         animator()
         assert animator.is_being_animated(vertical_scroll, "scroll_y")
+        assert 0 < vertical_scroll.scroll_y < vertical_scroll.max_scroll_y
 
 
 async def test_scrolling_does_not_animate_on_none() -> None:
@@ -56,14 +66,19 @@ async def test_scrolling_does_not_animate_on_none() -> None:
     app.animation_level = "none"
 
     async with app.run_test() as pilot:
+        # Complete initial layout before measuring the scroll range.
+        await pilot.pause()
         vertical_scroll = app.query_one(VerticalScroll)
+        assert vertical_scroll.max_scroll_y > 0
         animator = app.animator
         # Freeze time at 0 before triggering the animation.
         animator._get_time = lambda *_: 0
-        vertical_scroll.scroll_end(duration=10000)
-        await pilot.pause()
+        # Exercise animation levels without depending on a deferred refresh.
+        # Do not yield between starting the animation and advancing its clock.
+        vertical_scroll.scroll_end(duration=1, immediate=True)
         # Freeze time after the animation start and before animation end.
-        animator._get_time = lambda *_: 0.01
+        animator._get_time = lambda *_: 0.5
         # Move to the next frame.
         animator()
         assert not animator.is_being_animated(vertical_scroll, "scroll_y")
+        assert vertical_scroll.scroll_y == vertical_scroll.max_scroll_y
