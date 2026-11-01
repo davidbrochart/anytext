@@ -1,7 +1,8 @@
 import os
 import sys
-from threading import Event
 from typing import Iterator
+
+import anyio
 
 
 class InputReader:
@@ -15,15 +16,16 @@ class InputReader:
         """
         self._fileno = sys.__stdin__.fileno()
         self.timeout = timeout
-        self._exit_event = Event()
+        self._closed = False
 
     def close(self) -> None:
         """Close the reader (will exit the iterator)."""
-        self._exit_event.set()
+        self._closed = True
 
     def __iter__(self) -> Iterator[bytes]:
         """Read input, yield bytes."""
-        while not self._exit_event.is_set():
+        while not self._closed:
+            anyio.from_thread.check_cancelled()
             try:
                 data = os.read(self._fileno, 1024) or None
             except Exception:

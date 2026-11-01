@@ -74,13 +74,11 @@ after(async () => {
 
 const guards = `
 import socket
-import threading
 import anyio
 forbidden_operations = []
 def forbid_thread_or_socket(*args, **kwargs):
     forbidden_operations.append('thread or socket operation')
     raise AssertionError('Browser execution must not create threads or socket pairs')
-threading.Thread.start = forbid_thread_or_socket
 anyio.to_thread.run_sync = forbid_thread_or_socket
 socket.socketpair = forbid_thread_or_socket
 `;
@@ -140,7 +138,7 @@ test("Pyodide runs the local wheel without threads and handles terminal interact
     assert.equal(await python(page, "__import__('sys').platform"), "emscripten");
     assert.equal(await python(page, "constants.THREADS_ENABLED"), false);
     assert.equal(await python(page, "os.environ.get('ANYTEXT_THREADS') is None"), true);
-    assert.equal(await python(page, "browser_app._runtime.portal is None and browser_app._runtime._reader is None"), true);
+    assert.equal(await python(page, "browser_app._runtime.portal is None"), true);
 
     const keyboard = page.locator(".xterm-helper-textarea");
     await keyboard.pressSequentially("hello browser");

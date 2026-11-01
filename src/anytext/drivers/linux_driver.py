@@ -7,14 +7,15 @@ import sys
 import termios
 import tty
 from codecs import getincrementaldecoder
-from threading import Event, Thread
 from typing import TYPE_CHECKING, Any, Final
 
+import anyio
 import rich.repr
 
 from anytext import constants, events
 from anytext._loop import loop_last
 from anytext._parser import ParseError
+from anytext._thread_worker import ThreadWorker
 from anytext._xterm_parser import XTermParser
 from anytext.driver import Driver
 from anytext.drivers._writer_thread import WriterThread
@@ -60,8 +61,7 @@ class LinuxDriver(Driver):
         self.fileno = sys.__stdin__.fileno()
         self.input_tty = sys.__stdin__.isatty()
         self.attrs_before: list[Any] | None = None
-        self.exit_event = Event()
-        self._key_thread: Thread | None = None
+        self._key_thread: ThreadWorker | None = None
         self._writer_thread: WriterThread | None = None
 
         # If we've finally and properly come back from a SIGSTOP we want to
@@ -84,18 +84,20 @@ class LinuxDriver(Driver):
         # If we're supposed to auto-restart, that means we need to shut down
         # first.
         if self._auto_restart:
-            self.suspend_application_mode()
-            # Flag that we'll need to signal a resume on successful startup
-            # again.
-            self._must_signal_resume = True
-        # Now send a SIGSTOP to our process to *actually* suspend the
-        # process.
-        os.kill(os.getpid(), signal.SIGSTOP)
+
+            async def suspend() -> None:
+                await self.suspend_application_mode()
+                self._must_signal_resume = True
+                os.kill(os.getpid(), signal.SIGSTOP)
+
+            self._app.call_later(suspend)
+        else:
+            os.kill(os.getpid(), signal.SIGSTOP)
 
     def _sigcont_application(self, *_) -> None:
-        """Handle a SICONT application."""
+        """Resume terminal workers on the app loop."""
         if self._auto_restart:
-            self.resume_application_mode()
+            self._app.call_later(self.resume_application_mode)
 
     @property
     def can_suspend(self) -> bool:
@@ -201,13 +203,14 @@ class LinuxDriver(Driver):
 
     def _start_input(self) -> None:
         """Start the native input mechanism."""
-        self._key_thread = Thread(target=self._run_input_thread, name="anytext-input")
+        self._key_thread = ThreadWorker(
+            target=self._run_input_thread, name="anytext-input"
+        )
         self._key_thread.start()
 
-    def _stop_input(self) -> None:
-        """Stop the native input mechanism."""
+    async def _stop_input(self) -> None:
         if self._key_thread is not None:
-            self._key_thread.join()
+            await self._key_thread.stop()
 
     def start_application_mode(self):
         """Start application mode."""
@@ -359,29 +362,24 @@ class LinuxDriver(Driver):
             | termios.IGNCR
         )
 
-    def disable_input(self) -> None:
-        """Disable further input."""
+    async def disable_input(self) -> None:
+        """Stop input without blocking the app loop."""
+        signal.signal(signal.SIGWINCH, signal.SIG_DFL)
+        self._disable_mouse_support()
+        from anytext._callback import invoke
+
+        await invoke(self._stop_input)
         try:
-            if not self.exit_event.is_set():
-                signal.signal(signal.SIGWINCH, signal.SIG_DFL)
-                self._disable_mouse_support()
-                self.exit_event.set()
-                self._stop_input()
-                self.exit_event.clear()
-                try:
-                    termios.tcflush(self.fileno, termios.TCIFLUSH)
-                except termios.error:
-                    pass
-        except Exception:
-            # TODO: log this
+            termios.tcflush(self.fileno, termios.TCIFLUSH)
+        except termios.error:
             pass
 
-    def stop_application_mode(self) -> None:
+    async def stop_application_mode(self) -> None:
         """Stop application mode, restore state."""
         self._disable_bracketed_paste()
         self._enable_line_wrap()
         self._disable_in_band_window_resize()
-        self.disable_input()
+        await self.disable_input()
 
         if self.attrs_before is not None:
             try:
@@ -399,10 +397,10 @@ class LinuxDriver(Driver):
         self.write("\x1b[?1004l")  # Disable FocusIn/FocusOut.
         self.flush()
 
-    def close(self) -> None:
+    async def close(self) -> None:
         """Perform cleanup."""
         if self._writer_thread is not None:
-            self._writer_thread.stop()
+            await self._writer_thread.stop()
 
     def _run_input_thread(self) -> None:
         """
@@ -411,7 +409,7 @@ class LinuxDriver(Driver):
         """
         try:
             self.run_input_thread()
-        except BaseException:
+        except Exception:
             import rich.traceback
 
             self._app.call_later(
@@ -458,7 +456,8 @@ class LinuxDriver(Driver):
                 self.process_message(event)
 
         try:
-            while not self.exit_event.is_set():
+            while True:
+                anyio.from_thread.check_cancelled()
                 process_selector_events(selector.select(0.1))
             selector.unregister(self.fileno)
             process_selector_events(selector.select(0.1), final=True)

@@ -11,7 +11,7 @@ else:
     # 5507eff19c757a908a2ff29dfe423e35595fda00/Lib/functools.py#L1089-L1138
     # Copyright (C) 2006 Python Software Foundation.
     # vendored under the PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2 because
-    # prior to Python 3.12 cached_property used a threading.Lock, which makes
+    # prior to Python 3.12 cached_property used a per-descriptor lock, which makes
     # it very slow.
     _T_co = TypeVar("_T_co", covariant=True)
     _NOT_FOUND = object()

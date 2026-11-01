@@ -18,11 +18,13 @@ import sys
 from codecs import getincrementaldecoder
 from functools import partial
 from pathlib import Path
-from threading import Event, Thread
 from typing import Any, BinaryIO, Literal, TextIO, cast
+
+import anyio
 
 from anytext import events, log, messages
 from anytext._binary_encode import dump as binary_dump
+from anytext._thread_worker import ThreadWorker
 from anytext._xterm_parser import XTermParser
 from anytext.app import App
 from anytext.driver import Driver
@@ -62,8 +64,7 @@ class WebDriver(Driver):
         self.stdout = sys.__stdout__
         self.fileno = sys.__stdout__.fileno()
         self._write = partial(os.write, self.fileno)
-        self.exit_event = Event()
-        self._key_thread: Thread = Thread(
+        self._key_thread: ThreadWorker = ThreadWorker(
             target=self.run_input_thread, name="anytext-input"
         )
         self._input_reader = InputReader()
@@ -166,14 +167,15 @@ class WebDriver(Driver):
         self._key_thread.start()
         self._app.call_later(self._app.post_message, events.AppBlur())
 
-    def disable_input(self) -> None:
+    async def disable_input(self) -> None:
         """Disable further input."""
-
-    def stop_application_mode(self) -> None:
-        """Stop application mode, restore state."""
-        self.exit_event.set()
         self._input_reader.close()
+        await self._key_thread.stop()
+
+    async def stop_application_mode(self) -> None:
+        """Stop application mode, restore state."""
         self.write_meta({"type": "exit"})
+        await self.disable_input()
 
     def run_input_thread(self) -> None:
         """Wait for input and dispatch events."""

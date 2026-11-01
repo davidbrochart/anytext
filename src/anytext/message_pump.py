@@ -10,7 +10,6 @@ A `MessagePump` is a base class for any object which processes messages, which i
 
 from __future__ import annotations
 
-import threading
 from contextlib import contextmanager
 from functools import partial
 from time import perf_counter
@@ -135,7 +134,6 @@ class MessagePump(metaclass=_MessagePumpMeta):
         explicit Boolean value is faster than the two lookups and the function call.
         """
         self._next_callbacks: list[events.Callback] = []
-        self._thread_id: int = threading.get_ident()
         self._prevented_messages_on_mount = self._prevent_message_types_stack[-1]
         self.message_signal: Signal[Message] = Signal(self, "messages")
         """Subscribe to this signal to be notified of all messages sent to this widget.
@@ -172,7 +170,7 @@ class MessagePump(metaclass=_MessagePumpMeta):
         return stack
 
     def _thread_init(self):
-        """Initialize threading primitives for the current thread.
+        """Initialize async primitives for the current app.
 
         Require for Python3.8 https://github.com/Textualize/textual/issues/5845
 
@@ -635,7 +633,6 @@ class MessagePump(metaclass=_MessagePumpMeta):
     async def _process_messages_loop(self) -> None:
         """Process messages until the queue is closed."""
         _rich_traceback_guard = True
-        self._thread_id = threading.get_ident()
         await _async.sleep(0)
         while not self._closed:
             try:
@@ -861,6 +858,9 @@ class MessagePump(metaclass=_MessagePumpMeta):
     def post_message(self, message: Message) -> bool:
         """Posts a message on to this widget's queue.
 
+        From another thread, waits until the app loop has queued the message,
+        without waiting for the message handler to run.
+
         Args:
             message: A message (including Event).
 
@@ -880,10 +880,12 @@ class MessagePump(metaclass=_MessagePumpMeta):
         # Add a copy of the prevented message types to the message
         # This is so that prevented messages are honoured by the event's handler
         message._prevent.update(self._get_prevented_messages())
-        if self._thread_id != threading.get_ident() and self.app._runtime is not None:
-            # If we're not calling from the same thread, make it threadsafe
-            loop = self.app._runtime
-            loop.call_soon_threadsafe(self._message_queue.put_nowait, message)
+        try:
+            runtime = self.app._runtime
+        except NoActiveAppError:
+            runtime = None
+        if runtime is not None and not runtime.in_event_loop():
+            runtime.run_sync_from_thread(self._message_queue.put_nowait, message)
         else:
             self._message_queue.put_nowait(message)
         return True

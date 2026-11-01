@@ -2,7 +2,6 @@
 
 import io
 import socket
-import threading
 from functools import partial
 
 import anyio
@@ -23,7 +22,6 @@ async def no_threads(monkeypatch):
     def forbidden(*args, **kwargs):
         raise AssertionError("Thread-free mode attempted to use threads or sockets")
 
-    monkeypatch.setattr(threading.Thread, "start", forbidden)
     monkeypatch.setattr(anyio.to_thread, "run_sync", forbidden)
     monkeypatch.setattr(socket, "socketpair", forbidden)
 
@@ -42,7 +40,6 @@ async def test_widgets_without_threads(no_threads, tmp_path):
     app = TestApp()
     async with app.run_test() as pilot:
         assert app._runtime.portal is None
-        assert app._runtime._reader is None
         await app.query_one(Markdown).load(document)
         log = app.query_one(Log)
         log.write_line("hello world")

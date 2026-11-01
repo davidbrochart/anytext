@@ -3,10 +3,11 @@ from __future__ import annotations
 import ctypes
 import msvcrt
 import sys
-import threading
 from ctypes import Structure, Union, byref, wintypes
 from ctypes.wintypes import BOOL, CHAR, DWORD, HANDLE, SHORT, UINT, WCHAR, WORD
 from typing import IO, TYPE_CHECKING, Callable, List, Optional
+
+import anyio
 
 from anytext import constants
 from anytext._xterm_parser import XTermParser
@@ -208,22 +209,18 @@ def wait_for_handles(handles: List[HANDLE], timeout: int = -1) -> Optional[HANDL
         return handles[ret]
 
 
-class EventMonitor(threading.Thread):
+class EventMonitor:
     """A thread to send key / window events to Anytext loop."""
 
     def __init__(
         self,
         app: App,
-        exit_event: threading.Event,
         process_event: Callable[[Event], None],
     ) -> None:
         self.app = app
-        self.exit_event = exit_event
         self.process_event = process_event
-        super().__init__(name="anytext-input")
 
     def run(self) -> None:
-        exit_requested = self.exit_event.is_set
         parser = XTermParser(debug=constants.DEBUG)
 
         try:
@@ -240,7 +237,8 @@ class EventMonitor(threading.Thread):
             keys: List[str] = []
             append_key = keys.append
 
-            while not exit_requested():
+            while True:
+                anyio.from_thread.check_cancelled()
 
                 for event in parser.tick():
                     self.process_event(event)

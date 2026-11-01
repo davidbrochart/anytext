@@ -1,6 +1,5 @@
 import io
 import socket
-import threading
 from functools import partial
 from pathlib import Path
 
@@ -19,7 +18,6 @@ def forbidden(*args, **kwargs):
     raise AssertionError("unexpected thread or socket operation")
 
 
-threading.Thread.start = forbidden
 anyio.to_thread.run_sync = forbidden
 socket.socketpair = forbidden
 

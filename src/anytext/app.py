@@ -14,7 +14,6 @@ import mimetypes
 import os
 import signal
 import sys
-import threading
 import uuid
 import warnings
 from contextlib import (
@@ -30,6 +29,7 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AsyncGenerator,
+    AsyncIterator,
     Awaitable,
     BinaryIO,
     Callable,
@@ -926,7 +926,7 @@ class App(Generic[ReturnType], DOMNode):
         return super().__init_subclass__(*args, **kwargs)
 
     def _thread_init(self):
-        """Initialize threading primitives for the current thread.
+        """Initialize async primitives for the current app.
 
         https://github.com/Textualize/textual/issues/5845
 
@@ -934,7 +934,6 @@ class App(Generic[ReturnType], DOMNode):
         self._message_queue
         self._mounted_event
         self._exception_event
-        self._thread_id = threading.get_ident()
 
     def _get_dom_base(self) -> DOMNode:
         """When querying from the app, we want to query the default screen."""
@@ -1825,7 +1824,7 @@ class App(Generic[ReturnType], DOMNode):
         if self._runtime is None:
             raise RuntimeError("App is not running")
 
-        if self._thread_id == threading.get_ident():
+        if self._runtime.in_event_loop():
             raise RuntimeError(
                 "The `call_from_thread` method must run in a different thread from the app"
             )
@@ -2190,7 +2189,6 @@ class App(Generic[ReturnType], DOMNode):
                         if message_hook is not None:
                             message_hook_context_var.set(message_hook)
                         app._runtime = _async.get_runtime()
-                        app._thread_id = threading.get_ident()
                         await app._process_messages(
                             ready_callback=on_app_ready,
                             headless=headless,
@@ -2217,7 +2215,6 @@ class App(Generic[ReturnType], DOMNode):
                         await app._shutdown()
                         await app_task
                     app._runtime = None
-                    app._thread_id = 0
                     # Re-raise the exception which caused panic so test frameworks are aware
                     if self._exception:
                         raise self._exception
@@ -2305,7 +2302,6 @@ class App(Generic[ReturnType], DOMNode):
                             await app._shutdown()
                     finally:
                         app._runtime = None
-                        app._thread_id = 0
 
         return app.return_value
 
@@ -3475,7 +3471,7 @@ class App(Generic[ReturnType], DOMNode):
                 self.log(driver=driver)
 
                 if not self._exit:
-                    driver.start_application_mode()
+                    await invoke(driver.start_application_mode)
                     try:
                         with redirect_stdout(self._capture_stdout):
                             with redirect_stderr(self._capture_stderr):
@@ -3500,7 +3496,8 @@ class App(Generic[ReturnType], DOMNode):
                                     Control.move(0, -self.INLINE_PADDING).segment.text
                                 )
 
-                        driver.stop_application_mode()
+                        with anyio.CancelScope(shield=True):
+                            await invoke(driver.stop_application_mode)
             except Exception as error:
                 self._handle_exception(error)
 
@@ -3728,14 +3725,14 @@ class App(Generic[ReturnType], DOMNode):
         driver = self._driver
         self._running = False
         if driver is not None:
-            driver.disable_input()
+            await invoke(driver.disable_input)
 
         await self._close_all()
         await self._close_messages()
         await self._dispatch_message(events.Unmount())
 
         if self._driver is not None:
-            self._driver.close()
+            await invoke(self._driver.close)
 
         self._nodes._clear()
 
@@ -4703,19 +4700,19 @@ class App(Generic[ReturnType], DOMNode):
         """Signal that the application is being resumed from a suspension."""
         self.app_resume_signal.publish(self)
 
-    @contextmanager
-    def suspend(self) -> Iterator[None]:
+    @asynccontextmanager
+    async def suspend(self) -> AsyncIterator[None]:
         """A context manager that temporarily suspends the app.
 
-        While inside the `with` block, the app will stop reading input and
+        While inside the `async with` block, the app will stop reading input and
         emitting output. Other applications will have full control of the
         terminal, configured as it was before the app started running. When
-        the `with` block ends, the application will start reading input and
+        the `async with` block ends, the application will start reading input and
         emitting output again.
 
         Example:
             ```python
-            with self.suspend():
+            async with self.suspend():
                 os.system("emacs -nw")
             ```
 
@@ -4728,11 +4725,12 @@ class App(Generic[ReturnType], DOMNode):
             not supported in Anytext Web.
         """
         if self._driver is None:
+            yield
             return
         if self._driver.can_suspend:
             # Publish a suspend signal *before* we suspend application mode.
             self._suspend_signal()
-            self._driver.suspend_application_mode()
+            await invoke(self._driver.suspend_application_mode)
             # We're going to handle the start of the driver again so mark
             # this next part as such; the reason for this is that the code
             # the developer may be running could be in this process, and on
@@ -4740,17 +4738,18 @@ class App(Generic[ReturnType], DOMNode):
             # app, and we don't want to have the driver auto-restart
             # application mode when the application comes back to the
             # foreground, in this context.
-            with (
-                self._driver.no_automatic_restart(),
-                redirect_stdout(sys.__stdout__),
-                redirect_stderr(sys.__stderr__),
-            ):
-                yield
-            # We're done with the dev's code so resume application mode.
-            self._driver.resume_application_mode()
-            # ...and publish a resume signal.
-            self._resume_signal()
-            self.refresh(layout=True)
+            try:
+                with (
+                    self._driver.no_automatic_restart(),
+                    redirect_stdout(sys.__stdout__),
+                    redirect_stderr(sys.__stderr__),
+                ):
+                    yield
+            finally:
+                with anyio.CancelScope(shield=True):
+                    await invoke(self._driver.resume_application_mode)
+                    self._resume_signal()
+                    self.refresh(layout=True)
         else:
             raise SuspendNotSupported(
                 "App.suspend is not supported in this environment."

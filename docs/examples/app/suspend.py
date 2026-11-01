@@ -11,8 +11,8 @@ class SuspendingApp(App[None]):
         yield Button("Open the editor", id="edit")
 
     @on(Button.Pressed, "#edit")
-    def run_external_editor(self) -> None:
-        with self.suspend():  # (1)!
+    async def run_external_editor(self) -> None:
+        async with self.suspend():  # (1)!
             system("vim")
 
 

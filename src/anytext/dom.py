@@ -7,7 +7,6 @@ which includes all Widgets, Screens, and Apps.
 from __future__ import annotations
 
 import re
-import threading
 from functools import lru_cache, partial
 from inspect import getfile
 from typing import (
@@ -524,7 +523,7 @@ class DOMNode(MessagePump):
 
         # If we're running a worker from inside a secondary thread,
         # do so in a thread-safe way.
-        if self.app._thread_id != threading.get_ident():
+        if self.app._runtime is not None and not self.app._runtime.in_event_loop():
             creator = partial(self.app.call_from_thread, self.workers._new_worker)
         else:
             creator = self.workers._new_worker

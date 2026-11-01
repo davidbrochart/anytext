@@ -269,7 +269,7 @@ You could use this to allow the user to edit content with their preferred text e
 
 ### Suspend context manager
 
-You can use the [App.suspend](/api/app/#anytext.app.App.suspend) context manager to suspend your app.
+You can use the [App.suspend](/api/app/#anytext.app.App.suspend) async context manager to suspend your app without blocking worker shutdown.
 The following Anytext app will launch [vim](https://www.vim.org/) (a text editor) when the user clicks a button:
 
 === "suspend.py"
@@ -278,7 +278,7 @@ The following Anytext app will launch [vim](https://www.vim.org/) (a text editor
     --8<-- "docs/examples/app/suspend.py"
     ```
 
-    1. All code in the body of the `with` statement will be run while the app is suspended.
+    1. All code in the body of the `async with` statement will be run while the app is suspended.
 
 === "Output"
 

@@ -7,14 +7,15 @@ import sys
 import termios
 import tty
 from codecs import getincrementaldecoder
-from threading import Event, Thread
 from typing import TYPE_CHECKING, Any
 
+import anyio
 import rich.repr
 
-from anytext import _async, events
+from anytext import events
 from anytext._loop import loop_last
 from anytext._parser import ParseError
+from anytext._thread_worker import ThreadWorker
 from anytext._xterm_parser import XTermParser
 from anytext.driver import Driver
 from anytext.geometry import Size
@@ -39,7 +40,6 @@ class LinuxInlineDriver(Driver):
         self._file = sys.__stderr__
         self.fileno = sys.__stdin__.fileno()
         self.attrs_before: list[Any] | None = None
-        self.exit_event = Event()
 
     def __rich_repr__(self) -> rich.repr.Result:
         yield self._app
@@ -111,7 +111,7 @@ class LinuxInlineDriver(Driver):
         """
         try:
             self.run_input_thread()
-        except BaseException:
+        except Exception:
             import rich.traceback
 
             self._app.call_later(
@@ -164,7 +164,8 @@ class LinuxInlineDriver(Driver):
                     self.process_message(event)
 
         try:
-            while not self.exit_event.is_set():
+            while True:
+                anyio.from_thread.check_cancelled()
                 process_selector_events(selector.select(0.1))
             selector.unregister(self.fileno)
             process_selector_events(selector.select(0.1), final=True)
@@ -196,7 +197,9 @@ class LinuxInlineDriver(Driver):
                     self.write("\x1b[2J")
                 await self._app._post_message(event)
 
-            _async.create_task(update_size())
+            # Signal handlers may run outside the app task context. Dispatch
+            # the update through the app instead of spawning a task here.
+            self._app.call_later(update_size)
 
         def on_terminal_resize(signum, stack) -> None:
             send_size_event(clear=True)
@@ -234,7 +237,9 @@ class LinuxInlineDriver(Driver):
 
             termios.tcsetattr(self.fileno, termios.TCSANOW, newattr)
 
-        self._key_thread = Thread(target=self._run_input_thread, name="anytext-input")
+        self._key_thread = ThreadWorker(
+            target=self._run_input_thread, name="anytext-input"
+        )
         send_size_event()
         self._key_thread.start()
         self._request_terminal_sync_mode_support()
@@ -280,33 +285,25 @@ class LinuxInlineDriver(Driver):
             | termios.IGNCR
         )
 
-    def disable_input(self) -> None:
-        """Disable further input."""
+    async def disable_input(self) -> None:
+        signal.signal(signal.SIGWINCH, signal.SIG_DFL)
+        self._disable_mouse_support()
+        worker = getattr(self, "_key_thread", None)
+        if worker is not None:
+            await worker.stop()
         try:
-            if not self.exit_event.is_set():
-                signal.signal(signal.SIGWINCH, signal.SIG_DFL)
-                self._disable_mouse_support()
-                self.exit_event.set()
-                if self._key_thread is not None:
-                    self._key_thread.join()
-                self.exit_event.clear()
-                try:
-                    termios.tcflush(self.fileno, termios.TCIFLUSH)
-                except termios.error:
-                    pass
-
-        except Exception as error:
-            # TODO: log this
+            termios.tcflush(self.fileno, termios.TCIFLUSH)
+        except termios.error:
             pass
 
     def flush(self):
         """Flush any buffered data."""
         self._file.flush()
 
-    def stop_application_mode(self) -> None:
+    async def stop_application_mode(self) -> None:
         """Stop application mode, restore state."""
         self._disable_bracketed_paste()
-        self.disable_input()
+        await self.disable_input()
         self.write("\x1b[<u")  # Disable kitty protocol
         self.write("\x1b[J")
 

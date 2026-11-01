@@ -40,7 +40,7 @@ target-version = "py311"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-anyio = ">=4.9,<5"
+anyio = ">=4.11,<5"
 sniffio = ">=1.3,<2"
 markdown-it-py = { extras = ["linkify"], version = ">=2.1.0" }
 mdit-py-plugins = "*"

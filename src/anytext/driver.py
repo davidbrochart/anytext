@@ -3,9 +3,10 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, BinaryIO, Iterator, Literal, TextIO
+from typing import TYPE_CHECKING, Any, Awaitable, BinaryIO, Iterator, Literal, TextIO
 
 from anytext import _async, constants, events, log, messages
+from anytext._callback import invoke
 from anytext.events import MouseUp
 
 if TYPE_CHECKING:
@@ -146,33 +147,33 @@ class Driver(ABC):
         """Flush any buffered data."""
 
     @abstractmethod
-    def start_application_mode(self) -> None:
+    def start_application_mode(self) -> Awaitable[None] | None:
         """Start application mode."""
 
     @abstractmethod
-    def disable_input(self) -> None:
+    def disable_input(self) -> Awaitable[None] | None:
         """Disable further input."""
 
     @abstractmethod
-    def stop_application_mode(self) -> None:
+    def stop_application_mode(self) -> Awaitable[None] | None:
         """Stop application mode, restore state."""
 
-    def suspend_application_mode(self) -> None:
+    async def suspend_application_mode(self) -> None:
         """Suspend application mode.
 
         Used to suspend application mode and allow uninhibited access to the
         terminal.
         """
-        self.stop_application_mode()
-        self.close()
+        await invoke(self.stop_application_mode)
+        await invoke(self.close)
 
-    def resume_application_mode(self) -> None:
+    async def resume_application_mode(self) -> None:
         """Resume application mode.
 
         Used to resume application mode after it has been previously
         suspended.
         """
-        self.start_application_mode()
+        await invoke(self.start_application_mode)
 
     class SignalResume(events.Event):
         """Event sent to the app when a resume signal should be published."""
@@ -192,7 +193,7 @@ class Driver(ABC):
         finally:
             self._auto_restart = auto_restart
 
-    def close(self) -> None:
+    def close(self) -> Awaitable[None] | None:
         """Perform any final cleanup."""
 
     def open_url(self, url: str, new_tab: bool = True) -> None:

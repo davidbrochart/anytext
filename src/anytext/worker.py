@@ -10,7 +10,6 @@ from __future__ import annotations
 import enum
 import inspect
 from contextvars import ContextVar
-from threading import Event
 from time import monotonic
 from typing import (
     TYPE_CHECKING,
@@ -174,8 +173,8 @@ class Worker(Generic[ResultType]):
             description if len(description) <= 1000 else description[:1000] + "..."
         )
         self.exit_on_error = exit_on_error
-        self.cancelled_event = Event() if constants.THREADS_ENABLED else _async.Event()
-        """A threading event set when the worker is cancelled."""
+        self.cancelled_event = _async.Event()
+        """An async event set when the worker is cancelled."""
         self._thread_worker = thread
         self._state = WorkerState.PENDING
         self.state = self._state

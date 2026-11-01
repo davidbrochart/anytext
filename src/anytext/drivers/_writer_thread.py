@@ -1,68 +1,61 @@
 from __future__ import annotations
 
-import threading
-from queue import Queue
 from typing import IO
 
-from typing_extensions import Final
+import anyio
 
-MAX_QUEUED_WRITES: Final[int] = 30
+from anytext import _async
 
 
-class WriterThread(threading.Thread):
-    """A thread / file-like to do writes to stdout in the background."""
+class WriterThread:
+    """Buffer terminal output and offload writes through AnyIO."""
 
     def __init__(self, file: IO[str]) -> None:
-        super().__init__(daemon=True, name="anytext-output")
-        self._queue: Queue[str | None] = Queue(MAX_QUEUED_WRITES)
         self._file = file
+        self._pending: list[str] = []
+        self._ready = _async.Event()
+        self._closing = False
+        self._task: _async.Task | None = None
+
+    def start(self) -> None:
+        self._task = _async.create_task(self.run(), name="anytext-output")
 
     def write(self, text: str) -> None:
-        """Write text. Text will be enqueued for writing.
-
-        Args:
-            text: Text to write to the file.
-        """
-        self._queue.put(text)
+        """Queue output from the app loop without blocking it."""
+        self._pending.append(text)
+        self._ready.set()
 
     def isatty(self) -> bool:
-        """Pretend to be a terminal.
-
-        Returns:
-            True.
-        """
         return True
 
     def fileno(self) -> int:
-        """Get file handle number.
-
-        Returns:
-            File number of proxied file.
-        """
         return self._file.fileno()
 
     def flush(self) -> None:
-        """Flush the file (a no-op, because flush is done in the thread)."""
-        return
+        """Wake the output task; stop() awaits the final flush."""
+        self._ready.set()
 
-    def run(self) -> None:
-        """Run the thread."""
-        write = self._file.write
-        flush = self._file.flush
-        get = self._queue.get
-        qsize = self._queue.qsize
-        # Read from the queue, write to the file.
-        # Flush when there is a break.
+    async def run(self) -> None:
+        limiter = anyio.CapacityLimiter(1)
+
+        def write(text: str) -> None:
+            self._file.write(text)
+            self._file.flush()
+
         while True:
-            text: str | None = get()
-            if text is None:
-                break
-            write(text)
-            if qsize() == 0:
-                flush()
-        flush()
+            await self._ready.wait()
+            self._ready.clear()
+            if self._pending:
+                text = "".join(self._pending)
+                self._pending.clear()
+                await anyio.to_thread.run_sync(write, text, limiter=limiter)
+            if self._closing and not self._pending:
+                return
 
-    def stop(self) -> None:
-        """Stop the thread, and block until it finished."""
-        self._queue.put(None)
-        self.join()
+    async def stop(self) -> None:
+        """Drain buffered output and await the last write."""
+        self._closing = True
+        self._ready.set()
+        if self._task is not None:
+            with anyio.CancelScope(shield=True):
+                await self._task

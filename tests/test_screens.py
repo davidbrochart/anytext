@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import sys
-import threading
 
 import pytest
 
@@ -55,7 +54,6 @@ async def test_installed_screens():
 async def test_screens():
     app = App()
     app._runtime = get_runtime()
-    app._thread_id = threading.get_ident()
     # There should be nothing in the children since the app hasn't run yet
     assert not app._nodes
     assert not app.children

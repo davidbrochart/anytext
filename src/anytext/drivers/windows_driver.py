@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import sys
-from threading import Event, Thread
 from typing import TYPE_CHECKING, Callable
 
+import anyio
+
+from anytext._thread_worker import ThreadWorker
 from anytext.driver import Driver
 from anytext.drivers import win32
 from anytext.drivers._writer_thread import WriterThread
@@ -35,8 +37,7 @@ class WindowsDriver(Driver):
         """
         super().__init__(app, debug=debug, mouse=mouse, size=size)
         self._file = sys.__stdout__
-        self.exit_event = Event()
-        self._event_thread: Thread | None = None
+        self._event_thread: ThreadWorker | None = None
         self._restore_console: Callable[[], None] | None = None
         self._writer_thread: WriterThread | None = None
 
@@ -100,29 +101,20 @@ class WindowsDriver(Driver):
         self.flush()
         self._enable_bracketed_paste()
 
-        self._event_thread = win32.EventMonitor(
-            self._app, self.exit_event, self.process_message
-        )
+        monitor = win32.EventMonitor(self._app, self.process_message)
+        self._event_thread = ThreadWorker(monitor.run, name="anytext-input")
         self._event_thread.start()
 
-    def disable_input(self) -> None:
-        """Disable further input."""
-        try:
-            if not self.exit_event.is_set():
-                self._disable_mouse_support()
-                self.exit_event.set()
-                if self._event_thread is not None:
-                    self._event_thread.join()
-                    self._event_thread = None
-                self.exit_event.clear()
-        except Exception as error:
-            # TODO: log this
-            pass
+    async def disable_input(self) -> None:
+        self._disable_mouse_support()
+        if self._event_thread is not None:
+            await self._event_thread.stop()
+            self._event_thread = None
 
-    def stop_application_mode(self) -> None:
+    async def stop_application_mode(self) -> None:
         """Stop application mode, restore state."""
         self._disable_bracketed_paste()
-        self.disable_input()
+        await self.disable_input()
 
         # Disable the Kitty keyboard protocol. This must be done before leaving
         # the alt screen. https://sw.kovidgoyal.net/kitty/keyboard-protocol/
@@ -133,9 +125,9 @@ class WindowsDriver(Driver):
         self.write("\033[?1004l")  # Disable FocusIn/FocusOut.
         self.flush()
 
-    def close(self) -> None:
+    async def close(self) -> None:
         """Perform cleanup."""
         if self._writer_thread is not None:
-            self._writer_thread.stop()
+            await self._writer_thread.stop()
         if self._restore_console:
             self._restore_console()

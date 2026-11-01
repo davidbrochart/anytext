@@ -1,6 +1,6 @@
 """Exercise the application lifecycle on both supported AnyIO backends."""
 
-from threading import Thread
+from contextvars import Context
 
 import anyio
 import pytest
@@ -60,11 +60,8 @@ def test_workers_and_thread_handoff(backend):
             worker.cancel()
             with pytest.raises(WorkerCancelled):
                 await worker.wait()
-            # A foreign thread may post messages without waiting on the UI task.
-            thread = Thread(target=app.post_message, args=(Button.Pressed(Button()),))
-            thread.start()
-            thread.join(timeout=1)
-            assert not thread.is_alive()
+            # An AnyIO worker may post messages back to the UI task.
+            await anyio.to_thread.run_sync(app.post_message, Button.Pressed(Button()))
             await pilot.pause()
 
     anyio.run(check, backend=backend)
@@ -203,5 +200,16 @@ def test_directory_tree_command_palette_and_streaming(backend, tmp_path):
             await pilot.press("escape")
             await pilot.pause()
             assert len(app.screen_stack) == 1
+
+    anyio.run(check, backend=backend)
+
+
+@pytest.mark.parametrize("backend", ["asyncio", "trio"])
+def test_runtime_loop_identity(backend):
+    async def check():
+        async with _async.task_context() as runtime:
+            assert runtime.in_event_loop()
+            assert Context().run(runtime.in_event_loop)
+            assert not await anyio.to_thread.run_sync(runtime.in_event_loop)
 
     anyio.run(check, backend=backend)

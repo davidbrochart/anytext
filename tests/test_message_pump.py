@@ -1,5 +1,4 @@
-import threading
-
+import anyio
 import pytest
 
 from anytext._dispatch_key import dispatch_key
@@ -179,9 +178,8 @@ async def test_thread_safe_post_message():
 
     class TestApp(App):
 
-        def on_mount(self) -> None:
-            msg = TextMessage()
-            threading.Thread(target=self.post_message, args=(msg,)).start()
+        async def on_mount(self) -> None:
+            await anyio.to_thread.run_sync(self.post_message, TextMessage())
 
         def on_text_message(self, message):
             self.exit()

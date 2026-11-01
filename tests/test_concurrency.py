@@ -1,5 +1,4 @@
-from threading import Thread
-
+import anyio
 import pytest
 
 from anytext.app import App, ComposeResult
@@ -17,21 +16,12 @@ def test_call_from_thread_app_not_running():
 def test_call_from_thread():
     """Test the call_from_thread method."""
 
-    class BackgroundThread(Thread):
-        """A background thread which will modify app in some way."""
+    def update_app(app):
+        def write_stuff(text: str) -> None:
+            app.query_one(RichLog).write(text)
 
-        def __init__(self, app: App[object]) -> None:
-            self.app = app
-            super().__init__()
-
-        def run(self) -> None:
-            def write_stuff(text: str) -> None:
-                """Write stuff to a widget."""
-                self.app.query_one(RichLog).write(text)
-
-            self.app.call_from_thread(write_stuff, "Hello")
-            # Exit the app with a code we can assert
-            self.app.call_from_thread(self.app.exit, 123)
+        app.call_from_thread(write_stuff, "Hello")
+        app.call_from_thread(app.exit, 123)
 
     class ThreadTestApp(App[object]):
         """Trivial app with a single widget."""
@@ -39,14 +29,14 @@ def test_call_from_thread():
         def compose(self) -> ComposeResult:
             yield RichLog()
 
-        def on_ready(self) -> None:
+        async def on_ready(self) -> None:
             """Launch a thread which will modify the app."""
             try:
                 self.call_from_thread(print)
             except RuntimeError as error:
                 # Calling this from the same thread as the app is an error
                 self._runtime_error = error
-            BackgroundThread(self).start()
+            self.run_worker(anyio.to_thread.run_sync(update_app, self))
 
     app = ThreadTestApp()
     result = app.run(headless=True, size=(80, 24))

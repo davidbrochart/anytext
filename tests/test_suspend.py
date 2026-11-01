@@ -12,7 +12,7 @@ async def test_suspend_not_supported() -> None:
         # Pilot uses the headless driver, the headless driver doesn't
         # support suspend, and so...
         with pytest.raises(SuspendNotSupported):
-            with pilot.app.suspend():
+            async with pilot.app.suspend():
                 pass
 
 
@@ -55,9 +55,15 @@ async def test_suspend_supported(capfd: pytest.CaptureFixture[str]) -> None:
         headless=False
     ) as pilot:
         calls = set()
-        with pilot.app.suspend():
+        async with pilot.app.suspend():
             _ = capfd.readouterr()  # Clear the existing buffer.
             print("USE THEM TOGETHER.", end="", flush=True)
             print("USE THEM IN PEACE.", file=sys.stderr, end="", flush=True)
             assert ("USE THEM TOGETHER.", "USE THEM IN PEACE.") == capfd.readouterr()
+        assert calls == {"suspend", "resume", "suspend signal", "resume signal"}
+
+        calls.clear()
+        with pytest.raises(ValueError, match="editor failed"):
+            async with pilot.app.suspend():
+                raise ValueError("editor failed")
         assert calls == {"suspend", "resume", "suspend signal", "resume signal"}
