@@ -9,7 +9,20 @@ on:
       - "**.css"
       - "**.ambr"
       - "**.lock"
+      - "pyproject.toml"
       - "Makefile"
+  push:
+    branches: [main, anytext]
+    paths:
+      - ".github/workflows/pythonpackage.yml"
+      - "**.py"
+      - "**.pyi"
+      - "**.css"
+      - "**.ambr"
+      - "**.lock"
+      - "pyproject.toml"
+      - "Makefile"
+  workflow_dispatch:
 
 env:
   PYTEST_ADDOPTS: "--color=yes"
