@@ -1172,7 +1172,7 @@ version = "2.0.3"
 description = "Links recognition library with FULL unicode support."
 optional = false
 python-versions = ">=3.7"
-groups = ["main"]
+groups = ["main", "dev"]
 files = [
     {file = "linkify-it-py-2.0.3.tar.gz", hash = "sha256:68cda27e162e9215c17d786649d1da0021a451bdc436ef9e0fa0ba5234b9b048"},
     {file = "linkify_it_py-2.0.3-py3-none-any.whl", hash = "sha256:6bcbc417b0ac14323382aef5c5192c0075bf8a9d6b41820a2b66371eac6b6d79"},
@@ -1337,7 +1337,7 @@ version = "0.4.2"
 description = "Collection of plugins for markdown-it-py"
 optional = false
 python-versions = ">=3.8"
-groups = ["main"]
+groups = ["main", "dev"]
 files = [
     {file = "mdit_py_plugins-0.4.2-py3-none-any.whl", hash = "sha256:0c673c3f889399a33b95e88d2f0d111b4447bdfea7f237dab2d488f459835636"},
     {file = "mdit_py_plugins-0.4.2.tar.gz", hash = "sha256:5f2cd1fdb606ddf152d37ec30e46101a60512bc0e5fa1a7002c36647b09e26b5"},
@@ -2536,6 +2536,29 @@ files = [
 pytest = ">=7.0.0,<9.0.0"
 
 [[package]]
+name = "textual"
+version = "8.2.8"
+description = "Modern Text User Interface framework"
+optional = false
+python-versions = "<4.0,>=3.9"
+groups = ["dev"]
+files = [
+    {file = "textual-8.2.8-py3-none-any.whl", hash = "sha256:267375fd402dc8d981457212efa71f0e3365fd17bba144ba9bb3ed7563cb374a"},
+    {file = "textual-8.2.8.tar.gz", hash = "sha256:3f106a9fbc73e39dd266c9712432087de78a6d644084c7c241d6a25c3169115b"},
+]
+
+[package.dependencies]
+markdown-it-py = {version = ">=2.1.0", extras = ["linkify"]}
+mdit-py-plugins = "*"
+platformdirs = ">=3.6.0,<5"
+pygments = ">=2.19.2,<3.0.0"
+rich = ">=14.2.0"
+typing-extensions = ">=4.4.0,<5.0.0"
+
+[package.extras]
+syntax = ["tree-sitter (>=0.25.0) ; python_version >= \"3.10\"", "tree-sitter-bash (>=0.23.0) ; python_version >= \"3.10\"", "tree-sitter-css (>=0.23.0) ; python_version >= \"3.10\"", "tree-sitter-go (>=0.23.0) ; python_version >= \"3.10\"", "tree-sitter-html (>=0.23.0) ; python_version >= \"3.10\"", "tree-sitter-java (>=0.23.0) ; python_version >= \"3.10\"", "tree-sitter-javascript (>=0.23.0) ; python_version >= \"3.10\"", "tree-sitter-json (>=0.24.0) ; python_version >= \"3.10\"", "tree-sitter-markdown (>=0.3.0) ; python_version >= \"3.10\"", "tree-sitter-python (>=0.23.0) ; python_version >= \"3.10\"", "tree-sitter-regex (>=0.24.0) ; python_version >= \"3.10\"", "tree-sitter-rust (>=0.23.0) ; python_version >= \"3.10\"", "tree-sitter-sql (>=0.3.11) ; python_version >= \"3.10\"", "tree-sitter-toml (>=0.6.0) ; python_version >= \"3.10\"", "tree-sitter-xml (>=0.7.0) ; python_version >= \"3.10\"", "tree-sitter-yaml (>=0.6.0) ; python_version >= \"3.10\""]
+
+[[package]]
 name = "textual-dev"
 version = "1.8.0"
 description = "Development tools for working with Textual"
@@ -3080,7 +3103,7 @@ version = "1.0.3"
 description = "Micro subset of unicode data files for linkify-it-py projects."
 optional = false
 python-versions = ">=3.7"
-groups = ["main"]
+groups = ["main", "dev"]
 files = [
     {file = "uc-micro-py-1.0.3.tar.gz", hash = "sha256:d321b92cff673ec58027c04015fcaa8bb1e005478643ff4a500882eaab88c48a"},
     {file = "uc_micro_py-1.0.3-py3-none-any.whl", hash = "sha256:db1dffff340817673d7b466ec86114a9dc0e9d4d9b5ba229d9d60e5c12600cd5"},

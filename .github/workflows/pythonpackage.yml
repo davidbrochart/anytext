@@ -31,6 +31,7 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
@@ -40,7 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.1
       - name: Install Poetry
-        run: pipx install poetry==1.7.1
+        run: pipx install poetry==2.5.1
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
@@ -64,6 +65,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: snapshot_report_anytext
+          name: snapshot_report_${{ matrix.os }}_py${{ matrix.python-version }}
           path: snapshot_report.html
           overwrite: true
