@@ -1,12 +1,12 @@
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.widgets import Footer
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.widgets import Footer
 
 
 class KeyDisplayApp(App):
     """Tests how keys are displayed in the Footer, and ensures
     that overriding the key_displays works as expected.
-    Exercises both the built-in Textual key display replacements,
+    Exercises both the built-in Anytext key display replacements,
     and user supplied replacements.
     Will break when we update the Footer - but we should add a similar
     test (or updated snapshot) for the updated Footer."""

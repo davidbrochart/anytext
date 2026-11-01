@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.containers import HorizontalScroll
-from textual.reactive import reactive
-from textual.widgets import Footer, Placeholder
+from anytext.app import App, ComposeResult
+from anytext.containers import HorizontalScroll
+from anytext.reactive import reactive
+from anytext.widgets import Footer, Placeholder
 
 PAGES_COUNT = 5
 

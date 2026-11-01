@@ -3,11 +3,11 @@ from __future__ import annotations
 from functools import partial
 from typing import Any
 
-from textual._on import on
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.containers import Container, Grid, Horizontal, VerticalScroll
-from textual.widgets import (
+from anytext._on import on
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.containers import Container, Grid, Horizontal, VerticalScroll
+from anytext.widgets import (
     Button,
     Collapsible,
     DataTable,
@@ -29,10 +29,10 @@ from textual.widgets import (
     TextArea,
     Tree,
 )
-from textual.widgets._masked_input import MaskedInput
-from textual.widgets._toggle_button import ToggleButton
-from textual.widgets.option_list import Option
-from textual.widgets.text_area import Selection
+from anytext.widgets._masked_input import MaskedInput
+from anytext.widgets._toggle_button import ToggleButton
+from anytext.widgets.option_list import Option
+from anytext.widgets.text_area import Selection
 
 HEADERS = ("lane", "swimmer", "country", "time")
 ROWS = [
@@ -54,7 +54,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Sed eui
 EXAMPLE_MARKDOWN = """\
 # Markdown Viewer
 
-This is an example of Textual's `MarkdownViewer` widget.
+This is an example of Anytext's `MarkdownViewer` widget.
 
 
 ## Features
@@ -285,7 +285,7 @@ class ChangingThemeApp(App[None]):
     ]
 
     def action_toggle_dark(self) -> None:
-        self.theme = "textual-light" if self.theme == "textual-dark" else "textual-dark"
+        self.theme = "anytext-light" if self.theme == "anytext-dark" else "anytext-dark"
 
     def action_toggle_panel(self) -> None:
         self.query_one("#widget-list").toggle_class("panel")
@@ -480,13 +480,13 @@ class ChangingThemeApp(App[None]):
         yield Footer()
 
     def on_mount(self) -> None:
-        self.theme = "textual-light"
+        self.theme = "anytext-light"
         text_area = self.query_one(TextArea)
         text_area.selection = Selection((0, 0), (1, 10))
 
     @on(ThemeList.OptionHighlighted, selector="#theme-list")
     def _change_theme(self, event: ThemeList.OptionHighlighted) -> None:
-        self.app.theme = event.option.id or "textual-dark"
+        self.app.theme = event.option.id or "anytext-dark"
 
 
 app = ChangingThemeApp()

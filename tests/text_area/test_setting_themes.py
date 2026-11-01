@@ -1,9 +1,9 @@
 import pytest
 
-from textual._text_area_theme import TextAreaTheme
-from textual.app import App, ComposeResult
-from textual.widgets import TextArea
-from textual.widgets._text_area import ThemeDoesNotExist
+from anytext._text_area_theme import TextAreaTheme
+from anytext.app import App, ComposeResult
+from anytext.widgets import TextArea
+from anytext.widgets._text_area import ThemeDoesNotExist
 
 
 class TextAreaApp(App[None]):

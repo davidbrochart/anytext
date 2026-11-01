@@ -1,5 +1,5 @@
-from textual.app import App
-from textual import events
+from anytext.app import App
+from anytext import events
 
 
 class ActionsApp(App):

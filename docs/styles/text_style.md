@@ -18,7 +18,7 @@ Each of the three text panels has a different text style, respectively `bold`, `
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/text_style.py" lines=14}
+    ```{.anytext path="docs/examples/styles/text_style.py" lines=14}
     ```
 
 === "text_style.py"
@@ -39,7 +39,7 @@ The next example shows all different text styles on their own, as well as some c
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/text_style_all.py"}
+    ```{.anytext path="docs/examples/styles/text_style_all.py"}
     ```
 
 === "text_style_all.py"

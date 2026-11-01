@@ -1,8 +1,8 @@
-from textual.app import App, ComposeResult
-from textual.containers import Container, ScrollableContainer, Vertical
-from textual.widget import Widget
-from textual.widgets import Button, Label
-from textual.widgets._placeholder import Placeholder
+from anytext.app import App, ComposeResult
+from anytext.containers import Container, ScrollableContainer, Vertical
+from anytext.widget import Widget
+from anytext.widgets import Button, Label
+from anytext.widgets._placeholder import Placeholder
 
 
 class Focusable(Widget, can_focus=True):
@@ -206,8 +206,8 @@ async def test_focus_next_and_previous_with_type_selector_without_self():
     async with app.run_test():
         screen = app.screen
 
-        from textual.containers import Horizontal, VerticalScroll
-        from textual.widgets import Button, Input, Switch
+        from anytext.containers import Horizontal, VerticalScroll
+        from anytext.widgets import Button, Input, Switch
 
         screen._add_children(
             VerticalScroll(

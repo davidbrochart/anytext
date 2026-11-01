@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Checkbox, Footer
+from anytext.app import App, ComposeResult
+from anytext.widgets import Checkbox, Footer
 
 
 class ScrollOffByOne(App):

@@ -1,8 +1,8 @@
 ---
-title: "textual.map_geometry"
+title: "anytext.map_geometry"
 ---
 
 
-A data structure returned by [screen.find_widget][textual.screen.Screen.find_widget].
+A data structure returned by [screen.find_widget][anytext.screen.Screen.find_widget].
 
-::: textual.map_geometry
+::: anytext.map_geometry

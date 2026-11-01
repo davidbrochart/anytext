@@ -1,6 +1,6 @@
 import inspect
 
-from textual.widgets import TextArea
+from anytext.widgets import TextArea
 
 
 def test_code_editor_parameters_kept_up_to_date():

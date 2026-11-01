@@ -15,7 +15,7 @@ Clicking the link open's a web-browser&mdash;as you might expect!
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/link.py"}
+    ```{.anytext path="docs/examples/widgets/link.py"}
     ```
 
 === "link.py"
@@ -41,7 +41,7 @@ This widget sends no messages.
 
 The Link widget defines the following bindings:
 
-::: textual.widgets.Link.BINDINGS
+::: anytext.widgets.Link.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -56,6 +56,6 @@ This widget contains no component classes.
 ---
 
 
-::: textual.widgets.Link
+::: anytext.widgets.Link
     options:
       heading_level: 2

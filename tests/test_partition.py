@@ -1,4 +1,4 @@
-from textual._partition import partition
+from anytext._partition import partition
 
 
 def test_partition():

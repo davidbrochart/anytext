@@ -1,6 +1,6 @@
 ---
-title: "textual.screen"
+title: "anytext.screen"
 ---
 
 
-::: textual.screen
+::: anytext.screen

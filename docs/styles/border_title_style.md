@@ -1,6 +1,6 @@
 # Border-title-style
 
-The `border-title-style` style sets the text style of the [border_title][textual.widget.Widget.border_title].
+The `border-title-style` style sets the text style of the [border_title][anytext.widget.Widget.border_title].
 
 
 ## Syntax

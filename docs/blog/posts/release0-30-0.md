@@ -3,19 +3,19 @@ draft: false
 date: 2023-07-17
 categories:
   - Release
-title: "Textual 0.30.0 adds desktop-style notifications"
+title: "Anytext 0.30.0 adds desktop-style notifications"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.30.0 adds desktop-style notifications
+# Anytext 0.30.0 adds desktop-style notifications
 
-We have a new release of Textual to talk about, but before that I'd like to cover a little Textual news.
+We have a new release of Anytext to talk about, but before that I'd like to cover a little Anytext news.
 
 <!-- more -->
 
 By sheer coincidence we reached [20,000 stars on GitHub](https://github.com/Textualize/textual) today.
-Now stars don't mean all that much (at least until we can spend them on coffee), but its nice to know that twenty thousand developers thought Textual was interesting enough to hit the ★ button.
+Now stars don't mean all that much (at least until we can spend them on coffee), but its nice to know that twenty thousand developers thought Anytext was interesting enough to hit the ★ button.
 Thank you!
 
 In other news: we moved office.
@@ -51,13 +51,13 @@ To display a notification, call `notify()` with a message and an optional title.
 
 ```python
 def on_mount(self) -> None:
-    self.notify("Hello, from Textual!", title="Welcome")
+    self.notify("Hello, from Anytext!", title="Welcome")
 ```
 
 ## Textualize Video Channel
 
 In case you missed it; Textualize now has a [YouTube](https://www.youtube.com/channel/UCo4nHAZv_cIlAiCSP2IyiOA) channel.
-Our very own [Rodrigo](https://twitter.com/mathsppblog) has recorded a video tutorial series on how to build Textual apps.
+Our very own [Rodrigo](https://twitter.com/mathsppblog) has recorded a video tutorial series on how to build Anytext apps.
 Check it out!
 
 <div class="video-wrapper">
@@ -74,7 +74,7 @@ Check it out!
 We will be adding more videos in the near future, covering anything from beginner to advanced topics.
 
 Don't worry if you prefer reading to watching videos.
-We will be adding plenty more content to the [Textual docs](https://textual.textualize.io/) in the near future.
+We will be adding plenty more content to the [Anytext docs](https://textual.textualize.io/) in the near future.
 Watch this space.
 
-As always, if you want to discuss anything with the Textual developers, join us on the [Discord server](https://discord.gg/Enf6Z3qhVr).
+As always, if you want to discuss anything with the Anytext developers, join us on the [Discord server](https://discord.gg/Enf6Z3qhVr).

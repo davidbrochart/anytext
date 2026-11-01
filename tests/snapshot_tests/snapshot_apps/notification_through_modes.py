@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.widgets import Label
 
 class Mode(Screen):
 

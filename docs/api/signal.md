@@ -1,5 +1,5 @@
 ---
-title: "textual.signal"
+title: "anytext.signal"
 ---
 
-::: textual.signal
+::: anytext.signal

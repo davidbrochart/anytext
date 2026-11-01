@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Button, Header, Label
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button, Header, Label
 
 
 class MyApp(App[str]):
@@ -9,7 +9,7 @@ class MyApp(App[str]):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Label("Do you love Textual?", id="question")
+        yield Label("Do you love Anytext?", id="question")
         yield Button("Yes", id="yes", variant="primary")
         yield Button("No", id="no", variant="error")
 

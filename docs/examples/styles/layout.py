@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import Container
-from textual.widgets import Label
+from anytext.app import App
+from anytext.containers import Container
+from anytext.widgets import Label
 
 
 class LayoutApp(App):

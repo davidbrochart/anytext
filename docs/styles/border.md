@@ -26,10 +26,10 @@ In Python, the border is set with a tuple of [border style](./border.md) and a c
 
 ## Border command
 
-The `textual` CLI has a subcommand which will let you explore the various border types interactively:
+The `anytext` CLI has a subcommand which will let you explore the various border types interactively:
 
 ```
-textual borders
+anytext borders
 ```
 
 Alternatively, you can see the examples below.
@@ -42,7 +42,7 @@ This examples shows three widgets with different border styles.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/border.py"}
+    ```{.anytext path="docs/examples/styles/border.py"}
     ```
 
 === "border.py"
@@ -63,7 +63,7 @@ The next example shows a grid with all the available border types.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/border_all.py"}
+    ```{.anytext path="docs/examples/styles/border_all.py"}
     ```
 
 === "border_all.py"

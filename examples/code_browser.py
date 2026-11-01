@@ -13,15 +13,15 @@ from pathlib import Path
 
 from rich.traceback import Traceback
 
-from textual.app import App, ComposeResult
-from textual.containers import Container, VerticalScroll
-from textual.highlight import highlight
-from textual.reactive import reactive, var
-from textual.widgets import DirectoryTree, Footer, Header, Static
+from anytext.app import App, ComposeResult
+from anytext.containers import Container, VerticalScroll
+from anytext.highlight import highlight
+from anytext.reactive import reactive, var
+from anytext.widgets import DirectoryTree, Footer, Header, Static
 
 
 class CodeBrowser(App):
-    """Textual code browser app."""
+    """Anytext code browser app."""
 
     CSS_PATH = "code_browser.tcss"
     BINDINGS = [

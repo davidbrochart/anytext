@@ -1,8 +1,8 @@
 from os import system
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Button
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button
 
 
 class SuspendingApp(App[None]):

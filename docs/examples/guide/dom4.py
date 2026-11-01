@@ -1,8 +1,8 @@
-from textual.app import App, ComposeResult
-from textual.containers import Container, Horizontal
-from textual.widgets import Button, Footer, Header, Static
+from anytext.app import App, ComposeResult
+from anytext.containers import Container, Horizontal
+from anytext.widgets import Button, Footer, Header, Static
 
-QUESTION = "Do you want to learn about Textual CSS?"
+QUESTION = "Do you want to learn about Anytext CSS?"
 
 
 class ExampleApp(App):

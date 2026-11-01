@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Pretty
+from anytext.app import App, ComposeResult
+from anytext.widgets import Pretty
 
 DATA = {
     "title": "Back to the Future",

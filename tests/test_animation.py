@@ -1,8 +1,8 @@
 from time import perf_counter
 
-from textual.app import App, ComposeResult
-from textual.reactive import var
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.reactive import var
+from anytext.widgets import Static
 
 
 class AnimApp(App):

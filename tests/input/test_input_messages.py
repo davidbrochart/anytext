@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.events import Paste
-from textual.widgets import Input
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.events import Paste
+from anytext.widgets import Input
 
 
 class InputApp(App[None]):

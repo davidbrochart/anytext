@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.binding import Binding
-from textual.widgets import Label, TabbedContent, TabPane
+from anytext.app import App
+from anytext.binding import Binding
+from anytext.widgets import Label, TabbedContent, TabPane
 
 
 class ReproApp(App[None]):

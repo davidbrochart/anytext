@@ -1,4 +1,4 @@
-from textual.case import camel_to_snake
+from anytext.case import camel_to_snake
 
 
 def test_camel_to_snake():

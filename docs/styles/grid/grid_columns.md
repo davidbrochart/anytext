@@ -31,7 +31,7 @@ Because there are more rows than scalars in the style definition, the scalars wi
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/grid_columns.py"}
+    ```{.anytext path="docs/examples/styles/grid_columns.py"}
     ```
 
 === "grid_columns.py"

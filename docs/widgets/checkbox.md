@@ -13,7 +13,7 @@ The example below shows check boxes in various states.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/checkbox.py"}
+    ```{.anytext path="docs/examples/widgets/checkbox.py"}
     ```
 
 === "checkbox.py"
@@ -36,13 +36,13 @@ The example below shows check boxes in various states.
 
 ## Messages
 
-- [Checkbox.Changed][textual.widgets.Checkbox.Changed]
+- [Checkbox.Changed][anytext.widgets.Checkbox.Changed]
 
 ## Bindings
 
 The checkbox widget defines the following bindings:
 
-::: textual.widgets._toggle_button.ToggleButton.BINDINGS
+::: anytext.widgets._toggle_button.ToggleButton.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -51,7 +51,7 @@ The checkbox widget defines the following bindings:
 
 The checkbox widget inherits the following component classes:
 
-::: textual.widgets._toggle_button.ToggleButton.COMPONENT_CLASSES
+::: anytext.widgets._toggle_button.ToggleButton.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -60,6 +60,6 @@ The checkbox widget inherits the following component classes:
 ---
 
 
-::: textual.widgets.Checkbox
+::: anytext.widgets.Checkbox
     options:
       heading_level: 2

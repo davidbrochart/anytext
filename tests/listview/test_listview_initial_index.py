@@ -1,7 +1,7 @@
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import Label, ListItem, ListView
+from anytext.app import App, ComposeResult
+from anytext.widgets import Label, ListItem, ListView
 
 
 @pytest.mark.parametrize(

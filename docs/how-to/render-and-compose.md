@@ -1,6 +1,6 @@
 # Render and compose
 
-A common question that comes up on the [Textual Discord server](https://discord.gg/Enf6Z3qhVr) is what is the difference between [`render`][textual.widget.Widget.render] and [`compose`][textual.widget.Widget.compose] methods on a widget?
+A common question that comes up on the [Anytext Discord server](https://discord.gg/Enf6Z3qhVr) is what is the difference between [`render`][anytext.widget.Widget.render] and [`compose`][anytext.widget.Widget.compose] methods on a widget?
 In this article we will clarify the differences, and use both these methods to build something fun.
 
 <div class="video-wrapper">
@@ -24,7 +24,7 @@ If you implement both, the `render` method will set the custom widget's *backgro
 ## Combining render and compose
 
 Let's look at an example that combines both these methods.
-We will create a custom widget with a [linear gradient][textual.renderables.gradient.LinearGradient] as a background.
+We will create a custom widget with a [linear gradient][anytext.renderables.gradient.LinearGradient] as a background.
 The background will be animated (I did promise *fun*)!
 
 === "render_compose.py"
@@ -39,7 +39,7 @@ The background will be animated (I did promise *fun*)!
 
 === "Output"
 
-    ```{.textual path="docs/examples/how-to/render_compose.py" columns="100" lines="40"}
+    ```{.anytext path="docs/examples/how-to/render_compose.py" columns="100" lines="40"}
     ```
 
 The `Splash` custom widget has a `compose` method which adds a simple `Static` widget to display a message.

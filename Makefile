@@ -14,7 +14,7 @@ test-snapshot-update:
 
 .PHONY: test-coverage
 test-coverage:
-	$(run) pytest tests/ --cov-report term-missing --cov=textual -n 16 --dist=loadgroup $(ARGS)
+	$(run) pytest tests/ --cov-report term-missing --cov=anytext -n 16 --dist=loadgroup $(ARGS)
 
 .PHONY: coverage
 coverage:
@@ -22,7 +22,7 @@ coverage:
 
 .PHONY: typecheck
 typecheck:
-	$(run) mypy src/textual
+	$(run) mypy src/anytext
 
 .PHONY: format
 format:
@@ -52,7 +52,7 @@ docs-online-nav:
 
 .PHONY: docs-serve
 docs-serve: clean-screenshot-cache docs-online-nav
-	TEXTUAL_THEME=dracula $(run) mkdocs serve --config-file mkdocs-nav-online.yml
+	ANYTEXT_THEME=dracula $(run) mkdocs serve --config-file mkdocs-nav-online.yml
 	rm -f mkdocs-nav-online.yml
 
 .PHONY: docs-serve-offline
@@ -76,7 +76,7 @@ clean-offline-docs:
 
 .PHONY: docs-deploy
 docs-deploy: clean-screenshot-cache docs-online-nav
-	TEXTUAL_THEME=dracula $(run) mkdocs gh-deploy --config-file mkdocs-nav-online.yml
+	ANYTEXT_THEME=dracula $(run) mkdocs gh-deploy --config-file mkdocs-nav-online.yml
 	rm -f mkdocs-nav-online.yml
 
 .PHONY: build
@@ -101,7 +101,7 @@ install-pre-commit:
 
 .PHONY: demo
 demo:
-	$(run) python -m textual
+	$(run) python -m anytext
 
 .PHONY: repl
 repl:

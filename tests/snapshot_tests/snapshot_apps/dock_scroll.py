@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.widgets import Header, Label, Footer
+from anytext.app import App
+from anytext.widgets import Header, Label, Footer
 
 
 class TestApp(App):

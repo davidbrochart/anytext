@@ -14,7 +14,7 @@ The example below creates a simple tree.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/tree.py"}
+    ```{.anytext path="docs/examples/widgets/tree.py"}
     ```
 
 === "tree.py"
@@ -23,7 +23,7 @@ The example below creates a simple tree.
     --8<-- "docs/examples/widgets/tree.py"
     ```
 
-Tree widgets have a "root" attribute which is an instance of a [TreeNode][textual.widgets.tree.TreeNode]. Call [add()][textual.widgets.tree.TreeNode.add] or [add_leaf()][textual.widgets.tree.TreeNode.add_leaf] to add new nodes underneath the root. Both these methods return a TreeNode for the child which you can use to add additional levels.
+Tree widgets have a "root" attribute which is an instance of a [TreeNode][anytext.widgets.tree.TreeNode]. Call [add()][anytext.widgets.tree.TreeNode.add] or [add_leaf()][anytext.widgets.tree.TreeNode.add_leaf] to add new nodes underneath the root. Both these methods return a TreeNode for the child which you can use to add additional levels.
 
 
 ## Reactive Attributes
@@ -36,16 +36,16 @@ Tree widgets have a "root" attribute which is an instance of a [TreeNode][textua
 
 ## Messages
 
-- [Tree.NodeCollapsed][textual.widgets.Tree.NodeCollapsed]
-- [Tree.NodeExpanded][textual.widgets.Tree.NodeExpanded]
-- [Tree.NodeHighlighted][textual.widgets.Tree.NodeHighlighted]
-- [Tree.NodeSelected][textual.widgets.Tree.NodeSelected]
+- [Tree.NodeCollapsed][anytext.widgets.Tree.NodeCollapsed]
+- [Tree.NodeExpanded][anytext.widgets.Tree.NodeExpanded]
+- [Tree.NodeHighlighted][anytext.widgets.Tree.NodeHighlighted]
+- [Tree.NodeSelected][anytext.widgets.Tree.NodeSelected]
 
 ## Bindings
 
 The tree widget defines the following bindings:
 
-::: textual.widgets.Tree.BINDINGS
+::: anytext.widgets.Tree.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -54,7 +54,7 @@ The tree widget defines the following bindings:
 
 The tree widget provides the following component classes:
 
-::: textual.widgets.Tree.COMPONENT_CLASSES
+::: anytext.widgets.Tree.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -63,12 +63,12 @@ The tree widget provides the following component classes:
 ---
 
 
-::: textual.widgets.Tree
+::: anytext.widgets.Tree
     options:
       heading_level: 2
 
 ---
 
-::: textual.widgets.tree
+::: anytext.widgets.tree
     options:
       heading_level: 2

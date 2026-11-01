@@ -1,8 +1,8 @@
 import pytest
 
-from textual.document._document import Document
-from textual.document._wrapped_document import WrappedDocument
-from textual.geometry import Offset
+from anytext.document._document import Document
+from anytext.document._wrapped_document import WrappedDocument
+from anytext.geometry import Offset
 
 SIMPLE_TEXT = "123 4567\n12345\n123456789\n"
 

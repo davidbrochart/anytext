@@ -8,21 +8,21 @@ authors:
 ---
 # A year of building for the terminal
 
-I joined Textualize back in January 2022, and since then have been hard at work with the team on both [Rich](https://github.com/Textualize/rich) and [Textual](https://github.com/Textualize/textual).
+I joined Textualize back in January 2022, and since then have been hard at work with the team on both [Rich](https://github.com/Textualize/rich) and [Anytext](https://github.com/Textualize/textual).
 Over the course of the year, I’ve been able to work on a lot of really cool things.
 In this post, I’ll review a subset of the more interesting and visual stuff I’ve built. If you’re into terminals and command line tooling, you’ll hopefully see at least one thing of interest!
 
 <!-- more -->
 
-## A file manager powered by Textual
+## A file manager powered by Anytext
 
-I’ve been slowly developing a file manager as a “dogfooding” project for Textual. It takes inspiration from tools such as Ranger and Midnight Commander.
+I’ve been slowly developing a file manager as a “dogfooding” project for Anytext. It takes inspiration from tools such as Ranger and Midnight Commander.
 
 ![Untitled](../images/darren-year-in-review/Untitled.png)
 
 As of December 2022, it lets you browse your file system, filtering, multi-selection, creating and deleting files/directories, opening files in your `$EDITOR` and more.
 
-I’m happy with how far this project has come — I think it’s a good example of the type of powerful application that can be built with Textual with relatively little code. I’ve been able to focus on *features*, instead of worrying about terminal emulator implementation details.
+I’m happy with how far this project has come — I think it’s a good example of the type of powerful application that can be built with Anytext with relatively little code. I’ve been able to focus on *features*, instead of worrying about terminal emulator implementation details.
 
 ![filemanager-trimmed.gif](../images/darren-year-in-review/filemanager-trimmed.gif)
 
@@ -43,15 +43,15 @@ For many diffs, the difference between running `git diff` and `git diff | dunk |
 ![Untitled](../images/darren-year-in-review/Untitled%202.png)
 
 It’d be interesting to revisit this at some point.
-It has its issues, but I’d love to see how it can be used alongside Textual to build a terminal-based diff/merge tool. Perhaps it could be combined with…
+It has its issues, but I’d love to see how it can be used alongside Anytext to build a terminal-based diff/merge tool. Perhaps it could be combined with…
 
 ## Code editor floating gutter
 
-This is a common feature in text editors and IDEs: when you scroll to the right, you should still be able to see what line you’re on. Out of interest, I tried to recreate the effect in the terminal using Textual.
+This is a common feature in text editors and IDEs: when you scroll to the right, you should still be able to see what line you’re on. Out of interest, I tried to recreate the effect in the terminal using Anytext.
 
 ![floating-gutter.gif](../images/darren-year-in-review/floating-gutter.gif)
 
-Textual CSS offers a `dock` property which allows you to attach a widget to an edge of its parent.
+Anytext CSS offers a `dock` property which allows you to attach a widget to an edge of its parent.
 By creating a widget that contains a vertical list of numbers and setting the `dock` property to `left`, we can create a floating gutter effect.
 Then, we just need to keep the `scroll_y` in sync between the gutter and the content to ensure the line numbers stay aligned.
 
@@ -61,7 +61,7 @@ While working on [Shira](https://github.com/darrenburns/shira) (a proof-of-conce
 
 ![shira-demo.gif](../images/darren-year-in-review/shira-demo.gif)
 
-Textual forgoes the z-index concept from browser CSS and instead uses a “named layer” system. Using the `layers` property you can defined an ordered list of named layers, and using the `layer` property, you can assign a descendant widget to one of those layers.
+Anytext forgoes the z-index concept from browser CSS and instead uses a “named layer” system. Using the `layers` property you can defined an ordered list of named layers, and using the `layer` property, you can assign a descendant widget to one of those layers.
 
 By creating a new layer above all others and assigning a widget to that layer, we can ensure that widget is painted above everything else.
 
@@ -69,13 +69,13 @@ In order to determine where to place the dropdown, we can track the current valu
 
 ![Untitled](../images/darren-year-in-review/Untitled%203.png)
 
-I’ve now extracted this into a separate library called [textual-autocomplete](https://github.com/darrenburns/textual-autocomplete).
+I’ve now extracted this into a separate library called [anytext-autocomplete](https://github.com/darrenburns/textual-autocomplete).
 
 ## Tabs with animated underline
 
 The aim here was to create a tab widget with underlines that animates smoothly as another tab is selected.
 
-<video style="position: relative; width: 100%;" controls autoplay loop><source src="../../../../images/darren-year-in-review/tabs-textual-video-demo.mp4" type="video/mp4"></video>
+<video style="position: relative; width: 100%;" controls autoplay loop><source src="../../../../images/darren-year-in-review/tabs-anytext-video-demo.mp4" type="video/mp4"></video>
 
 The difficulty with implementing something like this is that we don’t have pixel-perfect resolution when animating - a terminal window is just a big grid of fixed-width character cells.
 
@@ -86,14 +86,14 @@ The exact characters that form the bar are "╺", "━" and "╸". When the bar 
 
 ## Snapshot testing for terminal apps
 
-One of the great features we added to Rich this year was the ability to export console contents to an SVG. This feature was later exposed to Textual, allowing users to capture screenshots of their running Textual apps.
-Ultimately, I ended up creating a tool for snapshot testing in the Textual codebase.
+One of the great features we added to Rich this year was the ability to export console contents to an SVG. This feature was later exposed to Anytext, allowing users to capture screenshots of their running Anytext apps.
+Ultimately, I ended up creating a tool for snapshot testing in the Anytext codebase.
 
-Snapshot testing is used to ensure that Textual output doesn’t unexpectedly change. On disk, we store what we expect the output to look like. Then, when we run our unit tests, we get immediately alerted if the output has changed.
+Snapshot testing is used to ensure that Anytext output doesn’t unexpectedly change. On disk, we store what we expect the output to look like. Then, when we run our unit tests, we get immediately alerted if the output has changed.
 
 This essentially automates the process of manually spinning up several apps and inspecting them for unexpected visual changes. It’s great for catching subtle regressions!
 
-In Textual, each CSS property has its own canonical example and an associated snapshot test.
+In Anytext, each CSS property has its own canonical example and an associated snapshot test.
 If we accidentally break a property in a way that affects the visual output, the chances of it sneaking into a release are greatly reduced, because the corresponding snapshot test will fail.
 
 As part of this work, I built a web interface for comparing snapshots with test output.
@@ -108,35 +108,35 @@ The snapshot testing functionality itself is implemented as a pytest plugin, and
 
 ![Screenshot 2022-09-16 at 15.52.03.png](..%2Fimages%2Fdarren-year-in-review%2FScreenshot%202022-09-16%20at%2015.52.03.png)
 
-It's quite likely that this will eventually be exposed to end-users of Textual.
+It's quite likely that this will eventually be exposed to end-users of Anytext.
 
 ## Demonstrating animation
 
-I built an example app to demonstrate how to animate in Textual and the available easing functions.
+I built an example app to demonstrate how to animate in Anytext and the available easing functions.
 
 <video style="position: relative; width: 100%;" controls loop><source src="../../../../images/darren-year-in-review/animation-easing-example.mov" type="video/mp4"></video>
 
 The smoothness here is achieved using tricks similar to those used in the tabs I discussed earlier.
-In fact, the bar that animates in the video above is the same Rich renderable that is used by Textual's scrollbars.
+In fact, the bar that animates in the video above is the same Rich renderable that is used by Anytext's scrollbars.
 
-You can play with this app by running `textual easing`. Please use animation sparingly.
+You can play with this app by running `anytext easing`. Please use animation sparingly.
 
 ## Developer console
 
 When developing terminal based applications, performing simple debugging using `print` can be difficult, since the terminal is in application mode.
 
-A project I worked on earlier in the year to improve the situation was the Textual developer console, which you can launch with `textual console`.
+A project I worked on earlier in the year to improve the situation was the Anytext developer console, which you can launch with `textual console`.
 
 <div>
 <figure markdown>
     <img src="../../../../images/darren-year-in-review/devtools.png">
-    <figcaption>On the right, <a href="https://twitter.com/davepdotorg">Dave's</a> 5x5 Textual app. On the left, the Textual console.</figcaption>
+    <figcaption>On the right, <a href="https://twitter.com/davepdotorg">Dave's</a> 5x5 Anytext app. On the left, the Anytext console.</figcaption>
 </figure>
 </div>
 
-Then, by running a Textual application with the `--dev` flag, all standard output will be redirected to it.
+Then, by running a Anytext application with the `--dev` flag, all standard output will be redirected to it.
 This means you can use the builtin `print` function and still immediately see the output.
-Textual itself also writes information to this console, giving insight into the messages that are flowing through an application.
+Anytext itself also writes information to this console, giving insight into the messages that are flowing through an application.
 
 ## Pixel art
 
@@ -151,7 +151,7 @@ It’s particularly good for displaying simple pixel art images. The SVG image b
 --8<-- "docs/blog/images/darren-year-in-review/bulbasaur.svg"
 </div>
 
-Since the library generates an object which is renderable using Rich, these can easily be embedded inside Textual applications.
+Since the library generates an object which is renderable using Rich, these can easily be embedded inside Anytext applications.
 
 Here's an example of that in a scrapped "Pokédex" app I threw together:
 

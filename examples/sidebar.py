@@ -5,11 +5,11 @@ See comments for details.
 
 """
 
-from textual.app import App, ComposeResult
-from textual.containers import Vertical
-from textual.reactive import reactive
-from textual.widget import Widget
-from textual.widgets import Footer, Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Vertical
+from anytext.reactive import reactive
+from anytext.widget import Widget
+from anytext.widgets import Footer, Label
 
 TEXT = """I must not fear.
 Fear is the mind-killer.

@@ -1,10 +1,10 @@
 import pytest
 
-from textual import containers, getters
-from textual.app import App, ComposeResult
-from textual.css.query import NoMatches, WrongType
-from textual.widget import Widget
-from textual.widgets import Input, Label
+from anytext import containers, getters
+from anytext.app import App, ComposeResult
+from anytext.css.query import NoMatches, WrongType
+from anytext.widget import Widget
+from anytext.widgets import Input, Label
 
 
 async def test_getters() -> None:

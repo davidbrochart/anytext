@@ -1,6 +1,6 @@
 # Text-wrap
 
-The `text-wrap` style set how Textual should wrap text.
+The `text-wrap` style set how Anytext should wrap text.
 The default value is "wrap" which will word-wrap text.
 You can also set this style to "nowrap" which will disable wrapping entirely.
 
@@ -20,7 +20,7 @@ The second has `text-wrap` set to "nowrap" which disables text wrapping and resu
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/text_wrap.py"}
+    ```{.anytext path="docs/examples/styles/text_wrap.py"}
     ```
 
 === "text_wrap.py"

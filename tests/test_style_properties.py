@@ -1,9 +1,9 @@
 import pytest
 from rich.style import Style
 
-from textual.color import Color
-from textual.css.errors import StyleValueError
-from textual.css.styles import Styles
+from anytext.color import Color
+from anytext.css.errors import StyleValueError
+from anytext.css.styles import Styles
 
 
 def test_box_normalization():
@@ -15,7 +15,7 @@ def test_box_normalization():
 
 @pytest.mark.parametrize("style_attr", ["text_style", "link_style"])
 def test_text_style_none_with_others(style_attr):
-    """Style "none" mixed with others should give custom Textual exception."""
+    """Style "none" mixed with others should give custom Anytext exception."""
     styles = Styles()
 
     with pytest.raises(StyleValueError):

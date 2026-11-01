@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from textual.app import App
+from anytext.app import App
 
 APP_DIR = Path(__file__).parent
 

@@ -1,3 +1,3 @@
-::: textual.events.Resize
+::: anytext.events.Resize
     options:
       heading_level: 1

@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Added support for Kitty key protocol "Report all keys as escape codes" which enabled alt+backspace on Warp https://github.com/Textualize/textual/pull/6544
 - Added support for detecting separate modifier keys for terminals that support the Kitty key protocol https://github.com/Textualize/textual/pull/6544
-- Added `TEXTUAL_DISABLE_KITTY_KEY` env var to disable Kitty key protocol support (debug aid). https://github.com/Textualize/textual/pull/6544
+- Added `ANYTEXT_DISABLE_KITTY_KEY` env var to disable Kitty key protocol support (debug aid). https://github.com/Textualize/textual/pull/6544
 
 ### Changed
 
@@ -301,7 +301,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Added `grid_size` property to `GridLayout` https://github.com/Textualize/textual/pull/6210
-- Exposed `NoSelection` and `BLANK` via `textual.widgets.select` https://github.com/Textualize/textual/pull/6214
+- Exposed `NoSelection` and `BLANK` via `anytext.widgets.select` https://github.com/Textualize/textual/pull/6214
 - Added `Widget.FOCUS_ON_CLICK` classvar amd `Widget.focus_on_click` method https://github.com/Textualize/textual/pull/6216
 - Added support for the kitty keyboard protocol on Windows https://github.com/Textualize/textual/pull/6207
 - Added `Widget.mount_compose` https://github.com/Textualize/textual/pull/6216
@@ -414,7 +414,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `TextArea.hide_suggestion_on_blur` boolean https://github.com/Textualize/textual/pull/6070
 - Added `OptionList.highlighted_option` property https://github.com/Textualize/textual/pull/6090
 - Added `TextArea.update_suggestion` method https://github.com/Textualize/textual/pull/6090
-- Added `textual.getters.app` https://github.com/Textualize/textual/pull/6089
+- Added `anytext.getters.app` https://github.com/Textualize/textual/pull/6089
 
 ### Changed
 
@@ -428,7 +428,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Added `Content.simplify` https://github.com/Textualize/textual/pull/6023
-- Added `textual.reactive.Initialize` https://github.com/Textualize/textual/pull/6023
+- Added `anytext.reactive.Initialize` https://github.com/Textualize/textual/pull/6023
 
 ### Fixed
 
@@ -457,7 +457,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - `last-child`, `last-of-type`, `first-child`, and `first-of-type` apply to displayed children only https://github.com/Textualize/textual/pull/5999
-- `textual.compose` is now public https://github.com/Textualize/textual/pull/5999
+- `anytext.compose` is now public https://github.com/Textualize/textual/pull/5999
 
 ## [5.0.1] - 2025-07-25
 
@@ -473,7 +473,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added get_minimal_width to Visual protocol https://github.com/Textualize/textual/pull/5962
 - Added `expand` and `shrink` attributes to GridLayout https://github.com/Textualize/textual/pull/5962
 - Added `Markdown.get_stream` https://github.com/Textualize/textual/pull/5966
-- Added `textual.highlight` module for syntax highlighting https://github.com/Textualize/textual/pull/5966
+- Added `anytext.highlight` module for syntax highlighting https://github.com/Textualize/textual/pull/5966
 - Added `MessagePump.wait_for_refresh` method https://github.com/Textualize/textual/pull/5966
 - Added `Widget.container_scroll_offset` https://github.com/Textualize/textual/commit/e84600cfb31630f8b5493bf1043a4a1e7c212f7c
 - Added `Markdown.source` attribute to MarkdownBlocks https://github.com/Textualize/textual/commit/e84600cfb31630f8b5493bf1043a4a1e7c212f7c
@@ -494,7 +494,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Content markup can now accept component classes when preceded by a dot, e.g. "Hello [.my_custo_style]World[/]!" https://github.com/Textualize/textual/pull/5981
 - Breaking change: `Visual.render_strips` has a new signature. If you aren't explicitly building Visuals then this won't effect you. https://github.com/Textualize/textual/pull/5981
 - Breaking change: The component classes on Markdown have been moved to MarkdownBlock. This won't affect you unless you have customize the Markdown CSS https://github.com/Textualize/textual/pull/5981
-- The textual-speedups library will now be imported automatically if it is installed. Set `TEXTUAL_SPEEDUPS=0` to disable.
+- The textual-speedups library will now be imported automatically if it is installed. Set `ANYTEXT_SPEEDUPS=0` to disable.
 - Breaking change: Updated tree-sitter dependency for `syntax` extras now requires Python 3.10+ https://github.com/Textualize/textual/pull/5977
 - Some `TextArea` syntax highlighting changes due to tree-sitter updates https://github.com/Textualize/textual/pull/5977
 
@@ -531,7 +531,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Added textual.getters https://github.com/Textualize/textual/pull/5930
+- Added anytext.getters https://github.com/Textualize/textual/pull/5930
 - Added a `show_cursor` boolean to TextArea https://github.com/Textualize/textual/pull/5934
 
 ### Changed
@@ -608,14 +608,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Added a few features to `python -m textual.markup` playground https://github.com/Textualize/textual/pull/5823
+- Added a few features to `python -m anytext.markup` playground https://github.com/Textualize/textual/pull/5823
 
 ## [3.2.0] - 2025-05-02
 
 ### Fixed
 
 - Fixed `OptionList` causing excessive redrawing https://github.com/Textualize/textual/pull/5766
-- Log messages could be written to stdout when there was no app, which could happen when using run_async or threads. Now they will be suppressed, unless the env var `TEXTUAL_DEBUG` is set https://github.com/Textualize/textual/pull/5782
+- Log messages could be written to stdout when there was no app, which could happen when using run_async or threads. Now they will be suppressed, unless the env var `ANYTEXT_DEBUG` is set https://github.com/Textualize/textual/pull/5782
 
 ### Added
 
@@ -653,12 +653,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Collapsible title now accepts str, Text, or Content https://github.com/Textualize/textual/pull/5697
 - Rich Text objects will be converted to Content in OptionList and other widgets https://github.com/Textualize/textual/pull/5712
-- Textual will always convert dim attributes to RGB by default https://github.com/Textualize/textual/pull/5715
+- Anytext will always convert dim attributes to RGB by default https://github.com/Textualize/textual/pull/5715
 - Notifications will now use content markup (previously they used Console markup) https://github.com/Textualize/textual/pull/5719
 
 ### Added
 
-- Added `TEXTUAL_DIM_FACTOR` env var to set the opacity of the 'dim' ANSI attribute https://github.com/Textualize/textual/pull/5715
+- Added `ANYTEXT_DIM_FACTOR` env var to set the opacity of the 'dim' ANSI attribute https://github.com/Textualize/textual/pull/5715
 - `notify()` now accepts a `markup` parameter to disable rendering the message as markup https://github.com/Textualize/textual/pull/5719
 - Added `Screen.text_selection_started_signal` https://github.com/Textualize/textual/pull/5739
 - Added `App.clear_selection()` helper method to clear arbitrary text selection of active screen https://github.com/Textualize/textual/pull/5739
@@ -675,9 +675,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Breaking change: `App.query` and friends will now always query the default (first) screen, not necessarily the active screen.
 - Content now has a default argument of an empty string, so `Content()` is equivalent to `Content("")`
-- Assigned names to Textual-specific threads: `textual-input`, `textual-output`. These should become visible in monitoring tools (ps, top, htop) as of Python 3.14. https://github.com/Textualize/textual/pull/5654
-- Tabs now accept Content or Textual markup https://github.com/Textualize/textual/pull/5657
-- Buttons will now use Textual markup rather than console markup
+- Assigned names to Anytext-specific threads: `anytext-input`, `anytext-output`. These should become visible in monitoring tools (ps, top, htop) as of Python 3.14. https://github.com/Textualize/textual/pull/5654
+- Tabs now accept Content or Anytext markup https://github.com/Textualize/textual/pull/5657
+- Buttons will now use Anytext markup rather than console markup
 - tree-sitter languages are now loaded lazily, improving cold-start time https://github.com/Textualize/textual/pull/563
 
 ### Fixed
@@ -763,7 +763,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fixed escape tags in Textual markup https://github.com/Textualize/textual/pull/5536
+- Fixed escape tags in Anytext markup https://github.com/Textualize/textual/pull/5536
 
 ## [2.0.0] - 2025-02-16
 
@@ -785,7 +785,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `DOMNode.query_ancestor` https://github.com/Textualize/textual/pull/5409
 - Added selection to Log widget https://github.com/Textualize/textual/pull/5467
 - Added `text-wrap` and `text-overflow` CSS values https://github.com/Textualize/textual/pull/5485
-- Added Textual markup to replace Rich markup https://github.com/Textualize/textual/pull/5485
+- Added Anytext markup to replace Rich markup https://github.com/Textualize/textual/pull/5485
 - Added `Content.from_markup` https://github.com/Textualize/textual/pull/5485
 
 ### Fixed
@@ -805,7 +805,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Breaking change: OptionList no longer supports `Separator`, a separator may be specified with `None`
-- Implemented smooth (pixel perfect) scrolling on supported terminals. Set `TEXTUAL_SMOOTH_SCROLL=0` to disable.
+- Implemented smooth (pixel perfect) scrolling on supported terminals. Set `ANYTEXT_SMOOTH_SCROLL=0` to disable.
 
 ### Removed
 
@@ -965,10 +965,10 @@ the selection if there is one, otherwise it will cut the current line https://gi
 - Added `App.get_theme_variable_defaults` which returns a mapping of theme variables to their default values https://github.com/Textualize/textual/pull/5087
 - Added `App.search` which allows bringing up a fuzzy search list of commands on-demand https://github.com/Textualize/textual/pull/5087
 - Added `App.search_themes` which allows bringing up a fuzzy search list of themes on-demand https://github.com/Textualize/textual/pull/5087
-- Added `textual.theme.ThemeProvider`, a command palette provider which returns all registered themes https://github.com/Textualize/textual/pull/5087
+- Added `anytext.theme.ThemeProvider`, a command palette provider which returns all registered themes https://github.com/Textualize/textual/pull/5087
 - Added several new built-in CSS variables https://github.com/Textualize/textual/pull/5087
 - Added support for in-band terminal resize protocol https://github.com/Textualize/textual/pull/5217
-- Added TEXTUAL_THEME environment var, which should be a comma separated list of desired themes https://github.com/Textualize/textual/pull/5238
+- Added ANYTEXT_THEME environment var, which should be a comma separated list of desired themes https://github.com/Textualize/textual/pull/5238
 - Added `Widget.is_scrolling` https://github.com/Textualize/textual/pull/5238
 - Added `Tree.add_json` https://github.com/Textualize/textual/pull/5238
 
@@ -977,11 +977,11 @@ the selection if there is one, otherwise it will cut the current line https://gi
 - `Driver.process_event` is now `Driver.process_message` https://github.com/Textualize/textual/pull/5217
 - `Driver.send_event` is now `Driver.send_message` https://github.com/Textualize/textual/pull/5217
 - Added `can_focus` and `can_focus_children` parameters to scrollable container types. https://github.com/Textualize/textual/pull/5226
-- Added `textual.lazy.Reveal` https://github.com/Textualize/textual/pull/5226
+- Added `anytext.lazy.Reveal` https://github.com/Textualize/textual/pull/5226
 - Added `Screen.action_blur` https://github.com/Textualize/textual/pull/5226
 - `Click` events can now be used with the on decorator to match the originally clicked widget https://github.com/Textualize/textual/pull/5238
 - Breaking change: Removed `App.dark` reactive attribute https://github.com/Textualize/textual/pull/5087
-- Breaking change: To improve consistency, several changes have been made to default widget CSS and the CSS variables which ship with Textual. On upgrading, your app will likely look different. All of these changes can be overidden with your own CSS. https://github.com/Textualize/textual/pull/5087
+- Breaking change: To improve consistency, several changes have been made to default widget CSS and the CSS variables which ship with Anytext. On upgrading, your app will likely look different. All of these changes can be overidden with your own CSS. https://github.com/Textualize/textual/pull/5087
 
 ### Removed
 
@@ -1003,7 +1003,7 @@ the selection if there is one, otherwise it will cut the current line https://gi
 
 - Grid will now size children to the maximum height of a row https://github.com/Textualize/textual/pull/5113
 - Markdown links will be opened with `App.open_url` automatically https://github.com/Textualize/textual/pull/5113
-- The universal selector (`*`) will now not match widgets with the class `-textual-system` (scrollbars, notifications etc) https://github.com/Textualize/textual/pull/5113
+- The universal selector (`*`) will now not match widgets with the class `-anytext-system` (scrollbars, notifications etc) https://github.com/Textualize/textual/pull/5113
 - Renamed `Screen.can_view` and `Widget.can_view` to `Screen.can_view_entire` and `Widget.can_view_entire` https://github.com/Textualize/textual/pull/5174
 
 ### Added
@@ -1015,9 +1015,9 @@ the selection if there is one, otherwise it will cut the current line https://gi
 - Added `$`, `£`, `€`, `(`, `)` symbols to Digits https://github.com/Textualize/textual/pull/5113
 - Added `Button.action` parameter to invoke action when clicked https://github.com/Textualize/textual/pull/5113
 - Added `immediate` parameter to scroll methods https://github.com/Textualize/textual/pull/5164
-- Added `textual._loop.loop_from_index` https://github.com/Textualize/textual/pull/5164
+- Added `anytext._loop.loop_from_index` https://github.com/Textualize/textual/pull/5164
 - Added `min_color` and `max_color` to Sparklines constructor, which take precedence over CSS https://github.com/Textualize/textual/pull/5174
-- Added new demo `python -m textual`, not *quite* finished but better than the old one https://github.com/Textualize/textual/pull/5174
+- Added new demo `python -m anytext`, not *quite* finished but better than the old one https://github.com/Textualize/textual/pull/5174
 - Added `Screen.can_view_partial` and `Widget.can_view_partial` https://github.com/Textualize/textual/pull/5174
 - Added `App.is_web` property to indicate if the app is running via a web browser https://github.com/Textualize/textual/pull/5128
 - `Enter` and `Leave` events can now be used with the `on` decorator https://github.com/Textualize/textual/pull/5159
@@ -1048,7 +1048,7 @@ the selection if there is one, otherwise it will cut the current line https://gi
 ### Changed
 
 - `Screen.ALLOW_IN_MAXIMIZED_VIEW` will now default to `App.ALLOW_IN_MAXIMIZED_VIEW` https://github.com/Textualize/textual/pull/5088
-- Widgets matching `.-textual-system` will now be included in the maximize view by default https://github.com/Textualize/textual/pull/5088
+- Widgets matching `.-anytext-system` will now be included in the maximize view by default https://github.com/Textualize/textual/pull/5088
 - Digits are now thin by default, style with text-style: bold to get bold digits https://github.com/Textualize/textual/pull/5094
 - Made `Widget.absolute_offset` public https://github.com/Textualize/textual/pull/5097
 - Tooltips are now displayed directly below the mouse cursor https://github.com/Textualize/textual/pull/5097
@@ -1195,7 +1195,7 @@ the selection if there is one, otherwise it will cut the current line https://gi
 - Removed `ctrl_to_caret` and `upper_case_keys` from Footer. These can be implemented in `App.get_key_display`.
 - Renamed `SystemCommands` to `SystemCommandsProvider` https://github.com/Textualize/textual/pull/4920
 - Breaking change: Removed `ClassicFooter` widget (please use new `Footer` widget) https://github.com/Textualize/textual/pull/4921
-- Breaking change: `App.get_key_display` now requires `textual.binding.Binding` instead of `str`.
+- Breaking change: `App.get_key_display` now requires `anytext.binding.Binding` instead of `str`.
 - Disallowed `Screen` instances in `App.SCREENS` and `App.MODES`
 
 ### Fixed
@@ -1222,7 +1222,7 @@ the selection if there is one, otherwise it will cut the current line https://gi
 
 ### Added
 
-- Textual will use the `ESCDELAY` env var when detecting escape keys https://github.com/Textualize/textual/pull/4848
+- Anytext will use the `ESCDELAY` env var when detecting escape keys https://github.com/Textualize/textual/pull/4848
 
 ## [0.75.1] - 2024-08-02
 
@@ -1268,8 +1268,8 @@ the selection if there is one, otherwise it will cut the current line https://gi
 - Added `TextArea.line_number_start` reactive attribute https://github.com/Textualize/textual/pull/4471
 - Added `TextArea.matching_bracket_location` property https://github.com/Textualize/textual/pull/4764
 - Added `DOMNode.mutate_reactive` https://github.com/Textualize/textual/pull/4731
-- Added "quality" parameter to `textual.color.Gradient` https://github.com/Textualize/textual/pull/4739
-- Added `textual.color.Gradient.get_rich_color` https://github.com/Textualize/textual/pull/4739
+- Added "quality" parameter to `anytext.color.Gradient` https://github.com/Textualize/textual/pull/4739
+- Added `anytext.color.Gradient.get_rich_color` https://github.com/Textualize/textual/pull/4739
 - `Widget.remove_children` now accepts an iterable if widgets in addition to a selector https://github.com/Textualize/textual/issues/4735
 - Raise `ValueError` with improved error message when number of cells inserted using `DataTable.add_row` doesn't match the number of columns in the table https://github.com/Textualize/textual/pull/4742
 - Add `Tree.move_cursor` to programmatically move the cursor without selecting the node https://github.com/Textualize/textual/pull/4753
@@ -1409,7 +1409,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Added
 
-- Added textual.rlock.RLock https://github.com/Textualize/textual/pull/4615
+- Added anytext.rlock.RLock https://github.com/Textualize/textual/pull/4615
 
 ## [0.65.1] - 2024-06-05
 
@@ -1760,15 +1760,15 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Changed
 
-- Textual now writes to stderr rather than stdout https://github.com/Textualize/textual/pull/4177
+- Anytext now writes to stderr rather than stdout https://github.com/Textualize/textual/pull/4177
 
 ### Added
 
 - Added an `asyncio` lock attribute `Widget.lock` to be used to synchronize widget state https://github.com/Textualize/textual/issues/4134
-- Added support for environment variable `TEXTUAL_ANIMATIONS` to control what animations Textual displays https://github.com/Textualize/textual/pull/4062
+- Added support for environment variable `ANYTEXT_ANIMATIONS` to control what animations Anytext displays https://github.com/Textualize/textual/pull/4062
 - Add attribute `App.animation_level` to control whether animations on that app run or not https://github.com/Textualize/textual/pull/4062
-- Added support for a `TEXTUAL_SCREENSHOT_LOCATION` environment variable to specify the location of an automated screenshot https://github.com/Textualize/textual/pull/4181/
-- Added support for a `TEXTUAL_SCREENSHOT_FILENAME` environment variable to specify the filename of an automated screenshot https://github.com/Textualize/textual/pull/4181/
+- Added support for a `ANYTEXT_SCREENSHOT_LOCATION` environment variable to specify the location of an automated screenshot https://github.com/Textualize/textual/pull/4181/
+- Added support for a `ANYTEXT_SCREENSHOT_FILENAME` environment variable to specify the filename of an automated screenshot https://github.com/Textualize/textual/pull/4181/
 - Added an `asyncio` lock attribute `Widget.lock` to be used to synchronize widget state https://github.com/Textualize/textual/issues/4134
 - `Widget.remove_children` now accepts a CSS selector to specify which children to remove https://github.com/Textualize/textual/pull/4183
 - `Widget.batch` combines widget locking and app update batching https://github.com/Textualize/textual/pull/4183
@@ -1868,7 +1868,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
   - `tab_behaviour="focus"` - pressing the tab key now switches focus instead of indenting by default.
 - Breaking change: `TextArea` default theme changed to CSS, and default styling changed https://github.com/Textualize/textual/pull/4074
 - Breaking change: `DOMNode.has_pseudo_class` now accepts a single name only https://github.com/Textualize/textual/pull/3970
-- Made `textual.cache` (formerly `textual._cache`) public https://github.com/Textualize/textual/pull/3976
+- Made `anytext.cache` (formerly `anytext._cache`) public https://github.com/Textualize/textual/pull/3976
 - `Tab.label` can now be used to change the label of a tab https://github.com/Textualize/textual/pull/3979
 - Changed the default notification timeout from 3 to 5 seconds https://github.com/Textualize/textual/pull/4059
 - Prior scroll animations are now cancelled on new scrolls https://github.com/Textualize/textual/pull/4081
@@ -1929,7 +1929,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Added
 
-- Added textual.lazy https://github.com/Textualize/textual/pull/3936
+- Added anytext.lazy https://github.com/Textualize/textual/pull/3936
 - Added App.push_screen_wait https://github.com/Textualize/textual/pull/3955
 - Added nesting of CSS https://github.com/Textualize/textual/pull/3946
 
@@ -2037,13 +2037,13 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 - Added the ability to set the `label` property of a `Checkbox` https://github.com/Textualize/textual/pull/3765
 - Added the ability to set the `label` property of a `RadioButton` https://github.com/Textualize/textual/pull/3765
 - Added support for various modified edit and navigation keys in urxvt https://github.com/Textualize/textual/pull/3739
-- Added app focus/blur for textual-web https://github.com/Textualize/textual/pull/3767
+- Added app focus/blur for anytext-web https://github.com/Textualize/textual/pull/3767
 
 ### Changed
 
 - Method `MarkdownTableOfContents.set_table_of_contents` renamed to `MarkdownTableOfContents.rebuild_table_of_contents` https://github.com/Textualize/textual/pull/3730
-- Exception `Tree.UnknownNodeID` moved out of `Tree`, import from `textual.widgets.tree` https://github.com/Textualize/textual/pull/3730
-- Exception `TreeNode.RemoveRootError` moved out of `TreeNode`, import from `textual.widgets.tree` https://github.com/Textualize/textual/pull/3730
+- Exception `Tree.UnknownNodeID` moved out of `Tree`, import from `anytext.widgets.tree` https://github.com/Textualize/textual/pull/3730
+- Exception `TreeNode.RemoveRootError` moved out of `TreeNode`, import from `anytext.widgets.tree` https://github.com/Textualize/textual/pull/3730
 - Optimized startup time https://github.com/Textualize/textual/pull/3753
 - App.COMMANDS or Screen.COMMANDS can now accept a callable which returns a command palette provider https://github.com/Textualize/textual/pull/3756
 
@@ -2066,7 +2066,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Added
 
-- Exceptions to `textual.widgets.select` https://github.com/Textualize/textual/pull/3614
+- Exceptions to `anytext.widgets.select` https://github.com/Textualize/textual/pull/3614
   - `InvalidSelectValueError` for when setting a `Select` to an invalid value
   - `EmptySelectError` when creating/setting a `Select` to have no options when `allow_blank` is `False`
 - `Select` methods https://github.com/Textualize/textual/pull/3614
@@ -2263,14 +2263,14 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Fixed
 
-- Fixed flash of 80x24 interface in textual-web
+- Fixed flash of 80x24 interface in anytext-web
 
 ## [0.35.0]
 
 ### Added
 
 - Ability to enable/disable tabs via the reactive `disabled` in tab panes https://github.com/Textualize/textual/pull/3152
-- Textual-web driver support for Windows
+- Anytext-web driver support for Windows
 
 ### Fixed
 
@@ -2414,7 +2414,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 ### Added
 
 - Added a method of allowing third party code to handle unhandled tokens in `Markdown` https://github.com/Textualize/textual/pull/2803
-- Added `MarkdownBlock` as an exported symbol in `textual.widgets.markdown` https://github.com/Textualize/textual/pull/2803
+- Added `MarkdownBlock` as an exported symbol in `anytext.widgets.markdown` https://github.com/Textualize/textual/pull/2803
 
 ### Changed
 
@@ -2515,7 +2515,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Changed
 
-- Textual will now scroll focused widgets to center if not in view
+- Anytext will now scroll focused widgets to center if not in view
 
 ## [0.25.0] - 2023-05-17
 
@@ -2575,7 +2575,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 - Property `control` as alias for attribute `tabs` in `Tabs` messages https://github.com/Textualize/textual/pull/2483
 - Experimental: Added "overlay" rule https://github.com/Textualize/textual/pull/2501
 - Experimental: Added "constrain" rule https://github.com/Textualize/textual/pull/2501
-- Added textual.widgets.Select https://github.com/Textualize/textual/pull/2501
+- Added anytext.widgets.Select https://github.com/Textualize/textual/pull/2501
 - Added Region.translate_inside https://github.com/Textualize/textual/pull/2501
 - `TabbedContent` now takes kwargs `id`, `name`, `classes`, and `disabled`, upon initialization, like other widgets https://github.com/Textualize/textual/pull/2497
 - Method `DataTable.move_cursor` https://github.com/Textualize/textual/issues/2472
@@ -2635,7 +2635,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 - Added `DirectoryTree.path` reactive attribute https://github.com/Textualize/textual/issues/2448
 - Added `DirectoryTree.FileSelected.node` https://github.com/Textualize/textual/pull/2463
 - Added `DirectoryTree.reload` https://github.com/Textualize/textual/issues/2448
-- Added textual.on decorator https://github.com/Textualize/textual/issues/2398
+- Added anytext.on decorator https://github.com/Textualize/textual/issues/2398
 
 ## [0.22.3] - 2023-04-29
 
@@ -2674,7 +2674,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Changed
 
-- All `textual.containers` are now `1fr` in relevant dimensions by default https://github.com/Textualize/textual/pull/2386
+- All `anytext.containers` are now `1fr` in relevant dimensions by default https://github.com/Textualize/textual/pull/2386
 
 
 ## [0.21.0] - 2023-04-26
@@ -2682,7 +2682,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 ### Changed
 
 - `textual run` execs apps in a new context.
-- Textual console no longer parses console markup.
+- Anytext console no longer parses console markup.
 - Breaking change: `Container` no longer shows required scrollbars by default https://github.com/Textualize/textual/issues/2361
 - Breaking change: `VerticalScroll` no longer shows a required horizontal scrollbar by default
 - Breaking change: `HorizontalScroll` no longer shows a required vertical scrollbar by default
@@ -2693,7 +2693,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Added
 
-- Added `-c` switch to `textual run` which runs commands in a Textual dev environment.
+- Added `-c` switch to `textual run` which runs commands in a Anytext dev environment.
 - Breaking change: standard keyboard scrollable navigation bindings have been moved off `Widget` and onto a new base class for scrollable containers (see also below addition) https://github.com/Textualize/textual/issues/2332
 - `ScrollView` now inherits from `ScrollableContainer` rather than `Widget` https://github.com/Textualize/textual/issues/2332
 - Containers no longer inherit any bindings from `Widget` https://github.com/Textualize/textual/issues/2331
@@ -2720,7 +2720,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 - Breaking change: Timer.start is now private, and returns None. There was no reason to call this manually, so unlikely to affect anyone.
 - A clicked tab will now be scrolled to the center of its tab container https://github.com/Textualize/textual/pull/2276
 - Style updates are now done immediately rather than on_idle https://github.com/Textualize/textual/pull/2304
-- `ButtonVariant` is now exported from `textual.widgets.button` https://github.com/Textualize/textual/issues/2264
+- `ButtonVariant` is now exported from `anytext.widgets.button` https://github.com/Textualize/textual/issues/2264
 - `HorizontalScroll` and `VerticalScroll` are now focusable by default https://github.com/Textualize/textual/pull/2317
 
 ### Added
@@ -2822,7 +2822,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 ### Changed
 
 - DataTable now has height: auto by default. https://github.com/Textualize/textual/issues/2117
-- Textual will now render strings within renderables (such as tables) as Console Markup by default. You can wrap your text with rich.Text() if you want the original behavior. https://github.com/Textualize/textual/issues/2120
+- Anytext will now render strings within renderables (such as tables) as Console Markup by default. You can wrap your text with rich.Text() if you want the original behavior. https://github.com/Textualize/textual/issues/2120
 - Some widget methods now return `self` instead of `None` https://github.com/Textualize/textual/pull/2102:
   - `Widget`: `refresh`, `focus`, `reset_focus`
   - `Button.press`
@@ -2844,8 +2844,8 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 - Added scroll_end switch to TextLog.write https://github.com/Textualize/textual/pull/2127
 - Added `Widget.get_pseudo_class_state` https://github.com/Textualize/textual/pull/2155
 - Added Screen.ModalScreen which prevents App from handling bindings. https://github.com/Textualize/textual/pull/2139
-- Added TEXTUAL_LOG env var which should be a path that Textual will write verbose logs to (textual devtools is generally preferred) https://github.com/Textualize/textual/pull/2148
-- Added textual.logging.TextualHandler logging handler
+- Added ANYTEXT_LOG env var which should be a path that Anytext will write verbose logs to (anytext devtools is generally preferred) https://github.com/Textualize/textual/pull/2148
+- Added anytext.logging.AnytextHandler logging handler
 - Added Query.set_classes, DOMNode.set_classes, and `classes` setter for Widget https://github.com/Textualize/textual/issues/1081
 - Added `OptionList` https://github.com/Textualize/textual/pull/2154
 
@@ -2862,7 +2862,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 - Added `TabbedContent` widget https://github.com/Textualize/textual/pull/2059
 - Added `get_child_by_type` method to widgets / app https://github.com/Textualize/textual/pull/2059
 - Added `Widget.render_str` method https://github.com/Textualize/textual/pull/2059
-- Added TEXTUAL_DRIVER environment variable
+- Added ANYTEXT_DRIVER environment variable
 
 ### Changed
 
@@ -2886,7 +2886,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 ### Fixed
 
 - Fixed how the namespace for messages is calculated to facilitate inheriting messages https://github.com/Textualize/textual/issues/1814
-- `Tab` is now correctly made available from `textual.widgets`. https://github.com/Textualize/textual/issues/2044
+- `Tab` is now correctly made available from `anytext.widgets`. https://github.com/Textualize/textual/issues/2044
 
 ## [0.15.0] - 2023-03-13
 
@@ -3053,7 +3053,7 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Changed
 
-- Breaking change: `TreeNode` can no longer be imported from `textual.widgets`; it is now available via `from textual.widgets.tree import TreeNode`. https://github.com/Textualize/textual/pull/1637
+- Breaking change: `TreeNode` can no longer be imported from `anytext.widgets`; it is now available via `from anytext.widgets.tree import TreeNode`. https://github.com/Textualize/textual/pull/1637
 - `Tree` now shows a (subdued) cursor for a highlighted node when focus has moved elsewhere https://github.com/Textualize/textual/issues/1471
 - `DataTable.add_row` now accepts `key` argument to uniquely identify the row https://github.com/Textualize/textual/pull/1638
 - `DataTable.add_column` now accepts `key` argument to uniquely identify the column https://github.com/Textualize/textual/pull/1638
@@ -3160,14 +3160,14 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Added
 
-- Added textual._win_sleep for Python on Windows < 3.11 https://github.com/Textualize/textual/pull/1457
+- Added anytext._win_sleep for Python on Windows < 3.11 https://github.com/Textualize/textual/pull/1457
 
 ## [0.9.0] - 2022-12-30
 
 ### Added
 
-- Added textual.strip.Strip primitive
-- Added textual._cache.FIFOCache
+- Added anytext.strip.Strip primitive
+- Added anytext._cache.FIFOCache
 - Added an option to clear columns in DataTable.clear() https://github.com/Textualize/textual/pull/1427
 
 ### Changed
@@ -3199,8 +3199,8 @@ when an expandable node is selected https://github.com/Textualize/textual/pull/4
 
 ### Added
 
-- Added `textual.actions.SkipAction` exception which can be raised from an action to allow parents to process bindings.
-- Added `textual keys` preview.
+- Added `anytext.actions.SkipAction` exception which can be raised from an action to allow parents to process bindings.
+- Added `anytext keys` preview.
 - Added ability to bind to a character in addition to key name. i.e. you can bind to "." or "full_stop".
 - Added TextLog.shrink attribute to allow renderable to reduce in size to fit width.
 
@@ -3270,7 +3270,7 @@ https://textual.textualize.io/blog/2022/12/11/version-060
   `DOMNode.ancestors`.
 - Improved the speed of `DOMQuery.remove`.
 - Added DataTable.clear
-- Added low-level `textual.walk` methods.
+- Added low-level `anytext.walk` methods.
 - It is now possible to `await` a `Widget.remove`.
   https://github.com/Textualize/textual/issues/1094
 - It is now possible to `await` a `DOMQuery.remove`. Note that this changes

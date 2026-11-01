@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Vertical
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Vertical
+from anytext.widgets import Label
 
 
 class Width100PCentApp(App[None]):

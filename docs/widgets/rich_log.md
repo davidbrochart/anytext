@@ -2,7 +2,7 @@
 
 A RichLog is a widget which displays scrollable content that may be appended to in realtime.
 
-Call [RichLog.write][textual.widgets.RichLog.write] with a string or [Rich Renderable](https://rich.readthedocs.io/en/latest/protocol.html) to write content to the end of the RichLog. Call [RichLog.clear][textual.widgets.RichLog.clear] to clear the content.
+Call [RichLog.write][anytext.widgets.RichLog.write] with a string or [Rich Renderable](https://rich.readthedocs.io/en/latest/protocol.html) to write content to the end of the RichLog. Call [RichLog.clear][anytext.widgets.RichLog.clear] to clear the content.
 
 !!! tip
 
@@ -17,7 +17,7 @@ The example below shows an application showing a `RichLog` with different kinds 
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/rich_log.py" press="H,i"}
+    ```{.anytext path="docs/examples/widgets/rich_log.py" press="H,i"}
     ```
 
 === "rich_log.py"
@@ -54,6 +54,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.RichLog
+::: anytext.widgets.RichLog
     options:
       heading_level: 2

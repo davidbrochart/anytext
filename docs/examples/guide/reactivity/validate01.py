@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal
-from textual.reactive import reactive
-from textual.widgets import Button, RichLog
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal
+from anytext.reactive import reactive
+from anytext.widgets import Button, RichLog
 
 
 class ValidateApp(App):

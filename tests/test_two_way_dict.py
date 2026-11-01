@@ -1,6 +1,6 @@
 import pytest
 
-from textual._two_way_dict import TwoWayDict
+from anytext._two_way_dict import TwoWayDict
 
 
 @pytest.fixture

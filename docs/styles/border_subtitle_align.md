@@ -24,7 +24,7 @@ This example shows three labels, each with a different border subtitle alignment
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/border_subtitle_align.py"}
+    ```{.anytext path="docs/examples/styles/border_subtitle_align.py"}
     ```
 
 === "border_subtitle_align.py"

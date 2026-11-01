@@ -1,5 +1,5 @@
 ---
-title: "textual.command"
+title: "anytext.command"
 ---
 
-::: textual.command
+::: anytext.command

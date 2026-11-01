@@ -5,9 +5,9 @@ from rich.segment import Segments
 from rich.terminal_theme import DIMMED_MONOKAI
 from rich.text import Text
 
-from textual._ansi_theme import DEFAULT_TERMINAL_THEME
-from textual.color import Color
-from textual.renderables.tint import Tint
+from anytext._ansi_theme import DEFAULT_TERMINAL_THEME
+from anytext.color import Color
+from anytext.renderables.tint import Tint
 
 
 def test_tint():

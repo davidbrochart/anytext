@@ -1,15 +1,15 @@
-from textual.app import App, ComposeResult
-from textual.color import Color
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.color import Color
+from anytext.widgets import Static
 
 
 class ColorApp(App):
     def compose(self) -> ComposeResult:
-        self.widget1 = Static("Textual One")
+        self.widget1 = Static("Anytext One")
         yield self.widget1
-        self.widget2 = Static("Textual Two")
+        self.widget2 = Static("Anytext Two")
         yield self.widget2
-        self.widget3 = Static("Textual Three")
+        self.widget3 = Static("Anytext Three")
         yield self.widget3
 
     def on_mount(self) -> None:

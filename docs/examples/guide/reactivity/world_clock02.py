@@ -2,10 +2,10 @@ from datetime import datetime
 
 from pytz import timezone
 
-from textual.app import App, ComposeResult
-from textual.reactive import reactive
-from textual.widget import Widget
-from textual.widgets import Digits, Label
+from anytext.app import App, ComposeResult
+from anytext.reactive import reactive
+from anytext.widget import Widget
+from anytext.widgets import Digits, Label
 
 
 class WorldClock(Widget):

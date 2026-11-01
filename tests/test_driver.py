@@ -1,7 +1,7 @@
-from textual import on
-from textual.app import App
-from textual.events import Click, MouseDown, MouseUp
-from textual.widgets import Button
+from anytext import on
+from anytext.app import App
+from anytext.events import Click, MouseDown, MouseUp
+from anytext.widgets import Button
 
 
 async def test_driver_mouse_down_up_click():

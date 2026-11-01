@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.geometry import Offset
-from textual.widgets import Input
+from anytext.app import App, ComposeResult
+from anytext.geometry import Offset
+from anytext.widgets import Input
 
 # A string containing only single-width characters
 TEXT_SINGLE = "That gum you like is going to come back in style"

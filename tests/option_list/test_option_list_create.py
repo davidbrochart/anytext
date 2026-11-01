@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import OptionList
-from textual.widgets.option_list import DuplicateID, Option, OptionDoesNotExist
+from anytext.app import App, ComposeResult
+from anytext.widgets import OptionList
+from anytext.widgets.option_list import DuplicateID, Option, OptionDoesNotExist
 
 
 class OptionListApp(App[None]):

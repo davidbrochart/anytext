@@ -15,7 +15,7 @@ The example below shows radio buttons, used within a [`RadioSet`](./radioset.md)
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/radio_button.py"}
+    ```{.anytext path="docs/examples/widgets/radio_button.py"}
     ```
 
 === "radio_button.py"
@@ -38,13 +38,13 @@ The example below shows radio buttons, used within a [`RadioSet`](./radioset.md)
 
 ## Messages
 
-- [RadioButton.Changed][textual.widgets.RadioButton.Changed]
+- [RadioButton.Changed][anytext.widgets.RadioButton.Changed]
 
 ## Bindings
 
 The radio button widget defines the following bindings:
 
-::: textual.widgets._toggle_button.ToggleButton.BINDINGS
+::: anytext.widgets._toggle_button.ToggleButton.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -53,7 +53,7 @@ The radio button widget defines the following bindings:
 
 The checkbox widget inherits the following component classes:
 
-::: textual.widgets._toggle_button.ToggleButton.COMPONENT_CLASSES
+::: anytext.widgets._toggle_button.ToggleButton.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -65,6 +65,6 @@ The checkbox widget inherits the following component classes:
 ---
 
 
-::: textual.widgets.RadioButton
+::: anytext.widgets.RadioButton
     options:
       heading_level: 2

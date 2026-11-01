@@ -1,9 +1,9 @@
 import pytest
 
-from textual.app import App
-from textual.css.query import TooManyMatches
-from textual.widget import MountError, Widget, WidgetError
-from textual.widgets import Static
+from anytext.app import App
+from anytext.css.query import TooManyMatches
+from anytext.widget import MountError, Widget, WidgetError
+from anytext.widgets import Static
 
 
 class SelfOwn(Widget):

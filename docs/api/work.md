@@ -1,6 +1,6 @@
 ---
-title: "textual.work"
+title: "anytext.work"
 ---
 
 
-::: textual.work
+::: anytext.work

@@ -21,7 +21,7 @@ In this example, we have 3 widgets with differing offsets.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/offset.py"}
+    ```{.anytext path="docs/examples/styles/offset.py"}
     ```
 
 === "offset.py"

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from rich.table import Table
 
-from textual.app import App, ComposeResult
-from textual.widgets import Footer, Header, OptionList
+from anytext.app import App, ComposeResult
+from anytext.widgets import Footer, Header, OptionList
 
 COLONIES: tuple[tuple[str, str, str, str], ...] = (
     ("Aerilon", "Demeter", "1.2 Billion", "Gaoth"),

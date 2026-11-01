@@ -1,4 +1,4 @@
-::: textual.events.Unmount
+::: anytext.events.Unmount
     options:
       heading_level: 1
 

@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.command import DiscoveryHit, Hit, Hits, Provider
+from anytext.app import App
+from anytext.command import DiscoveryHit, Hit, Hits, Provider
 
 
 class TestSource(Provider):

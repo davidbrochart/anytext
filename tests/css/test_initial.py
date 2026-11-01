@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.color import Color
-from textual.widget import Widget
+from anytext.app import App, ComposeResult
+from anytext.color import Color
+from anytext.widget import Widget
 
 
 class Base(Widget):

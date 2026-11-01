@@ -1,5 +1,5 @@
 ---
-title: "textual.style"
+title: "anytext.style"
 ---
 
-::: textual.style
+::: anytext.style

@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from textual.app import App, ComposeResult
-from textual.widgets import Markdown
+from anytext.app import App, ComposeResult
+from anytext.widgets import Markdown
 
 CSS_PATH = (Path(__file__) / "../markdown_component_classes_reloading.tcss").resolve()
 

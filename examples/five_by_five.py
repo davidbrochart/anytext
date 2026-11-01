@@ -1,18 +1,18 @@
-"""Simple version of 5x5, developed for/with Textual."""
+"""Simple version of 5x5, developed for/with Anytext."""
 
 from __future__ import annotations
 
 from pathlib import Path
 from typing import TYPE_CHECKING, cast
 
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.containers import Horizontal
-from textual.css.query import DOMQuery
-from textual.reactive import reactive
-from textual.screen import Screen
-from textual.widget import Widget
-from textual.widgets import Button, Footer, Label, Markdown
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.containers import Horizontal
+from anytext.css.query import DOMQuery
+from anytext.reactive import reactive
+from anytext.screen import Screen
+from anytext.widget import Widget
+from anytext.widgets import Button, Footer, Label, Markdown
 
 if TYPE_CHECKING:
     from typing_extensions import Final

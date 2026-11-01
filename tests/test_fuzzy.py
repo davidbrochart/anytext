@@ -1,6 +1,6 @@
-from textual.content import Span
-from textual.fuzzy import Matcher
-from textual.style import Style
+from anytext.content import Span
+from anytext.fuzzy import Matcher
+from anytext.style import Style
 
 
 def test_no_match():

@@ -9,10 +9,10 @@ A Select widget is a compact control to allow the user to select between a numbe
 - [ ] Container
 
 
-The options in a select control may be passed into the constructor or set later with [set_options][textual.widgets.Select.set_options].
+The options in a select control may be passed into the constructor or set later with [set_options][anytext.widgets.Select.set_options].
 Options should be given as a sequence of tuples consisting of two values: the first is the string (or [Rich Renderable](https://rich.readthedocs.io/en/latest/protocol.html)) to display in the control and list of options, the second is the value of option.
 
-The value of the currently selected option is stored in the `value` attribute of the widget, and the `value` attribute of the [Changed][textual.widgets.Select.Changed] message.
+The value of the currently selected option is stored in the `value` attribute of the widget, and the `value` attribute of the [Changed][anytext.widgets.Select.Changed] message.
 
 
 ## Typing
@@ -39,12 +39,12 @@ The following example presents a `Select` with a number of options.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/select_widget.py"}
+    ```{.anytext path="docs/examples/widgets/select_widget.py"}
     ```
 
 === "Output (expanded)"
 
-    ```{.textual path="docs/examples/widgets/select_widget.py" press="tab,enter,down,down"}
+    ```{.anytext path="docs/examples/widgets/select_widget.py" press="tab,enter,down,down"}
     ```
 
 === "select_widget.py"
@@ -65,12 +65,12 @@ The following example presents a `Select` created using the `from_values` class 
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/select_from_values_widget.py"}
+    ```{.anytext path="docs/examples/widgets/select_from_values_widget.py"}
     ```
 
 === "Output (expanded)"
 
-    ```{.textual path="docs/examples/widgets/select_from_values_widget.py" press="tab,enter,down,down"}
+    ```{.anytext path="docs/examples/widgets/select_from_values_widget.py" press="tab,enter,down,down"}
     ```
 
 
@@ -89,8 +89,8 @@ The following example presents a `Select` created using the `from_values` class 
 ## Blank state
 
 The `Select` widget has an option `allow_blank` for its constructor.
-If set to `True`, the widget may be in a state where there is no selection, in which case its value will be the special constant [`Select.NULL`][textual.widgets.Select.NULL].
-The auxiliary methods [`Select.is_blank`][textual.widgets.Select.is_blank] and [`Select.clear`][textual.widgets.Select.clear] provide a convenient way to check if the widget is in this state and to set this state, respectively.
+If set to `True`, the widget may be in a state where there is no selection, in which case its value will be the special constant [`Select.NULL`][anytext.widgets.Select.NULL].
+The auxiliary methods [`Select.is_blank`][anytext.widgets.Select.is_blank] and [`Select.clear`][anytext.widgets.Select.clear] provide a convenient way to check if the widget is in this state and to set this state, respectively.
 
 ## Type to search
 
@@ -101,17 +101,17 @@ The `Select` widget has a `type_to_search` attribute which allows you to type to
 | Name       | Type                           | Default                                      | Description                         |
 | ---------- | ------------------------------ | -------------------------------------------- | ----------------------------------- |
 | `expanded` | `bool`                         | `False`                                      | True to expand the options overlay. |
-| `value`    | `SelectType` \| `_NoSelection` | [`Select.NULL`][textual.widgets.Select.NULL] | Current value of the Select.        |
+| `value`    | `SelectType` \| `_NoSelection` | [`Select.NULL`][anytext.widgets.Select.NULL] | Current value of the Select.        |
 
 ## Messages
 
--  [Select.Changed][textual.widgets.Select.Changed]
+-  [Select.Changed][anytext.widgets.Select.Changed]
 
 ## Bindings
 
 The Select widget defines the following bindings:
 
-::: textual.widgets.Select.BINDINGS
+::: anytext.widgets.Select.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -123,10 +123,10 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Select
+::: anytext.widgets.Select
     options:
       heading_level: 2
 
-::: textual.widgets.select
+::: anytext.widgets.select
     options:
       heading_level: 2

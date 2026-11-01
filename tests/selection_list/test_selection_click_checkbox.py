@@ -1,9 +1,9 @@
 """See https://github.com/Textualize/textual/pull/2930 for the introduction of these tests."""
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.geometry import Offset
-from textual.widgets import SelectionList
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.geometry import Offset
+from anytext.widgets import SelectionList
 
 class SelectionListApp(App[None]):
     """Test selection list application."""

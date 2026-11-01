@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.css.query import NoMatches
-from textual.widget import Widget
-from textual.widgets import ContentSwitcher
+from anytext.app import App, ComposeResult
+from anytext.css.query import NoMatches
+from anytext.widget import Widget
+from anytext.widgets import ContentSwitcher
 
 
 class SwitcherApp(App[None]):

@@ -5,7 +5,7 @@ alt_titles:
   - "Problem with threaded workers"
 ---
 
-Textual version 0.31.0 requires that you set `thread=True` on the `@work` decorator if you want to run a threaded worker.
+Anytext version 0.31.0 requires that you set `thread=True` on the `@work` decorator if you want to run a threaded worker.
 
 If you want a threaded worker, you would declare it in the following way:
 

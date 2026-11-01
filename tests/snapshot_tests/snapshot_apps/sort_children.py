@@ -1,8 +1,8 @@
 from operator import attrgetter
 
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal, Vertical
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal, Vertical
+from anytext.widgets import Label
 
 
 class Number(Label):

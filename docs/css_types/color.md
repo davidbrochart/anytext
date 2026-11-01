@@ -17,19 +17,19 @@ A bullet point summary of the formats available follows:
  - a color description in the RGB system, [with](#rgba-description) or [without](#rgb-description) opacity (e.g., `rgb(23, 78, 200)`);
  - a color description in the HSL system, [with](#hsla-description) or [without](#hsl-description) opacity (e.g., `hsl(290, 70%, 80%)`);
 
-[Textual's default themes](../guide/design.md) also provide many CSS variables with colors that can be used out of the box.
+[Anytext's default themes](../guide/design.md) also provide many CSS variables with colors that can be used out of the box.
 
 ### Named colors
 
-A named color is a [`<name>`](./name.md) that Textual recognises.
-Below, you can find a (collapsed) list of all of the named colors that Textual recognises, along with their hexadecimal values, their RGB values, and a visual sample.
+A named color is a [`<name>`](./name.md) that Anytext recognises.
+Below, you can find a (collapsed) list of all of the named colors that Anytext recognises, along with their hexadecimal values, their RGB values, and a visual sample.
 
 <details>
 <summary>All named colors available.</summary>
 
 ```{.rich columns="80" title="colors"}
-from textual._color_constants import COLOR_NAME_TO_RGB
-from textual.color import Color
+from anytext._color_constants import COLOR_NAME_TO_RGB
+from anytext.color import Color
 from rich.table import Table
 from rich.text import Text
 table = Table("Name", "hex", "RGB", "Color", expand=True, highlight=True)
@@ -112,7 +112,7 @@ Header {
 }
 
 .accent {
-    color: $accent;            /* Textual variable */
+    color: $accent;            /* Anytext variable */
 }
 
 #footer {
@@ -122,15 +122,15 @@ Header {
 
 ### Python
 
-In Python, rules that expect a `<color>` can also accept an instance of the type [`Color`][textual.color.Color].
+In Python, rules that expect a `<color>` can also accept an instance of the type [`Color`][anytext.color.Color].
 
 ```py
 # Mimicking the CSS syntax
 widget.styles.background = "red"           # Color name
-widget.styles.color = "$accent"            # Textual variable
+widget.styles.color = "$accent"            # Anytext variable
 widget.styles.tint = "hsl(300, 20%, 70%)"  # HSL description
 
-from textual.color import Color
+from anytext.color import Color
 # Using a Color object directly...
 color = Color(16, 200, 45)
 # ... which can also parse the CSS syntax

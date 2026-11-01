@@ -2,8 +2,8 @@ from typing import cast
 
 import pytest
 
-from textual.widgets import Tree
-from textual.widgets.tree import NodeID, UnknownNodeID
+from anytext.widgets import Tree
+from anytext.widgets.tree import NodeID, UnknownNodeID
 
 
 async def test_get_tree_node_by_id() -> None:

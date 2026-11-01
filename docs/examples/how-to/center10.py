@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Center
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.containers import Center
+from anytext.widgets import Static
 
 
 class CenterApp(App):

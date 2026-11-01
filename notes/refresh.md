@@ -1,6 +1,6 @@
 # Refresh system
 
-This note describes how Textual updates widgets on-screen.
+This note describes how Anytext updates widgets on-screen.
 
 if widget has made some changes and wishes to update visuals it can call Widget.refresh. There are two flags on this method; `repaint` which will repaint just the widget, and `layout` which will re-layout the screen. A layout must be done if the widget has changed size / position / visibility. Otherwise repaint will refresh just the widget area.
 

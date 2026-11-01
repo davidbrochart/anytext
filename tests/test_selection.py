@@ -1,10 +1,10 @@
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.geometry import Offset
-from textual.selection import Selection
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.geometry import Offset
+from anytext.selection import Selection
+from anytext.widgets import Static
 
 
 @pytest.mark.parametrize(

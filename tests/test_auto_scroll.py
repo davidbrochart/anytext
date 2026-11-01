@@ -1,7 +1,7 @@
 import pytest
 
-from textual._auto_scroll import get_auto_scroll_regions
-from textual.geometry import Region
+from anytext._auto_scroll import get_auto_scroll_regions
+from anytext.geometry import Region
 
 
 @pytest.mark.parametrize(

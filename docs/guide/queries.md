@@ -1,16 +1,16 @@
 # DOM Queries
 
-In the [CSS chapter](./CSS.md) we introduced the [DOM](../guide/CSS.md#the-dom) which is how Textual apps keep track of widgets. We saw how you can apply styles to the DOM with CSS [selectors](./CSS.md#selectors).
+In the [CSS chapter](./CSS.md) we introduced the [DOM](../guide/CSS.md#the-dom) which is how Anytext apps keep track of widgets. We saw how you can apply styles to the DOM with CSS [selectors](./CSS.md#selectors).
 
 Selectors are a very useful idea and can do more than apply styles. We can also find widgets in Python code with selectors, and make updates to widgets in a simple expressive way. Let's look at how!
 
 !!! tip
 
-    See the [Textual Query Sandbox](https://github.com/davep/textual-query-sandbox/) project for an interactive way of experimenting with DOM queries.
+    See the [Anytext Query Sandbox](https://github.com/davep/textual-query-sandbox/) project for an interactive way of experimenting with DOM queries.
 
 ## Query one
 
-The [query_one][textual.dom.DOMNode.query_one] method is used to retrieve a single widget that matches a selector or a type.
+The [query_one][anytext.dom.DOMNode.query_one] method is used to retrieve a single widget that matches a selector or a type.
 
 Let's say we have a widget with an ID of `send` and we want to get a reference to it in our app.
 We could do this with the following line of code:
@@ -20,7 +20,7 @@ send_button = self.query_one("#send")
 ```
 
 This will retrieve the first widget discovered with an ID of `send`.
-If there are no matching widgets, Textual will raise a [NoMatches][textual.css.query.NoMatches] exception.
+If there are no matching widgets, Anytext will raise a [NoMatches][anytext.css.query.NoMatches] exception.
 
 You can also add a second parameter for the expected type, which will ensure that you get the type you are expecting.
 
@@ -28,7 +28,7 @@ You can also add a second parameter for the expected type, which will ensure tha
 send_button = self.query_one("#send", Button)
 ```
 
-If the matched widget is *not* a button (i.e. if `isinstance(widget, Button)` equals `False`), Textual will raise a [WrongType][textual.css.query.WrongType] exception.
+If the matched widget is *not* a button (i.e. if `isinstance(widget, Button)` equals `False`), Anytext will raise a [WrongType][anytext.css.query.WrongType] exception.
 
 !!! tip
 
@@ -52,7 +52,7 @@ self.screen.query_one("#send-email")
 
 ## Making queries
 
-Apps and widgets also have a [query][textual.dom.DOMNode.query] method which finds (or queries) widgets. This method returns a [DOMQuery][textual.css.query.DOMQuery] object which is a list-like container of widgets.
+Apps and widgets also have a [query][anytext.dom.DOMNode.query] method which finds (or queries) widgets. This method returns a [DOMQuery][anytext.css.query.DOMQuery] object which is a list-like container of widgets.
 
 If you call `query` with no arguments, you will get back a `DOMQuery` containing all widgets. This method is *recursive*, meaning it will also return child widgets (as many levels as required).
 
@@ -93,7 +93,7 @@ for button in self.query("Dialog Button.disabled"):
 
 ### Results
 
-Query objects have a [results][textual.css.query.DOMQuery.results] method which is an alternative way of iterating over widgets. If you supply a type (i.e. a Widget class) then this method will generate only objects of that type.
+Query objects have a [results][anytext.css.query.DOMQuery.results] method which is an alternative way of iterating over widgets. If you supply a type (i.e. a Widget class) then this method will generate only objects of that type.
 
 The following example queries for widgets with the `disabled` CSS class and iterates over just the Button objects.
 
@@ -108,11 +108,11 @@ for button in self.query(".disabled").results(Button):
 
 ## Query objects
 
-We've seen that the [query][textual.dom.DOMNode.query] method returns a [DOMQuery][textual.css.query.DOMQuery] object you can iterate over in a for loop. Query objects behave like Python lists and support all of the same operations (such as `query[0]`, `len(query)` ,`reverse(query)` etc). They also have a number of other methods to simplify retrieving and modifying widgets.
+We've seen that the [query][anytext.dom.DOMNode.query] method returns a [DOMQuery][anytext.css.query.DOMQuery] object you can iterate over in a for loop. Query objects behave like Python lists and support all of the same operations (such as `query[0]`, `len(query)` ,`reverse(query)` etc). They also have a number of other methods to simplify retrieving and modifying widgets.
 
 ## First and last
 
-The [first][textual.css.query.DOMQuery.first] and [last][textual.css.query.DOMQuery.last] methods return the first or last matching widget from the selector, respectively.
+The [first][anytext.css.query.DOMQuery.first] and [last][anytext.css.query.DOMQuery.last] methods return the first or last matching widget from the selector, respectively.
 
 Here's how we might find the _last_ button in an app:
 
@@ -120,7 +120,7 @@ Here's how we might find the _last_ button in an app:
 last_button = self.query("Button").last()
 ```
 
-If there are no buttons, Textual will raise a [NoMatches][textual.css.query.NoMatches] exception. Otherwise it will return a button widget.
+If there are no buttons, Anytext will raise a [NoMatches][anytext.css.query.NoMatches] exception. Otherwise it will return a button widget.
 
 Both `first()` and `last()` accept an `expect_type` argument that should be the class of the widget you are expecting. Let's say we want to get the last widget with class `.disabled`, and we want to check it really is a button. We could do this:
 
@@ -130,7 +130,7 @@ disabled_button = self.query(".disabled").last(Button)
 
 The query selects all widgets with a `disabled` CSS class. The `last` method gets the last disabled widget and checks it is a `Button` and not any other kind of widget.
 
-If the last widget is *not* a button, Textual will raise a [WrongType][textual.css.query.WrongType] exception.
+If the last widget is *not* a button, Anytext will raise a [WrongType][anytext.css.query.WrongType] exception.
 
 !!! tip
 
@@ -138,7 +138,7 @@ If the last widget is *not* a button, Textual will raise a [WrongType][textual.c
 
 ## Filter
 
-Query objects have a [filter][textual.css.query.DOMQuery.filter] method which further refines a query. This method will return a new query object with widgets that match both the original query _and_ the new selector.
+Query objects have a [filter][anytext.css.query.DOMQuery.filter] method which further refines a query. This method will return a new query object with widgets that match both the original query _and_ the new selector.
 
 Let's say we have a query which gets all the buttons in an app, and we want a new query object with just the disabled buttons. We could write something like this:
 
@@ -153,7 +153,7 @@ Iterating over `disabled_buttons` will give us all the disabled buttons.
 
 ## Exclude
 
-Query objects have an [exclude][textual.css.query.DOMQuery.exclude] method which is the logical opposite of [filter][textual.css.query.DOMQuery.filter]. The `exclude` method removes any widgets from the query object which match a selector.
+Query objects have an [exclude][anytext.css.query.DOMQuery.exclude] method which is the logical opposite of [filter][anytext.css.query.DOMQuery.filter]. The `exclude` method removes any widgets from the query object which match a selector.
 
 Here's how we could get all the buttons which *don't* have the `disabled` class set.
 
@@ -168,7 +168,7 @@ enabled_buttons = buttons_query.exclude(".disabled")
 
 Once you have a query object, you can loop over it to call methods on the matched widgets. Query objects also support a number of methods which make an update to every matched widget without an explicit loop.
 
-For instance, let's say we want to disable all buttons in an app. We could do this by calling [add_class()][textual.css.query.DOMQuery.add_class] on a query object.
+For instance, let's say we want to disable all buttons in an app. We could do this by calling [add_class()][anytext.css.query.DOMQuery.add_class] on a query object.
 
 ```python
 self.query("Button").add_class("disabled")
@@ -183,12 +183,12 @@ for widget in self.query("Button"):
 
 Here are the other loop-free methods on query objects:
 
-- [add_class][textual.css.query.DOMQuery.add_class] Adds a CSS class (or classes) to matched widgets.
-- [blur][textual.css.query.DOMQuery.focus] Blurs (removes focus) from matching widgets.
-- [focus][textual.css.query.DOMQuery.focus] Focuses the first matching widgets.
-- [refresh][textual.css.query.DOMQuery.refresh] Refreshes matched widgets.
-- [remove_class][textual.css.query.DOMQuery.remove_class] Removes a CSS class (or classes) from matched widgets.
-- [remove][textual.css.query.DOMQuery.remove] Removes matched widgets from the DOM.
-- [set_class][textual.css.query.DOMQuery.set_class] Sets a CSS class (or classes) on matched widgets.
-- [set][textual.css.query.DOMQuery.set] Sets common attributes on a widget.
-- [toggle_class][textual.css.query.DOMQuery.toggle_class] Sets a CSS class (or classes) if it is not set, or removes the class (or classes) if they are set on the matched widgets.
+- [add_class][anytext.css.query.DOMQuery.add_class] Adds a CSS class (or classes) to matched widgets.
+- [blur][anytext.css.query.DOMQuery.focus] Blurs (removes focus) from matching widgets.
+- [focus][anytext.css.query.DOMQuery.focus] Focuses the first matching widgets.
+- [refresh][anytext.css.query.DOMQuery.refresh] Refreshes matched widgets.
+- [remove_class][anytext.css.query.DOMQuery.remove_class] Removes a CSS class (or classes) from matched widgets.
+- [remove][anytext.css.query.DOMQuery.remove] Removes matched widgets from the DOM.
+- [set_class][anytext.css.query.DOMQuery.set_class] Sets a CSS class (or classes) on matched widgets.
+- [set][anytext.css.query.DOMQuery.set] Sets common attributes on a widget.
+- [toggle_class][anytext.css.query.DOMQuery.toggle_class] Sets a CSS class (or classes) if it is not set, or removes the class (or classes) if they are set on the matched widgets.

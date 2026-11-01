@@ -1,6 +1,6 @@
 # Grid
 
-There are a number of styles relating to the Textual `grid` layout.
+There are a number of styles relating to the Anytext `grid` layout.
 
 For an in-depth look at the grid layout, visit the grid [guide](../../guide/layout.md#grid).
 
@@ -40,7 +40,7 @@ The spacing between grid cells is defined by the `grid-gutter` style.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/grid.py"}
+    ```{.anytext path="docs/examples/styles/grid.py"}
     ```
 
 === "grid.py"

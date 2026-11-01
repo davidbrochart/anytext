@@ -2,7 +2,7 @@ from typing import Literal
 
 import pytest
 
-from textual.geometry import Offset, Region, Shape, Size, Spacing, clamp
+from anytext.geometry import Offset, Region, Shape, Size, Spacing, clamp
 
 
 def test_dimensions_region():

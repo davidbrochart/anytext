@@ -1,7 +1,7 @@
-from textual import on, work
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Button, Label
+from anytext import on, work
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.widgets import Button, Label
 
 
 class QuestionScreen(Screen[bool]):
@@ -33,7 +33,7 @@ class QuestionsApp(App):
     @work  # (3)!
     async def on_mount(self) -> None:
         if await self.push_screen_wait(  # (4)!
-            QuestionScreen("Do you like Textual?"),
+            QuestionScreen("Do you like Anytext?"),
         ):
             self.notify("Good answer!")
         else:

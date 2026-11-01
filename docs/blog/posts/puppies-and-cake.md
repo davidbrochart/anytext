@@ -47,7 +47,7 @@ Take it from me: maintainers love it when their project spawns an ecosystem.
 You could also blog about how you solved your problem without an update to the core project.
 Having a resource that can be googled for, or a maintainer can direct people to, can be a huge help.
 
-What prompted me to think about this is that my two main projects, [Rich](https://github.com/Textualize/rich) and [Textual](https://github.com/Textualize/textual), are at quite different stages in their lifetime. Rich is relatively mature, and I'm unlikely to accept a puppy. If you can achieve what you need without adding to the core library, I am *probably* going to decline a new feature. Textual is younger and still accepting puppies &mdash; in addition to stick insects, gerbils, capybaras and giraffes.
+What prompted me to think about this is that my two main projects, [Rich](https://github.com/Textualize/rich) and [Anytext](https://github.com/Textualize/textual), are at quite different stages in their lifetime. Rich is relatively mature, and I'm unlikely to accept a puppy. If you can achieve what you need without adding to the core library, I am *probably* going to decline a new feature. Anytext is younger and still accepting puppies &mdash; in addition to stick insects, gerbils, capybaras and giraffes.
 
 !!! tip
 

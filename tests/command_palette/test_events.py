@@ -1,9 +1,9 @@
 from typing import Union
 from unittest import mock
 
-from textual import on
-from textual.app import App
-from textual.command import CommandPalette, Hit, Hits, Provider
+from anytext import on
+from anytext.app import App
+from anytext.command import CommandPalette, Hit, Hits, Provider
 
 CommandPaletteEvent = Union[
     CommandPalette.Opened, CommandPalette.Closed, CommandPalette.OptionHighlighted

@@ -1,4 +1,4 @@
-::: textual.events.Enter
+::: anytext.events.Enter
     options:
       heading_level: 1
 

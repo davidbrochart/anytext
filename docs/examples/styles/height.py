@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.widget import Widget
+from anytext.app import App
+from anytext.widget import Widget
 
 
 class HeightApp(App):

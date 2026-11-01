@@ -16,7 +16,7 @@ options:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/option_list_strings.py"}
+    ```{.anytext path="docs/examples/widgets/option_list_strings.py"}
     ```
 
 === "option_list_strings.py"
@@ -39,7 +39,7 @@ class can be used to add separator lines between options.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/option_list_options.py"}
+    ```{.anytext path="docs/examples/widgets/option_list_options.py"}
     ```
 
 === "option_list_options.py"
@@ -64,7 +64,7 @@ tables](https://rich.readthedocs.io/en/latest/tables.html):
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/option_list_tables.py"}
+    ```{.anytext path="docs/examples/widgets/option_list_tables.py"}
     ```
 
 === "option_list_tables.py"
@@ -87,16 +87,16 @@ tables](https://rich.readthedocs.io/en/latest/tables.html):
 
 ## Messages
 
-- [OptionList.OptionHighlighted][textual.widgets.OptionList.OptionHighlighted]
-- [OptionList.OptionSelected][textual.widgets.OptionList.OptionSelected]
+- [OptionList.OptionHighlighted][anytext.widgets.OptionList.OptionHighlighted]
+- [OptionList.OptionSelected][anytext.widgets.OptionList.OptionSelected]
 
-Both of the messages above inherit from the common base [`OptionList.OptionMessage`][textual.widgets.OptionList.OptionMessage], so refer to its documentation to see what attributes are available.
+Both of the messages above inherit from the common base [`OptionList.OptionMessage`][anytext.widgets.OptionList.OptionMessage], so refer to its documentation to see what attributes are available.
 
 ## Bindings
 
 The option list widget defines the following bindings:
 
-::: textual.widgets.OptionList.BINDINGS
+::: anytext.widgets.OptionList.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -105,18 +105,18 @@ The option list widget defines the following bindings:
 
 The option list provides the following component classes:
 
-::: textual.widgets.OptionList.COMPONENT_CLASSES
+::: anytext.widgets.OptionList.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
 
 
 
-::: textual.widgets.OptionList
+::: anytext.widgets.OptionList
     options:
       heading_level: 2
 
 
-::: textual.widgets.option_list
+::: anytext.widgets.option_list
     options:
       heading_level: 2

@@ -1,6 +1,6 @@
 import pytest
 
-from textual._box_drawing import combine_quads
+from anytext._box_drawing import combine_quads
 
 
 @pytest.mark.parametrize(

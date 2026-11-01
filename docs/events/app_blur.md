@@ -2,7 +2,7 @@
 title: AppBlur
 ---
 
-::: textual.events.AppBlur
+::: anytext.events.AppBlur
     options:
       heading_level: 1
 

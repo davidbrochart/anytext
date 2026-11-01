@@ -6,12 +6,12 @@ Works like a real calculator. Click the buttons or press the equivalent keys.
 
 from decimal import Decimal
 
-from textual import events, on
-from textual.app import App, ComposeResult
-from textual.containers import Container
-from textual.css.query import NoMatches
-from textual.reactive import var
-from textual.widgets import Button, Digits
+from anytext import events, on
+from anytext.app import App, ComposeResult
+from anytext.containers import Container
+from anytext.css.query import NoMatches
+from anytext.reactive import var
+from anytext.widgets import Button, Digits
 
 
 class CalculatorApp(App):

@@ -1,7 +1,7 @@
 import pytest
 
-from textual._slug import TrackedSlugs, slug, slug_for_tcss_id
-from textual.dom import check_identifiers
+from anytext._slug import TrackedSlugs, slug, slug_for_tcss_id
+from anytext.dom import check_identifiers
 
 
 @pytest.mark.xdist_group("group1")

@@ -1,7 +1,7 @@
 # Layout
 
-In Textual, the *layout* defines how widgets will be arranged (or *laid out*) inside a container.
-Textual supports a number of layouts which can be set either via a widget's `styles` object or via CSS.
+In Anytext, the *layout* defines how widgets will be arranged (or *laid out*) inside a container.
+Anytext supports a number of layouts which can be set either via a widget's `styles` object or via CSS.
 Layouts can be used for both high-level positioning of widgets on screen, and for positioning of nested widgets.
 
 ## Vertical
@@ -16,7 +16,7 @@ The example below demonstrates how children are arranged inside a container with
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/vertical_layout.py"}
+    ```{.anytext path="docs/examples/guide/layout/vertical_layout.py"}
     ```
 
 === "vertical_layout.py"
@@ -52,7 +52,7 @@ widget.styles.layout = "vertical"
 ```
 
 Using `fr` units guarantees that the children fill the available height of the parent.
-However, if the total height of the children exceeds the available space, then Textual will automatically add
+However, if the total height of the children exceeds the available space, then Anytext will automatically add
 a scrollbar to the parent `Screen`.
 
 !!! note
@@ -61,7 +61,7 @@ a scrollbar to the parent `Screen`.
 
 For example, if we swap out `height: 1fr;` for `height: 10;` in the example above, the child widgets become a fixed height of 10, and a scrollbar appears (assuming our terminal window is sufficiently small):
 
-```{.textual path="docs/examples/guide/layout/vertical_layout_scrolled.py"}
+```{.anytext path="docs/examples/guide/layout/vertical_layout_scrolled.py"}
 ```
 
 [//]: # (TODO: Add link to "focus" docs in paragraph below.)
@@ -81,7 +81,7 @@ The example below shows how we can arrange widgets horizontally, with minimal ch
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/horizontal_layout.py"}
+    ```{.anytext path="docs/examples/guide/layout/horizontal_layout.py"}
     ```
 
 === "horizontal_layout.py"
@@ -108,13 +108,13 @@ Thus, we need explicitly assign `height: 100%` to achieve this.
 A consequence of this "horizontal growth" behavior is that if we remove the width restriction from the above example (by deleting `width: 1fr;`), each child widget will grow to fit the width of the screen,
 and only the first widget will be visible.
 The other two widgets in our layout are offscreen, to the right-hand side of the screen.
-In the case of `horizontal` layout, Textual will _not_ automatically add a scrollbar.
+In the case of `horizontal` layout, Anytext will _not_ automatically add a scrollbar.
 
 To enable horizontal scrolling, we can use the `overflow-x: auto;` declaration:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/horizontal_layout_overflow.py"}
+    ```{.anytext path="docs/examples/guide/layout/horizontal_layout_overflow.py"}
     ```
 
 === "horizontal_layout_overflow.py"
@@ -129,13 +129,13 @@ To enable horizontal scrolling, we can use the `overflow-x: auto;` declaration:
     --8<-- "docs/examples/guide/layout/horizontal_layout_overflow.tcss"
     ```
 
-With `overflow-x: auto;`, Textual automatically adds a horizontal scrollbar since the width of the children
+With `overflow-x: auto;`, Anytext automatically adds a horizontal scrollbar since the width of the children
 exceeds the available horizontal space in the parent container.
 
 ## Utility containers
 
-Textual comes with [several "container" widgets][textual.containers].
-Among them, we have [Vertical][textual.containers.Vertical], [Horizontal][textual.containers.Horizontal], and [Grid][textual.containers.Grid] which have the corresponding layout.
+Anytext comes with [several "container" widgets][anytext.containers].
+Among them, we have [Vertical][anytext.containers.Vertical], [Horizontal][anytext.containers.Horizontal], and [Grid][anytext.containers.Grid] which have the corresponding layout.
 
 The example below shows how we can combine these containers to create a simple 2x2 grid.
 Inside a single `Horizontal` container, we place two `Vertical` containers.
@@ -143,7 +143,7 @@ In other words, we have a single row containing two columns.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/utility_containers.py"}
+    ```{.anytext path="docs/examples/guide/layout/utility_containers.py"}
     ```
 
 === "utility_containers.py"
@@ -159,12 +159,12 @@ In other words, we have a single row containing two columns.
     ```
 
 You may be tempted to use many levels of nested utility containers in order to build advanced, grid-like layouts.
-However, Textual comes with a more powerful mechanism for achieving this known as _grid layout_, which we'll discuss below.
+However, Anytext comes with a more powerful mechanism for achieving this known as _grid layout_, which we'll discuss below.
 
 ## Composing with context managers
 
 In the previous section, we've shown how you add children to a container (such as `Horizontal` and `Vertical`) using positional arguments.
-It's fine to do it this way, but Textual offers a simplified syntax using [context managers](https://docs.python.org/3/reference/datamodel.html#context-managers), which is generally easier to write and edit.
+It's fine to do it this way, but Anytext offers a simplified syntax using [context managers](https://docs.python.org/3/reference/datamodel.html#context-managers), which is generally easier to write and edit.
 
 When composing a widget, you can introduce a container using Python's `with` statement.
 Any widgets yielded within that block are added as a child of the container.
@@ -199,7 +199,7 @@ Let's update the [utility containers](#utility-containers) example to use the co
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/utility_containers_using_with.py"}
+    ```{.anytext path="docs/examples/guide/layout/utility_containers_using_with.py"}
     ```
 
 Note how the end result is the same, but the code with context managers is a little easier to read. It is up to you which method you want to use, and you can mix context managers with positional arguments if you like!
@@ -216,7 +216,7 @@ The diagram below hints at what can be achieved using `layout: grid`.
 
 !!! note
 
-    Grid layouts in Textual have little in common with browser-based CSS Grid.
+    Grid layouts in Anytext have little in common with browser-based CSS Grid.
 
 To get started with grid layout, define the number of columns and rows in your grid with the `grid-size` CSS property and set `layout: grid`. Widgets are inserted into the "cells" of the grid from left-to-right and top-to-bottom order.
 
@@ -224,7 +224,7 @@ The following example creates a 3 x 2 grid and adds six widgets to it
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/grid_layout1.py"}
+    ```{.anytext path="docs/examples/guide/layout/grid_layout1.py"}
     ```
 
 === "grid_layout1.py"
@@ -240,12 +240,12 @@ The following example creates a 3 x 2 grid and adds six widgets to it
     ```
 
 
-If we were to yield a seventh widget from our `compose` method, it would not be visible as the grid does not contain enough cells to accommodate it. We can tell Textual to add new rows on demand to fit the number of widgets, by omitting the number of rows from `grid-size`. The following example creates a grid with three columns, with rows created on demand:
+If we were to yield a seventh widget from our `compose` method, it would not be visible as the grid does not contain enough cells to accommodate it. We can tell Anytext to add new rows on demand to fit the number of widgets, by omitting the number of rows from `grid-size`. The following example creates a grid with three columns, with rows created on demand:
 
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/grid_layout2.py"}
+    ```{.anytext path="docs/examples/guide/layout/grid_layout2.py"}
     ```
 
 === "grid_layout2.py"
@@ -277,7 +277,7 @@ We'll make the first column take up half of the screen width, with the other two
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/grid_layout3_row_col_adjust.py"}
+    ```{.anytext path="docs/examples/guide/layout/grid_layout3_row_col_adjust.py"}
     ```
 
 === "grid_layout3_row_col_adjust.py"
@@ -306,7 +306,7 @@ and the second row to `75%` height (while retaining the `grid-columns` change fr
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/grid_layout4_row_col_adjust.py"}
+    ```{.anytext path="docs/examples/guide/layout/grid_layout4_row_col_adjust.py"}
     ```
 
 === "grid_layout4_row_col_adjust.py"
@@ -328,13 +328,13 @@ If it instead had three columns, then `grid-columns: 2 4;` would be equivalent t
 
 #### Auto rows / columns
 
-The `grid-columns` and `grid-rows` rules can both accept a value of "auto" in place of any of the dimensions, which tells Textual to calculate an optimal size based on the content.
+The `grid-columns` and `grid-rows` rules can both accept a value of "auto" in place of any of the dimensions, which tells Anytext to calculate an optimal size based on the content.
 
 Let's modify the previous example to make the first column an `auto` column.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/grid_layout_auto.py"}
+    ```{.anytext path="docs/examples/guide/layout/grid_layout_auto.py"}
     ```
 
 === "grid_layout_auto.py"
@@ -366,7 +366,7 @@ We'll also add a slight tint using `tint: magenta 40%;` to draw attention to it.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/grid_layout5_col_span.py"}
+    ```{.anytext path="docs/examples/guide/layout/grid_layout5_col_span.py"}
     ```
 
 === "grid_layout5_col_span.py"
@@ -399,7 +399,7 @@ We again target widget `#two` in our CSS, and add a `row-span: 2;` declaration t
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/grid_layout6_row_span.py"}
+    ```{.anytext path="docs/examples/guide/layout/grid_layout6_row_span.py"}
     ```
 
 === "grid_layout6_row_span.py"
@@ -431,7 +431,7 @@ Now if we add `grid-gutter: 1;` to our grid, one cell of spacing appears between
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/grid_layout7_gutter.py"}
+    ```{.anytext path="docs/examples/guide/layout/grid_layout7_gutter.py"}
     ```
 
 === "grid_layout7_gutter.py"
@@ -471,7 +471,7 @@ The code below shows a simple sidebar implementation.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/dock_layout1_sidebar.py" press="pagedown,down,down"}
+    ```{.anytext path="docs/examples/guide/layout/dock_layout1_sidebar.py" press="pagedown,down,down"}
     ```
 
 === "dock_layout1_sidebar.py"
@@ -495,7 +495,7 @@ This new sidebar is double the width of the one previous one, and has a `deeppin
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/dock_layout2_sidebar.py" press="pagedown,down,down"}
+    ```{.anytext path="docs/examples/guide/layout/dock_layout2_sidebar.py" press="pagedown,down,down"}
     ```
 
 === "dock_layout2_sidebar.py"
@@ -519,7 +519,7 @@ We can yield it inside `compose`, and without any additional CSS, we get a heade
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/dock_layout3_sidebar_header.py"}
+    ```{.anytext path="docs/examples/guide/layout/dock_layout3_sidebar_header.py"}
     ```
 
 === "dock_layout3_sidebar_header.py"
@@ -538,9 +538,9 @@ If we wished for the sidebar to appear below the header, it'd simply be a case o
 
 ## Layers
 
-Textual has a concept of _layers_ which gives you finely grained control over the order widgets are placed.
+Anytext has a concept of _layers_ which gives you finely grained control over the order widgets are placed.
 
-When drawing widgets, Textual will first draw on _lower_ layers, working its way up to higher layers.
+When drawing widgets, Anytext will first draw on _lower_ layers, working its way up to higher layers.
 As such, widgets on higher layers will be drawn on top of those on lower layers.
 
 Layer names are defined with a `layers` style on a container (parent) widget.
@@ -562,7 +562,7 @@ However, in this case, both `#box1` and `#box2` are assigned to layers which def
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/layers.py"}
+    ```{.anytext path="docs/examples/guide/layout/layers.py"}
     ```
 
 === "layers.py"
@@ -596,14 +596,14 @@ The offset of a widget can be set using the `offset` CSS property.
 
 ## Putting it all together
 
-The sections above show how the various layouts in Textual can be used to position widgets on screen.
+The sections above show how the various layouts in Anytext can be used to position widgets on screen.
 In a real application, you'll make use of several layouts.
 
 The example below shows how an advanced layout can be built by combining the various techniques described on this page.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/combining_layouts.py"}
+    ```{.anytext path="docs/examples/guide/layout/combining_layouts.py"}
     ```
 
 === "combining_layouts.py"
@@ -618,4 +618,4 @@ The example below shows how an advanced layout can be built by combining the var
     --8<-- "docs/examples/guide/layout/combining_layouts.tcss"
     ```
 
-Textual layouts make it easy to design and build real-life applications with relatively little code.
+Anytext layouts make it easy to design and build real-life applications with relatively little code.

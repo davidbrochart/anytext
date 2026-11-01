@@ -4,13 +4,13 @@ from dataclasses import dataclass
 
 import pytest
 
-from textual import on
-from textual._on import OnDecoratorError
-from textual.app import App, ComposeResult
-from textual.events import Enter, Leave
-from textual.message import Message
-from textual.widget import Widget
-from textual.widgets import Button, TabbedContent, TabPane
+from anytext import on
+from anytext._on import OnDecoratorError
+from anytext.app import App, ComposeResult
+from anytext.events import Enter, Leave
+from anytext.message import Message
+from anytext.widget import Widget
+from anytext.widgets import Button, TabbedContent, TabPane
 
 
 async def test_on_button_pressed() -> None:

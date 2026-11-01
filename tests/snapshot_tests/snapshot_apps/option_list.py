@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from rich.text import Text
 
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal
-from textual.widgets import OptionList
-from textual.widgets.option_list import Option
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal
+from anytext.widgets import OptionList
+from anytext.widgets.option_list import Option
 
 
 class OptionListApp(App[None]):

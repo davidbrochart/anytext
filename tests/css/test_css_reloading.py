@@ -1,9 +1,9 @@
 import os
 from pathlib import Path
 
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.widgets import Label
 
 CSS_PATH = (Path(__file__) / "../css_reloading.tcss").resolve()
 
@@ -34,7 +34,7 @@ async def test_css_reloading_applies_to_non_top_screen(monkeypatch) -> None:  # 
     """Regression test for https://github.com/Textualize/textual/issues/3931"""
 
     monkeypatch.setenv(
-        "TEXTUAL", "debug"
+        "ANYTEXT", "debug"
     )  # This will make sure we create a file monitor.
 
     # Write some initial CSS.
@@ -69,16 +69,16 @@ async def test_css_reloading_file_not_found(monkeypatch, tmp_path):
 
     Files can become temporarily unavailable during saving on certain environments.
     """
-    monkeypatch.setenv("TEXTUAL", "debug")
+    monkeypatch.setenv("ANYTEXT", "debug")
 
     css_path = tmp_path / "test_css_reloading_file_not_found.tcss"
     with open(css_path, "w") as css_file:
         css_file.write("#a {color: red;}")
 
-    class TextualApp(App):
+    class AnytextApp(App):
         CSS_PATH = css_path
 
-    app = TextualApp()
+    app = AnytextApp()
     async with app.run_test() as pilot:
         await pilot.app._on_css_change()
         os.remove(css_path)

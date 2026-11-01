@@ -1,7 +1,7 @@
 """Test https://github.com/Textualize/textual/issues/4248"""
 
-from textual.app import App, ComposeResult
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.widgets import Label
 
 
 async def test_issue_4248() -> None:

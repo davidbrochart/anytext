@@ -1,9 +1,9 @@
 """Test replacing options prompt from an option list."""
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import OptionList
-from textual.widgets.option_list import Option, OptionDoesNotExist
+from anytext.app import App, ComposeResult
+from anytext.widgets import OptionList
+from anytext.widgets.option_list import Option, OptionDoesNotExist
 
 
 class OptionListApp(App[None]):

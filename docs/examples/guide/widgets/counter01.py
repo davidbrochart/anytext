@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult, RenderResult
-from textual.reactive import reactive
-from textual.widgets import Footer, Static
+from anytext.app import App, ComposeResult, RenderResult
+from anytext.reactive import reactive
+from anytext.widgets import Footer, Static
 
 
 class Counter(Static, can_focus=True):  # (1)!

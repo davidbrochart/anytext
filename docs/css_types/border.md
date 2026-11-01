@@ -28,10 +28,10 @@ The [`<border>`](./border.md) type can take any of the following values:
 
 ## Border command
 
-The `textual` CLI has a subcommand which will let you explore the various border types interactively, when applied to the CSS rule [`border`](../styles/border.md):
+The `anytext` CLI has a subcommand which will let you explore the various border types interactively, when applied to the CSS rule [`border`](../styles/border.md):
 
 ```
-textual borders
+anytext borders
 ```
 
 ## Examples

@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Button
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button
 
 
 class OnDecoratorApp(App):
@@ -17,7 +17,7 @@ class OnDecoratorApp(App):
             self.bell()
         elif event.button.has_class("toggle", "dark"):
             self.theme = (
-                "textual-dark" if self.theme == "textual-light" else "textual-light"
+                "anytext-dark" if self.theme == "anytext-light" else "anytext-light"
             )
         elif event.button.id == "quit":
             self.exit()

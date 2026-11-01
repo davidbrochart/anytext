@@ -20,7 +20,7 @@ The example below shows a 4 by 4 grid where many placeholders span over several 
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/column_span.py"}
+    ```{.anytext path="docs/examples/styles/column_span.py"}
     ```
 
 === "column_span.py"

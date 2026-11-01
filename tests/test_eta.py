@@ -1,4 +1,4 @@
-from textual.eta import ETA
+from anytext.eta import ETA
 
 
 def test_basics() -> None:

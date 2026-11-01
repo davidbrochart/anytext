@@ -3,14 +3,14 @@ draft: false
 date: 2023-03-22
 categories:
   - Release
-title: "Textual 0.16.0 adds TabbedContent and border titles"
+title: "Anytext 0.16.0 adds TabbedContent and border titles"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.16.0 adds TabbedContent and border titles
+# Anytext 0.16.0 adds TabbedContent and border titles
 
-Textual 0.16.0 lands 9 days after the previous release. We have some new features to show you.
+Anytext 0.16.0 lands 9 days after the previous release. We have some new features to show you.
 
 <!-- more -->
 
@@ -28,7 +28,7 @@ def compose(self) -> ComposeResult:
 
 Here's an example of the UI you can create with this widget (note the nesting)!
 
-```{.textual path="docs/examples/widgets/tabbed_content.py" press="j"}
+```{.anytext path="docs/examples/widgets/tabbed_content.py" press="j"}
 ```
 
 
@@ -47,7 +47,7 @@ Here's an example of a widget with a title:
 BTW the above is a command you can run to see the various border styles you can apply to widgets.
 
 ```
-textual borders
+anytext borders
 ```
 
 ## Container changes
@@ -63,4 +63,4 @@ We've made a change to containers in this release. Previously all containers had
 
 As always, see the [release notes](https://github.com/Textualize/textual/releases/tag/v0.16.0) for the full details on this update.
 
-If you want to talk about this update or anything else Textual related, join us on our [Discord server](https://discord.gg/Enf6Z3qhVr).
+If you want to talk about this update or anything else Anytext related, join us on our [Discord server](https://discord.gg/Enf6Z3qhVr).

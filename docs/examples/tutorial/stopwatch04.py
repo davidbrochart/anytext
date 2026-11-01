@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import HorizontalGroup, VerticalScroll
-from textual.widgets import Button, Digits, Footer, Header
+from anytext.app import App, ComposeResult
+from anytext.containers import HorizontalGroup, VerticalScroll
+from anytext.widgets import Button, Digits, Footer, Header
 
 
 class TimeDisplay(Digits):
@@ -26,7 +26,7 @@ class Stopwatch(HorizontalGroup):
 
 
 class StopwatchApp(App):
-    """A Textual app to manage stopwatches."""
+    """A Anytext app to manage stopwatches."""
 
     CSS_PATH = "stopwatch04.tcss"
     BINDINGS = [("d", "toggle_dark", "Toggle dark mode")]
@@ -40,7 +40,7 @@ class StopwatchApp(App):
     def action_toggle_dark(self) -> None:
         """An action to toggle dark mode."""
         self.theme = (
-            "textual-dark" if self.theme == "textual-light" else "textual-light"
+            "anytext-dark" if self.theme == "anytext-light" else "anytext-light"
         )
 
 

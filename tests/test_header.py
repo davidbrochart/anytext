@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.screen import Screen
-from textual.widgets import Header, Static
+from anytext.app import App
+from anytext.screen import Screen
+from anytext.widgets import Header, Static
 
 
 async def test_screen_title_none_is_ignored():

@@ -2,7 +2,7 @@ from typing import Sequence
 
 import pytest
 
-from textual._immutable_sequence_view import ImmutableSequenceView
+from anytext._immutable_sequence_view import ImmutableSequenceView
 
 
 def wrap(source: Sequence[int]) -> ImmutableSequenceView[int]:

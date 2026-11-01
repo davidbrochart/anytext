@@ -2,7 +2,7 @@
 
 !!! tip "Added in version 0.80.0"
 
-A masked input derived from `Input`, allowing to restrict user input and give visual aid via a simple template mask, which also acts as an implicit *[validator][textual.validation.Validator]*.
+A masked input derived from `Input`, allowing to restrict user input and give visual aid via a simple template mask, which also acts as an implicit *[validator][anytext.validation.Validator]*.
 
 - [x] Focusable
 - [ ] Container
@@ -13,7 +13,7 @@ The example below shows a masked input to ease entering a credit card number.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/masked_input.py"}
+    ```{.anytext path="docs/examples/widgets/masked_input.py"}
     ```
 
 === "masked_input.py"
@@ -22,7 +22,7 @@ The example below shows a masked input to ease entering a credit card number.
     --8<-- "docs/examples/widgets/masked_input.py"
     ```
 
-    1. Textual offers default styling for the `-invalid` CSS class (a red border), which is automatically applied to the `MaskedInput` when validation fails. We can also provide custom styling for the `-valid` class, as seen here. In this case, we add a green border around the `MaskedInput` to indicate successful validation.
+    1. Anytext offers default styling for the `-invalid` CSS class (a red border), which is automatically applied to the `MaskedInput` when validation fails. We can also provide custom styling for the `-valid` class, as seen here. In this case, we add a green border around the `MaskedInput` to indicate successful validation.
     2. This example shows how to define a template mask for a credit card number, which requires 16 digits in groups of 4.
 
 ## Reactive Attributes
@@ -58,14 +58,14 @@ The mask can be terminated by `;c`, where `c` is any character you want to be us
 
 ## Messages
 
-- [MaskedInput.Changed][textual.widgets.MaskedInput.Changed]
-- [MaskedInput.Submitted][textual.widgets.MaskedInput.Submitted]
+- [MaskedInput.Changed][anytext.widgets.MaskedInput.Changed]
+- [MaskedInput.Submitted][anytext.widgets.MaskedInput.Submitted]
 
 ## Bindings
 
 The masked input widget defines the following bindings:
 
-::: textual.widgets.MaskedInput.BINDINGS
+::: anytext.widgets.MaskedInput.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -74,7 +74,7 @@ The masked input widget defines the following bindings:
 
 The masked input widget provides the following component classes:
 
-::: textual.widgets.MaskedInput.COMPONENT_CLASSES
+::: anytext.widgets.MaskedInput.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -82,6 +82,6 @@ The masked input widget provides the following component classes:
 ---
 
 
-::: textual.widgets.MaskedInput
+::: anytext.widgets.MaskedInput
     options:
       heading_level: 2

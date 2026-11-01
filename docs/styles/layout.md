@@ -27,7 +27,7 @@ To learn more about the grid layout, you can see the [layout guide](../guide/lay
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/layout.py"}
+    ```{.anytext path="docs/examples/styles/layout.py"}
     ```
 
 === "layout.py"

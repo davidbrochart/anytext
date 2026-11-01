@@ -1,5 +1,5 @@
 ---
-title: "textual.cache"
+title: "anytext.cache"
 ---
 
-::: textual.cache
+::: anytext.cache

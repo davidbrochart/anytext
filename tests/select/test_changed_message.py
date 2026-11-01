@@ -1,7 +1,7 @@
-from textual import on
-from textual.app import App
-from textual.widgets import Select
-from textual.widgets._select import SelectOverlay
+from anytext import on
+from anytext.app import App
+from anytext.widgets import Select
+from anytext.widgets._select import SelectOverlay
 
 
 class SelectApp(App[None]):

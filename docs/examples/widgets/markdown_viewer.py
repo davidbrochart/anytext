@@ -1,10 +1,10 @@
-from textual.app import App, ComposeResult
-from textual.widgets import MarkdownViewer
+from anytext.app import App, ComposeResult
+from anytext.widgets import MarkdownViewer
 
 EXAMPLE_MARKDOWN = """\
 # Markdown Viewer
 
-This is an example of Textual's `MarkdownViewer` widget.
+This is an example of Anytext's `MarkdownViewer` widget.
 
 
 ## Features

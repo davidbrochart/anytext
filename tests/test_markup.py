@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from textual.content import Content, Span
-from textual.markup import MarkupError, to_content
+from anytext.content import Content, Span
+from anytext.markup import MarkupError, to_content
 
 
 @pytest.mark.parametrize(
@@ -51,9 +51,9 @@ from textual.markup import MarkupError, to_content
             ),
         ),
         (
-            "[b]Welcome to Textual[/b]\n\nI must not fear",
+            "[b]Welcome to Anytext[/b]\n\nI must not fear",
             Content(
-                "Welcome to Textual\n\nI must not fear",
+                "Welcome to Anytext\n\nI must not fear",
                 spans=[
                     Span(0, 18, style="b"),
                 ],

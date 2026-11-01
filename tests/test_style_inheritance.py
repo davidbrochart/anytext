@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Button, Static
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button, Static
 
 
 async def test_text_style_inheritance():

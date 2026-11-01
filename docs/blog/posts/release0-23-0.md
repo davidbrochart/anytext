@@ -3,15 +3,15 @@ draft: false
 date: 2023-05-03
 categories:
   - Release
-title: "Textual 0.23.0 improves message handling"
+title: "Anytext 0.23.0 improves message handling"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.23.0 improves message handling
+# Anytext 0.23.0 improves message handling
 
 It's been a busy couple of weeks at Textualize.
-We've been building apps with [Textual](https://github.com/Textualize/textual), as part of our *dog-fooding* week.
+We've been building apps with [Anytext](https://github.com/Textualize/textual), as part of our *dog-fooding* week.
 The first app, [Frogmouth](https://github.com/Textualize/frogmouth), was released at the weekend and already has 1K GitHub stars!
 Expect two more such apps this month.
 
@@ -25,10 +25,10 @@ Expect two more such apps this month.
 
     Join our [mailing list](http://eepurl.com/hL0BF1) if you would like to be the first to hear about our apps.
 
-We haven't stopped developing Textual in that time.
+We haven't stopped developing Anytext in that time.
 Today we released version 0.23.0 which has a really interesting API update I'd like to introduce.
 
-Textual *widgets* can send messages to each other.
+Anytext *widgets* can send messages to each other.
 To respond to those messages, you implement a message handler with a naming convention.
 For instance, the [Button](/widget_gallery/#button) widget sends a `Pressed` event.
 To handle that event, you implement a method called `on_button_pressed`.
@@ -65,7 +65,7 @@ The first uses a single message handler, the second uses the decorator approach:
 
 === "Output"
 
-    ```{.textual path="docs/examples/events/on_decorator01.py"}
+    ```{.anytext path="docs/examples/events/on_decorator01.py"}
     ```
 
 The decorator dispatches events based on a CSS selector.
@@ -85,4 +85,4 @@ It might seem obvious in hindsight, but it took many iterations and brainstormin
 
 ## Join us
 
-If you want to talk about this update or anything else Textual related, join us on our [Discord server](https://discord.gg/Enf6Z3qhVr).
+If you want to talk about this update or anything else Anytext related, join us on our [Discord server](https://discord.gg/Enf6Z3qhVr).

@@ -1,6 +1,6 @@
 ---
-title: "textual.layout"
+title: "anytext.layout"
 ---
 
 
-::: textual.layout
+::: anytext.layout

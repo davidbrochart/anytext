@@ -2,7 +2,7 @@
 title: ScreenResume
 ---
 
-::: textual.events.ScreenResume
+::: anytext.events.ScreenResume
     options:
       heading_level: 1
 

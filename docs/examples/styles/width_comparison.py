@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import Horizontal
-from textual.widgets import Label, Placeholder, Static
+from anytext.app import App
+from anytext.containers import Horizontal
+from anytext.widgets import Label, Placeholder, Static
 
 
 class Ruler(Static):

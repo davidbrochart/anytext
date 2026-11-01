@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.widgets import SelectionList
+from anytext.app import App, ComposeResult
+from anytext.widgets import SelectionList
 
 
 class SelectionListApp(App[None]):

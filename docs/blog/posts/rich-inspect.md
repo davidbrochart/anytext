@@ -60,7 +60,7 @@ You can see the full range of options with this delightful little incantation:
 >>> inspect(inspect)
 ```
 
-If you are interested in Rich or Textual, join our [Discord server](https://discord.gg/Enf6Z3qhVr)!
+If you are interested in Rich or Anytext, join our [Discord server](https://discord.gg/Enf6Z3qhVr)!
 
 
 ## Addendum

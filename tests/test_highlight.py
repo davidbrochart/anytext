@@ -1,7 +1,7 @@
 import pytest
 
-from textual.content import Span
-from textual.highlight import guess_language, highlight
+from anytext.content import Span
+from anytext.highlight import guess_language, highlight
 
 
 def test_highlight() -> None:

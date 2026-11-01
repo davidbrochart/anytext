@@ -9,13 +9,13 @@ import pytest
 from markdown_it.token import Token
 from rich.text import Span
 
-import textual.widgets._markdown as MD
-from textual import on
-from textual.app import App, ComposeResult
-from textual.style import Style
-from textual.widget import Widget
-from textual.widgets import Markdown
-from textual.widgets.markdown import MarkdownBlock
+import anytext.widgets._markdown as MD
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.style import Style
+from anytext.widget import Widget
+from anytext.widgets import Markdown
+from anytext.widgets.markdown import MarkdownBlock
 
 
 class UnhandledToken(MarkdownBlock):
@@ -81,7 +81,7 @@ class MarkdownApp(App[None]):
 async def test_markdown_nodes(
     document: str, expected_nodes: list[Widget | list[Widget]]
 ) -> None:
-    """A Markdown document should parse into the expected Textual node list."""
+    """A Markdown document should parse into the expected Anytext node list."""
 
     def markdown_nodes(root: Widget) -> Iterator[MarkdownBlock]:
         for node in root.children:
@@ -175,7 +175,7 @@ async def test_link_in_markdown_table_posts_message_when_clicked():
     """
 
     markdown_table = """\
-| Textual Links                                    |
+| Anytext Links                                    |
 | ------------------------------------------------ |
 | [GitHub](https://github.com/textualize/textual/) |
 | [Documentation](https://textual.textualize.io/)  |\

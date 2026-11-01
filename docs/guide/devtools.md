@@ -6,7 +6,7 @@
 
     See [getting started](../getting_started.md#installation) for details.
 
-Textual comes with a command line application of the same name. The `textual` command is a super useful tool that will help you to build apps.
+Anytext comes with a command line application of the same name. The `textual` command is a super useful tool that will help you to build apps.
 
 Take a moment to look through the available subcommands. There will be even more helpful tools here in the future.
 
@@ -17,7 +17,7 @@ textual --help
 
 ## Run
 
-The `run` sub-command runs Textual apps. If you supply a path to a Python file it will load and run the app.
+The `run` sub-command runs Anytext apps. If you supply a path to a Python file it will load and run the app.
 
 ```bash
 textual run my_app.py
@@ -31,14 +31,14 @@ See the `run` subcommand's help for details:
 textual run --help
 ```
 
-You can also run Textual apps from a python import.
-The following command would import `music.play` and run a Textual app in that module:
+You can also run Anytext apps from a python import.
+The following command would import `music.play` and run a Anytext app in that module:
 
 ```bash
 textual run music.play
 ```
 
-This assumes you have a Textual app instance called `app` in `music.play`.
+This assumes you have a Anytext app instance called `app` in `music.play`.
 If your app has a different name, you can append it after a colon:
 
 ```bash
@@ -47,16 +47,16 @@ textual run music.play:MusicPlayerApp
 
 !!! note
 
-    This works for both Textual app *instances* and *classes*.
+    This works for both Anytext app *instances* and *classes*.
 
 
 ### Running from commands
 
 If your app is installed as a command line script, you can use the `-c` switch to run it.
-For instance, the following will run the `textual colors` command:
+For instance, the following will run the `anytext colors` command:
 
 ```bash
-textual run -c textual colors
+textual run -c anytext colors
 ```
 
 ## Serve
@@ -70,29 +70,29 @@ The `serve` sub-command is similar to `run`. Here's how you can serve an app lau
 textual serve my_app.py
 ```
 
-You can also serve a Textual app launched via a command. Here's an example:
+You can also serve a Anytext app launched via a command. Here's an example:
 
 ```
-textual serve "textual keys"
+textual serve "anytext keys"
 ```
 
 The syntax for launching an app in a module is slightly different from `run`.
 You need to specify the full command, including `python`.
-Here's how you would run the Textual demo:
+Here's how you would run the Anytext demo:
 
 ```
-textual serve "python -m textual"
+textual serve "python -m anytext"
 ```
 
-Textual's builtin web-server is quite powerful.
+Anytext's builtin web-server is quite powerful.
 You can serve multiple instances of your application at once!
 
 !!! tip
 
-    Textual serve is also useful when developing your app.
+    Anytext serve is also useful when developing your app.
     If you make changes to your code, simply refresh the browser to update.
 
-There are some additional switches for serving Textual apps. Run the following for a list:
+There are some additional switches for serving Anytext apps. Run the following for a list:
 
 ```
 textual serve --help
@@ -112,7 +112,7 @@ This is a great feature for iterating on your app's look and feel. Open the CSS 
 
 ## Console
 
-When building a typical terminal application you are generally unable to use `print` when debugging (or log to the console). This is because anything you write to standard output will overwrite application content. Textual has a solution to this in the form of a debug console which restores `print` and adds a few additional features to help you debug.
+When building a typical terminal application you are generally unable to use `print` when debugging (or log to the console). This is because anything you write to standard output will overwrite application content. Anytext has a solution to this in the form of a debug console which restores `print` and adds a few additional features to help you debug.
 
 To use the console, open up **two** terminal emulators. Run the following in one of the terminals:
 
@@ -120,9 +120,9 @@ To use the console, open up **two** terminal emulators. Run the following in one
 textual console
 ```
 
-You should see the Textual devtools welcome message:
+You should see the Anytext devtools welcome message:
 
-```{.textual title="textual console" path="docs/examples/getting_started/console.py"}
+```{.anytext title="textual console" path="docs/examples/getting_started/console.py"}
 ```
 
 In the other console, run your application with `textual run` and the `--dev` switch:
@@ -131,12 +131,12 @@ In the other console, run your application with `textual run` and the `--dev` sw
 textual run --dev my_app.py
 ```
 
-Anything you `print` from your application will be displayed in the console window. Textual will also write log messages to this window which may be helpful when debugging your application.
+Anything you `print` from your application will be displayed in the console window. Anytext will also write log messages to this window which may be helpful when debugging your application.
 
 
 ### Increasing verbosity
 
-Textual writes log messages to inform you about certain events, such as when the user presses a key or clicks on the terminal. To avoid swamping you with too much information, some events are marked as "verbose" and will be excluded from the logs. If you want to see these log messages, you can add the `-v` switch.
+Anytext writes log messages to inform you about certain events, such as when the user presses a key or clicks on the terminal. To avoid swamping you with too much information, some events are marked as "verbose" and will be excluded from the logs. If you want to see these log messages, you can add the `-v` switch.
 
 ```bash
 textual console -v
@@ -154,7 +154,7 @@ textual console -x SYSTEM -x EVENT -x DEBUG -x INFO
 
 ### Custom port
 
-You can use the option `--port` to specify a custom port to run the console on, which comes in handy if you have other software running on the port that Textual uses by default:
+You can use the option `--port` to specify a custom port to run the console on, which comes in handy if you have other software running on the port that Anytext uses by default:
 
 ```bash
 textual console --port 7342
@@ -167,14 +167,14 @@ textual run --dev --port 7342 my_app.py
 ```
 
 
-## Textual log
+## Anytext log
 
 Use the `log` function to pretty-print data structures and anything that [Rich](https://rich.readthedocs.io/en/latest/) can display.
 
 You can import the log function as follows:
 
 ```python
-from textual import log
+from anytext import log
 ```
 
 Here's a few examples of writing to the console, with `log`:
@@ -194,7 +194,7 @@ def on_mount(self) -> None:
 There's a convenient shortcut to `log` on the `App` and `Widget` objects. This is useful in event handlers. Here's an example:
 
 ```python
-from textual.app import App
+from anytext.app import App
 
 class LogApp(App):
 
@@ -210,31 +210,31 @@ if __name__ == "__main__":
 
 ## Logging handler
 
-Textual has a [logging handler][textual.logging.TextualHandler] which will write anything logged via the builtin logging library to the devtools.
-This may be useful if you have a third-party library that uses the logging module, and you want to see those logs with Textual logs.
+Anytext has a [logging handler][anytext.logging.AnytextHandler] which will write anything logged via the builtin logging library to the devtools.
+This may be useful if you have a third-party library that uses the logging module, and you want to see those logs with Anytext logs.
 
 !!! note
 
     The logging library works with strings only, so you won't be able to log Rich renderables such as `self.tree` with the logging handler.
 
-Here's an example of configuring logging to use the `TextualHandler`.
+Here's an example of configuring logging to use the `AnytextHandler`.
 
 ```python
 import logging
-from textual.app import App
-from textual.logging import TextualHandler
+from anytext.app import App
+from anytext.logging import AnytextHandler
 
 logging.basicConfig(
     level="NOTSET",
-    handlers=[TextualHandler()],
+    handlers=[AnytextHandler()],
 )
 
 
 class LogApp(App):
-    """Using logging with Textual."""
+    """Using logging with Anytext."""
 
     def on_mount(self) -> None:
-        logging.debug("Logged via TextualHandler")
+        logging.debug("Logged via AnytextHandler")
 
 
 if __name__ == "__main__":

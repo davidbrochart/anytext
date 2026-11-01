@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.widgets import Label
 
 
 class BorderTitleApp(App):
@@ -10,8 +10,8 @@ class BorderTitleApp(App):
 
     def on_mount(self) -> None:
         label = self.query_one(Label)
-        label.border_title = "Textual Rocks"
-        label.border_subtitle = "Textual Rocks"
+        label.border_title = "Anytext Rocks"
+        label.border_subtitle = "Anytext Rocks"
 
 
 if __name__ == "__main__":

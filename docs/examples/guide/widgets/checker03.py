@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.geometry import Size
-from textual.strip import Strip
-from textual.scroll_view import ScrollView
+from anytext.app import App, ComposeResult
+from anytext.geometry import Size
+from anytext.strip import Strip
+from anytext.scroll_view import ScrollView
 
 from rich.segment import Segment
 

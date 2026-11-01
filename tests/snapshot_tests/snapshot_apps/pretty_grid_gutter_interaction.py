@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.containers import Grid
-from textual.widgets import Pretty, Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Grid
+from anytext.widgets import Pretty, Label
 
 
 class MyGrid(Grid):

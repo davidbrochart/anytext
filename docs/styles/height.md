@@ -19,7 +19,7 @@ This examples creates a widget with a height of 50% of the screen.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/height.py"}
+    ```{.anytext path="docs/examples/styles/height.py"}
     ```
 
 === "height.py"
@@ -42,7 +42,7 @@ Open the CSS file tab to see the comments that explain how each height is comput
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/height_comparison.py" lines=24 columns=80}
+    ```{.anytext path="docs/examples/styles/height_comparison.py" lines=24 columns=80}
     ```
 
 === "height_comparison.py"

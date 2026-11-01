@@ -24,10 +24,10 @@ This rule can be useful to add temporary emphasis on the content of a widget, if
 
 ## Border command
 
-The `textual` CLI has a subcommand which will let you explore the various border types interactively, when applied to the CSS rule [`border`](../styles/border.md):
+The `anytext` CLI has a subcommand which will let you explore the various border types interactively, when applied to the CSS rule [`border`](../styles/border.md):
 
 ```
-textual borders
+anytext borders
 ```
 
 ## Examples
@@ -39,7 +39,7 @@ Note how the outline occludes the text area.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/outline.py"}
+    ```{.anytext path="docs/examples/styles/outline.py"}
     ```
 
 === "outline.py"
@@ -60,7 +60,7 @@ The next example shows a grid with all the available outline types.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/outline_all.py"}
+    ```{.anytext path="docs/examples/styles/outline_all.py"}
     ```
 
 === "outline_all.py"

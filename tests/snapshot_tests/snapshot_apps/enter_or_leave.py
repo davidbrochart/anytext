@@ -1,8 +1,8 @@
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Label
-from textual.widget import Widget
-from textual import events
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import Label
+from anytext.widget import Widget
+from anytext import events
 
 
 class MyWidget(Widget):

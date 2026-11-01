@@ -1,9 +1,9 @@
-from textual.app import App, ComposeResult
+from anytext.app import App, ComposeResult
 
-from textual.widgets import Label
+from anytext.widgets import Label
 
-from textual.containers import VerticalGroup
-from textual.content import Content
+from anytext.containers import VerticalGroup
+from anytext.content import Content
 
 TEXT = """I must not fear.
 Fear is the mind-killer.

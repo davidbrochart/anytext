@@ -10,7 +10,7 @@ color: (<a href="../../css_types/color">&lt;color&gt;</a> | auto) [<a href="../.
 
 The `color` style requires a [`<color>`](../css_types/color.md) followed by an optional [`<percentage>`](../css_types/percentage.md) to specify the color's opacity.
 
-You can also use the special value of `"auto"` in place of a color. This tells Textual to automatically select either white or black text for best contrast against the background.
+You can also use the special value of `"auto"` in place of a color. This tells Anytext to automatically select either white or black text for best contrast against the background.
 
 ## Examples
 
@@ -20,7 +20,7 @@ This example sets a different text color for each of three different widgets.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/color.py"}
+    ```{.anytext path="docs/examples/styles/color.py"}
     ```
 
 === "color.py"
@@ -41,7 +41,7 @@ The next example shows how `auto` chooses between a lighter or a darker text col
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/color_auto.py"}
+    ```{.anytext path="docs/examples/styles/color_auto.py"}
     ```
 
 === "color_auto.py"
@@ -80,7 +80,7 @@ You can use the same syntax as CSS, or explicitly set a `Color` object.
 # Set blue text
 widget.styles.color = "blue"
 
-from textual.color import Color
+from anytext.color import Color
 # Set with a color object
 widget.styles.color = Color.parse("pink")
 ```

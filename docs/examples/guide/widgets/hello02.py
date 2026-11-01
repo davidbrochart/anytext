@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult, RenderResult
-from textual.widget import Widget
+from anytext.app import App, ComposeResult, RenderResult
+from anytext.widget import Widget
 
 
 class Hello(Widget):

@@ -18,7 +18,7 @@ Then, we set `max-width` individually on each placeholder.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/max_width.py"}
+    ```{.anytext path="docs/examples/styles/max_width.py"}
     ```
 
 === "max_width.py"

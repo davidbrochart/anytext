@@ -1,4 +1,4 @@
-from textual.demo.demo_app import DemoApp
+from anytext.demo.demo_app import DemoApp
 
 
 async def test_demo():

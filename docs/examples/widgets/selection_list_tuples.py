@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Footer, Header, SelectionList
+from anytext.app import App, ComposeResult
+from anytext.widgets import Footer, Header, SelectionList
 
 
 class SelectionListApp(App[None]):

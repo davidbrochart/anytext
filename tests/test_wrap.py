@@ -1,6 +1,6 @@
 import pytest
 
-from textual._wrap import chunks, compute_wrap_offsets
+from anytext._wrap import chunks, compute_wrap_offsets
 
 
 @pytest.mark.parametrize(

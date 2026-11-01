@@ -3,12 +3,12 @@ from pytest import approx
 from rich.console import Console
 from rich.text import Text
 
-from textual.app import App, ComposeResult
-from textual.color import Gradient
-from textual.css.query import NoMatches
-from textual.renderables.bar import _apply_gradient
-from textual.widget import Widget
-from textual.widgets import ProgressBar
+from anytext.app import App, ComposeResult
+from anytext.color import Gradient
+from anytext.css.query import NoMatches
+from anytext.renderables.bar import _apply_gradient
+from anytext.widget import Widget
+from anytext.widgets import ProgressBar
 
 
 async def test_initial_status():

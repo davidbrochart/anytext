@@ -1,8 +1,8 @@
 """Test that setting a toggle button's label has the desired effect."""
 
-from textual.app import App, ComposeResult
-from textual.content import Content
-from textual.widgets import Checkbox, RadioButton, RadioSet
+from anytext.app import App, ComposeResult
+from anytext.content import Content
+from anytext.widgets import Checkbox, RadioButton, RadioSet
 
 
 class LabelChangeApp(App[None]):

@@ -1,5 +1,5 @@
 ---
-title: "textual.worker"
+title: "anytext.worker"
 ---
 
-::: textual.worker
+::: anytext.worker

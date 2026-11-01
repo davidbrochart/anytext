@@ -1,8 +1,8 @@
-# Package a Textual app with Hatch
+# Package a Anytext app with Hatch
 
 Python apps may be distributed via [PyPI](https://pypi.org/) so they can be installed via `pip`.
 This is known as *packaging*.
-The packaging process for Textual apps is much the same as any Python library, with the additional requirement that we can launch our app from the command line.
+The packaging process for Anytext apps is much the same as any Python library, with the additional requirement that we can launch our app from the command line.
 
 !!! tip
 
@@ -11,15 +11,15 @@ The packaging process for Textual apps is much the same as any Python library, w
 In this How To we will cover how to use [Hatch](https://github.com/pypa/hatch) to package an example application.
 
 Hatch is a *build tool* (a command line app to assist with packaging).
-You could use any build tool to package a Textual app (such as [Poetry](https://python-poetry.org/) for example), but Hatch is a good choice given its large feature set and ease of use.
+You could use any build tool to package a Anytext app (such as [Poetry](https://python-poetry.org/) for example), but Hatch is a good choice given its large feature set and ease of use.
 
 
 !!! info inline end "Calculator example"
 
-    ```{.textual path="examples/calculator.py" columns=100 lines=41 press="3,.,1,4,5,9,2,wait:400"}
+    ```{.anytext path="examples/calculator.py" columns=100 lines=41 press="3,.,1,4,5,9,2,wait:400"}
     ```
 
-    This example is [`calculator.py`](https://github.com/Textualize/textual/blob/main/examples/calculator.py) taken from the examples directory in the Textual repository.
+    This example is [`calculator.py`](https://github.com/Textualize/textual/blob/main/examples/calculator.py) taken from the examples directory in the Anytext repository.
 
 
 ## Foreword
@@ -30,7 +30,7 @@ When you have been through it once or twice, you should find it fairly straightf
 
 ## Example repository
 
-See the [textual-calculator-hatch](https://github.com/Textualize/textual-calculator-hatch) repository for the project created in this How To.
+See the [anytext-calculator-hatch](https://github.com/Textualize/textual-calculator-hatch) repository for the project created in this How To.
 
 ## The example app
 
@@ -39,7 +39,7 @@ The end goal is to allow a user to install it with pip:
 
 
 ```bash
-pip install textual-calculator
+pip install anytext-calculator
 ```
 
 Then launch the app from the command line:
@@ -64,21 +64,21 @@ hatch
 
 Hatch can create an initial directory structure and files with the `new` *subcommand*.
 Enter `hatch new` followed by the name of your project.
-For the calculator example, the name will be "textual calculator":
+For the calculator example, the name will be "anytext calculator":
 
 ```batch
-hatch new "textual calculator"
+hatch new "anytext calculator"
 ```
 
 This will create the following directory structure:
 
 ```
-textual-calculator
+anytext-calculator
 ├── LICENSE.txt
 ├── README.md
 ├── pyproject.toml
 ├── src
-│   └── textual_calculator
+│   └── anytext_calculator
 │       ├── __about__.py
 │       └── __init__.py
 └── tests
@@ -90,18 +90,18 @@ This follows a well established convention when packaging Python code, and will 
 - `LICENSE.txt` contains the license you want to distribute your code under.
 - `README.md` is a markdown file containing information about your project, which will be displayed in PyPI and Github (if you use it). You can edit this with information about your app and how to use it.
 - `pyproject.toml` is a [TOML](https://en.wikipedia.org/wiki/TOML) file which contains *metadata* (additional information) about your project and how to package it. This is a Python standard. This file may be edited manually or by a build tool (such as Hatch).
-- `src/textual_calculator/__about__.py` contains the version number of your app. You should update this when you release new versions.
-- `src/textual_calculator/__init__.py`  and `tests/__init__py` indicate the directory they are within contains Python code (these files are often empty).
+- `src/anytext_calculator/__about__.py` contains the version number of your app. You should update this when you release new versions.
+- `src/anytext_calculator/__init__.py`  and `tests/__init__py` indicate the directory they are within contains Python code (these files are often empty).
  
 In the top level is a directory called `src`.
 This should contain a directory named after your project, and will be the name your code can be imported from.
-In our example, this directory is `textual_calculator` so we can do `import textual_calculator` in Python code.
+In our example, this directory is `anytext_calculator` so we can do `import anytext_calculator` in Python code.
 
 Additionally, there is a `tests` directory where you can add any [test](../guide/testing.md) code.
 
 ### More on naming
 
-Note how Hatch replaced the space in the project name with a hyphen (i.e. `textual-calculator`), but the directory in `src` with an underscore (i.e. `textual_calculator`). This is because the directory in `src` contains the Python module, and a hyphen is not legal in a Python import. The top-level directory doesn't have this restriction and uses a hyphen, which is more typical for a directory name.
+Note how Hatch replaced the space in the project name with a hyphen (i.e. `anytext-calculator`), but the directory in `src` with an underscore (i.e. `anytext_calculator`). This is because the directory in `src` contains the Python module, and a hyphen is not legal in a Python import. The top-level directory doesn't have this restriction and uses a hyphen, which is more typical for a directory name.
 
 Bear this in mind if your project name contains spaces.
 
@@ -124,15 +124,15 @@ This will generate a `pyproject.toml` in the current directory.
 ## Adding code
 
 Your code should reside inside `src/<PROJECT NAME>`.
-For the calculator example we will copy `calculator.py` and `calculator.tcss` into the `src/textual_calculator` directory, so our directory will look like the following:
+For the calculator example we will copy `calculator.py` and `calculator.tcss` into the `src/anytext_calculator` directory, so our directory will look like the following:
 
 ```
-textual-calculator
+anytext-calculator
 ├── LICENSE.txt
 ├── README.md
 ├── pyproject.toml
 ├── src
-│   └── textual_calculator
+│   └── anytext_calculator
 │       ├── __about__.py
 │       ├── __init__.py
 │       ├── calculator.py
@@ -143,14 +143,14 @@ textual-calculator
 
 ## Adding dependencies
 
-Your Textual app will likely depend on other Python libraries (at the very least Textual itself).
+Your Anytext app will likely depend on other Python libraries (at the very least Anytext itself).
 We need to list these in `pyproject.toml` to ensure that these *dependencies* are installed alongside your app.
 
 In `pyproject.toml` there should be a section beginning with `[project]`, which will look something like the following:
 
 ```toml
 [project]
-name = "textual-calculator"
+name = "anytext-calculator"
 dynamic = ["version"]
 description = 'A example app'
 readme = "README.md"
@@ -177,14 +177,14 @@ dependencies = []
 We are interested in the `dependencies` value, which should list the app's dependencies.
 If you want a particular version of a project you can add `==` followed by the version.
 
-For the calculator, the only dependency is Textual.
-We can add Textual by modifying the following line:
+For the calculator, the only dependency is Anytext.
+We can add Anytext by modifying the following line:
 
 ```toml
-dependencies = ["textual==0.47.1"]
+dependencies = ["anytext>=8.2.8"]
 ```
 
-At the time of writing, the latest Textual is `0.47.1`.
+At the time of writing, the latest Anytext is `0.47.1`.
 The entry in `dependencies` will ensure we get that particular version, even when newer versions are released.
 
 See the Hatch docs for more information on specifying [dependencies](https://hatch.pypa.io/latest/config/dependency/).
@@ -192,7 +192,7 @@ See the Hatch docs for more information on specifying [dependencies](https://hat
 ## Environments
 
 A common problem when working with Python code is managing multiple projects with different dependencies.
-For instance, if we had another app that used version `0.40.0` of Textual, it *may* break if we installed version `0.47.1`.
+For instance, if we had another app that used version `0.40.0` of Anytext, it *may* break if we installed version `0.47.1`.
 
 The standard way of solving this is with *virtual environments* (or *venvs*), which allow each project to have its own set of dependencies.
 Hatch can create virtual environments for us, and makes working with them very easy.
@@ -215,7 +215,7 @@ If you run `python` now, it will have our app and its dependencies available for
 $ python
 Python 3.11.1 (main, Jan  1 2023, 10:28:48) [Clang 14.0.0 (clang-1400.0.29.202)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
->>> from textual_calculator import calculator
+>>> from anytext_calculator import calculator
 ```
 
 ### Running the app
@@ -223,7 +223,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 You can launch the calculator from the command line with the following command:
 
 ```bash
-python -m textual_calculator.calculator
+python -m anytext_calculator.calculator
 ```
 
 The `-m` switch tells Python to import the module and run it.
@@ -236,10 +236,10 @@ To do that, we will need to add an *entry point* to pyproject.toml
 
 An entry point is a function in your project that can be run from the command line.
 For our calculator example, we first need to create a function that will run the app.
-Add the following file to the `src/textual_calculator` folder, and name it `entry_points.py`:
+Add the following file to the `src/anytext_calculator` folder, and name it `entry_points.py`:
 
 ```python
-from textual_calculator.calculator import CalculatorApp
+from anytext_calculator.calculator import CalculatorApp
 
 
 def calculator():
@@ -255,18 +255,18 @@ Then edit `pyproject.toml` to add the following section:
 
 ```toml
 [project.scripts]
-calculator = "textual_calculator.entry_points:calculator"
+calculator = "anytext_calculator.entry_points:calculator"
 ```
 
 Each entry in the `[project.scripts]` section (there can be more than one) maps a command on to an import and function name.
 In the second line above, before the `=` character, `calculator` is the name of the command.
-The string after the `=` character contains the name of the import (`textual_calculator.entry_points`), followed by a colon (`:`), and then the name of the function (also called `calculator`).
+The string after the `=` character contains the name of the import (`anytext_calculator.entry_points`), followed by a colon (`:`), and then the name of the function (also called `calculator`).
 
 Specifying an entry point like this is equivalent to doing the following from the Python REPL:
 
 ```
->>> import textual_calculator.entry_points
->>> textual_calculator.entry_points.calculator()
+>>> import anytext_calculator.entry_points
+>>> anytext_calculator.entry_points.calculator()
 ```
 
 To add the `calculator` command once you have edited `pyproject.toml`, run the following from the command line:
@@ -294,7 +294,7 @@ When you install a package via pip or other tool, it will download one of these 
 To build your project with Hatch, change to the directory containing your `pyproject.toml` and run the `hatch build` subcommand:
 
 ```
-cd textual-calculator
+cd anytext-calculator
 hatch build
 ```
 
@@ -304,8 +304,8 @@ You don't typically need to use these files directly, but feel free to have a lo
 !!! note "Packaging TCSS and other files"
 
     Hatch will typically include all the files needed by your project, i.e. the `.py` files.
-    It will also include any Textual CSS (`.tcss`) files in the project directory.
-    Not all build tools will include files other than `.py`; if you are using another build tool, you may have to consult the documentation for how to add the Textual CSS files.
+    It will also include any Anytext CSS (`.tcss`) files in the project directory.
+    Not all build tools will include files other than `.py`; if you are using another build tool, you may have to consult the documentation for how to add the Anytext CSS files.
 
 
 ## Publishing
@@ -342,14 +342,14 @@ If you have made changes to your app, and you want to publish the updates, you w
 
 !!! tip "Managing version numbers"
 
-    See [Semver](https://semver.org/) for a popular versioning system (used by Textual itself).
+    See [Semver](https://semver.org/) for a popular versioning system (used by Anytext itself).
 
 ## Installing the calculator
 
 From the user's point of view, they only need run the following command to install the calculator:
 
 ```bash
-pip install textual_calculator
+pip install anytext_calculator
 ```
 
 They will then be able to launch the calculator with the following command:
@@ -366,10 +366,10 @@ A good solution to this issue is [pipx](https://github.com/pypa/pipx) which auto
 Once PipX is installed, you can advise users to install your app with the following command:
 
 ```bash
-pipx install textual_calculator
+pipx install anytext_calculator
 ```
 
-This will install the calculator and the `textual` dependency as before, but without the potential of dependency conflicts.
+This will install the calculator and the `anytext` dependency as before, but without the potential of dependency conflicts.
 
 ## Summary
 
@@ -382,4 +382,4 @@ This will install the calculator and the `textual` dependency as before, but wit
 
 ---
 
-If you have any problems packaging Textual apps, we are here to [help](../help.md)!
+If you have any problems packaging Anytext apps, we are here to [help](../help.md)!

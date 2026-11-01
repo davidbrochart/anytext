@@ -1,12 +1,12 @@
 # Screens
 
-This chapter covers Textual's screen API. We will discuss how to create screens and switch between them.
+This chapter covers Anytext's screen API. We will discuss how to create screens and switch between them.
 
 ## What is a screen?
 
 Screens are containers for widgets that occupy the dimensions of your terminal. There can be many screens in a given app, but only one screen is active at a time.
 
-Textual requires that there be at least one screen object and will create one implicitly in the App class. If you don't change the screen, any widgets you [mount][textual.widget.Widget.mount] or [compose][textual.widget.Widget.compose] will be added to this default screen.
+Anytext requires that there be at least one screen object and will create one implicitly in the App class. If you don't change the screen, any widgets you [mount][anytext.widget.Widget.mount] or [compose][anytext.widget.Widget.compose] will be added to this default screen.
 
 <div class="excalidraw">
 --8<-- "docs/images/dom1.excalidraw.svg"
@@ -14,7 +14,7 @@ Textual requires that there be at least one screen object and will create one im
 
 ## Creating a screen
 
-You can create a screen by extending the [Screen][textual.screen.Screen] class which you can import from `textual.screen`. The screen may be styled in the same way as other widgets, with the exception that you can't modify the screen's dimensions (as these will always be the size of your terminal).
+You can create a screen by extending the [Screen][anytext.screen.Screen] class which you can import from `anytext.screen`. The screen may be styled in the same way as other widgets, with the exception that you can't modify the screen's dimensions (as these will always be the size of your terminal).
 
 Let's look at a simple example of writing a screen class to simulate Window's [blue screen of death](https://en.wikipedia.org/wiki/Blue_screen_of_death).
 
@@ -32,20 +32,20 @@ Let's look at a simple example of writing a screen class to simulate Window's [b
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/screens/screen01.py" press="b"}
+    ```{.anytext path="docs/examples/guide/screens/screen01.py" press="b"}
     ```
 
 If you run this you will see an empty screen. Hit the ++b++ key to show a blue screen of death. Hit ++escape++ to return to the default screen.
 
 The `BSOD` class above defines a screen with a key binding and compose method. These should be familiar as they work in the same way as apps.
 
-The app class has a new `SCREENS` class variable. Textual uses this class variable to associate a name with screen object (the name is used to reference screens in the screen API). Also in the app is a key binding associated with the action `"push_screen('bsod')"`. The screen class has a similar action `"pop_screen"` bound to the ++escape++ key. We will cover these actions below.
+The app class has a new `SCREENS` class variable. Anytext uses this class variable to associate a name with screen object (the name is used to reference screens in the screen API). Also in the app is a key binding associated with the action `"push_screen('bsod')"`. The screen class has a similar action `"pop_screen"` bound to the ++escape++ key. We will cover these actions below.
 
 ## Named screens
 
 You can associate a screen with a name by defining a `SCREENS` class variable in your app, which should be a `dict` that maps names on to `Screen` objects. The name of the screen may be used interchangeably with screen objects in much of the screen API.
 
-You can also _install_ new named screens dynamically with the [install_screen][textual.app.App.install_screen] method. The following example installs the `BSOD` screen in a mount handler rather than from the `SCREENS` variable.
+You can also _install_ new named screens dynamically with the [install_screen][anytext.app.App.install_screen] method. The following example installs the `BSOD` screen in a mount handler rather than from the `SCREENS` variable.
 
 === "screen02.py"
 
@@ -61,20 +61,20 @@ You can also _install_ new named screens dynamically with the [install_screen][t
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/screens/screen02.py" press="b"}
+    ```{.anytext path="docs/examples/guide/screens/screen02.py" press="b"}
     ```
 
 Although both do the same thing, we recommend `SCREENS` for screens that exist for the lifetime of your app.
 
 ### Uninstalling screens
 
-Screens defined in `SCREENS` or added with [install_screen][textual.app.App.install_screen] are _installed_ screens. Textual will keep these screens in memory for the lifetime of your app.
+Screens defined in `SCREENS` or added with [install_screen][anytext.app.App.install_screen] are _installed_ screens. Anytext will keep these screens in memory for the lifetime of your app.
 
-If you have installed a screen, but you later want it to be removed and cleaned up, you can call [uninstall_screen][textual.app.App.uninstall_screen].
+If you have installed a screen, but you later want it to be removed and cleaned up, you can call [uninstall_screen][anytext.app.App.uninstall_screen].
 
 ## Screen stack
 
-Textual apps keep a _stack_ of screens. You can think of this screen stack as a stack of paper, where only the very top sheet is visible. If you remove the top sheet, the paper underneath becomes visible. Screens work in a similar way.
+Anytext apps keep a _stack_ of screens. You can think of this screen stack as a stack of paper, where only the very top sheet is visible. If you remove the top sheet, the paper underneath becomes visible. Screens work in a similar way.
 
 !!! note
 
@@ -84,7 +84,7 @@ The active screen (top of the stack) will render the screen and receive input ev
 
 ### Push screen
 
-The [push_screen][textual.app.App.push_screen] method puts a screen on top of the stack and makes that screen active. You can call this method with the name of an installed screen, or a screen object.
+The [push_screen][anytext.app.App.push_screen] method puts a screen on top of the stack and makes that screen active. You can call this method with the name of an installed screen, or a screen object.
 
 <div class="excalidraw">
 --8<-- "docs/images/screens/push_screen.excalidraw.svg"
@@ -96,11 +96,11 @@ You can also push screens with the `"app.push_screen"` action, which requires th
 
 ### Pop screen
 
-The [pop_screen][textual.app.App.pop_screen] method removes the top-most screen from the stack, and makes the new top screen active.
+The [pop_screen][anytext.app.App.pop_screen] method removes the top-most screen from the stack, and makes the new top screen active.
 
 !!! note
 
-    The screen stack must always have at least one screen. If you attempt to remove the last screen, Textual will raise a [ScreenStackError][textual.app.ScreenStackError] exception.
+    The screen stack must always have at least one screen. If you attempt to remove the last screen, Anytext will raise a [ScreenStackError][anytext.app.ScreenStackError] exception.
 
 <div class="excalidraw">
 --8<-- "docs/images/screens/pop_screen.excalidraw.svg"
@@ -115,7 +115,7 @@ You can also pop screens with the `"app.pop_screen"` action.
 
 ### Switch screen
 
-The [switch_screen][textual.app.App.switch_screen] method replaces the top of the stack with a new screen.
+The [switch_screen][anytext.app.App.switch_screen] method replaces the top of the stack with a new screen.
 
 <div class="excalidraw">
 --8<-- "docs/images/screens/switch_screen.excalidraw.svg"
@@ -156,12 +156,12 @@ From the quit screen you can click either Quit to exit the app immediately, or C
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/screens/modal01.py"}
+    ```{.anytext path="docs/examples/guide/screens/modal01.py"}
     ```
 
 === "Output (after pressing ++q++)"
 
-    ```{.textual path="docs/examples/guide/screens/modal01.py" press="q"}
+    ```{.anytext path="docs/examples/guide/screens/modal01.py" press="q"}
     ```
 
 === "modal01.py"
@@ -178,7 +178,7 @@ From the quit screen you can click either Quit to exit the app immediately, or C
 
 
 Note the `request_quit` action in the app which pushes a new instance of `QuitScreen`.
-This makes the quit screen active. If you click Cancel, the quit screen calls [pop_screen][textual.app.App.pop_screen] to return the default screen. This also removes and deletes the `QuitScreen` object.
+This makes the quit screen active. If you click Cancel, the quit screen calls [pop_screen][anytext.app.App.pop_screen] to return the default screen. This also removes and deletes the `QuitScreen` object.
 
 There are two flaws with this modal screen, which we can fix in the same way.
 
@@ -189,7 +189,7 @@ This is because bindings defined on App are always checked, and we call `push_sc
 The second flaw is that the modal dialog doesn't *look* modal.
 There is no indication that the main interface is still there, waiting to become active again.
 
-We can solve both those issues by replacing our use of [Screen][textual.screen.Screen] with [ModalScreen][textual.screen.ModalScreen].
+We can solve both those issues by replacing our use of [Screen][anytext.screen.Screen] with [ModalScreen][anytext.screen.ModalScreen].
 This screen sub-class will prevent key bindings on the app from being processed.
 It also sets a background with a little alpha to allow the previous screen to show through.
 
@@ -198,12 +198,12 @@ Let's see what happens when we use `ModalScreen`.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/screens/modal02.py"}
+    ```{.anytext path="docs/examples/guide/screens/modal02.py"}
     ```
 
 === "Output (after pressing ++q++)"
 
-    ```{.textual path="docs/examples/guide/screens/modal02.py" press="q"}
+    ```{.anytext path="docs/examples/guide/screens/modal02.py" press="q"}
     ```
 
 === "modal02.py"
@@ -226,8 +226,8 @@ The main screen is darkened to indicate to the user that it is not active, and o
 It is a common requirement for screens to be able to return data.
 For instance, you may want a screen to show a dialog and have the result of that dialog processed *after* the screen has been popped.
 
-To return data from a screen, call [`dismiss()`][textual.screen.Screen.dismiss] on the screen with the data you wish to return.
-This will pop the screen and invoke a callback set when the screen was pushed (with [`push_screen`][textual.app.App.push_screen]).
+To return data from a screen, call [`dismiss()`][anytext.screen.Screen.dismiss] on the screen with the data you wish to return.
+This will pop the screen and invoke a callback set when the screen was pushed (with [`push_screen`][anytext.app.App.push_screen]).
 
 Let's modify the previous example to use `dismiss` rather than an explicit `pop_screen`.
 
@@ -256,13 +256,13 @@ Returning data in this way can help keep your code manageable by making it easy 
 ### Typing screen results
 
 You may have noticed in the previous example that we changed the base class to `ModalScreen[bool]`.
-The addition of `[bool]` adds typing information that tells the type checker to expect a boolean in the call to `dismiss`, and that any callback set in `push_screen` should also expect the same type. As always, typing is optional in Textual, but this may help you catch bugs.
+The addition of `[bool]` adds typing information that tells the type checker to expect a boolean in the call to `dismiss`, and that any callback set in `push_screen` should also expect the same type. As always, typing is optional in Anytext, but this may help you catch bugs.
 
 
 ### Waiting for screens
 
 It is also possible to wait on a screen to be dismissed, which can feel like a more natural way of expressing logic than a callback.
-The [`push_screen_wait()`][textual.app.App.push_screen_wait] method will push a screen and wait for its result (the value from [`Screen.dismiss()`][textual.screen.Screen.dismiss]).
+The [`push_screen_wait()`][anytext.app.App.push_screen_wait] method will push a screen and wait for its result (the value from [`Screen.dismiss()`][anytext.screen.Screen.dismiss]).
 
 This can only be done from a [worker](./workers.md), so that waiting for the screen doesn't prevent your app from updating.
 
@@ -289,12 +289,12 @@ Let's look at an example that uses `push_screen_wait` to ask a question and wait
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/screens/questions01.py"}
+    ```{.anytext path="docs/examples/guide/screens/questions01.py"}
     ```
 
 The mount handler on the app is decorated with `@work`, which makes the code run in a worker (background task).
 In the mount handler we push the screen with the `push_screen_wait`.
-When the user presses one of the buttons, the screen calls [`dismiss()`][textual.screen.Screen.dismiss] with either `True` or `False`.
+When the user presses one of the buttons, the screen calls [`dismiss()`][anytext.screen.Screen.dismiss] with either `True` or `False`.
 This value is then returned from the `push_screen_wait` method in the mount handler.
 
 
@@ -305,7 +305,7 @@ Consider an app with a dashboard screen, a settings screen, and a help screen.
 These are independent in the sense that we don't want to prevent the user from switching between them, even if there are one or more modal screens on the screen stack.
 But we may still want each individual screen to have a navigation stack where we can push and pop screens.
 
-In Textual we can manage this with *modes*.
+In Anytext we can manage this with *modes*.
 A mode is simply a named screen stack, which we can switch between as required.
 When we switch modes, the topmost screen in the new mode becomes the active visible screen.
 
@@ -322,14 +322,14 @@ If we later change the mode to "settings", the top of that mode's screen stack b
 --8<-- "docs/images/screens/modes2.excalidraw.svg"
 </div>
 
-To add modes to your app, define a [`MODES`][textual.app.App.MODES] class variable in your App class which should be a `dict` that maps the name of the mode on to either a screen object, a callable that returns a screen, or the name of an installed screen.
+To add modes to your app, define a [`MODES`][anytext.app.App.MODES] class variable in your App class which should be a `dict` that maps the name of the mode on to either a screen object, a callable that returns a screen, or the name of an installed screen.
 However you specify it, the values in `MODES` set the base screen for each mode's screen stack.
 
-You can switch between these screens at any time by calling [`App.switch_mode`][textual.app.App.switch_mode].
+You can switch between these screens at any time by calling [`App.switch_mode`][anytext.app.App.switch_mode].
 When you switch to a new mode, the topmost screen in the new stack becomes visible.
-Any calls to [`App.push_screen`][textual.app.App.push_screen] or [`App.pop_screen`][textual.app.App.pop_screen] will affect only the active mode.
+Any calls to [`App.push_screen`][anytext.app.App.push_screen] or [`App.pop_screen`][anytext.app.App.pop_screen] will affect only the active mode.
 
-You can set which mode will be active when the app starts by setting the [`DEFAULT_MODE`][textual.app.App.DEFAULT_MODE] class variable.
+You can set which mode will be active when the app starts by setting the [`DEFAULT_MODE`][anytext.app.App.DEFAULT_MODE] class variable.
 
 Let's look at an example with modes:
 
@@ -345,12 +345,12 @@ Let's look at an example with modes:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/screens/modes01.py"}
+    ```{.anytext path="docs/examples/guide/screens/modes01.py"}
     ```
 
 === "Output (after pressing S)"
 
-    ```{.textual path="docs/examples/guide/screens/modes01.py", press="s"}
+    ```{.anytext path="docs/examples/guide/screens/modes01.py", press="s"}
     ```
 
 Here we have defined three screens.
@@ -362,8 +362,8 @@ Pressing ++d++, ++s++, or ++h++ switches between these modes.
 
 ## Screen events
 
-Textual will send a [ScreenSuspend](../events/screen_suspend.md) event to screens that have become inactive due to another screen being pushed, or switching via a mode.
+Anytext will send a [ScreenSuspend](../events/screen_suspend.md) event to screens that have become inactive due to another screen being pushed, or switching via a mode.
 
-When a screen becomes active, Textual will send a [ScreenResume](../events/screen_resume.md) event to the newly active screen.
+When a screen becomes active, Anytext will send a [ScreenResume](../events/screen_resume.md) event to the newly active screen.
 
 These events can be useful if you want to disable processing for a screen that is no longer visible, for example.

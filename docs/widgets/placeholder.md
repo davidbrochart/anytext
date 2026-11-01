@@ -17,7 +17,7 @@ The example below shows each placeholder variant.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/placeholder.py"}
+    ```{.anytext path="docs/examples/widgets/placeholder.py"}
     ```
 
 === "placeholder.py"
@@ -54,6 +54,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Placeholder
+::: anytext.widgets.Placeholder
     options:
       heading_level: 2

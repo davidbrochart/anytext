@@ -25,7 +25,7 @@ In this example we modify the size of the widget's scrollbar to be _much_ larger
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/scrollbar_size.py"}
+    ```{.anytext path="docs/examples/styles/scrollbar_size.py"}
     ```
 
 === "scrollbar_size.py"
@@ -51,7 +51,7 @@ In the next example we show three containers with differently sized scrollbars.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/scrollbar_size2.py"}
+    ```{.anytext path="docs/examples/styles/scrollbar_size2.py"}
     ```
 
 === "scrollbar_size2.py"

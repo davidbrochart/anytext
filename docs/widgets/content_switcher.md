@@ -18,7 +18,7 @@ between the different views.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/content_switcher.py"}
+    ```{.anytext path="docs/examples/widgets/content_switcher.py"}
     ```
 
 === "content_switcher.py"
@@ -41,7 +41,7 @@ between the different views.
 
 When the user presses the "Markdown" button the view is switched:
 
-```{.textual path="docs/examples/widgets/content_switcher.py" lines="40" press="tab,enter"}
+```{.anytext path="docs/examples/widgets/content_switcher.py" lines="40" press="tab,enter"}
 ```
 
 ## Reactive Attributes
@@ -66,6 +66,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.ContentSwitcher
+::: anytext.widgets.ContentSwitcher
     options:
       heading_level: 2

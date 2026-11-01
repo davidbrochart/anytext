@@ -1,7 +1,7 @@
-from textual.app import App
-from textual.color import Color
-from textual.screen import Screen
-from textual.widgets import Label
+from anytext.app import App
+from anytext.color import Color
+from anytext.screen import Screen
+from anytext.widgets import Label
 
 RED = Color(255, 0, 0)
 GREEN = Color(0, 255, 0)

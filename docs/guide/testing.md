@@ -1,7 +1,7 @@
 # Testing
 
 Code testing is an important part of software development.
-This chapter will cover how to write tests for your Textual apps.
+This chapter will cover how to write tests for your Anytext apps.
 
 ## What is testing?
 
@@ -21,10 +21,10 @@ Writing code that is completely bug free is virtually impossible, even for exper
 If you want to have confidence that your application will run as you intended it to, then you should write tests.
 Your test code will help you find bugs early, and alert you if you accidentally break something in the future.
 
-## Testing frameworks for Textual
+## Testing frameworks for Anytext
 
-Textual is an async framework powered by Python's [asyncio](https://docs.python.org/3/library/asyncio.html) library.
-While Textual doesn't require a particular test framework, it must provide support for asyncio testing.
+Anytext is an async framework powered by Python's [asyncio](https://docs.python.org/3/library/asyncio.html) library.
+While Anytext doesn't require a particular test framework, it must provide support for asyncio testing.
 
 You can use any test framework you are familiar with, but we will be using [pytest](https://docs.pytest.org/)
 along with the [pytest-asyncio](https://pytest-asyncio.readthedocs.io/) plugin in this chapter.
@@ -36,10 +36,10 @@ or by running pytest with the `--asyncio-mode=auto` option.
 
 ## Testing apps
 
-You can often test Textual code in the same way as any other app, and use similar techniques.
-But when testing user interface interactions, you may need to use Textual's dedicated test features.
+You can often test Anytext code in the same way as any other app, and use similar techniques.
+But when testing user interface interactions, you may need to use Anytext's dedicated test features.
 
-Let's write a simple Textual app so we can demonstrate how to test it.
+Let's write a simple Anytext app so we can demonstrate how to test it.
 The following app shows three buttons labelled "red", "green", and "blue".
 Clicking one of those buttons or pressing a corresponding ++r++, ++g++, and ++b++ key will change the background color.
 
@@ -51,16 +51,16 @@ Clicking one of those buttons or pressing a corresponding ++r++, ++g++, and ++b+
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/testing/rgb.py"}
+    ```{.anytext path="docs/examples/guide/testing/rgb.py"}
     ```
 
 Although it is straightforward to test an app like this manually, it is not practical to click every button and hit every key in your app after changing a single line of code.
 Tests allow us to automate such testing so we can quickly simulate user interactions and check the result.
 
-To test our simple app we will use the [`run_test()`][textual.app.App.run_test] method on the `App` class.
-This replaces the usual call to [`run()`][textual.app.App.run] and will run the app in *headless* mode, which prevents Textual from updating the terminal but otherwise behaves as normal.
+To test our simple app we will use the [`run_test()`][anytext.app.App.run_test] method on the `App` class.
+This replaces the usual call to [`run()`][anytext.app.App.run] and will run the app in *headless* mode, which prevents Anytext from updating the terminal but otherwise behaves as normal.
 
-The `run_test()` method is an *async context manager* which returns a [`Pilot`][textual.pilot.Pilot] object.
+The `run_test()` method is an *async context manager* which returns a [`Pilot`][anytext.pilot.Pilot] object.
 You can use this object to interact with the app as if you were operating it with a keyboard and mouse.
 
 Let's look at the tests for the example above:
@@ -78,9 +78,9 @@ Let's look at the tests for the example above:
 There are two tests defined in `test_rgb.py`.
 The first to test keys and the second to test button clicks.
 Both tests first construct an instance of the app and then call `run_test()` to get a Pilot object.
-The `test_keys` function simulates key presses with [`Pilot.press`][textual.pilot.Pilot.press], and `test_buttons` simulates button clicks with [`Pilot.click`][textual.pilot.Pilot.click].
+The `test_keys` function simulates key presses with [`Pilot.press`][anytext.pilot.Pilot.press], and `test_buttons` simulates button clicks with [`Pilot.click`][anytext.pilot.Pilot.click].
 
-After simulating a user interaction, Textual tests will typically check the state has been updated with an `assert` statement.
+After simulating a user interaction, Anytext tests will typically check the state has been updated with an `assert` statement.
 The `pytest` module will record any failures of these assert statements as a test fail.
 
 If you run the tests with `pytest test_rgb.py` you should get 2 passes, which will confirm that the user will be able to click buttons or press the keys to change the background color.
@@ -90,7 +90,7 @@ Knowing which test has failed will help you quickly track down where your code w
 
 ## Simulating key presses
 
-We've seen how the [`press`][textual.pilot.Pilot] method simulates keys.
+We've seen how the [`press`][anytext.pilot.Pilot] method simulates keys.
 You can also supply multiple keys to simulate the user typing into the app.
 Here's an example of simulating the user typing the word "hello".
 
@@ -100,12 +100,12 @@ await pilot.press("h", "e", "l", "l", "o")
 
 Each string creates a single keypress.
 You can also use the name for non-printable keys (such as "enter") and the "ctrl+" modifier.
-These are the same identifiers as used for key events, which you can experiment with by running `textual keys`.
+These are the same identifiers as used for key events, which you can experiment with by running `anytext keys`.
 
 ## Simulating clicks
 
-You can simulate mouse clicks in a similar way with [`Pilot.click`][textual.pilot.Pilot.click].
-If you supply a CSS selector Textual will simulate clicking on the matching widget.
+You can simulate mouse clicks in a similar way with [`Pilot.click`][anytext.pilot.Pilot.click].
+If you supply a CSS selector Anytext will simulate clicking on the matching widget.
 
 !!! note
 
@@ -160,7 +160,7 @@ await pilot.click("#slider", control=True)
 
 The default size of a simulated app is (80, 24).
 You may want to test what happens when the app has a different size.
-To do this, set the `size` parameter of [`run_test`][textual.app.App.run_test] to a different size.
+To do this, set the `size` parameter of [`run_test`][anytext.app.App.run_test] to a different size.
 For example, here is how you would simulate a terminal resized to 100 columns and 50 lines:
 
 ```python
@@ -170,27 +170,27 @@ async with app.run_test(size=(100, 50)) as pilot:
 
 ## Pausing the pilot
 
-Some actions in a Textual app won't change the state immediately.
+Some actions in a Anytext app won't change the state immediately.
 For instance, messages may take a moment to bubble from the widget that sent them.
 If you were to post a message and immediately `assert` you may find that it fails because the message hasn't yet been processed.
 
-You can generally solve this by calling [`pause()`][textual.pilot.Pilot.pause] which will wait for all pending messages to be processed.
+You can generally solve this by calling [`pause()`][anytext.pilot.Pilot.pause] which will wait for all pending messages to be processed.
 You can also supply a `delay` parameter, which will insert a delay prior to waiting for pending messages.
 
 
-## Textual's tests
+## Anytext's tests
 
-Textual itself has a large battery of tests.
-If you are interested in how we write tests, see the [tests/](https://github.com/Textualize/textual/tree/main/tests) directory in the Textual repository.
+Anytext itself has a large battery of tests.
+If you are interested in how we write tests, see the [tests/](https://github.com/Textualize/textual/tree/main/tests) directory in the Anytext repository.
 
 ## Snapshot testing
 
 Snapshot testing is the process of recording the output of a test, and comparing it against the output from previous runs.
 
-Textual uses snapshot testing internally to ensure that the builtin widgets look and function correctly in every release.
+Anytext uses snapshot testing internally to ensure that the builtin widgets look and function correctly in every release.
 We've made the pytest plugin we built available for public use.
 
-The [official Textual pytest plugin](https://github.com/Textualize/pytest-textual-snapshot) can help you catch otherwise difficult to detect visual changes in your app.
+The [official Anytext pytest plugin](https://github.com/Textualize/pytest-textual-snapshot) can help you catch otherwise difficult to detect visual changes in your app.
 
 It works by generating an SVG _screenshot_ (such as the images in these docs) from your app.
 If the screenshot changes in any test run, you will have the opportunity to visually compare the new output against previous runs.
@@ -210,7 +210,7 @@ With the package installed, you now have access to the `snap_compare` pytest fix
 
 Let's look at an example of how we'd create a snapshot test for the [calculator app](https://github.com/Textualize/textual/blob/main/examples/calculator.py) below.
 
-```{.textual path="examples/calculator.py" columns=100 lines=41 press="3,.,1,4,5,9,2,wait:400"}
+```{.anytext path="examples/calculator.py" columns=100 lines=41 press="3,.,1,4,5,9,2,wait:400"}
 ```
 
 First, we need to create a new test and specify the path to the Python file containing the app.

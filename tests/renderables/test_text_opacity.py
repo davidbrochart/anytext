@@ -2,7 +2,7 @@ import pytest
 from rich.text import Text
 
 from tests.utilities.render import render
-from textual.renderables.text_opacity import TextOpacity
+from anytext.renderables.text_opacity import TextOpacity
 
 STOP = "\x1b[0m"
 

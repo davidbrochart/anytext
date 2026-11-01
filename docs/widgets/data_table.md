@@ -12,12 +12,12 @@ Applications may have custom rules for formatting, numbers, repopulating tables 
 ### Adding data
 
 The following example shows how to fill a table with data.
-First, we use [add_columns][textual.widgets.DataTable.add_columns] to include the `lane`, `swimmer`, `country`, and `time` columns in the table.
-After that, we use the [add_rows][textual.widgets.DataTable.add_rows] method to insert the rows into the table.
+First, we use [add_columns][anytext.widgets.DataTable.add_columns] to include the `lane`, `swimmer`, `country`, and `time` columns in the table.
+After that, we use the [add_rows][anytext.widgets.DataTable.add_rows] method to insert the rows into the table.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/data_table.py"}
+    ```{.anytext path="docs/examples/widgets/data_table.py"}
     ```
 
 === "data_table.py"
@@ -26,7 +26,7 @@ After that, we use the [add_rows][textual.widgets.DataTable.add_rows] method to 
     --8<-- "docs/examples/widgets/data_table.py"
     ```
 
-To add a single row or column use [add_row][textual.widgets.DataTable.add_row] and [add_column][textual.widgets.DataTable.add_column], respectively.
+To add a single row or column use [add_row][anytext.widgets.DataTable.add_row] and [add_column][anytext.widgets.DataTable.add_column], respectively.
 
 #### Styling and justifying cells
 
@@ -35,7 +35,7 @@ Cells can contain more than just plain strings - [Rich](https://rich.readthedocs
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/data_table_renderables.py"}
+    ```{.anytext path="docs/examples/widgets/data_table_renderables.py"}
     ```
 
 === "data_table_renderables.py"
@@ -46,55 +46,55 @@ Cells can contain more than just plain strings - [Rich](https://rich.readthedocs
 
 ### Keys
 
-When adding a row to the table, you can supply a _key_ to [add_row][textual.widgets.DataTable.add_row].
+When adding a row to the table, you can supply a _key_ to [add_row][anytext.widgets.DataTable.add_row].
 A key is a unique identifier for that row.
-If you don't supply a key, Textual will generate one for you and return it from `add_row`.
+If you don't supply a key, Anytext will generate one for you and return it from `add_row`.
 This key can later be used to reference the row, regardless of its current position in the table.
 
 When working with data from a database, for example, you may wish to set the row `key` to the primary key of the data to ensure uniqueness.
-The method [add_column][textual.widgets.DataTable.add_column] also accepts a `key` argument and works similarly.
+The method [add_column][anytext.widgets.DataTable.add_column] also accepts a `key` argument and works similarly.
 
 Keys are important because cells in a data table can change location due to factors like row deletion and sorting.
 Thus, using keys instead of coordinates allows us to refer to data without worrying about its current location in the table.
 
-If you want to change the table based solely on coordinates, you may need to convert that coordinate to a cell key first using the [coordinate_to_cell_key][textual.widgets.DataTable.coordinate_to_cell_key] method.
+If you want to change the table based solely on coordinates, you may need to convert that coordinate to a cell key first using the [coordinate_to_cell_key][anytext.widgets.DataTable.coordinate_to_cell_key] method.
 
 ### Cursors
 
 A cursor allows navigating within a table with the keyboard or mouse. There are four cursor types: `"cell"` (the default), `"row"`, `"column"`, and `"none"`.
 
  Change the cursor type by assigning to 
-the [`cursor_type`][textual.widgets.DataTable.cursor_type] reactive attribute.  
-The coordinate of the cursor is exposed via the [`cursor_coordinate`][textual.widgets.DataTable.cursor_coordinate] reactive attribute.
+the [`cursor_type`][anytext.widgets.DataTable.cursor_type] reactive attribute.
+The coordinate of the cursor is exposed via the [`cursor_coordinate`][anytext.widgets.DataTable.cursor_coordinate] reactive attribute.
 
-Using the keyboard, arrow keys,  ++page-up++, ++page-down++, ++home++ and ++end++ move the cursor highlight, emitting a [`CellHighlighted`][textual.widgets.DataTable.CellHighlighted] 
-message, then enter selects the cell, emitting a [`CellSelected`][textual.widgets.DataTable.CellSelected] message.  If the 
-`cursor_type` is row, then [`RowHighlighted`][textual.widgets.DataTable.RowHighlighted] and [`RowSelected`][textual.widgets.DataTable.RowSelected]
-are emitted, similarly for  [`ColumnHighlighted`][textual.widgets.DataTable.ColumnHighlighted] and [`ColumnSelected`][textual.widgets.DataTable.ColumnSelected].
+Using the keyboard, arrow keys,  ++page-up++, ++page-down++, ++home++ and ++end++ move the cursor highlight, emitting a [`CellHighlighted`][anytext.widgets.DataTable.CellHighlighted]
+message, then enter selects the cell, emitting a [`CellSelected`][anytext.widgets.DataTable.CellSelected] message.  If the
+`cursor_type` is row, then [`RowHighlighted`][anytext.widgets.DataTable.RowHighlighted] and [`RowSelected`][anytext.widgets.DataTable.RowSelected]
+are emitted, similarly for  [`ColumnHighlighted`][anytext.widgets.DataTable.ColumnHighlighted] and [`ColumnSelected`][anytext.widgets.DataTable.ColumnSelected].
 
-When moving the mouse over the table, a [`MouseMove`][textual.events.MouseMove] event is emitted, the cell hovered over is styled,
-and the [`hover_coordinate`][textual.widgets.DataTable.hover_coordinate] reactive attribute is updated.  Clicking the mouse
-then emits the [`CellHighlighted`][textual.widgets.DataTable.CellHighlighted] and  [`CellSelected`][textual.widgets.DataTable.CellSelected]
+When moving the mouse over the table, a [`MouseMove`][anytext.events.MouseMove] event is emitted, the cell hovered over is styled,
+and the [`hover_coordinate`][anytext.widgets.DataTable.hover_coordinate] reactive attribute is updated.  Clicking the mouse
+then emits the [`CellHighlighted`][anytext.widgets.DataTable.CellHighlighted] and  [`CellSelected`][anytext.widgets.DataTable.CellSelected]
 events. 
 
 === "Column Cursor"
 
-    ```{.textual path="docs/examples/widgets/data_table_cursors.py"}
+    ```{.anytext path="docs/examples/widgets/data_table_cursors.py"}
     ```
 
 === "Row Cursor"
 
-    ```{.textual path="docs/examples/widgets/data_table_cursors.py" press="c"}
+    ```{.anytext path="docs/examples/widgets/data_table_cursors.py" press="c"}
     ```
 
 === "Cell Cursor"
 
-    ```{.textual path="docs/examples/widgets/data_table_cursors.py" press="c,c"}
+    ```{.anytext path="docs/examples/widgets/data_table_cursors.py" press="c,c"}
     ```
 
 === "No Cursor"
 
-    ```{.textual path="docs/examples/widgets/data_table_cursors.py" press="c,c,c"}
+    ```{.anytext path="docs/examples/widgets/data_table_cursors.py" press="c,c,c"}
     ```
 
 === "data_table_cursors.py"
@@ -106,12 +106,12 @@ events.
 
 ### Updating data
 
-Cells can be updated using the [update_cell][textual.widgets.DataTable.update_cell] and [update_cell_at][textual.widgets.DataTable.update_cell_at] methods.
+Cells can be updated using the [update_cell][anytext.widgets.DataTable.update_cell] and [update_cell_at][anytext.widgets.DataTable.update_cell_at] methods.
 
 ### Removing data
 
-To remove all data in the table, use the [clear][textual.widgets.DataTable.clear] method.
-To remove individual rows, use [remove_row][textual.widgets.DataTable.remove_row].
+To remove all data in the table, use the [clear][anytext.widgets.DataTable.clear] method.
+To remove individual rows, use [remove_row][anytext.widgets.DataTable.remove_row].
 The `remove_row` method accepts a `key` argument, which identifies the row to be removed.
 
 If you wish to remove the row below the cursor in the `DataTable`, use `coordinate_to_cell_key` to get the row key of
@@ -126,7 +126,7 @@ table.remove_row(row_key)
 
 ### Removing columns
 
-To remove individual columns, use [remove_column][textual.widgets.DataTable.remove_column].
+To remove individual columns, use [remove_column][anytext.widgets.DataTable.remove_column].
 The `remove_column` method accepts a `key` argument, which identifies the column to be removed.
 
 You can remove the column below the cursor using the same `coordinate_to_cell_key` method described above:
@@ -145,7 +145,7 @@ To do this, assign an integer to the `fixed_rows` or `fixed_columns` reactive at
 
 === "Fixed data"
 
-    ```{.textual path="docs/examples/widgets/data_table_fixed.py" press="end"}
+    ```{.anytext path="docs/examples/widgets/data_table_fixed.py" press="end"}
     ```
 
 === "data_table_fixed.py"
@@ -160,11 +160,11 @@ visible as you scroll through the data table.
 
 ### Sorting
 
-The DataTable rows can be sorted using the  [`sort`][textual.widgets.DataTable.sort]  method.
+The DataTable rows can be sorted using the  [`sort`][anytext.widgets.DataTable.sort]  method.
 
-There are three methods of using [`sort`][textual.widgets.DataTable.sort]:
+There are three methods of using [`sort`][anytext.widgets.DataTable.sort]:
 
-* By Column.  Pass columns in as parameters to sort by the natural order of one or more columns.  Specify a column using either a [`ColumnKey`][textual.widgets.data_table.ColumnKey] instance or the `key` you supplied to [`add_column`][textual.widgets.DataTable.add_column].  For example, `sort("country", "region")` would sort by country, and, when the country values are equal, by region.
+* By Column.  Pass columns in as parameters to sort by the natural order of one or more columns.  Specify a column using either a [`ColumnKey`][anytext.widgets.data_table.ColumnKey] instance or the `key` you supplied to [`add_column`][anytext.widgets.DataTable.add_column].  For example, `sort("country", "region")` would sort by country, and, when the country values are equal, by region.
 * By Key function.  Pass a function as the `key` parameter to sort, similar to the [key function parameter](https://docs.python.org/3/howto/sorting.html#key-functions)  of Python's [`sorted`](https://docs.python.org/3/library/functions.html#sorted) built-in.   The function will be called once per row with a tuple of all row values.
 * By both Column and Key function.   You can specify which columns to include as parameters to your key function.  For example, `sort("hours", "rate", key=lambda h, r: h*r)` passes two values to the key function for each row.
 
@@ -172,7 +172,7 @@ The `reverse` argument reverses the order of your sort.  Note that correct sorti
  
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/data_table_sort.py"}
+    ```{.anytext path="docs/examples/widgets/data_table_sort.py"}
     ```
 
 === "data_table_sort.py"
@@ -183,14 +183,14 @@ The `reverse` argument reverses the order of your sort.  Note that correct sorti
 
 ### Labeled rows
 
-A "label" can be attached to a row using the [add_row][textual.widgets.DataTable.add_row] method.
+A "label" can be attached to a row using the [add_row][anytext.widgets.DataTable.add_row] method.
 This will add an extra column to the left of the table which the cursor cannot interact with.
 This column is similar to the leftmost column in a spreadsheet containing the row numbers.
 The example below shows how to attach simple numbered labels to rows.
 
 === "Labeled rows"
 
-    ```{.textual path="docs/examples/widgets/data_table_labels.py"}
+    ```{.anytext path="docs/examples/widgets/data_table_labels.py"}
     ```
 
 === "data_table_labels.py"
@@ -211,25 +211,25 @@ The example below shows how to attach simple numbered labels to rows.
 | `header_height`     | `int`                                       | `1`                | Height of header row                                  |
 | `show_cursor`       | `bool`                                      | `True`             | Show the cursor                                       |
 | `cursor_type`       | `str`                                       | `"cell"`           | One of `"cell"`, `"row"`, `"column"`, or `"none"`     |
-| `cursor_coordinate` | [Coordinate][textual.coordinate.Coordinate] | `Coordinate(0, 0)` | The current coordinate of the cursor                  |
-| `hover_coordinate`  | [Coordinate][textual.coordinate.Coordinate] | `Coordinate(0, 0)` | The coordinate the _mouse_ cursor is above            |
+| `cursor_coordinate` | [Coordinate][anytext.coordinate.Coordinate] | `Coordinate(0, 0)` | The current coordinate of the cursor                  |
+| `hover_coordinate`  | [Coordinate][anytext.coordinate.Coordinate] | `Coordinate(0, 0)` | The coordinate the _mouse_ cursor is above            |
 
 ## Messages
 
-- [DataTable.CellHighlighted][textual.widgets.DataTable.CellHighlighted]
-- [DataTable.CellSelected][textual.widgets.DataTable.CellSelected]
-- [DataTable.RowHighlighted][textual.widgets.DataTable.RowHighlighted]
-- [DataTable.RowSelected][textual.widgets.DataTable.RowSelected]
-- [DataTable.ColumnHighlighted][textual.widgets.DataTable.ColumnHighlighted]
-- [DataTable.ColumnSelected][textual.widgets.DataTable.ColumnSelected]
-- [DataTable.HeaderSelected][textual.widgets.DataTable.HeaderSelected]
-- [DataTable.RowLabelSelected][textual.widgets.DataTable.RowLabelSelected]
+- [DataTable.CellHighlighted][anytext.widgets.DataTable.CellHighlighted]
+- [DataTable.CellSelected][anytext.widgets.DataTable.CellSelected]
+- [DataTable.RowHighlighted][anytext.widgets.DataTable.RowHighlighted]
+- [DataTable.RowSelected][anytext.widgets.DataTable.RowSelected]
+- [DataTable.ColumnHighlighted][anytext.widgets.DataTable.ColumnHighlighted]
+- [DataTable.ColumnSelected][anytext.widgets.DataTable.ColumnSelected]
+- [DataTable.HeaderSelected][anytext.widgets.DataTable.HeaderSelected]
+- [DataTable.RowLabelSelected][anytext.widgets.DataTable.RowLabelSelected]
 
 ## Bindings
 
 The data table widget defines the following bindings:
 
-::: textual.widgets.DataTable.BINDINGS
+::: anytext.widgets.DataTable.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -238,7 +238,7 @@ The data table widget defines the following bindings:
 
 The data table widget provides the following component classes:
 
-::: textual.widgets.DataTable.COMPONENT_CLASSES
+::: anytext.widgets.DataTable.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -246,11 +246,11 @@ The data table widget provides the following component classes:
 ---
 
 
-::: textual.widgets.DataTable
+::: anytext.widgets.DataTable
     options:
       heading_level: 2
 
-::: textual.widgets.data_table
+::: anytext.widgets.data_table
     options:
       show_root_heading: true
       show_root_toc_entry: true

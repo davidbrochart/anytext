@@ -10,11 +10,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@textualizeio">
 <meta name="twitter:creator" content="@willmcgugan">
-<meta property="og:title" content="Textual - {{ page.title }}">
+<meta property="og:title" content="Anytext - {{ page.title }}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{{ page.canonical_url | url }}">
-<meta property="og:site_name" content="Textual Documentation">
-<meta property="og:description" content="Textual is a TUI framework for Python, inspired by modern web development.">
+<meta property="og:site_name" content="Anytext Documentation">
+<meta property="og:description" content="Anytext is a TUI framework for Python, inspired by modern web development.">
 <meta property="og:image" content="https://raw.githubusercontent.com/Textualize/textual/main/imgs/textual.png">
 
 <style>
@@ -34,7 +34,7 @@
 
 <script lang="js">
 window.onload = async (event) => {
-  const demos = document.querySelectorAll(".textual-web-demo");
+  const demos = document.querySelectorAll(".anytext-web-demo");
 
   if (demos.length){
     await fetch("https://textual-web-demos.fly.dev/health-check/", {
@@ -43,7 +43,7 @@ window.onload = async (event) => {
     });
     demos.forEach((element)=>{
       const app = element.dataset.app;
-      const iframe_html = `<div class="textual-web-demo"><iframe width="100%" onload="this.parentElement.classList.add('-loaded');" src="https://textual-web.io/textualize/${app}?delay=y&fontsize=12&ping=https://textual-web-demos.fly.dev/health-check/"></iframe></div>`;
+      const iframe_html = `<div class="anytext-web-demo"><iframe width="100%" onload="this.parentElement.classList.add('-loaded');" src="https://textual-web.io/textualize/${app}?delay=y&fontsize=12&ping=https://textual-web-demos.fly.dev/health-check/"></iframe></div>`;
       element.outerHTML = iframe_html;
     });
   }

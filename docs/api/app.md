@@ -1,8 +1,8 @@
 ---
-title: "textual.app"
+title: "anytext.app"
 ---
 
-::: textual.app
+::: anytext.app
     options:
         filters:
           - "!^_"

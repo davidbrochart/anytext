@@ -16,7 +16,7 @@ This examples shows a green tint with gradually increasing alpha.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/tint.py"}
+    ```{.anytext path="docs/examples/styles/tint.py"}
     ```
 
 === "tint.py"
@@ -25,7 +25,7 @@ This examples shows a green tint with gradually increasing alpha.
     --8<-- "docs/examples/styles/tint.py"
     ```
 
-    1. We set the tint to a `Color` instance with varying levels of opacity, set through the method [with_alpha][textual.color.Color.with_alpha].
+    1. We set the tint to a `Color` instance with varying levels of opacity, set through the method [with_alpha][anytext.color.Color.with_alpha].
 
 === "tint.tcss"
 
@@ -47,7 +47,7 @@ tint: rgba(0, 200, 0, 0.3);
 
 ```python
 # A red tint
-from textual.color import Color
+from anytext.color import Color
 widget.styles.tint = Color.parse("red").with_alpha(0.2);
 
 # A green tint

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from textual.css.tokenize import tokenize
-from textual.css.tokenizer import Token, TokenError
+from anytext.css.tokenize import tokenize
+from anytext.css.tokenizer import Token, TokenError
 
 VALID_VARIABLE_NAMES = [
     "warning-text",

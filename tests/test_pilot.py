@@ -3,16 +3,16 @@ from typing import Type
 
 import pytest
 
-from textual import events, work
-from textual._on import on
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.containers import Center, Middle
-from textual.css.errors import StylesheetError
-from textual.pilot import OutOfBounds
-from textual.screen import Screen
-from textual.widgets import Button, Label
-from textual.worker import WorkerFailed
+from anytext import events, work
+from anytext._on import on
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.containers import Center, Middle
+from anytext.css.errors import StylesheetError
+from anytext.pilot import OutOfBounds
+from anytext.screen import Screen
+from anytext.widgets import Button, Label
+from anytext.worker import WorkerFailed
 
 KEY_CHARACTERS_TO_TEST = "akTW03" + punctuation
 """Test some "simple" characters (letters + digits) and all punctuation."""

@@ -4,7 +4,7 @@ A simple header widget which docks itself to the top of the parent container.
 
 !!! note
 
-    The application title which is shown in the header is taken from the [`title`][textual.app.App.title] and [`sub_title`][textual.app.App.sub_title] of the application.
+    The application title which is shown in the header is taken from the [`title`][anytext.app.App.title] and [`sub_title`][anytext.app.App.sub_title] of the application.
 
 - [ ] Focusable
 - [ ] Container
@@ -15,7 +15,7 @@ The example below shows an app with a `Header`.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/header.py"}
+    ```{.anytext path="docs/examples/widgets/header.py"}
     ```
 
 === "header.py"
@@ -28,7 +28,7 @@ This example shows how to set the text in the `Header` using `App.title` and `Ap
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/header_app_title.py"}
+    ```{.anytext path="docs/examples/widgets/header_app_title.py"}
     ```
 
 === "header_app_title.py"
@@ -58,6 +58,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Header
+::: anytext.widgets.Header
     options:
       heading_level: 2

@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from textual.app import App, ComposeResult
-from textual.reactive import reactive
-from textual.widgets import Digits
+from anytext.app import App, ComposeResult
+from anytext.reactive import reactive
+from anytext.widgets import Digits
 
 
 class Clock(App):

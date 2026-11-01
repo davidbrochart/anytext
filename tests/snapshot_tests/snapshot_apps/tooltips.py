@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import ProgressBar
+from anytext.app import App, ComposeResult
+from anytext.widgets import ProgressBar
 
 
 class TooltipApp(App[None]):

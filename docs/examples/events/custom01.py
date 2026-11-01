@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.color import Color
-from textual.message import Message
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.color import Color
+from anytext.message import Message
+from anytext.widgets import Static
 
 
 class ColorButton(Static):

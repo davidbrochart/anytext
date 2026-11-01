@@ -1,0 +1,3 @@
+from anytext.widgets._tabbed_content import TabPane
+
+__all__ = ["TabPane"]

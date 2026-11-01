@@ -10,7 +10,7 @@ This chapter will discuss how to make your app respond to input in the form of k
 
 ## Keyboard input
 
-The most fundamental way to receive input is via [Key][textual.events.Key] events which are sent to your app when the user presses a key. Let's write an app to show key events as you type.
+The most fundamental way to receive input is via [Key][anytext.events.Key] events which are sent to your app when the user presses a key. Let's write an app to show key events as you type.
 
 === "key01.py"
 
@@ -20,14 +20,14 @@ The most fundamental way to receive input is via [Key][textual.events.Key] event
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/input/key01.py", press="T,e,x,t,u,a,l,!"}
+    ```{.anytext path="docs/examples/guide/input/key01.py", press="T,e,x,t,u,a,l,!"}
     ```
 
 When you press a key, the app will receive the event and write it to a [RichLog](../widgets/rich_log.md) widget. Try pressing a few keys to see what happens.
 
 !!! tip
 
-    For a more feature rich version of this example, run `textual keys` from the command line.
+    For a more feature rich version of this example, run `anytext keys` from the command line.
 
 ### Key Event
 
@@ -43,7 +43,7 @@ Many keys can also be combined with ++ctrl++ which will prefix the key with `ctr
 
 !!! warning
 
-    Not all keys combinations are supported in terminals and some keys may be intercepted by your OS. If in doubt, run `textual keys` from the command line.
+    Not all keys combinations are supported in terminals and some keys may be intercepted by your OS. If in doubt, run `anytext keys` from the command line.
 
 #### character
 
@@ -53,7 +53,7 @@ For example the ++p++ key will produce `character="p"` but ++f2++ will produce `
 
 #### name
 
-The `name` attribute is similar to `key` but, unlike `key`, is guaranteed to be valid within a Python function name. Textual derives `name` from the `key` attribute by lower casing it and replacing `+` with `_`. Upper case letters are prefixed with `upper_` to distinguish them from lower case names.
+The `name` attribute is similar to `key` but, unlike `key`, is guaranteed to be valid within a Python function name. Anytext derives `name` from the `key` attribute by lower casing it and replacing `+` with `_`. Upper case letters are prefixed with `upper_` to distinguish them from lower case names.
 
 For example, ++ctrl+p++ produces `name="ctrl_p"` and ++shift+p++ produces `name="upper_p"`.
 
@@ -63,12 +63,12 @@ The `is_printable` attribute is a boolean which indicates if the key would typic
 
 #### aliases
 
-Some keys or combinations of keys can produce the same event. For instance, the ++tab++ key is indistinguishable from ++ctrl+i++ in the terminal. For such keys, Textual events will contain a list of the possible keys that may have produced this event. In the case of ++tab++, the `aliases` attribute will contain `["tab", "ctrl+i"]`
+Some keys or combinations of keys can produce the same event. For instance, the ++tab++ key is indistinguishable from ++ctrl+i++ in the terminal. For such keys, Anytext events will contain a list of the possible keys that may have produced this event. In the case of ++tab++, the `aliases` attribute will contain `["tab", "ctrl+i"]`
 
 
 ### Key methods
 
-Textual offers a convenient way of handling specific keys. If you create a method beginning with `key_` followed by the key name (the event's `name` attribute), then that method will be called in response to the key press.
+Anytext offers a convenient way of handling specific keys. If you create a method beginning with `key_` followed by the key name (the event's `name` attribute), then that method will be called in response to the key press.
 
 Let's add a key method to the example code.
 
@@ -80,7 +80,7 @@ Note the addition of a `key_space` method which is called in response to the spa
 
 !!! note
 
-    Consider key methods to be a convenience for experimenting with Textual features. In nearly all cases, key [bindings](#bindings) and [actions](../guide/actions.md) are preferable.
+    Consider key methods to be a convenience for experimenting with Anytext features. In nearly all cases, key [bindings](#bindings) and [actions](../guide/actions.md) are preferable.
 
 ## Input focus
 
@@ -102,7 +102,7 @@ The following example shows how focus works in practice.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/input/key03.py", press="H,e,l,l,o,tab,W,o,r,l,d,!"}
+    ```{.anytext path="docs/examples/guide/input/key03.py", press="H,e,l,l,o,tab,W,o,r,l,d,!"}
     ```
 
 The app splits the screen into quarters, with a `RichLog` widget in each quarter. If you click any of the text logs, you should see that it is highlighted to show that the widget has focus. Key events will be sent to the focused widget only.
@@ -121,8 +121,8 @@ For example, a disabled widget cannot receive focus even if `can_focus` is `True
 
 ### Controlling focus
 
-Textual will handle keyboard focus automatically, but you can tell Textual to focus a widget by calling the widget's [focus()][textual.widget.Widget.focus] method.
-By default, Textual will focus the first focusable widget when the app starts.
+Anytext will handle keyboard focus automatically, but you can tell Anytext to focus a widget by calling the widget's [focus()][anytext.widget.Widget.focus] method.
+By default, Anytext will focus the first focusable widget when the app starts.
 
 ### Focus events
 
@@ -151,7 +151,7 @@ The following example binds the keys ++r++, ++g++, and ++b++ to an action which 
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/input/binding01.py", press="r,g,b,b"}
+    ```{.anytext path="docs/examples/guide/input/binding01.py", press="r,g,b,b"}
     ```
 
 Note how the footer displays bindings and makes them clickable.
@@ -161,18 +161,18 @@ Note how the footer displays bindings and makes them clickable.
     Multiple keys can be bound to a single action by comma-separating them.
     For example, `("r,t", "add_bar('red')", "Add Red")` means both ++r++ and ++t++ are bound to `add_bar('red')`.
 
-When you press a key, Textual will first check for a matching binding in the `BINDINGS` list of the currently focused widget.
+When you press a key, Anytext will first check for a matching binding in the `BINDINGS` list of the currently focused widget.
 If no match is found, it will search upwards through the DOM all the way up to the `App` looking for a match.
 
 ### Binding class
 
-The tuple of three strings may be enough for simple bindings, but you can also replace the tuple with a [Binding][textual.binding.Binding] instance which exposes a few more options.
+The tuple of three strings may be enough for simple bindings, but you can also replace the tuple with a [Binding][anytext.binding.Binding] instance which exposes a few more options.
 
 ### Priority bindings
 
 Individual bindings may be marked as a *priority*, which means they will be checked prior to the bindings of the focused widget. This feature is often used to create hot-keys on the app or screen. Such bindings can not be disabled by binding the same key on a widget.
 
-You can create priority key bindings by setting `priority=True` on the Binding object. Textual uses this feature to add a default binding for ++ctrl+q++ so there is always a way to exit the app. Here's the `BINDINGS` from the App base class. Note the quit binding is set as a priority:
+You can create priority key bindings by setting `priority=True` on the Binding object. Anytext uses this feature to add a default binding for ++ctrl+q++ so there is always a way to exit the app. Here's the `BINDINGS` from the App base class. Note the quit binding is set as a priority:
 
 ```python
     BINDINGS = [
@@ -191,12 +191,12 @@ You may find you have bindings which are not always applicable given the current
 For instance a "Save file" binding when there are no changes to save.
 It wouldn't be a good user experience if the save key did nothing, or raised an error.
 
-Textual doesn't support modifying the bindings at runtime, but you can accomplish this with [dynamic actions](./actions.md#dynamic-actions) which offers greater flexibility.
+Anytext doesn't support modifying the bindings at runtime, but you can accomplish this with [dynamic actions](./actions.md#dynamic-actions) which offers greater flexibility.
 
 
 ## Mouse Input
 
-Textual will send events in response to mouse movement and mouse clicks. These events contain the coordinates of the mouse cursor relative to the terminal or widget.
+Anytext will send events in response to mouse movement and mouse clicks. These events contain the coordinates of the mouse cursor relative to the terminal or widget.
 
 !!! information
 
@@ -235,34 +235,34 @@ The `on_mouse_move` handler sets the [offset](../styles/offset.md) style of the 
 
 ### Mouse capture
 
-In the `mouse01.py` example there was a call to `capture_mouse()` in the mount handler. Textual will send mouse move events to the widget directly under the cursor. You can tell Textual to send all mouse events to a widget regardless of the position of the mouse cursor by calling [capture_mouse][textual.widget.Widget.capture_mouse].
+In the `mouse01.py` example there was a call to `capture_mouse()` in the mount handler. Anytext will send mouse move events to the widget directly under the cursor. You can tell Anytext to send all mouse events to a widget regardless of the position of the mouse cursor by calling [capture_mouse][anytext.widget.Widget.capture_mouse].
 
-Call [release_mouse][textual.widget.Widget.release_mouse] to restore the default behavior.
+Call [release_mouse][anytext.widget.Widget.release_mouse] to restore the default behavior.
 
 !!! warning
 
     If you capture the mouse, be aware you might get negative mouse coordinates if the cursor is to the left of the widget.
 
-Textual will send a [MouseCapture](../events/mouse_capture.md) event when the mouse is captured, and a [MouseRelease](../events/mouse_release.md) event when it is released.
+Anytext will send a [MouseCapture](../events/mouse_capture.md) event when the mouse is captured, and a [MouseRelease](../events/mouse_release.md) event when it is released.
 
 ### Enter and Leave events
 
-Textual will send a [Enter](../events/enter.md) event to a widget when the mouse cursor first moves over it, and a [Leave](../events/leave.md) event when the cursor moves off a widget.
+Anytext will send a [Enter](../events/enter.md) event to a widget when the mouse cursor first moves over it, and a [Leave](../events/leave.md) event when the cursor moves off a widget.
 
 Both `Enter` and `Leave` _bubble_, so a widget may receive these events from a child widget.
 You can check the initial widget these events were sent to by comparing the `node` attribute against `self` in the message handler.
 
 ### Click events
 
-There are three events associated with clicking a button on your mouse. When the button is initially pressed, Textual sends a [MouseDown](../events/mouse_down.md) event, followed by [MouseUp](../events/mouse_up.md) when the button is released. Textual then sends a final [Click](../events/click.md) event.
+There are three events associated with clicking a button on your mouse. When the button is initially pressed, Anytext sends a [MouseDown](../events/mouse_down.md) event, followed by [MouseUp](../events/mouse_up.md) when the button is released. Anytext then sends a final [Click](../events/click.md) event.
 
-If you want your app to respond to a mouse click you should prefer the Click event (and not MouseDown or MouseUp). This is because a future version of Textual may support other pointing devices which don't have up and down states.
+If you want your app to respond to a mouse click you should prefer the Click event (and not MouseDown or MouseUp). This is because a future version of Anytext may support other pointing devices which don't have up and down states.
 
 ### Scroll events
 
-Most mice have a scroll wheel which you can use to scroll the window underneath the cursor. Scrollable containers in Textual will handle these automatically, but you can handle [MouseScrollDown](../events/mouse_scroll_down.md) and [MouseScrollUp](../events/mouse_scroll_up.md) if you want build your own scrolling functionality.
+Most mice have a scroll wheel which you can use to scroll the window underneath the cursor. Scrollable containers in Anytext will handle these automatically, but you can handle [MouseScrollDown](../events/mouse_scroll_down.md) and [MouseScrollUp](../events/mouse_scroll_up.md) if you want build your own scrolling functionality.
 
-For terminals that support horizontal mouse wheel, Textual sends [MouseScrollLeft](../events/mouse_scroll_left.md) and [MouseScrollRight](../events/mouse_scroll_right.md), and scrollable containers handle them automatically.
+For terminals that support horizontal mouse wheel, Anytext sends [MouseScrollLeft](../events/mouse_scroll_left.md) and [MouseScrollRight](../events/mouse_scroll_right.md), and scrollable containers handle them automatically.
 
 !!! information
 

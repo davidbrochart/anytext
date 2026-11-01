@@ -1,9 +1,9 @@
 ---
-title: "textual.widget"
+title: "anytext.widget"
 ---
 
 
-::: textual.widget
+::: anytext.widget
     options:
         filters:
           - "!^_"

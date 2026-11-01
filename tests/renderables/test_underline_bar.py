@@ -4,7 +4,7 @@ from rich.console import Console, ConsoleOptions
 from rich.text import Text
 
 from tests.utilities.render import render
-from textual.renderables.bar import Bar
+from anytext.renderables.bar import Bar
 
 MAGENTA = "\x1b[35m"
 GREY = "\x1b[38;5;59m"

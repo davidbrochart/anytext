@@ -1,8 +1,8 @@
-from textual.app import App, ComposeResult
-from textual.color import Color
-from textual.containers import Horizontal
-from textual.reactive import reactive
-from textual.widgets import Input, Static
+from anytext.app import App, ComposeResult
+from anytext.color import Color
+from anytext.containers import Horizontal
+from anytext.reactive import reactive
+from anytext.widgets import Input, Static
 
 
 class ComputedApp(App):

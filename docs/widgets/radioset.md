@@ -16,7 +16,7 @@ The example below shows two radio sets, one built using a collection of
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/radio_set.py"}
+    ```{.anytext path="docs/examples/widgets/radio_set.py"}
     ```
 
 === "radio_set.py"
@@ -37,7 +37,7 @@ Here is an example of using the message to react to changes in a `RadioSet`:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/radio_set_changed.py" press="enter"}
+    ```{.anytext path="docs/examples/widgets/radio_set_changed.py" press="enter"}
     ```
 
 === "radio_set_changed.py"
@@ -54,13 +54,13 @@ Here is an example of using the message to react to changes in a `RadioSet`:
 
 ## Messages
 
--  [RadioSet.Changed][textual.widgets.RadioSet.Changed]
+-  [RadioSet.Changed][anytext.widgets.RadioSet.Changed]
 
 ## Bindings
 
 The `RadioSet` widget defines the following bindings:
 
-::: textual.widgets.RadioSet.BINDINGS
+::: anytext.widgets.RadioSet.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -77,6 +77,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.RadioSet
+::: anytext.widgets.RadioSet
     options:
       heading_level: 2

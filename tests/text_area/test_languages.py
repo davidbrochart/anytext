@@ -1,8 +1,8 @@
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import TextArea
-from textual.widgets.text_area import LanguageDoesNotExist
+from anytext.app import App, ComposeResult
+from anytext.widgets import TextArea
+from anytext.widgets.text_area import LanguageDoesNotExist
 
 
 class TextAreaApp(App):
@@ -67,7 +67,7 @@ async def test_register_language():
     async with app.run_test():
         text_area = app.query_one(TextArea)
 
-        from textual._tree_sitter import get_language
+        from anytext._tree_sitter import get_language
 
         language = get_language("python")
         assert language is not None

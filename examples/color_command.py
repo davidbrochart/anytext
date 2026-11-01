@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from functools import partial
 
-from textual import on
-from textual._color_constants import COLOR_NAME_TO_RGB
-from textual.app import App, ComposeResult
-from textual.command import Hit, Hits, Provider
-from textual.message import Message
-from textual.widgets import Header, Static
+from anytext import on
+from anytext._color_constants import COLOR_NAME_TO_RGB
+from anytext.app import App, ComposeResult
+from anytext.command import Hit, Hits, Provider
+from anytext.message import Message
+from anytext.widgets import Header, Static
 
 
 @dataclass

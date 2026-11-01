@@ -1,7 +1,7 @@
 import pytest
 
-from textual._spatial_map import SpatialMap
-from textual.geometry import Offset, Region
+from anytext._spatial_map import SpatialMap
+from anytext.geometry import Offset, Region
 
 
 @pytest.mark.parametrize(

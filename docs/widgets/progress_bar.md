@@ -19,17 +19,17 @@ It shows the progress bar in:
 
 === "Indeterminate state"
 
-    ```{.textual path="docs/examples/widgets/progress_bar_isolated_.py" press="f"}
+    ```{.anytext path="docs/examples/widgets/progress_bar_isolated_.py" press="f"}
     ```
 
 === "39% done"
 
-    ```{.textual path="docs/examples/widgets/progress_bar_isolated_.py" press="t"}
+    ```{.anytext path="docs/examples/widgets/progress_bar_isolated_.py" press="t"}
     ```
 
 === "Completed"
 
-    ```{.textual path="docs/examples/widgets/progress_bar_isolated_.py" press="u"}
+    ```{.anytext path="docs/examples/widgets/progress_bar_isolated_.py" press="u"}
     ```
 
 === "progress_bar_isolated.py"
@@ -44,17 +44,17 @@ The example below shows a simple app with a progress bar that is keeping track o
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/progress_bar.py"}
+    ```{.anytext path="docs/examples/widgets/progress_bar.py"}
     ```
 
 === "Output (partial funding)"
 
-    ```{.textual path="docs/examples/widgets/progress_bar.py" press="1,5,enter,2,0,enter"}
+    ```{.anytext path="docs/examples/widgets/progress_bar.py" press="1,5,enter,2,0,enter"}
     ```
 
 === "Output (full funding)"
 
-    ```{.textual path="docs/examples/widgets/progress_bar.py" press="1,5,enter,2,0,enter,6,5,enter"}
+    ```{.anytext path="docs/examples/widgets/progress_bar.py" press="1,5,enter,2,0,enter,6,5,enter"}
     ```
 
 === "progress_bar.py"
@@ -74,7 +74,7 @@ The example below shows a simple app with a progress bar that is keeping track o
 ### Gradient Bars
 
 Progress bars support an optional `gradient` parameter, which renders a smooth gradient rather than a solid bar.
-To use a gradient, create and set a [Gradient][textual.color.Gradient] object on the ProgressBar widget.
+To use a gradient, create and set a [Gradient][anytext.color.Gradient] object on the ProgressBar widget.
 
 !!! note
 
@@ -84,7 +84,7 @@ Here's an example:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/progress_bar_gradient.py"}
+    ```{.anytext path="docs/examples/widgets/progress_bar_gradient.py"}
     ```
 
 === "progress_bar_gradient.py"
@@ -100,17 +100,17 @@ Refer to the [section below](#styling-the-progress-bar) for more information.
 
 === "Indeterminate state"
 
-    ```{.textual path="docs/examples/widgets/progress_bar_styled_.py" press="f"}
+    ```{.anytext path="docs/examples/widgets/progress_bar_styled_.py" press="f"}
     ```
 
 === "39% done"
 
-    ```{.textual path="docs/examples/widgets/progress_bar_styled_.py" press="t"}
+    ```{.anytext path="docs/examples/widgets/progress_bar_styled_.py" press="t"}
     ```
 
 === "Completed"
 
-    ```{.textual path="docs/examples/widgets/progress_bar_styled_.py" press="u"}
+    ```{.anytext path="docs/examples/widgets/progress_bar_styled_.py" press="u"}
     ```
 
 === "progress_bar_styled.py"
@@ -137,7 +137,7 @@ The progress bar is composed of three sub-widgets that can be styled independent
 
 ### Bar Component Classes
 
-::: textual.widgets._progress_bar.Bar.COMPONENT_CLASSES
+::: anytext.widgets._progress_bar.Bar.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -164,6 +164,6 @@ This widget has no component classes.
 
 ---
 
-::: textual.widgets.ProgressBar
+::: anytext.widgets.ProgressBar
     options:
       heading_level: 2

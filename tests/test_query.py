@@ -1,17 +1,17 @@
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.color import Color
-from textual.containers import Container
-from textual.css.query import (
+from anytext.app import App, ComposeResult
+from anytext.color import Color
+from anytext.containers import Container
+from anytext.css.query import (
     DeclarationError,
     InvalidQueryFormat,
     NoMatches,
     TooManyMatches,
     WrongType,
 )
-from textual.widget import Widget
-from textual.widgets import Input, Label
+from anytext.widget import Widget
+from anytext.widgets import Input, Label
 
 
 async def test_query_errors():

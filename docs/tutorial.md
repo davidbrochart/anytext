@@ -5,15 +5,15 @@ hide:
 
 # Tutorial
 
-Welcome to the Textual Tutorial!
+Welcome to the Anytext Tutorial!
 
-By the end of this page you should have a solid understanding of app development with Textual.
+By the end of this page you should have a solid understanding of app development with Anytext.
 
 !!! quote
 
     If you want people to build things, make it fun.
 
-    &mdash; **Will McGugan** (creator of Rich and Textual)
+    &mdash; **Will McGugan** (creator of Rich and Anytext)
 
 ## Video series
 
@@ -28,7 +28,7 @@ This will be a simple yet **fully featured** app &mdash; you could distribute th
 Here's what the finished app will look like:
 
 
-```{.textual path="docs/examples/tutorial/stopwatch.py" title="stopwatch.py" press="tab,enter,tab,enter,tab,enter,tab,enter"}
+```{.anytext path="docs/examples/tutorial/stopwatch.py" title="stopwatch.py" press="tab,enter,tab,enter,tab,enter,tab,enter"}
 ```
 
 !!! info
@@ -39,7 +39,7 @@ Here's what the finished app will look like:
 
 ### Get the code
 
-If you want to try the finished Stopwatch app and follow along with the code, first make sure you have [Textual installed](getting_started.md) then check out the [Textual](https://github.com/Textualize/textual) repository:
+If you want to try the finished Stopwatch app and follow along with the code, first make sure you have [Anytext installed](getting_started.md) then check out the [Anytext](https://github.com/Textualize/textual) repository:
 
 === "HTTPS"
 
@@ -56,14 +56,14 @@ If you want to try the finished Stopwatch app and follow along with the code, fi
 === "GitHub CLI"
 
     ```bash
-    gh repo clone Textualize/textual
+    gh repo clone Textualize/anytext
     ```
 
 
 With the repository cloned, navigate to `docs/examples/tutorial` and run `stopwatch.py`.
 
 ```bash
-cd textual/docs/examples/tutorial
+cd anytext/docs/examples/tutorial
 python stopwatch.py
 ```
 
@@ -71,7 +71,7 @@ python stopwatch.py
 
 !!! tip inline end
 
-    Type hints are entirely optional in Textual. We've included them in the example code but it's up to you whether you add them to your own projects.
+    Type hints are entirely optional in Anytext. We've included them in the example code but it's up to you whether you add them to your own projects.
 
 We're a big fan of Python type hints at Textualize. If you haven't encountered type hinting, it's a way to express the types of your data, parameters, and return values. Type hinting allows tools like [mypy](https://mypy.readthedocs.io/en/stable/) to catch bugs before your code runs.
 
@@ -90,7 +90,7 @@ Return types follow `->`. So `-> str:` indicates this method returns a string.
 
 ## The App class
 
-The first step in building a Textual app is to import and extend the `App` class. Here's a basic app class we will use as a starting point for the stopwatch app.
+The first step in building a Anytext app is to import and extend the `App` class. Here's a basic app class we will use as a starting point for the stopwatch app.
 
 ```python title="stopwatch01.py"
 --8<-- "docs/examples/tutorial/stopwatch01.py"
@@ -99,12 +99,12 @@ The first step in building a Textual app is to import and extend the `App` class
 If you run this code, you should see something like the following:
 
 
-```{.textual path="docs/examples/tutorial/stopwatch01.py" title="stopwatch01.py"}
+```{.anytext path="docs/examples/tutorial/stopwatch01.py" title="stopwatch01.py"}
 ```
 
 Hit the ++d++ key to toggle between light and dark themes.
 
-```{.textual path="docs/examples/tutorial/stopwatch01.py" press="d" title="stopwatch01.py"}
+```{.anytext path="docs/examples/tutorial/stopwatch01.py" press="d" title="stopwatch01.py"}
 ```
 
 Hit ++ctrl+q++ to exit the app and return to the command prompt.
@@ -117,7 +117,7 @@ Let's examine `stopwatch01.py` in more detail.
 --8<-- "docs/examples/tutorial/stopwatch01.py"
 ```
 
-The first line imports `App` class, which is the base class for all Textual apps.
+The first line imports `App` class, which is the base class for all Anytext apps.
 The second line imports two builtin widgets: [`Footer`](widgets/footer.md) which shows a bar at the bottom of the screen with bound keys, and [`Header`](widgets/header.md) which shows a title at the top of the screen.
 Widgets are re-usable components responsible for managing a part of the screen.
 We will cover how to build widgets in this tutorial.
@@ -128,7 +128,7 @@ The following lines define the app itself:
 --8<-- "docs/examples/tutorial/stopwatch01.py"
 ```
 
-The App class is where most of the logic of Textual apps is written. It is responsible for loading configuration, setting up widgets, handling keys, and more.
+The App class is where most of the logic of Anytext apps is written. It is responsible for loading configuration, setting up widgets, handling keys, and more.
 
 Here's what the above app defines:
 
@@ -136,17 +136,17 @@ Here's what the above app defines:
 
 -  `compose()` is where we construct a user interface with widgets. The `compose()` method may return a list of widgets, but it is generally easier to _yield_ them (making this method a generator). In the example code we yield an instance of each of the widget classes we imported, i.e. `Header()` and `Footer()`.
 
-- `action_toggle_dark()` defines an _action_ method. Actions are methods beginning with `action_` followed by the name of the action. The `BINDINGS` list above tells Textual to run this action when the user hits the ++d++ key. See [actions](./guide/actions.md) in the guide for details.
+- `action_toggle_dark()` defines an _action_ method. Actions are methods beginning with `action_` followed by the name of the action. The `BINDINGS` list above tells Anytext to run this action when the user hits the ++d++ key. See [actions](./guide/actions.md) in the guide for details.
 
 ```python title="stopwatch01.py" hl_lines="22-24"
 --8<-- "docs/examples/tutorial/stopwatch01.py"
 ```
 
-The final three lines create an instance of the app and calls the [run()][textual.app.App.run] method which puts your terminal into *application mode* and runs the app until you exit with ++ctrl+q++. This happens within a `__name__ == "__main__"` block so we could run the app with `python stopwatch01.py` or import it as part of a larger project.
+The final three lines create an instance of the app and calls the [run()][anytext.app.App.run] method which puts your terminal into *application mode* and runs the app until you exit with ++ctrl+q++. This happens within a `__name__ == "__main__"` block so we could run the app with `python stopwatch01.py` or import it as part of a larger project.
 
 ## Designing a UI with widgets
 
-Textual has a large number of [builtin widgets](./widget_gallery.md).
+Anytext has a large number of [builtin widgets](./widget_gallery.md).
 For our app we will need new widgets, which we can create by extending and combining the builtin widgets.
 
 Before we dive into building widgets, let's first sketch a design for the app &mdash; so we know what we're aiming for.
@@ -173,7 +173,7 @@ Just a skeleton for now, we will add the rest of the features as we go.
 ```
 
 We've imported two new widgets in this code: [`Button`](widgets/button.md) for the buttons and [`Digits`](widgets/digits.md) for the time display.
-Additionally, we've imported [`HorizontalGroup`][textual.containers.HorizontalGroup] and [`VerticalScroll`][textual.containers.VerticalScroll] from `textual.containers` (as the name of the module suggests, *containers* are widgets which contain other widgets).
+Additionally, we've imported [`HorizontalGroup`][anytext.containers.HorizontalGroup] and [`VerticalScroll`][anytext.containers.VerticalScroll] from `anytext.containers` (as the name of the module suggests, *containers* are widgets which contain other widgets).
 We will use these container widgets to define the general layout of our interface.
 
 The `TimeDisplay` is currently very simple, all it does is extend `Digits` without adding any new features. We will flesh this out later.
@@ -203,12 +203,12 @@ So the line `yield VerticalScroll(Stopwatch(), Stopwatch(), Stopwatch())` create
 
 Let's see what happens when we run `stopwatch02.py`.
 
-```{.textual path="docs/examples/tutorial/stopwatch02.py" title="stopwatch02.py"}
+```{.anytext path="docs/examples/tutorial/stopwatch02.py" title="stopwatch02.py"}
 ```
 
 The elements of the stopwatch application are there, but it doesn't look much like the sketch. This is because we have yet to apply any _styles_ to our new widgets.
 
-## Writing Textual CSS
+## Writing Anytext CSS
 
 Every widget has a `styles` object with a number of attributes that impact how the widget will appear. Here's how you might set white text and a blue background for a widget:
 
@@ -217,11 +217,11 @@ self.styles.background = "blue"
 self.styles.color = "white"
 ```
 
-While it's possible to set all styles for an app this way, it is rarely necessary. Textual has support for CSS (Cascading Style Sheets), a technology used by web browsers. CSS files are data files loaded by your app which contain information about styles to apply to your widgets.
+While it's possible to set all styles for an app this way, it is rarely necessary. Anytext has support for CSS (Cascading Style Sheets), a technology used by web browsers. CSS files are data files loaded by your app which contain information about styles to apply to your widgets.
 
 !!! info
 
-    The dialect of CSS used in Textual is greatly simplified over web based CSS and easier to learn.
+    The dialect of CSS used in Anytext is greatly simplified over web based CSS and easier to learn.
 
 
 CSS makes it easy to iterate on the design of your app and enables [live-editing](./guide/devtools.md#live-editing) &mdash; you can edit CSS and see the changes without restarting the app!
@@ -233,7 +233,7 @@ Let's add a CSS file to our application.
 --8<-- "docs/examples/tutorial/stopwatch03.py"
 ```
 
-Adding the `CSS_PATH` class variable tells Textual to load the following file when the app starts:
+Adding the `CSS_PATH` class variable tells Anytext to load the following file when the app starts:
 
 ```css title="stopwatch03.tcss"
 --8<-- "docs/examples/tutorial/stopwatch03.tcss"
@@ -241,10 +241,10 @@ Adding the `CSS_PATH` class variable tells Textual to load the following file wh
 
 If we run the app now, it will look *very* different.
 
-```{.textual path="docs/examples/tutorial/stopwatch03.py" title="stopwatch03.py"}
+```{.anytext path="docs/examples/tutorial/stopwatch03.py" title="stopwatch03.py"}
 ```
 
-This app looks much more like our sketch. Let's look at how Textual uses `stopwatch03.tcss` to apply styles.
+This app looks much more like our sketch. Let's look at how Anytext uses `stopwatch03.tcss` to apply styles.
 
 ### CSS basics
 
@@ -260,7 +260,7 @@ Stopwatch {
 }
 ```
 
-The first line tells Textual that the styles should apply to the `Stopwatch` widget. The lines between the curly brackets contain the styles themselves.
+The first line tells Anytext that the styles should apply to the `Stopwatch` widget. The lines between the curly brackets contain the styles themselves.
 
 Here's how this CSS code changes how the `Stopwatch` widget is displayed.
 
@@ -311,7 +311,7 @@ The last 3 blocks have a slightly different format. When the declaration begins 
 The buttons have a `dock` style which aligns the widget to a given edge.
 The start and stop buttons are docked to the left edge, while the reset button is docked to the right edge.
 
-You may have noticed that the stop button (`#stop` in the CSS) has `display: none;`. This tells Textual to not show the button. We do this because we don't want to display the stop button when the timer is *not* running. Similarly, we don't want to show the start button when the timer is running. We will cover how to manage such dynamic user interfaces in the next section.
+You may have noticed that the stop button (`#stop` in the CSS) has `display: none;`. This tells Anytext to not show the button. We do this because we don't want to display the stop button when the timer is *not* running. Similarly, we don't want to show the start button when the timer is running. We will cover how to manage such dynamic user interfaces in the next section.
 
 ### Dynamic CSS
 
@@ -352,7 +352,7 @@ If we were to write this in English, it would be something like: "Hide the start
 
 Modifying a widget's CSS classes is a convenient way to update visuals without introducing a lot of messy display related code.
 
-You can add and remove CSS classes with the [add_class()][textual.dom.DOMNode.add_class] and [remove_class()][textual.dom.DOMNode.remove_class] methods.
+You can add and remove CSS classes with the [add_class()][anytext.dom.DOMNode.add_class] and [remove_class()][anytext.dom.DOMNode.remove_class] methods.
 We will use these methods to connect the started state to the Start / Stop buttons.
 
 The following code will start or stop the stopwatches in response to clicking a button:
@@ -361,7 +361,7 @@ The following code will start or stop the stopwatches in response to clicking a 
 --8<-- "docs/examples/tutorial/stopwatch04.py"
 ```
 
-The `on_button_pressed` method is an *event handler*. Event handlers are methods called by Textual in response to an *event* such as a key press, mouse click, etc.
+The `on_button_pressed` method is an *event handler*. Event handlers are methods called by Anytext in response to an *event* such as a key press, mouse click, etc.
 Event handlers begin with `on_` followed by the name of the event they will handle.
 Hence `on_button_pressed` will handle the button pressed event.
 
@@ -369,21 +369,21 @@ See the guide on [message handlers](./guide/events.md#message-handlers) for the 
 
 If you run `stopwatch04.py` now you will be able to toggle between the two states by clicking the first button:
 
-```{.textual path="docs/examples/tutorial/stopwatch04.py" title="stopwatch04.py" press="tab,tab,tab,enter"}
+```{.anytext path="docs/examples/tutorial/stopwatch04.py" title="stopwatch04.py" press="tab,tab,tab,enter"}
 ```
 
-When the button event handler adds or removes the `"started"` CSS class, Textual re-applies the CSS and updates the visuals.
+When the button event handler adds or removes the `"started"` CSS class, Anytext re-applies the CSS and updates the visuals.
 
 
 ## Reactive attributes
 
-A recurring theme in Textual is that you rarely need to explicitly update a widget's visuals.
-It is possible: you can call [refresh()][textual.widget.Widget.refresh] to display new data.
-However, Textual prefers to do this automatically via _reactive_ attributes.
+A recurring theme in Anytext is that you rarely need to explicitly update a widget's visuals.
+It is possible: you can call [refresh()][anytext.widget.Widget.refresh] to display new data.
+However, Anytext prefers to do this automatically via _reactive_ attributes.
 
-Reactive attributes work like any other attribute, such as those you might set in an `__init__` method, but allow Textual to detect when you assign to them, in addition to some other [*superpowers*](./guide/reactivity.md).
+Reactive attributes work like any other attribute, such as those you might set in an `__init__` method, but allow Anytext to detect when you assign to them, in addition to some other [*superpowers*](./guide/reactivity.md).
 
-To add a reactive attribute, import [reactive][textual.reactive.reactive] and create an instance in your class scope.
+To add a reactive attribute, import [reactive][anytext.reactive.reactive] and create an instance in your class scope.
 
 Let's add reactives to our stopwatch to calculate and display the elapsed time.
 
@@ -406,7 +406,7 @@ We set the default for `start_time` to the `monotonic` function which will be ca
 The `time` attribute has a simple float as the default, so `self.time` will be initialized to `0`.
 
 
-The `on_mount` method is an event handler called when the widget is first added to the application (or _mounted_ in Textual terminology). In this method we call [set_interval()][textual.message_pump.MessagePump.set_interval] to create a timer which calls `self.update_time` sixty times a second. This `update_time` method calculates the time elapsed since the widget started and assigns it to `self.time` &mdash; which brings us to one of Reactive's super-powers.
+The `on_mount` method is an event handler called when the widget is first added to the application (or _mounted_ in Anytext terminology). In this method we call [set_interval()][anytext.message_pump.MessagePump.set_interval] to create a timer which calls `self.update_time` sixty times a second. This `update_time` method calculates the time elapsed since the widget started and assigns it to `self.time` &mdash; which brings us to one of Reactive's super-powers.
 
 If you implement a method that begins with `watch_` followed by the name of a reactive attribute, then the method will be called when the attribute is modified.
 Such methods are known as *watch methods*.
@@ -416,7 +416,7 @@ Because this happens automatically, we don't need to pass in an initial argument
 
 The end result is that the `Stopwatch` widgets show the time elapsed since the widget was created:
 
-```{.textual path="docs/examples/tutorial/stopwatch05.py" title="stopwatch05.py"}
+```{.anytext path="docs/examples/tutorial/stopwatch05.py" title="stopwatch05.py"}
 ```
 
 We've seen how we can update widgets with a timer, but we still need to wire up the buttons so we can operate stopwatches independently.
@@ -433,9 +433,9 @@ We need to be able to start, stop, and reset each stopwatch independently. We ca
 Here's a summary of the changes made to `TimeDisplay`.
 
 - We've added a `total` reactive attribute to store the total time elapsed between clicking the start and stop buttons.
-- The call to `set_interval` has grown a `pause=True` argument which starts the timer in pause mode (when a timer is paused it won't run until [resume()][textual.timer.Timer.resume] is called). This is because we don't want the time to update until the user hits the start button.
+- The call to `set_interval` has grown a `pause=True` argument which starts the timer in pause mode (when a timer is paused it won't run until [resume()][anytext.timer.Timer.resume] is called). This is because we don't want the time to update until the user hits the start button.
 - The `update_time` method now adds `total` to the current time to account for the time between any previous clicks of the start and stop buttons.
-- We've stored the result of `set_interval` which returns a [Timer](textual.timer.Timer) object. We will use this to _resume_ the timer when we start the Stopwatch.
+- We've stored the result of `set_interval` which returns a [Timer](anytext.timer.Timer) object. We will use this to _resume_ the timer when we start the Stopwatch.
 - We've added `start()`, `stop()`, and `reset()` methods.
 
 In addition, the `on_button_pressed` method on `Stopwatch` has grown some code to manage the time display when the user clicks a button. Let's look at that in detail:
@@ -458,20 +458,20 @@ In addition, the `on_button_pressed` method on `Stopwatch` has grown some code t
 This code supplies missing features and makes our app useful. We've made the following changes.
 
 - The first line retrieves `id` attribute of the button that was pressed. We can use this to decide what to do in response.
-- The second line calls [`query_one`][textual.dom.DOMNode.query_one] to get a reference to the `TimeDisplay` widget.
+- The second line calls [`query_one`][anytext.dom.DOMNode.query_one] to get a reference to the `TimeDisplay` widget.
 - We call the method on `TimeDisplay` that matches the pressed button.
 - We add the `"started"` class when the Stopwatch is started (`self.add_class("started")`), and remove it (`self.remove_class("started")`) when it is stopped. This will update the Stopwatch visuals via CSS.
 
 If you run `stopwatch06.py` you will be able to use the stopwatches independently.
 
-```{.textual path="docs/examples/tutorial/stopwatch06.py" title="stopwatch06.py" press="tab,enter,tab,enter,tab"}
+```{.anytext path="docs/examples/tutorial/stopwatch06.py" title="stopwatch06.py" press="tab,enter,tab,enter,tab"}
 ```
 
 The only remaining feature of the Stopwatch app left to implement is the ability to add and remove stopwatches.
 
 ## Dynamic widgets
 
-The Stopwatch app creates widgets when it starts via the `compose` method. We will also need to create new widgets while the app is running, and remove widgets we no longer need. We can do this by calling [mount()][textual.widget.Widget.mount] to add a widget, and [remove()][textual.widget.Widget.remove] to remove a widget.
+The Stopwatch app creates widgets when it starts via the `compose` method. We will also need to create new widgets while the app is running, and remove widgets we no longer need. We can do this by calling [mount()][anytext.widget.Widget.mount] to add a widget, and [remove()][anytext.widget.Widget.remove] to remove a widget.
 
 Let's use these methods to implement adding and removing stopwatches to our app.
 
@@ -486,19 +486,19 @@ Here's a summary of the changes:
 - Added `action_remove_stopwatch` to remove a stopwatch.
 - Added keybindings for the actions.
 
-The `action_add_stopwatch` method creates and mounts a new stopwatch. Note the call to [query_one()][textual.dom.DOMNode.query_one] with a CSS selector of `"#timers"` which gets the timer's container via its ID.
-Once mounted, the new Stopwatch will appear in the terminal. That last line in `action_add_stopwatch` calls [scroll_visible()][textual.widget.Widget.scroll_visible] which will scroll the container to make the new `Stopwatch` visible (if required).
+The `action_add_stopwatch` method creates and mounts a new stopwatch. Note the call to [query_one()][anytext.dom.DOMNode.query_one] with a CSS selector of `"#timers"` which gets the timer's container via its ID.
+Once mounted, the new Stopwatch will appear in the terminal. That last line in `action_add_stopwatch` calls [scroll_visible()][anytext.widget.Widget.scroll_visible] which will scroll the container to make the new `Stopwatch` visible (if required).
 
-The `action_remove_stopwatch` function calls [query()][textual.dom.DOMNode.query] with a CSS selector of `"Stopwatch"` which gets all the `Stopwatch` widgets.
-If there are stopwatches then the action calls [last()][textual.css.query.DOMQuery.last] to get the last stopwatch, and [remove()][textual.css.query.DOMQuery.remove] to remove it.
+The `action_remove_stopwatch` function calls [query()][anytext.dom.DOMNode.query] with a CSS selector of `"Stopwatch"` which gets all the `Stopwatch` widgets.
+If there are stopwatches then the action calls [last()][anytext.css.query.DOMQuery.last] to get the last stopwatch, and [remove()][anytext.css.query.DOMQuery.remove] to remove it.
 
 If you run `stopwatch.py` now you can add a new stopwatch with the ++a++ key and remove a stopwatch with ++r++.
 
-```{.textual path="docs/examples/tutorial/stopwatch.py" title="stopwatch.py" press="d,a,a,a,a,a,a,a,tab,enter,tab"}
+```{.anytext path="docs/examples/tutorial/stopwatch.py" title="stopwatch.py" press="d,a,a,a,a,a,a,a,tab,enter,tab"}
 ```
 
 ## What next?
 
-Congratulations on building your first Textual application! This tutorial has covered a lot of ground. If you are the type that prefers to learn a framework by coding, feel free. You could tweak `stopwatch.py` or look through the examples.
+Congratulations on building your first Anytext application! This tutorial has covered a lot of ground. If you are the type that prefers to learn a framework by coding, feel free. You could tweak `stopwatch.py` or look through the examples.
 
-Read the guide for the full details on how to build sophisticated TUI applications with Textual.
+Read the guide for the full details on how to build sophisticated TUI applications with Anytext.

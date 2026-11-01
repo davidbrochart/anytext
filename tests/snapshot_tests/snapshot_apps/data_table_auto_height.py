@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import DataTable, Label
+from anytext.app import App, ComposeResult
+from anytext.widgets import DataTable, Label
 
 LORUM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 

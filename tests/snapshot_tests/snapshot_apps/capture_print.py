@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual import events
-from textual.widgets import RichLog
+from anytext.app import App, ComposeResult
+from anytext import events
+from anytext.widgets import RichLog
 
 
 class PrintLogger(RichLog):

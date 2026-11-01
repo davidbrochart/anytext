@@ -1,7 +1,7 @@
 from rich.markdown import Markdown
-from textual.app import App, ComposeResult
-from textual.containers import Grid, Vertical
-from textual.widgets import Label, TabbedContent, TabPane
+from anytext.app import App, ComposeResult
+from anytext.containers import Grid, Vertical
+from anytext.widgets import Label, TabbedContent, TabPane
 
 
 class FooApp(App):

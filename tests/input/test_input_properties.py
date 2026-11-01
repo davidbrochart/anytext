@@ -3,10 +3,10 @@ from __future__ import annotations
 from rich.highlighter import JSONHighlighter
 from rich.text import Text
 
-from textual.app import App, ComposeResult
-from textual.containers import Container
-from textual.widgets import Input
-from textual.widgets.input import Selection
+from anytext.app import App, ComposeResult
+from anytext.containers import Container
+from anytext.widgets import Input
+from anytext.widgets.input import Selection
 
 
 class InputApp(App[None]):

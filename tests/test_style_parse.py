@@ -1,7 +1,7 @@
 import pytest
 
-from textual.color import Color
-from textual.style import Style
+from anytext.color import Color
+from anytext.style import Style
 
 
 @pytest.mark.parametrize(

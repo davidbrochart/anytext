@@ -1,8 +1,8 @@
 from rich.panel import Panel
 from rich.text import Text
 
-from textual.app import App
-from textual.widgets import DataTable
+from anytext.app import App
+from anytext.widgets import DataTable
 
 
 class AutoHeightRowsApp(App[None]):

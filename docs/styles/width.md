@@ -19,7 +19,7 @@ This example adds a widget with 50% width of the screen.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/width.py"}
+    ```{.anytext path="docs/examples/styles/width.py"}
     ```
 
 === "width.py"
@@ -38,7 +38,7 @@ This example adds a widget with 50% width of the screen.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/width_comparison.py" lines=24 columns=80}
+    ```{.anytext path="docs/examples/styles/width_comparison.py" lines=24 columns=80}
     ```
 
 === "width_comparison.py"

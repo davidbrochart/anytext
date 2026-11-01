@@ -1,10 +1,10 @@
 # App Basics
 
-In this chapter we will cover how to use Textual's App class to create an application. Just enough to get you up to speed. We will go into more detail in the following chapters.
+In this chapter we will cover how to use Anytext's App class to create an application. Just enough to get you up to speed. We will go into more detail in the following chapters.
 
 ## The App class
 
-The first step in building a Textual app is to import the [App][textual.app.App] class and create a subclass. Let's look at the simplest app class:
+The first step in building a Anytext app is to import the [App][anytext.app.App] class and create a subclass. Let's look at the simplest app class:
 
 ```python
 --8<-- "docs/examples/app/simple01.py"
@@ -13,7 +13,7 @@ The first step in building a Textual app is to import the [App][textual.app.App]
 
 ### The run method
 
-To run an app we create an instance and call [run()][textual.app.App.run].
+To run an app we create an instance and call [run()][anytext.app.App.run].
 
 ```python hl_lines="8-10" title="simple02.py"
 --8<-- "docs/examples/app/simple02.py"
@@ -27,12 +27,12 @@ Apps don't get much simpler than this&mdash;don't expect it to do much.
 
 If we run this app with `python simple02.py` you will see a blank terminal, something like the following:
 
-```{.textual path="docs/examples/app/simple02.py"}
+```{.anytext path="docs/examples/app/simple02.py"}
 ```
 
-When you call [App.run()][textual.app.App.run] Textual puts the terminal into a special state called *application mode*. When in application mode the terminal will no longer echo what you type. Textual will take over responding to user input (keyboard and mouse) and will update the visible portion of the terminal (i.e. the *screen*).
+When you call [App.run()][anytext.app.App.run] Anytext puts the terminal into a special state called *application mode*. When in application mode the terminal will no longer echo what you type. Anytext will take over responding to user input (keyboard and mouse) and will update the visible portion of the terminal (i.e. the *screen*).
 
-If you hit ++ctrl+q++ Textual will exit application mode and return you to the command prompt. Any content you had in the terminal prior to application mode will be restored.
+If you hit ++ctrl+q++ Anytext will exit application mode and return you to the command prompt. Any content you had in the terminal prior to application mode will be restored.
 
 
 #### Run inline
@@ -42,7 +42,7 @@ If you hit ++ctrl+q++ Textual will exit application mode and return you to the c
 You can also run apps in _inline_ mode, which will cause the app to appear beneath the prompt (and won't go into application mode).
 Inline apps are useful for tools that integrate closely with the typical workflow of a terminal.
 
-To run an app in inline mode set the `inline` parameter to `True` when you call [App.run()][textual.app.App.run]. See [Style Inline Apps](../how-to/style-inline-apps.md) for how to apply additional styles to inline apps.
+To run an app in inline mode set the `inline` parameter to `True` when you call [App.run()][anytext.app.App.run]. See [Style Inline Apps](../how-to/style-inline-apps.md) for how to apply additional styles to inline apps.
 
 !!! note
 
@@ -54,15 +54,15 @@ To run an app in inline mode set the `inline` parameter to `True` when you call 
 !!! tip "Added in version 0.80.0"
 
 Terminals support 16 theme-able *ANSI* colors, which you can personalize from your terminal settings.
-By default, Textual will replace these colors with its own color choices (see the [FAQ for details](../FAQ.md#why-doesnt-textual-support-ansi-themes)).
+By default, Anytext will replace these colors with its own color choices (see the [FAQ for details](../FAQ.md#why-doesnt-anytext-support-ansi-themes)).
 
-You can disable this behavior by setting `ansi_color=True` in the [App constructor][textual.app.App].
+You can disable this behavior by setting `ansi_color=True` in the [App constructor][anytext.app.App].
 
 We recommend the default behavior for full-screen apps, but you may want to preserve ANSI colors in [inline](#run-inline) apps.
 
 ## Events
 
-Textual has an [event system](./events.md) you can use to respond to key presses, mouse actions, and internal state changes. Event handlers are methods prefixed with `on_` followed by the name of the event.
+Anytext has an [event system](./events.md) you can use to respond to key presses, mouse actions, and internal state changes. Event handlers are methods prefixed with `on_` followed by the name of the event.
 
 One such event is the *mount* event which is sent to an application after it enters application mode. You can respond to this event by defining a method called `on_mount`.
 
@@ -74,21 +74,21 @@ Another such event is the *key* event which is sent when the user presses a key.
 
 The `on_mount` handler sets the `self.screen.styles.background` attribute to `"darkblue"` which (as you can probably guess) turns the background blue. Since the mount event is sent immediately after entering application mode, you will see a blue screen when you run this code.
 
-```{.textual path="docs/examples/app/event01.py" hl_lines="23-25"}
+```{.anytext path="docs/examples/app/event01.py" hl_lines="23-25"}
 ```
 
-When you press a key, the key event handler (`on_key`) which will receive a [Key][textual.events.Key] instance.
+When you press a key, the key event handler (`on_key`) which will receive a [Key][anytext.events.Key] instance.
 If you don't require the event in your handler, you can omit it.
 
 Events may contain additional information which you can inspect in the handler.
-In the case of the [Key][textual.events.Key] event, there is a `key` attribute which is the name of the key that was pressed.
+In the case of the [Key][anytext.events.Key] event, there is a `key` attribute which is the name of the key that was pressed.
 The `on_key` method above uses this attribute to change the background color if any of the keys from ++0++ to ++9++ are pressed.
 
 ### Async events
 
-Textual is powered by Python's [asyncio](https://docs.python.org/3/library/asyncio.html) framework which uses the `async` and `await` keywords.
+Anytext is powered by Python's [asyncio](https://docs.python.org/3/library/asyncio.html) framework which uses the `async` and `await` keywords.
 
-Textual knows to *await* your event handlers if they are coroutines (i.e. prefixed with the `async` keyword). Regular functions are generally fine unless you plan on integrating other async libraries (such as [httpx](https://www.python-httpx.org/) for reading data from the internet).
+Anytext knows to *await* your event handlers if they are coroutines (i.e. prefixed with the `async` keyword). Regular functions are generally fine unless you plan on integrating other async libraries (such as [httpx](https://www.python-httpx.org/) for reading data from the internet).
 
 !!! tip
 
@@ -103,7 +103,7 @@ Widgets can be as simple as a piece of text, a button, or a fully-fledged compon
 
 ### Composing
 
-To add widgets to your app implement a [`compose()`][textual.app.App.compose] method which should return an iterable of `Widget` instances. A list would work, but it is convenient to yield widgets, making the method a *generator*.
+To add widgets to your app implement a [`compose()`][anytext.app.App.compose] method which should return an iterable of `Widget` instances. A list would work, but it is convenient to yield widgets, making the method a *generator*.
 
 The following example imports a builtin `Welcome` widget and yields it from `App.compose()`.
 
@@ -111,16 +111,16 @@ The following example imports a builtin `Welcome` widget and yields it from `App
 --8<-- "docs/examples/app/widgets01.py"
 ```
 
-When you run this code, Textual will *mount* the `Welcome` widget which contains Markdown content and a button:
+When you run this code, Anytext will *mount* the `Welcome` widget which contains Markdown content and a button:
 
-```{.textual path="docs/examples/app/widgets01.py"}
+```{.anytext path="docs/examples/app/widgets01.py"}
 ```
 
-Notice the `on_button_pressed` method which handles the [Button.Pressed][textual.widgets.Button] event sent by a button contained in the `Welcome` widget. The handler calls [App.exit()][textual.app.App.exit] to exit the app.
+Notice the `on_button_pressed` method which handles the [Button.Pressed][anytext.widgets.Button] event sent by a button contained in the `Welcome` widget. The handler calls [App.exit()][anytext.app.App.exit] to exit the app.
 
 ### Mounting
 
-While composing is the preferred way of adding widgets when your app starts it is sometimes necessary to add new widget(s) in response to events. You can do this by calling [mount()][textual.widget.Widget.mount] which will add a new widget to the UI.
+While composing is the preferred way of adding widgets when your app starts it is sometimes necessary to add new widget(s) in response to events. You can do this by calling [mount()][anytext.widget.Widget.mount] which will add a new widget to the UI.
 
 Here's an app which adds a welcome widget in response to any key press:
 
@@ -130,13 +130,13 @@ Here's an app which adds a welcome widget in response to any key press:
 
 When you first run this you will get a blank screen. Press any key to add the welcome widget. You can even press a key multiple times to add several widgets.
 
-```{.textual path="docs/examples/app/widgets02.py" press="a,a,a,down,down,down,down,down,down"}
+```{.anytext path="docs/examples/app/widgets02.py" press="a,a,a,down,down,down,down,down,down"}
 ```
 
 #### Awaiting mount
 
-When you mount a widget, Textual will mount everything the widget *composes*.
-Textual guarantees that the mounting will be complete by the *next* message handler, but not immediately after the call to `mount()`.
+When you mount a widget, Anytext will mount everything the widget *composes*.
+Anytext guarantees that the mounting will be complete by the *next* message handler, but not immediately after the call to `mount()`.
 This may be a problem if you want to make any changes to the widget in the same message handler.
 
 Let's first illustrate the problem with an example.
@@ -144,8 +144,8 @@ The following code will mount the Welcome widget in response to a key press.
 It will also attempt to modify the Button in the Welcome widget by changing its label from "OK" to "YES!".
 
 ```python hl_lines="2 8"
-from textual.app import App
-from textual.widgets import Button, Welcome
+from anytext.app import App
+from anytext.widgets import Button, Welcome
 
 
 class WelcomeApp(App):
@@ -161,7 +161,7 @@ if __name__ == "__main__":
 
 1. See [queries](./queries.md) for more information on the `query_one` method.
 
-If you run this example, you will find that Textual raises a [NoMatches][textual.css.query.NoMatches] exception when you press a key.
+If you run this example, you will find that Anytext raises a [NoMatches][anytext.css.query.NoMatches] exception when you press a key.
 This is because the mount process has not yet completed when we attempt to change the button.
 
 To solve this we can optionally await the result of `mount()`, which requires we make the function `async`.
@@ -169,8 +169,8 @@ This guarantees that by the following line, the Button has been mounted, and we 
 
 
 ```python hl_lines="6 7"
-from textual.app import App
-from textual.widgets import Button, Welcome
+from anytext.app import App
+from anytext.widgets import Button, Welcome
 
 
 class WelcomeApp(App):
@@ -186,12 +186,12 @@ if __name__ == "__main__":
 
 Here's the output. Note the changed button text:
 
-```{.textual path="docs/examples/app/widgets04.py" press=["a"]}
+```{.anytext path="docs/examples/app/widgets04.py" press=["a"]}
 ```
 
 ## Exiting
 
-An app will run until you call [App.exit()][textual.app.App.exit] which will exit application mode and the [run][textual.app.App.run] method will return. If this is the last line in your code you will return to the command prompt.
+An app will run until you call [App.exit()][anytext.app.App.exit] which will exit application mode and the [run][anytext.app.App.run] method will return. If this is the last line in your code you will return to the command prompt.
 
 The exit method will also accept an optional positional value to be returned by `run()`. The following example uses this to return the `id` (identifier) of a clicked button.
 
@@ -201,7 +201,7 @@ The exit method will also accept an optional positional value to be returned by 
 
 Running this app will give you the following:
 
-```{.textual path="docs/examples/app/question01.py"}
+```{.anytext path="docs/examples/app/question01.py"}
 ```
 
 Clicking either of those buttons will exit the app, and the `run()` method will return either `"yes"` or `"no"` depending on button clicked.
@@ -214,15 +214,15 @@ You may have noticed that we subclassed `App[str]` rather than the usual `App`.
 --8<-- "docs/examples/app/question01.py"
 ```
 
-The addition of `[str]` tells mypy that `run()` is expected to return a string. It may also return `None` if [App.exit()][textual.app.App.exit] is called without a return value, so the return type of `run` will be `str | None`. Replace the `str` in `[str]` with the type of the value you intend to call the exit method with.
+The addition of `[str]` tells mypy that `run()` is expected to return a string. It may also return `None` if [App.exit()][anytext.app.App.exit] is called without a return value, so the return type of `run` will be `str | None`. Replace the `str` in `[str]` with the type of the value you intend to call the exit method with.
 
-!!! note "Typing in Textual"
+!!! note "Typing in Anytext"
 
-    Type annotations are entirely optional (but recommended) with Textual.
+    Type annotations are entirely optional (but recommended) with Anytext.
 
 ### Return code
 
-When you exit a Textual app with [`App.exit()`][textual.app.App.exit], you can optionally specify a *return code* with the `return_code` parameter.
+When you exit a Anytext app with [`App.exit()`][anytext.app.App.exit], you can optionally specify a *return code* with the `return_code` parameter.
 
 
 !!! info "What are return codes?"
@@ -232,7 +232,7 @@ When you exit a Textual app with [`App.exit()`][textual.app.App.exit], you can o
     A return code of `0` indicates success, any other value indicates that an error occurred.
     The exact meaning of a non-zero return code is application-dependant.
 
-When a Textual app exits normally, the return code will be `0`. If there is an unhandled exception, Textual will set a return code of `1`.
+When a Anytext app exits normally, the return code will be `0`. If there is an unhandled exception, Anytext will set a return code of `1`.
 You may want to set a different value for the return code if there is error condition that you want to differentiate from an unhandled exception.
 
 Here's an example of setting a return code for an error condition:
@@ -244,7 +244,7 @@ if critical_error:
 
 The app's return code can be queried with `app.return_code`, which will be `None` if it hasn't been set, or an integer.
 
-Textual won't explicitly exit the process.
+Anytext won't explicitly exit the process.
 To exit the app with a return code, you should call `sys.exit`.
 Here's how you might do that:
 
@@ -258,19 +258,19 @@ if __name__ == "__main__":
 
 ## Suspending
 
-A Textual app may be suspended so you can leave application mode for a period of time.
+A Anytext app may be suspended so you can leave application mode for a period of time.
 This is often used to temporarily replace your app with another terminal application.
 
 You could use this to allow the user to edit content with their preferred text editor, for example.
 
 !!! info
 
-    App suspension is unavailable with [textual-web](https://github.com/Textualize/textual-web).
+    App suspension is unavailable with [anytext-web](https://github.com/Textualize/textual-web).
 
 ### Suspend context manager
 
-You can use the [App.suspend](/api/app/#textual.app.App.suspend) context manager to suspend your app.
-The following Textual app will launch [vim](https://www.vim.org/) (a text editor) when the user clicks a button:
+You can use the [App.suspend](/api/app/#anytext.app.App.suspend) context manager to suspend your app.
+The following Anytext app will launch [vim](https://www.vim.org/) (a text editor) when the user clicks a button:
 
 === "suspend.py"
 
@@ -282,14 +282,14 @@ The following Textual app will launch [vim](https://www.vim.org/) (a text editor
 
 === "Output"
 
-    ```{.textual path="docs/examples/app/suspend.py"}
+    ```{.anytext path="docs/examples/app/suspend.py"}
     ```
 
 ### Suspending from foreground
 
-On Unix and Unix-like systems (GNU/Linux, macOS, etc) Textual has support for the user pressing a key combination to suspend the application as the foreground process.
+On Unix and Unix-like systems (GNU/Linux, macOS, etc) Anytext has support for the user pressing a key combination to suspend the application as the foreground process.
 Ordinarily this key combination is <kbd>Ctrl</kbd>+<kbd>Z</kbd>;
-in a Textual application this is disabled by default, but an action is provided ([`action_suspend_process`](/api/app/#textual.app.App.action_suspend_process)) that you can bind in the usual way.
+in a Anytext application this is disabled by default, but an action is provided ([`action_suspend_process`](/api/app/#anytext.app.App.action_suspend_process)) that you can bind in the usual way.
 For example:
 
 === "suspend_process.py"
@@ -300,22 +300,22 @@ For example:
 
 === "Output"
 
-    ```{.textual path="docs/examples/app/suspend_process.py"}
+    ```{.anytext path="docs/examples/app/suspend_process.py"}
     ```
 
 !!! note
 
-    If `suspend_process` is called on Windows, or when your application is being hosted under Textual Web, the call will be ignored.
+    If `suspend_process` is called on Windows, or when your application is being hosted under Anytext Web, the call will be ignored.
 
 ## CSS
 
-Textual apps can reference [CSS](CSS.md) files which define how your app and widgets will look, while keeping your project free of messy display related code.
+Anytext apps can reference [CSS](CSS.md) files which define how your app and widgets will look, while keeping your project free of messy display related code.
 
 !!! info
 
-    Textual apps typically use the extension `.tcss` for external CSS files to differentiate them from browser (`.css`) files.
+    Anytext apps typically use the extension `.tcss` for external CSS files to differentiate them from browser (`.css`) files.
 
-The chapter on [Textual CSS](CSS.md) describes how to use CSS in detail. For now let's look at how your app references external CSS files.
+The chapter on [Anytext CSS](CSS.md) describes how to use CSS in detail. For now let's look at how your app references external CSS files.
 
 The following example enables loading of CSS by adding a `CSS_PATH` class variable:
 
@@ -335,7 +335,7 @@ If the path is relative (as it is above) then it is taken as relative to where t
 
 When `"question02.py"` runs it will load `"question02.tcss"` and update the app and widgets accordingly. Even though the code is almost identical to the previous sample, the app now looks quite different:
 
-```{.textual path="docs/examples/app/question02.py"}
+```{.anytext path="docs/examples/app/question02.py"}
 ```
 
 
@@ -354,7 +354,7 @@ Here's the question app with classvar CSS:
 
 ## Title and subtitle
 
-Textual apps have a `title` attribute which is typically the name of your application, and an optional `sub_title` attribute which adds additional context (such as the file your are working on).
+Anytext apps have a `title` attribute which is typically the name of your application, and an optional `sub_title` attribute which adds additional context (such as the file your are working on).
 By default, `title` will be set to the name of your App class, and `sub_title` is empty.
 You can change these defaults by defining `TITLE` and `SUB_TITLE` class variables. Here's an example of that:
 
@@ -364,7 +364,7 @@ You can change these defaults by defining `TITLE` and `SUB_TITLE` class variable
 
 Note that the title and subtitle are displayed by the builtin [Header](./../widgets/header.md) widget at the top of the screen:
 
-```{.textual path="docs/examples/app/question_title01.py"}
+```{.anytext path="docs/examples/app/question_title01.py"}
 ```
 
 You can also set the title attributes dynamically within a method of your app. The following example sets the title and subtitle in response to a key press:
@@ -375,7 +375,7 @@ You can also set the title attributes dynamically within a method of your app. T
 
 If you run this app and press the ++t++ key, you should see the header update accordingly:
 
-```{.textual path="docs/examples/app/question_title02.py" press="t"}
+```{.anytext path="docs/examples/app/question_title02.py" press="t"}
 ```
 
 !!! info
@@ -388,7 +388,7 @@ In the following chapter we will learn more about how to apply styles to your wi
 
 ## Async backends
 
-Textual uses [AnyIO](https://anyio.readthedocs.io/) for concurrency. By default,
+Anytext uses [AnyIO](https://anyio.readthedocs.io/) for concurrency. By default,
 `App.run()` uses AnyIO's asyncio backend. To run without asyncio, install Trio
 (`pip install trio`) and select it when starting your app:
 

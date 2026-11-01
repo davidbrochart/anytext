@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.widget import Widget
-from textual.widgets import Input, Label
+from anytext.app import App, ComposeResult
+from anytext.widget import Widget
+from anytext.widgets import Input, Label
 
 
 class InputWithLabel(Widget):

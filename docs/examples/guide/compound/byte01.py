@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.containers import Container
-from textual.widget import Widget
-from textual.widgets import Input, Label, Switch
+from anytext.app import App, ComposeResult
+from anytext.containers import Container
+from anytext.widget import Widget
+from anytext.widgets import Input, Label, Switch
 
 
 class BitSwitch(Widget):

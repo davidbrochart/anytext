@@ -1,9 +1,9 @@
 import httpx
 from rich.text import Text
 
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widgets import Input, Static
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Input, Static
 
 
 class WeatherApp(App):

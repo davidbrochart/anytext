@@ -1,8 +1,8 @@
 import asyncio
 
-from textual._context import active_message_pump
-from textual.app import App
-from textual.message_pump import MessagePump
+from anytext._context import active_message_pump
+from anytext.app import App
+from anytext.message_pump import MessagePump
 
 
 class CallLaterApp(App[None]):

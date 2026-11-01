@@ -1,5 +1,5 @@
 ---
-title: "textual.highlight"
+title: "anytext.highlight"
 ---
 
-::: textual.highlight
+::: anytext.highlight

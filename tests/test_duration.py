@@ -1,6 +1,6 @@
 import pytest
 
-from textual._duration import DurationParseError, _duration_as_seconds
+from anytext._duration import DurationParseError, _duration_as_seconds
 
 
 def test_parse() -> None:

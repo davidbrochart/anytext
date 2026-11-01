@@ -4,7 +4,7 @@ The `link-background-hover` style sets the background color of the link when the
 
 !!! note
 
-    `link-background-hover` only applies to Textual action links as described in the [actions guide](../../guide/actions.md#links) and not to regular hyperlinks.
+    `link-background-hover` only applies to Anytext action links as described in the [actions guide](../../guide/actions.md#links) and not to regular hyperlinks.
 
 ## Syntax
 
@@ -12,11 +12,11 @@ The `link-background-hover` style sets the background color of the link when the
 link-background-hover: <a href="../../../css_types/color">&lt;color&gt;</a> [<a href="../../../css_types/percentage">&lt;percentage&gt;</a>];
 --8<-- "docs/snippets/syntax_block_end.md"
 
-`link-background-hover` accepts a [`<color>`](../../css_types/color.md) (with an optional opacity level defined by a [`<percentage>`](../../css_types/percentage.md)) that is used to define the background color of text enclosed in Textual action links when the mouse pointer is over it.
+`link-background-hover` accepts a [`<color>`](../../css_types/color.md) (with an optional opacity level defined by a [`<percentage>`](../../css_types/percentage.md)) that is used to define the background color of text enclosed in Anytext action links when the mouse pointer is over it.
 
 ### Defaults
 
-If not provided, a Textual action link will have `link-background-hover` set to `$accent`.
+If not provided, a Anytext action link will have `link-background-hover` set to `$accent`.
 
 ## Example
 

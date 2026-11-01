@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Footer, Label
+from anytext.app import App, ComposeResult
+from anytext.widgets import Footer, Label
 
 
 class ToggleCompactFooterApp(App):

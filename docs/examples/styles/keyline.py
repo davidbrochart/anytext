@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Grid
-from textual.widgets import Placeholder
+from anytext.app import App, ComposeResult
+from anytext.containers import Grid
+from anytext.widgets import Placeholder
 
 
 class KeylineApp(App):

@@ -1,6 +1,6 @@
 ---
-title: "textual.fuzzy"
+title: "anytext.fuzzy"
 ---
 
 
-::: textual.fuzzy
+::: anytext.fuzzy

@@ -18,7 +18,7 @@ This example creates three widgets and applies a different background to each.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/background.py"}
+    ```{.anytext path="docs/examples/styles/background.py"}
     ```
 
 === "background.py"
@@ -39,7 +39,7 @@ The next example creates ten widgets laid out side by side to show the effect of
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/background_transparency.py"}
+    ```{.anytext path="docs/examples/styles/background_transparency.py"}
     ```
 
 === "background_transparency.py"
@@ -80,7 +80,7 @@ widget.styles.background = "blue"
 # Set through HSL model
 widget.styles.background = "hsl(351,32%,89%)"
 
-from textual.color import Color
+from anytext.color import Color
 # Set with a color object by parsing a string
 widget.styles.background = Color.parse("pink")
 widget.styles.background = Color.parse("#FF00FF")

@@ -21,7 +21,7 @@ Note that the second widget is hidden by adding the `"remove"` class which sets 
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/display.py"}
+    ```{.anytext path="docs/examples/styles/display.py"}
     ```
 
 === "display.py"

@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Center, VerticalScroll
-from textual.widgets import Button, Header, Input, Label, ProgressBar
+from anytext.app import App, ComposeResult
+from anytext.containers import Center, VerticalScroll
+from anytext.widgets import Button, Header, Input, Label, ProgressBar
 
 
 class FundingProgressApp(App[None]):

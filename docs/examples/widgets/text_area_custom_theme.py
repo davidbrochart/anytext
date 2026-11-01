@@ -1,8 +1,8 @@
 from rich.style import Style
 
-from textual._text_area_theme import TextAreaTheme
-from textual.app import App, ComposeResult
-from textual.widgets import TextArea
+from anytext._text_area_theme import TextAreaTheme
+from anytext.app import App, ComposeResult
+from anytext.widgets import TextArea
 
 TEXT = """\
 # says hello

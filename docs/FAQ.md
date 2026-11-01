@@ -9,23 +9,23 @@ hide:
 # Frequently Asked Questions
 
 
-Welcome to the Textual FAQ.
+Welcome to the Anytext FAQ.
 Here we try and answer any question that comes up frequently.
 If you can't find what you are looking for here, see our other [help](./help.md) channels.
 
-<a name="does-textual-support-images"></a>
-## Does Textual support images?
+<a name="does-anytext-support-images"></a>
+## Does Anytext support images?
 
-Textual doesn't have built-in support for images yet, but it is on the [Roadmap](https://textual.textualize.io/roadmap/).
+Anytext doesn't have built-in support for images yet, but it is on the [Roadmap](https://textual.textualize.io/roadmap/).
 
-See also the [rich-pixels](https://github.com/darrenburns/rich-pixels) project for a Rich renderable for images that works with Textual.
+See also the [rich-pixels](https://github.com/darrenburns/rich-pixels) project for a Rich renderable for images that works with Anytext.
 
 ---
 
-<a name="how-can-i-fix-importerror-cannot-import-name-composeresult-from-textualapp-"></a>
-## How can I fix ImportError cannot import name ComposeResult from textual.app ?
+<a name="how-can-i-fix-importerror-cannot-import-name-composeresult-from-anytextapp-"></a>
+## How can I fix ImportError cannot import name ComposeResult from anytext.app ?
 
-You likely have an older version of Textual. You can install the latest version by adding the `-U` switch which will force pip to upgrade.
+You likely have an older version of Anytext. You can install the latest version by adding the `-U` switch which will force pip to upgrade.
 
 The following should do it:
 
@@ -35,10 +35,10 @@ pip install textual-dev -U
 
 ---
 
-<a name="how-can-i-select-and-copy-text-in-a-textual-app"></a>
-## How can I select and copy text in a Textual app?
+<a name="how-can-i-select-and-copy-text-in-a-anytext-app"></a>
+## How can I select and copy text in a Anytext app?
 
-Textual supports text selection for most widgets, via click and drag. Press ctrl+c to copy.
+Anytext supports text selection for most widgets, via click and drag. Press ctrl+c to copy.
 
 For widgets that don't yet support text selection, you can try and use your terminal's builtin support.
 Most terminal emulators offer a modifier key which you can hold while you click and drag to restore the behavior you
@@ -57,10 +57,10 @@ Refer to the documentation for your terminal emulator, if it is not listed above
 
 Some terminal emulators have a translucent background feature which allows the desktop underneath to be partially visible.
 
-This feature is unlikely to work with Textual, as the translucency effect requires the use of ANSI background colors, which Textual doesn't use.
-Textual uses 16.7 million colors where available which enables consistent colors across all platforms and additional effects which aren't possible with ANSI colors.
+This feature is unlikely to work with Anytext, as the translucency effect requires the use of ANSI background colors, which Anytext doesn't use.
+Anytext uses 16.7 million colors where available which enables consistent colors across all platforms and additional effects which aren't possible with ANSI colors.
 
-For more information on ANSI colors in Textual, see [Why no ANSI Themes?](#why-doesnt-textual-support-ansi-themes).
+For more information on ANSI colors in Anytext, see [Why no ANSI Themes?](#why-doesnt-anytext-support-ansi-themes).
 
 ---
 
@@ -70,7 +70,7 @@ For more information on ANSI colors in Textual, see [Why no ANSI Themes?](#why-d
 !!! tip
 
     See [*How To Center Things*](https://textual.textualize.io/how-to/center-things/) in the
-    Textual documentation for a more comprehensive answer to this question.
+    Anytext documentation for a more comprehensive answer to this question.
 
 To center a widget within a container use
 [`align`](https://textual.textualize.io/styles/align/). But remember that
@@ -81,8 +81,8 @@ For example, here's an app that shows a `Button` in the middle of a
 `Screen`:
 
 ```python
-from textual.app import App, ComposeResult
-from textual.widgets import Button
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button
 
 class ButtonApp(App):
 
@@ -137,9 +137,9 @@ container](https://textual.textualize.io/api/containers/#textual.containers.Cent
 that individually centers it. For example:
 
 ```python
-from textual.app import App, ComposeResult
-from textual.containers import Center
-from textual.widgets import Button
+from anytext.app import App, ComposeResult
+from anytext.containers import Center
+from anytext.widgets import Button
 
 class ButtonApp(App):
 
@@ -164,7 +164,7 @@ if __name__ == "__main__":
 <a name="how-do-i-fix-workerdeclarationerror"></a>
 ## How do I fix WorkerDeclarationError?
 
-Textual version 0.31.0 requires that you set `thread=True` on the `@work` decorator if you want to run a threaded worker.
+Anytext version 0.31.0 requires that you set `thread=True` on the `@work` decorator if you want to run a threaded worker.
 
 If you want a threaded worker, you would declare it in the following way:
 
@@ -193,8 +193,8 @@ When creating your `App` class, override `__init__` as you would when
 inheriting normally. For example:
 
 ```python
-from textual.app import App, ComposeResult
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.widgets import Static
 
 class Greetings(App[None]):
 
@@ -225,7 +225,7 @@ Greetings("Well hello", "there").run()
 <a name="why-do-some-key-combinations-never-make-it-to-my-app"></a>
 ## Why do some key combinations never make it to my app?
 
-Textual can only ever support key combinations that are passed on by your
+Anytext can only ever support key combinations that are passed on by your
 terminal application. Which keys get passed on can differ from terminal to
 terminal, and from operating system to operating system.
 
@@ -250,14 +250,14 @@ on macOS, and the Windows key on Windows.
 
 If you need to test what [key
 combinations](https://textual.textualize.io/guide/input/#keyboard-input)
-work in different environments you can try them out with `textual keys`.
+work in different environments you can try them out with `anytext keys`.
 
 ---
 
-<a name="why-doesnt-textual-look-good-on-macos"></a>
-## Why doesn't Textual look good on macOS?
+<a name="why-doesnt-anytext-look-good-on-macos"></a>
+## Why doesn't Anytext look good on macOS?
 
-You may find that the default macOS Terminal.app doesn't render Textual apps (and likely other TUIs) very well, particularly when it comes to box characters.
+You may find that the default macOS Terminal.app doesn't render Anytext apps (and likely other TUIs) very well, particularly when it comes to box characters.
 For instance, you may find it displays misaligned blocks and lines like this:
 
 <img width="1042" alt="Screenshot 2023-06-19 at 10 43 02" src="https://github.com/Textualize/textual/assets/554369/e61f3876-3dd1-4ac8-b380-22922c89c7d6">
@@ -268,7 +268,7 @@ If you want to use another font, you may have to tweak the line spacing until yo
 
 <img width="737" alt="Screenshot 2023-06-19 at 10 44 00" src="https://github.com/Textualize/textual/assets/554369/0a052a93-b1fd-4327-9d33-d954b51a9ad2">
 
-With these changes, Textual apps render more as intended:
+With these changes, Anytext apps render more as intended:
 
 <img width="1042" alt="Screenshot 2023-06-19 at 10 43 23" src="https://github.com/Textualize/textual/assets/554369/a0c4aa05-c509-4ac1-b0b8-e68ce4433f70">
 
@@ -292,23 +292,23 @@ We recommend any of the following terminals:
 
 ---
 
-<a name="why-doesnt-textual-support-ansi-themes"></a>
-## Why doesn't Textual support ANSI themes?
+<a name="why-doesnt-anytext-support-ansi-themes"></a>
+## Why doesn't Anytext support ANSI themes?
 
-Textual will not generate escape sequences for the 16 themeable *ANSI* colors.
+Anytext will not generate escape sequences for the 16 themeable *ANSI* colors.
 
 This is an intentional design decision we took for the following reasons:
 
-- Not everyone has a carefully chosen ANSI color theme. Color combinations which may look fine on your system, may be unreadable on another machine. There is very little an app author or Textual can do to resolve this. Asking users to simply pick a better theme is not a good solution, since not all users will know how.
-- ANSI colors can't be manipulated in the way Textual can do with other colors. Textual can blend colors and produce light and dark shades from an original color, which is used to create more readable text and user interfaces. Color blending will also be used to power future accessibility features.
+- Not everyone has a carefully chosen ANSI color theme. Color combinations which may look fine on your system, may be unreadable on another machine. There is very little an app author or Anytext can do to resolve this. Asking users to simply pick a better theme is not a good solution, since not all users will know how.
+- ANSI colors can't be manipulated in the way Anytext can do with other colors. Anytext can blend colors and produce light and dark shades from an original color, which is used to create more readable text and user interfaces. Color blending will also be used to power future accessibility features.
 
-Textual has a design system which guarantees apps will be readable on all platforms and terminals, and produces better results than ANSI colors.
+Anytext has a design system which guarantees apps will be readable on all platforms and terminals, and produces better results than ANSI colors.
 
 There is currently a light and dark version of the design system, but more are planned. It will also be possible for users to customize the source colors on a per-app or per-system basis. This means that in the future you will be able to modify the core colors to blend in with your chosen terminal theme.
 
 !!! tip "Changed in version 0.80.0"
 
-    Textual added an `ansi_color` boolean to App. If you set this to `True`, then Textual will not attempt to convert ANSI colors. Note that you will lose transparency effects if you enable this setting.
+    Anytext added an `ansi_color` boolean to App. If you set this to `True`, then Anytext will not attempt to convert ANSI colors. Note that you will lose transparency effects if you enable this setting.
 
 ---
 

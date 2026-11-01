@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Footer, Label, ListItem, ListView
+from anytext.app import App, ComposeResult
+from anytext.widgets import Footer, Label, ListItem, ListView
 
 
 class ListViewExample(App):

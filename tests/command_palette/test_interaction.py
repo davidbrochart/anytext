@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.command import CommandList, CommandPalette, Hit, Hits, Provider
+from anytext.app import App
+from anytext.command import CommandList, CommandPalette, Hit, Hits, Provider
 
 
 class SimpleSource(Provider):

@@ -5,7 +5,7 @@ This example also shows that a widget cannot contain both a `border` and an `out
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/outline_vs_border.py"}
+    ```{.anytext path="docs/examples/styles/outline_vs_border.py"}
     ```
 
 === "outline_vs_border.py"

@@ -4,10 +4,10 @@ from typing import Callable, List, Tuple
 
 import pytest
 
-from textual import work
-from textual._work_decorator import WorkerDeclarationError
-from textual.app import App
-from textual.worker import Worker, WorkerState, WorkType
+from anytext import work
+from anytext._work_decorator import WorkerDeclarationError
+from anytext.app import App
+from anytext.worker import Worker, WorkerState, WorkType
 
 
 class WorkApp(App):

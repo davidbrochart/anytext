@@ -6,10 +6,10 @@ except ImportError:
     raise ImportError("Please install httpx with 'pip install httpx' ")
 
 
-from textual import getters, work
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widgets import Input, Markdown
+from anytext import getters, work
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Input, Markdown
 
 
 class DictionaryApp(App):

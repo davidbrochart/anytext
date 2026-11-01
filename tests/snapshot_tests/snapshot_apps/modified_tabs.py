@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Button, TabbedContent
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button, TabbedContent
 
 
 class FiddleWithTabsApp(App[None]):

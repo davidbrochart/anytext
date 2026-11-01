@@ -1,9 +1,9 @@
-from textual import on
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal
-from textual.events import Mount
-from textual.widgets import Footer, Header, Pretty, SelectionList
-from textual.widgets.selection_list import Selection
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal
+from anytext.events import Mount
+from anytext.widgets import Footer, Header, Pretty, SelectionList
+from anytext.widgets.selection_list import Selection
 
 
 class SelectionListApp(App[None]):

@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import Horizontal, VerticalScroll
-from textual.widgets import Placeholder
+from anytext.app import App
+from anytext.containers import Horizontal, VerticalScroll
+from anytext.widgets import Placeholder
 
 
 class VisibilityContainersApp(App):

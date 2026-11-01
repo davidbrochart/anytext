@@ -39,7 +39,7 @@ This example adds padding around some text.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/padding.py"}
+    ```{.anytext path="docs/examples/styles/padding.py"}
     ```
 
 === "padding.py"
@@ -62,7 +62,7 @@ The effect of each padding setting is noticeable in the colored background aroun
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/padding_all.py"}
+    ```{.anytext path="docs/examples/styles/padding_all.py"}
     ```
 
 === "padding_all.py"

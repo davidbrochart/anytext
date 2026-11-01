@@ -1,8 +1,8 @@
 import csv
 import io
 
-from textual.app import App, ComposeResult
-from textual.widgets import DataTable
+from anytext.app import App, ComposeResult
+from anytext.widgets import DataTable
 
 CSV = """lane,swimmer,country,time
 4,Joseph Schooling,Singapore,50.39

@@ -1,9 +1,9 @@
 from rich.text import Text
 
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widget import Widget
-from textual.widgets import RichLog
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widget import Widget
+from anytext.widgets import RichLog
 
 
 class MyWidget(Widget):

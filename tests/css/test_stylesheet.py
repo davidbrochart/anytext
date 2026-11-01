@@ -2,12 +2,12 @@ from contextlib import nullcontext as does_not_raise
 
 import pytest
 
-from textual.color import Color
-from textual.css.stylesheet import CssSource, Stylesheet, StylesheetParseError
-from textual.css.tokenizer import TokenError
-from textual.dom import DOMNode
-from textual.geometry import Spacing
-from textual.widget import Widget
+from anytext.color import Color
+from anytext.css.stylesheet import CssSource, Stylesheet, StylesheetParseError
+from anytext.css.tokenizer import TokenError
+from anytext.dom import DOMNode
+from anytext.geometry import Spacing
+from anytext.widget import Widget
 
 
 def _make_user_stylesheet(css: str) -> Stylesheet:

@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.screen import ModalScreen
-from textual.widgets import Button, Footer, Header, Label, Input
+from anytext.app import App, ComposeResult
+from anytext.screen import ModalScreen
+from anytext.widgets import Button, Footer, Header, Label, Input
 
 
 class Dialog(ModalScreen):

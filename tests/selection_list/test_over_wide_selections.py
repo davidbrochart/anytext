@@ -1,7 +1,7 @@
 """See https://github.com/Textualize/textual/issues/2900 for the reason behind these tests."""
 
-from textual.app import App, ComposeResult
-from textual.widgets import SelectionList
+from anytext.app import App, ComposeResult
+from anytext.widgets import SelectionList
 
 
 class SelectionListApp(App[None]):

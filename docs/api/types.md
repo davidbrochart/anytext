@@ -1,6 +1,6 @@
 ---
-title: "textual.types"
+title: "anytext.types"
 ---
 
 
-::: textual.types
+::: anytext.types

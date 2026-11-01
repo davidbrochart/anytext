@@ -3,10 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 from sys import argv
 
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.reactive import var
-from textual.widgets import Footer, MarkdownViewer
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.reactive import var
+from anytext.widgets import Footer, MarkdownViewer
 
 
 class MarkdownApp(App):

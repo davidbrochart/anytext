@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from rich.segment import Segment
 
-from textual._styles_cache import StylesCache
-from textual.color import Color
-from textual.css.styles import Styles
-from textual.geometry import Region, Size
-from textual.strip import Strip
+from anytext._styles_cache import StylesCache
+from anytext.color import Color
+from anytext.css.styles import Styles
+from anytext.geometry import Region, Size
+from anytext.strip import Strip
 
 
 def _extract_content(lines: list[Strip]) -> list[str]:

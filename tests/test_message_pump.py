@@ -2,13 +2,13 @@ import threading
 
 import pytest
 
-from textual._dispatch_key import dispatch_key
-from textual.app import App, ComposeResult
-from textual.errors import DuplicateKeyHandlers
-from textual.events import Key
-from textual.message import Message
-from textual.widget import Widget
-from textual.widgets import Button, Input, Label
+from anytext._dispatch_key import dispatch_key
+from anytext.app import App, ComposeResult
+from anytext.errors import DuplicateKeyHandlers
+from anytext.events import Key
+from anytext.message import Message
+from anytext.widget import Widget
+from anytext.widgets import Button, Input, Label
 
 
 class ValidWidget(Widget):

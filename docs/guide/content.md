@@ -1,6 +1,6 @@
 # Content
 
-The *content* of widget (displayed within the widget's borders) is typically specified in a call to [`Static.update`][textual.widgets.Static.update] or returned from [`render()`][textual.widget.Widget.render] in the case of [custom widgets](./widgets.md#custom-widgets).
+The *content* of widget (displayed within the widget's borders) is typically specified in a call to [`Static.update`][anytext.widgets.Static.update] or returned from [`render()`][anytext.widget.Widget.render] in the case of [custom widgets](./widgets.md#custom-widgets).
 
 There are a few ways for you to specify this content.
 
@@ -12,7 +12,7 @@ In this chapter, we will cover all these methods.
 
 ## Markup
 
-When building a custom widget you can embed color and style information in the string returned from the Widget's [`render()`][textual.widget.Widget.render] method.
+When building a custom widget you can embed color and style information in the string returned from the Widget's [`render()`][anytext.widget.Widget.render] method.
 Markup is specified as a string which contains 
 Text enclosed in square brackets (`[]`) won't appear in the output, but will modify the style of the text that follows.
 This is known as *content markup*.
@@ -26,7 +26,7 @@ Notice how the markup *tags* change the style in the first widget, but are left 
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/content/content01.py"}
+    ```{.anytext path="docs/examples/guide/content/content01.py"}
     ```
 
 === "content01.py"
@@ -40,16 +40,16 @@ Notice how the markup *tags* change the style in the first widget, but are left 
 
 ### Playground
 
-Textual comes with a markup playground where you can enter content markup and see the result's live.
+Anytext comes with a markup playground where you can enter content markup and see the result's live.
 To launch the playground, run the following command:
 
 ```
-python -m textual.markup
+python -m anytext.markup
 ```
 
 You can experiment with markup by entering it in to the textarea at the top of the terminal, and seeing the results in the lower pane:
 
-```{.textual path="docs/examples/guide/content/playground.py", type="[i]Hello!"] lines=16}
+```{.anytext path="docs/examples/guide/content/playground.py", type="[i]Hello!"] lines=16}
 ```
 
 You might find it helpful to try out some of the examples from this guide in the playground.
@@ -86,7 +86,7 @@ For example, the following makes just the first word in "Hello, World!" bold:
 
 Note how the tags change the style but are removed from the output:
 
-```{.textual path="docs/examples/guide/content/playground.py", type="[bold]Hello[/bold], World!" lines=16}
+```{.anytext path="docs/examples/guide/content/playground.py", type="[bold]Hello[/bold], World!" lines=16}
 ```
 
 You can use any number of tags. 
@@ -99,7 +99,7 @@ For instance, the following combines the bold and italic styles:
 
 Here's the output:
 
-```{.textual path="docs/examples/guide/content/playground.py", type="[bold]Bold [italic]Bold and italic[/italic][/bold]" lines=16}
+```{.anytext path="docs/examples/guide/content/playground.py", type="[bold]Bold [italic]Bold and italic[/italic][/bold]" lines=16}
 ```
 
 #### Auto-closing tags
@@ -153,7 +153,7 @@ However, the `[not bold]` tag disables bold until the corresponding `[/not bold]
 
 Here's what this markup will produce:
 
-```{.textual path="docs/examples/guide/content/playground.py" lines=16 type="[bold]This is bold [not bold]This is not bold[/not bold] This is bold."]}
+```{.anytext path="docs/examples/guide/content/playground.py" lines=16 type="[bold]This is bold [not bold]This is not bold[/not bold] This is bold."]}
 ```
 
 ### Colors
@@ -187,7 +187,7 @@ In the following example we have an alpha of 0.5, which will produce a color hal
 
 Here's the output:
 
-```{.textual path="docs/examples/guide/content/playground.py", type="[rgba(0, 255, 0, 0.5)]Faded green (and probably hard to read)[/]" lines=16}
+```{.anytext path="docs/examples/guide/content/playground.py", type="[rgba(0, 255, 0, 0.5)]Faded green (and probably hard to read)[/]" lines=16}
 ```
 
 !!! warning
@@ -197,7 +197,7 @@ Here's the output:
 
 #### Auto colors
 
-You can also specify a color as "auto", which is a special value that tells Textual to pick either white or black text -- whichever has the best contrast.
+You can also specify a color as "auto", which is a special value that tells Anytext to pick either white or black text -- whichever has the best contrast.
 
 For example, the following will produce either white or black text (I haven't checked) on a sienna background:
 
@@ -237,7 +237,7 @@ Here's an example that tints the background with 20% red:
 
 Here's the output:
 
-```{.textual path="docs/examples/guide/content/playground.py" lines=15 type="[on #ff0000 20%]The background has a red tint.[/]"]}
+```{.anytext path="docs/examples/guide/content/playground.py" lines=15 type="[on #ff0000 20%]The background has a red tint.[/]"]}
 ```
 
 
@@ -261,7 +261,7 @@ The following displays text in the 'warning' style on a muted 'warning' backgrou
 
 Here's the result of that markup:
 
-```{.textual path="docs/examples/guide/content/playground.py" lines=16 type="[$warning on $warning-muted]This is a warning![/]"]}
+```{.anytext path="docs/examples/guide/content/playground.py" lines=16 type="[$warning on $warning-muted]This is a warning![/]"]}
 ```
 
 ### Links
@@ -291,7 +291,7 @@ Play the [@click=app.bell]bell[/]
 
 Here's what it looks like:
 
-```{.textual path="docs/examples/guide/content/playground.py" lines=16 type="Play the [@click=app.bell]bell[/]"]}
+```{.anytext path="docs/examples/guide/content/playground.py" lines=16 type="Play the [@click=app.bell]bell[/]"]}
 ```
 
 We've used an [auto-closing](#auto-closing-tags) to close the click action here. 
@@ -309,24 +309,24 @@ Play the [on $success 30% @click=app.bell]bell[/]
 
 Here's what that looks like:
 
-```{.textual path="docs/examples/guide/content/playground.py" lines=16 type="Play the [on $success 30% @click=app.bell]bell[/]"]}
+```{.anytext path="docs/examples/guide/content/playground.py" lines=16 type="Play the [on $success 30% @click=app.bell]bell[/]"]}
 ```
 
 ### Escaping
 
-If you precede an open bracket with a backslash (`\`), then Textual will not consider it to be a tag and the square bracket will be displayed without modification. 
+If you precede an open bracket with a backslash (`\`), then Anytext will not consider it to be a tag and the square bracket will be displayed without modification.
 
 For example, the backslash in the following content prevents the following text from becoming bold, and the text `[bold]` will be in the output.
 
-```{.textual path="docs/examples/guide/content/playground.py" lines=16 type="\[bold]This is not bold"]}
+```{.anytext path="docs/examples/guide/content/playground.py" lines=16 type="\[bold]This is not bold"]}
 ```
 
 !!! tip "Escaping markup"
 
-    You can also use the [escape][textual.markup.escape] function to escape tags
+    You can also use the [escape][anytext.markup.escape] function to escape tags
 
-Some methods, such as [`notify()`][textual.widget.Widget.notify], have a `markup` switch that you can use to disable markup.
-You may want to use this if you want to output a Python repr strings, so that Textual doesn't interpret a list as a tag.
+Some methods, such as [`notify()`][anytext.widget.Widget.notify], have a `markup` switch that you can use to disable markup.
+You may want to use this if you want to output a Python repr strings, so that Anytext doesn't interpret a list as a tag.
 
 Here's an example:
 
@@ -337,7 +337,7 @@ self.notify(repr(my_list), markup=False)
 
 ## Content class
 
-Under the hood, Textual will convert markup into a [Content][textual.content.Content] instance.
+Under the hood, Anytext will convert markup into a [Content][anytext.content.Content] instance.
 You can also return a Content object directly from `render()`.
 This can give you more flexibility beyond the markup.
 
@@ -359,7 +359,7 @@ class WelcomeWidget(Widget):
 
 ### Constructing content
 
-The [Content][textual.content.Content] class accepts a default string in it's constructor.
+The [Content][anytext.content.Content] class accepts a default string in it's constructor.
 
 Here's an example:
 
@@ -369,7 +369,7 @@ Content("hello, World!")
 
 Note that if you construct Content in this way, it *won't* process markup (any square brackets will be displayed literally).
 
-If you want markup, you can create a `Content` with the [Content.from_markup][textual.content.Content.from_markup] alternative constructor:
+If you want markup, you can create a `Content` with the [Content.from_markup][anytext.content.Content.from_markup] alternative constructor:
 
 ```python
 Content.from_markup("hello, [bold]World[/bold]!")
@@ -377,7 +377,7 @@ Content.from_markup("hello, [bold]World[/bold]!")
 
 ### Styling content
 
-You can add styles to content with the [stylize][textual.content.Content.stylize] or [stylize_before][textual.content.Content.stylize] methods.
+You can add styles to content with the [stylize][anytext.content.Content.stylize] or [stylize_before][anytext.content.Content.stylize] methods.
 
 For instance, in the following code we create content with the text "Hello, World!" and style "World" to be bold:
 
@@ -405,7 +405,7 @@ While this is straightforward and intuitive, it can potentially break in subtle 
 If the 'name' variable contains square brackets, these may be interpreted as markup.
 For instance if the user entered their name at some point as "[magenta italic]Will" then your app will display those styles where you didn't intend them to be.
 
-We can avoid this problem by relying on the [Content.from_markup][textual.content.Content.from_markup] method to insert the variables for us.
+We can avoid this problem by relying on the [Content.from_markup][anytext.content.Content.from_markup] method to insert the variables for us.
 If you supply variables as keyword arguments, these will be substituted in the markup using the same syntax as [string.Template](https://docs.python.org/3/library/string.html#template-strings).
 Any square brackets in the variables will be present in the output, but won't change the styles.
 
@@ -419,21 +419,21 @@ You can experiment with this feature by entering a dictionary of variables in th
 
 Here's what that looks like:
 
-```{.textual path="docs/examples/guide/content/playground.py" lines=20 columns=110 type='hello [bold]$name[/bold]!\t{"name": "[magenta italic]Will"}\t']}
+```{.anytext path="docs/examples/guide/content/playground.py" lines=20 columns=110 type='hello [bold]$name[/bold]!\t{"name": "[magenta italic]Will"}\t']}
 ```
 
 ## Rich renderables
 
-Textual supports Rich *renderables*, which means you can display any object that works with Rich, such as Rich's [Text](https://rich.readthedocs.io/en/latest/text.html) object.
+Anytext supports Rich *renderables*, which means you can display any object that works with Rich, such as Rich's [Text](https://rich.readthedocs.io/en/latest/text.html) object.
 
-The Content class is preferred for simple text, as it supports more of Textual's features.
+The Content class is preferred for simple text, as it supports more of Anytext's features.
 But you can display any of the objects in the [Rich library](https://github.com/Textualize/rich) (or ecosystem) within a widget.
 
 Here's an example which displays its own code using Rich's [Syntax](https://rich.readthedocs.io/en/latest/syntax.html) object.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/content/renderables.py"}
+    ```{.anytext path="docs/examples/guide/content/renderables.py"}
     ```
 
 === "renderables.py"

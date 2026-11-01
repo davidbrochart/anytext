@@ -1,6 +1,6 @@
 # Scrollbar colors
 
-There are a number of styles to set the colors used in Textual scrollbars.
+There are a number of styles to set the colors used in Anytext scrollbars.
 You won't typically need to do this, as the default themes have carefully chosen colors, but you can if you want to.
 
 | Style                                                             | Applies to                                               |
@@ -40,7 +40,7 @@ The right panel sets `scrollbar-background`, `scrollbar-color`, and `scrollbar-c
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/scrollbars.py"}
+    ```{.anytext path="docs/examples/styles/scrollbars.py"}
     ```
 
 === "scrollbars.py"

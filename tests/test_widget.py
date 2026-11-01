@@ -2,17 +2,17 @@ from operator import attrgetter
 
 import pytest
 
-from textual import events
-from textual._node_list import DuplicateIds
-from textual.app import App, ComposeResult
-from textual.containers import Container, Vertical
-from textual.content import Content
-from textual.css.errors import StyleValueError
-from textual.css.query import NoMatches
-from textual.geometry import Offset, Size
-from textual.message import Message
-from textual.widget import BadWidgetName, MountError, PseudoClasses, Widget
-from textual.widgets import (
+from anytext import events
+from anytext._node_list import DuplicateIds
+from anytext.app import App, ComposeResult
+from anytext.containers import Container, Vertical
+from anytext.content import Content
+from anytext.css.errors import StyleValueError
+from anytext.css.query import NoMatches
+from anytext.geometry import Offset, Size
+from anytext.message import Message
+from anytext.widget import BadWidgetName, MountError, PseudoClasses, Widget
+from anytext.widgets import (
     Button,
     DataTable,
     Footer,
@@ -325,9 +325,9 @@ async def test_render_str() -> None:
 
 
 async def test_compose_order() -> None:
-    from textual.containers import Horizontal
-    from textual.screen import Screen
-    from textual.widgets import Select
+    from anytext.containers import Horizontal
+    from anytext.screen import Screen
+    from anytext.widgets import Select
 
     class MyScreen(Screen):
         def on_mount(self) -> None:
@@ -381,7 +381,7 @@ async def test__allow_scroll_default():
 
 
 async def test__allow_scroll():
-    from textual.containers import ScrollableContainer
+    from anytext.containers import ScrollableContainer
 
     class AllowScrollApp(App):
         CSS = "ScrollableContainer { width: 3; height: 3; }"
@@ -626,10 +626,10 @@ def test_lazy_loading() -> None:
     """
 
     with pytest.raises(ImportError):
-        from textual.widgets import Foo  # nopycln: import
+        from anytext.widgets import Foo  # nopycln: import
 
-    from textual import widgets
-    from textual.widgets import Label
+    from anytext import widgets
+    from anytext.widgets import Label
 
     assert not hasattr(widgets, "foo")
     assert not hasattr(widgets, "bar")

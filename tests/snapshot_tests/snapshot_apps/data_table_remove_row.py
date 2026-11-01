@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.widgets import DataTable
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.widgets import DataTable
 
 ROWS = [
     ("lane", "swimmer", "country", "time"),

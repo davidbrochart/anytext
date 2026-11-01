@@ -1,8 +1,8 @@
 from rich.table import Table
 
-from textual.app import App, ComposeResult
-from textual.geometry import Size
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.geometry import Size
+from anytext.widgets import Static
 
 
 class FizzBuzz(Static):

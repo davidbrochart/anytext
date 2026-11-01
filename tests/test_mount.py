@@ -5,8 +5,8 @@ Make sure that calls to render only happen after a widget being mounted.
 
 import asyncio
 
-from textual.app import App
-from textual.widget import Widget
+from anytext.app import App
+from anytext.widget import Widget
 
 
 class W(Widget):

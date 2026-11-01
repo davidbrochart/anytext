@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Container, Horizontal, VerticalScroll
-from textual.widgets import Header, Static
+from anytext.app import App, ComposeResult
+from anytext.containers import Container, Horizontal, VerticalScroll
+from anytext.widgets import Header, Static
 
 
 class CombiningLayoutsExample(App):

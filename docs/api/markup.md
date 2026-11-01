@@ -1,5 +1,5 @@
 ---
-title: "textual.markup"
+title: "anytext.markup"
 ---
 
-::: textual.markup
+::: anytext.markup

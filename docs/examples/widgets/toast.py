@@ -1,4 +1,4 @@
-from textual.app import App
+from anytext.app import App
 
 
 class ToastApp(App[None]):
@@ -6,7 +6,7 @@ class ToastApp(App[None]):
         # Show an information notification.
         self.notify("It's an older code, sir, but it checks out.")
 
-        # Show a warning. Note that Textual's notification system allows
+        # Show a warning. Note that Anytext's notification system allows
         # for the use of Rich console markup.
         self.notify(
             "Now witness the firepower of this fully "

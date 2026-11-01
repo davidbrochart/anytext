@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import Horizontal
-from textual.widgets import Footer, Tree
+from anytext.app import App
+from anytext.containers import Horizontal
+from anytext.widgets import Footer, Tree
 
 
 class TreeApp(App[None]):

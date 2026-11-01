@@ -1,5 +1,5 @@
 ---
-title: "textual.binding"
+title: "anytext.binding"
 ---
 
-::: textual.binding
+::: anytext.binding

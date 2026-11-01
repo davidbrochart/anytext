@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.containers import HorizontalScroll, VerticalScroll
-from textual.screen import Screen
-from textual.widgets import Placeholder
+from anytext.app import App, ComposeResult
+from anytext.containers import HorizontalScroll, VerticalScroll
+from anytext.screen import Screen
+from anytext.widgets import Placeholder
 
 
 class Header(Placeholder):

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from typing import Type
-from textual.app import App, ComposeResult
-from textual.containers import Container, Horizontal, Vertical, Grid
-from textual.widgets import Header, Footer, Label
-from textual.binding import Binding
+from anytext.app import App, ComposeResult
+from anytext.containers import Container, Horizontal, Vertical, Grid
+from anytext.widgets import Header, Footer, Label
+from anytext.binding import Binding
 
 
 class GridHeightAuto(App[None]):

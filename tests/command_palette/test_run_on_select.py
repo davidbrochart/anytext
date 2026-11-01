@@ -1,8 +1,8 @@
 from functools import partial
 
-from textual.app import App
-from textual.command import CommandPalette, Hit, Hits, Provider
-from textual.widgets import Input
+from anytext.app import App
+from anytext.command import CommandPalette, Hit, Hits, Provider
+from anytext.widgets import Input
 
 
 class SimpleSource(Provider):

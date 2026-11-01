@@ -4,7 +4,7 @@ In this chapter we will explore how you can apply styles to your application to 
 
 ## Styles object
 
-Every Textual widget class provides a `styles` object which contains a number of attributes. These attributes tell Textual how the widget should be displayed. Setting any of these attributes will update the screen accordingly.
+Every Anytext widget class provides a `styles` object which contains a number of attributes. These attributes tell Anytext how the widget should be displayed. Setting any of these attributes will update the screen accordingly.
 
 !!! note
 
@@ -18,9 +18,9 @@ Let's look at a simple example which sets styles on `screen` (a special widget t
 
 The first line sets the [background](../styles/background.md) style to `"darkblue"` which will change the background color to dark blue. There are a few other ways of setting color which we will explore later.
 
-The second line sets [border](../styles/border.md) to a tuple of `("heavy", "white")` which tells Textual to draw a white border with a style of `"heavy"`. Running this code will show the following:
+The second line sets [border](../styles/border.md) to a tuple of `("heavy", "white")` which tells Anytext to draw a white border with a style of `"heavy"`. Running this code will show the following:
 
-```{.textual path="docs/examples/guide/styles/screen.py"}
+```{.anytext path="docs/examples/guide/styles/screen.py"}
 ```
 
 ## Styling widgets
@@ -35,7 +35,7 @@ The following example adds a static widget which we will apply some styles to:
 
 The compose method stores a reference to the widget before yielding it. In the mount handler we use that reference to set the same styles on the widget as we did for the screen example. Here is the result:
 
-```{.textual path="docs/examples/guide/styles/widget.py"}
+```{.anytext path="docs/examples/guide/styles/widget.py"}
 ```
 
 Widgets will occupy the full width of their container and as many lines as required to fit in the vertical direction.
@@ -44,13 +44,13 @@ Note how the combined height of the widget is three rows in the terminal. This i
 
 !!! information
 
-    Widgets will wrap text by default. If you were to replace `"Textual"` with a long paragraph of text, the widget will expand downwards to fit.
+    Widgets will wrap text by default. If you were to replace `"Anytext"` with a long paragraph of text, the widget will expand downwards to fit.
 
 ## Colors
 
 There are a number of style attributes which accept colors. The most commonly used are [color](../styles/color.md) which sets the default color of text on a widget, and [background](../styles/background.md) which sets the background color (beneath the text).
 
-You can set a color value to one of a number of pre-defined color constants, such as `"crimson"`, `"lime"`, and `"palegreen"`. You can find a full list in the [Color API](../api/color.md#textual.color--named-colors).
+You can set a color value to one of a number of pre-defined color constants, such as `"crimson"`, `"lime"`, and `"palegreen"`. You can find a full list in the [Color API](../api/color.md#anytext.color--named-colors).
 
 Here's how you would set the screen background to lime:
 
@@ -65,7 +65,7 @@ In addition to color names, you can also use any of the following ways of expres
 - HSL colors start with `hsl` followed by an angle between 0 and 360 and two percentage values, representing Hue, Saturation and Lightness. For example `hsl(0,100%,50%)` is intense red and `hsl(280,60%,49%)` is *dark orchid*.
 
 
-The background and color styles also accept a [Color][textual.color.Color] object which can be used to create colors dynamically.
+The background and color styles also accept a [Color][anytext.color.Color] object which can be used to create colors dynamically.
 
 The following example adds three widgets and sets their color styles.
 
@@ -75,20 +75,20 @@ The following example adds three widgets and sets their color styles.
 
 Here is the output:
 
-```{.textual path="docs/examples/guide/styles/colors01.py"}
+```{.anytext path="docs/examples/guide/styles/colors01.py"}
 ```
 
 ### Alpha
 
-Textual represents color internally as a tuple of three values for the red, green, and blue components.
+Anytext represents color internally as a tuple of three values for the red, green, and blue components.
 
-Textual supports a common fourth value called *alpha* which can make a color translucent. If you set alpha on a background color, Textual will blend the background with the color beneath it. If you set alpha on the text color, then Textual will blend the text with the background color.
+Anytext supports a common fourth value called *alpha* which can make a color translucent. If you set alpha on a background color, Anytext will blend the background with the color beneath it. If you set alpha on the text color, then Anytext will blend the text with the background color.
 
-There are a few ways you can set alpha on a color in Textual.
+There are a few ways you can set alpha on a color in Anytext.
 
 - You can set the alpha value of a color by adding a fourth digit or pair of digits to a hex color. The extra digits form an alpha component which ranges from 0 for completely transparent to 255 (completely opaque). Any value between 0 and 255 will be translucent. For example `"#9932CC7f"` is a dark orchid which is roughly 50% translucent.
 - You can also set alpha with the `rgba` format, which is identical to `rgb` with the additional of a fourth value that should be between 0 and 1, where 0 is invisible and 1 is opaque. For example `"rgba(192,78,96,0.5)"`.
-- You can add the `a` parameter on a [Color][textual.color.Color] object. For example `Color(192, 78, 96, a=0.5)` creates a translucent dark orchid.
+- You can add the `a` parameter on a [Color][anytext.color.Color] object. For example `Color(192, 78, 96, a=0.5)` creates a translucent dark orchid.
 
 The following example shows what happens when you set alpha on background colors:
 
@@ -98,7 +98,7 @@ The following example shows what happens when you set alpha on background colors
 
 Notice that at an alpha of 0.1 the background almost matches the screen, but at 1.0 it is a solid color.
 
-```{.textual path="docs/examples/guide/styles/colors02.py"}
+```{.anytext path="docs/examples/guide/styles/colors02.py"}
 ```
 
 ## Dimensions
@@ -131,7 +131,7 @@ Setting the width restricts the number of columns used by a widget, and setting 
 
 This code produces the following result.
 
-```{.textual path="docs/examples/guide/styles/dimensions01.py"}
+```{.anytext path="docs/examples/guide/styles/dimensions01.py"}
 ```
 
 Note how the text wraps, but doesn't fit in the 10 lines provided, resulting in the last line being omitted entirely.
@@ -148,12 +148,12 @@ Let's set the height to auto and see what happens.
 
 If you run this you will see the height of the widget now grows to accommodate the full text:
 
-```{.textual path="docs/examples/guide/styles/dimensions02.py"}
+```{.anytext path="docs/examples/guide/styles/dimensions02.py"}
 ```
 
 ### Units
 
-Textual offers a few different *units* which allow you to specify dimensions relative to the screen or container. Relative units can better make use of available space if the user resizes the terminal.
+Anytext offers a few different *units* which allow you to specify dimensions relative to the screen or container. Relative units can better make use of available space if the user resizes the terminal.
 
 - Percentage units are given as a number followed by a percent (`%`) symbol and will set a dimension to a proportion of the widget's *parent* size. For instance, setting width to `"50%"` will cause a widget to be half the width of its parent.
 - View units are similar to percentage units, but explicitly reference a dimension. The `vw` unit sets a dimension to a percentage of the terminal *width*, and `vh` sets a dimension to a percentage of the terminal *height*.
@@ -172,24 +172,24 @@ With the width set to `"50%"` and the height set to `"80%"`, the widget will kee
 
 === "60 x 20"
 
-    ```{.textual path="docs/examples/guide/styles/dimensions03.py" columns="60" lines="20"}
+    ```{.anytext path="docs/examples/guide/styles/dimensions03.py" columns="60" lines="20"}
     ```
 
 === "80 x 30"
 
-    ```{.textual path="docs/examples/guide/styles/dimensions03.py" columns="80" lines="30"}
+    ```{.anytext path="docs/examples/guide/styles/dimensions03.py" columns="80" lines="30"}
     ```
 
 === "120 x 40"
 
-    ```{.textual path="docs/examples/guide/styles/dimensions03.py" columns="120" lines="40"}
+    ```{.anytext path="docs/examples/guide/styles/dimensions03.py" columns="120" lines="40"}
     ```
 
 #### FR units
 
-Percentage units can be problematic for some relative values. For instance, if we want to divide the screen into thirds, we would have to set a dimension to `33.3333333333%` which is awkward. Textual supports `fr` units which are often better than percentage-based units for these situations.
+Percentage units can be problematic for some relative values. For instance, if we want to divide the screen into thirds, we would have to set a dimension to `33.3333333333%` which is awkward. Anytext supports `fr` units which are often better than percentage-based units for these situations.
 
-When specifying `fr` units for a given dimension, Textual will divide the available space by the sum of the `fr` units for that dimension. That space is then assigned according to each widget's `fr` values.
+When specifying `fr` units for a given dimension, Anytext will divide the available space by the sum of the `fr` units for that dimension. That space is then assigned according to each widget's `fr` values.
 
 Let's look at an example. We will create two widgets, one with a height of `"2fr"` and one with a height of `"1fr"`.
 
@@ -202,7 +202,7 @@ The first widget has a height ot `2fr`, which results in the height being two th
 The second widget has a height of `1fr` which makes it take up the remaining third of the height.
 Here's what that looks like.
 
-```{.textual path="docs/examples/guide/styles/dimensions04.py"}
+```{.anytext path="docs/examples/guide/styles/dimensions04.py"}
 ```
 
 ### Maximum and minimums
@@ -225,7 +225,7 @@ Padding adds space around your content which can aid readability. Setting [paddi
 
 Notice the additional space around the text:
 
-```{.textual path="docs/examples/guide/styles/padding01.py"}
+```{.anytext path="docs/examples/guide/styles/padding01.py"}
 ```
 
 You can also set padding to a tuple of *two* integers which will apply padding to the top/bottom and left/right edges. The following example sets padding to `(2, 4)` which adds two rows to the top and bottom of the widget, and 4 columns to the left and right of the widget.
@@ -236,7 +236,7 @@ You can also set padding to a tuple of *two* integers which will apply padding t
 
 Compare the output of this example to the previous example:
 
-```{.textual path="docs/examples/guide/styles/padding02.py"}
+```{.anytext path="docs/examples/guide/styles/padding02.py"}
 ```
 
 You can also set padding to a tuple of *four* values which applies padding to each edge individually. The first value is the padding for the top of the widget, followed by the right of the widget, then bottom, then left.
@@ -253,14 +253,14 @@ The following example adds a border around a widget:
 
 Here is the result:
 
-```{.textual path="docs/examples/guide/styles/border01.py"}
+```{.anytext path="docs/examples/guide/styles/border01.py"}
 ```
 
 There are many other border types. Run the following from the command prompt to preview them.
 
 
 ```bash
-textual borders
+anytext borders
 ```
 
 
@@ -282,7 +282,7 @@ The following example sets both titles and changes the alignment of the title (t
 
 Note the addition of the titles and their alignments:
 
-```{.textual path="docs/examples/guide/styles/border_title.py"}
+```{.anytext path="docs/examples/guide/styles/border_title.py"}
 ```
 
 ### Outline
@@ -295,7 +295,7 @@ Note the addition of the titles and their alignments:
 
 Notice how the outline overlaps the text in the widget.
 
-```{.textual path="docs/examples/guide/styles/outline01.py"}
+```{.anytext path="docs/examples/guide/styles/outline01.py"}
 ```
 
 Outline can be useful to emphasize a widget, but be mindful that it may obscure your content.
@@ -331,7 +331,7 @@ The second widget sets `box_sizing` to `"content-box"`.
 
 The padding and border of the first widget is subtracted from the height leaving only 2 lines in the content area. The second widget also has a height of 6, but the padding and border adds additional height so that the content area remains 6 lines.
 
-```{.textual path="docs/examples/guide/styles/box_sizing01.py"}
+```{.anytext path="docs/examples/guide/styles/box_sizing01.py"}
 ```
 
 ### Margin
@@ -346,15 +346,15 @@ The following example creates two widgets, each with a margin of 2.
 
 Notice how each widget has an additional two rows and columns around the border.
 
-```{.textual path="docs/examples/guide/styles/margin01.py"}
+```{.anytext path="docs/examples/guide/styles/margin01.py"}
 ```
 
 !!! note "Margins overlap"
 
-    In the above example both widgets have a margin of 2, but there are only 2 lines of space between the widgets. This is because margins of consecutive widgets *overlap*. In other words when there are two widgets next to each other Textual picks the greater of the two margins.
+    In the above example both widgets have a margin of 2, but there are only 2 lines of space between the widgets. This is because margins of consecutive widgets *overlap*. In other words when there are two widgets next to each other Anytext picks the greater of the two margins.
 
 ## More styles
 
-We've covered some fundamental styles used by Textual apps, but there are many more which you can use to customize all aspects of how your app looks. See the [Styles reference](../styles/index.md) for a comprehensive list.
+We've covered some fundamental styles used by Anytext apps, but there are many more which you can use to customize all aspects of how your app looks. See the [Styles reference](../styles/index.md) for a comprehensive list.
 
-In the next chapter we will discuss Textual CSS which is a powerful way of applying styles to widgets that keeps your code free of style attributes.
+In the next chapter we will discuss Anytext CSS which is a powerful way of applying styles to widgets that keeps your code free of style attributes.

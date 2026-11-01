@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Header, Footer, Static, RadioSet
-from textual.reactive import reactive
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.widgets import Header, Footer, Static, RadioSet
+from anytext.reactive import reactive
 
 
 class Profile(Static):
@@ -28,7 +28,7 @@ class Landing(Screen):
 
 
 class ForecastApp(App):
-    """A Textual app to forecast Financials."""
+    """A Anytext app to forecast Financials."""
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""

@@ -1,6 +1,6 @@
-from textual import events
-from textual.app import App, ComposeResult
-from textual.widgets import RichLog, Static
+from anytext import events
+from anytext.app import App, ComposeResult
+from anytext.widgets import RichLog, Static
 
 
 class Ball(Static):
@@ -12,7 +12,7 @@ class MouseApp(App):
 
     def compose(self) -> ComposeResult:
         yield RichLog()
-        yield Ball("Textual")
+        yield Ball("Anytext")
 
     def on_mouse_move(self, event: events.MouseMove) -> None:
         self.screen.query_one(RichLog).write(event)

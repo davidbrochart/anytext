@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Button, Label, TabbedContent, Tabs, TabPane
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button, Label, TabbedContent, Tabs, TabPane
 
 class TabbedContentStyleLeakTestApp(App[None]):
 

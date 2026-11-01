@@ -2,9 +2,9 @@ import re
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import Input
-from textual.widgets._input import _RESTRICT_TYPES
+from anytext.app import App, ComposeResult
+from anytext.widgets import Input
+from anytext.widgets._input import _RESTRICT_TYPES
 
 
 def test_input_number_type():

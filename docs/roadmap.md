@@ -6,7 +6,7 @@ hide:
 
 # Roadmap
 
-We ([textualize.io](https://www.textualize.io/)) are actively building and maintaining Textual.
+We ([textualize.io](https://www.textualize.io/)) are actively building and maintaining Anytext.
 
 We have many new features in the pipeline. This page will keep track of that work.
 

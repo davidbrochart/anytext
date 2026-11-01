@@ -1,8 +1,8 @@
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.signal import Signal, SignalError
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.signal import Signal, SignalError
+from anytext.widgets import Label
 
 
 async def test_signal():

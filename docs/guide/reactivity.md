@@ -1,6 +1,6 @@
 # Reactivity
 
-Textual's reactive attributes are attributes _with superpowers_. In this chapter we will look at how reactive attributes can simplify your apps.
+Anytext's reactive attributes are attributes _with superpowers_. In this chapter we will look at how reactive attributes can simplify your apps.
 
 !!! quote
 
@@ -10,13 +10,13 @@ Textual's reactive attributes are attributes _with superpowers_. In this chapter
 
 ## Reactive attributes
 
-Textual provides an alternative way of adding attributes to your widget or App, which doesn't require adding them to your class constructor (`__init__`). To create these attributes import [reactive][textual.reactive.reactive] from `textual.reactive`, and assign them in the class scope.
+Anytext provides an alternative way of adding attributes to your widget or App, which doesn't require adding them to your class constructor (`__init__`). To create these attributes import [reactive][anytext.reactive.reactive] from `anytext.reactive`, and assign them in the class scope.
 
 The following code illustrates how to create reactive attributes:
 
 ```python
-from textual.reactive import reactive
-from textual.widget import Widget
+from anytext.reactive import reactive
+from anytext.widget import Widget
 
 class Reactive(Widget):
 
@@ -33,18 +33,18 @@ The `reactive` constructor accepts a default value as the first positional argum
 
 !!! information
 
-    Textual uses Python's _descriptor protocol_ to create reactive attributes, which is the same protocol used by the builtin `property` decorator.
+    Anytext uses Python's _descriptor protocol_ to create reactive attributes, which is the same protocol used by the builtin `property` decorator.
 
 You can get and set these attributes in the same way as if you had assigned them in an `__init__` method. For instance `self.name = "Jessica"`, `self.count += 1`, or `print(self.is_cool)`.
 
 ### Dynamic defaults
 
-You can also set the default to a function (or other callable). Textual will call this function to get the default value. The following code illustrates a reactive value which will be automatically assigned the current time when the widget is created:
+You can also set the default to a function (or other callable). Anytext will call this function to get the default value. The following code illustrates a reactive value which will be automatically assigned the current time when the widget is created:
 
 ```python
 from time import time
-from textual.reactive import reactive
-from textual.widget import Widget
+from anytext.reactive import reactive
+from anytext.widget import Widget
 
 class Timer(Widget):
 
@@ -65,11 +65,11 @@ You may want to add explicit type hints if the attribute type is a superset of t
 
 ## Smart refresh
 
-The first superpower we will look at is "smart refresh". When you modify a reactive attribute, Textual will make note of the fact that it has changed and refresh automatically by calling the widget's [`render()`][textual.widget.Widget.render] method to get updated content.
+The first superpower we will look at is "smart refresh". When you modify a reactive attribute, Anytext will make note of the fact that it has changed and refresh automatically by calling the widget's [`render()`][anytext.widget.Widget.render] method to get updated content.
 
 !!! information
 
-    If you modify multiple reactive attributes, Textual will only do a single refresh to minimize updates.
+    If you modify multiple reactive attributes, Anytext will only do a single refresh to minimize updates.
 
 Let's look at an example which illustrates this. In the following app, the value of an input is used to update a "Hello, World!" type greeting.
 
@@ -87,18 +87,18 @@ Let's look at an example which illustrates this. In the following app, the value
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/refresh01.py" press="T,e,x,t,u,a,l"}
+    ```{.anytext path="docs/examples/guide/reactivity/refresh01.py" press="T,e,x,t,u,a,l"}
     ```
 
 The `Name` widget has a reactive `who` attribute. When the app modifies that attribute, a refresh happens automatically.
 
 !!! information
 
-    Textual will check if a value has really changed, so assigning the same value wont prompt an unnecessary refresh.
+    Anytext will check if a value has really changed, so assigning the same value wont prompt an unnecessary refresh.
 
 ### Disabling refresh
 
-If you *don't* want an attribute to prompt a refresh or layout but you still want other reactive superpowers, you can use [var][textual.reactive.var] to create an attribute. You can import `var` from `textual.reactive`.
+If you *don't* want an attribute to prompt a refresh or layout but you still want other reactive superpowers, you can use [var][anytext.reactive.var] to create an attribute. You can import `var` from `anytext.reactive`.
 
 The following code illustrates how you create non-refreshing reactive attributes.
 
@@ -131,7 +131,7 @@ The following example modifies "refresh01.py" so that the greeting has an automa
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/refresh02.py" press="n,a,m,e"}
+    ```{.anytext path="docs/examples/guide/reactivity/refresh02.py" press="n,a,m,e"}
     ```
 
 If you type into the input now, the greeting will expand to fit the content. If you were to set `layout=False` on the reactive attribute, you should see that the box remains the same size when you type.
@@ -158,20 +158,20 @@ A common use for this is to restrict numbers to a given range. The following exa
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/validate01.py"}
+    ```{.anytext path="docs/examples/guide/reactivity/validate01.py"}
     ```
 
-If you click the buttons in the above example it will show the current count. When `self.count` is modified in the button handler, Textual runs `validate_count` which performs the validation to limit the value of count.
+If you click the buttons in the above example it will show the current count. When `self.count` is modified in the button handler, Anytext runs `validate_count` which performs the validation to limit the value of count.
 
 ## Watch methods
 
 Watch methods are another superpower.
-Textual will call watch methods when reactive attributes are modified.
+Anytext will call watch methods when reactive attributes are modified.
 Watch method names begin with `watch_` followed by the name of the attribute, and should accept one or two arguments.
 If the method accepts a single argument, it will be called with the new assigned value.
 If the method accepts *two* positional arguments, it will be called with both the *old* value and the *new* value.
 
-The following app will display any color you type into the input. Try it with a valid color in Textual CSS. For example `"darkorchid"` or `"#52de44"`.
+The following app will display any color you type into the input. Try it with a valid color in Anytext CSS. For example `"darkorchid"` or `"#52de44"`.
 
 === "watch01.py"
 
@@ -179,7 +179,7 @@ The following app will display any color you type into the input. Try it with a 
     --8<-- "docs/examples/guide/reactivity/watch01.py"
     ```
 
-    1. Creates a reactive [color][textual.color.Color] attribute.
+    1. Creates a reactive [color][anytext.color.Color] attribute.
     2. Called when `self.color` is changed.
     3. New color is assigned here.
 
@@ -191,21 +191,21 @@ The following app will display any color you type into the input. Try it with a 
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/watch01.py" press="d,a,r,k,o,r,c,h,i,d"}
+    ```{.anytext path="docs/examples/guide/reactivity/watch01.py" press="d,a,r,k,o,r,c,h,i,d"}
     ```
 
-The color is parsed in `on_input_submitted` and assigned to `self.color`. Because `color` is reactive, Textual also calls `watch_color` with the old and new values.
+The color is parsed in `on_input_submitted` and assigned to `self.color`. Because `color` is reactive, Anytext also calls `watch_color` with the old and new values.
 
 ### When are watch methods called?
 
-Textual only calls watch methods if the value of a reactive attribute _changes_.
+Anytext only calls watch methods if the value of a reactive attribute _changes_.
 If the newly assigned value is the same as the previous value, the watch method is not called.
 You can override this behavior by passing `always_update=True` to `reactive`.
 
 
 ### Dynamically watching reactive attributes
 
-You can programmatically add watchers to reactive attributes with the method [`watch`][textual.dom.DOMNode.watch].
+You can programmatically add watchers to reactive attributes with the method [`watch`][anytext.dom.DOMNode.watch].
 This is useful when you want to react to changes to reactive attributes for which you can't edit the watch methods.
 
 The example below shows a widget `Counter` that defines a reactive attribute `counter`.
@@ -223,13 +223,13 @@ The app that uses `Counter` uses the method `watch` to keep its progress bar syn
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/dynamic_watch.py" press="enter,enter,enter"}
+    ```{.anytext path="docs/examples/guide/reactivity/dynamic_watch.py" press="enter,enter,enter"}
     ```
 
 ## Recompose
 
 An alternative to a refresh is *recompose*.
-If you set `recompose=True` on a reactive, then Textual will remove all the child widgets and call [`compose()`][textual.widget.Widget.compose] again, when the reactive attribute changes.
+If you set `recompose=True` on a reactive, then Anytext will remove all the child widgets and call [`compose()`][anytext.widget.Widget.compose] again, when the reactive attribute changes.
 The process of removing and mounting new widgets occurs in a single update, so it will appear as though the content has simply updated.
 
 The following example uses recompose:
@@ -251,7 +251,7 @@ The following example uses recompose:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/refresh03.py" press="P,a,u,l"}
+    ```{.anytext path="docs/examples/guide/reactivity/refresh03.py" press="P,a,u,l"}
     ```
 
 While the end-result is identical to `refresh02.py`, this code works quite differently.
@@ -283,7 +283,7 @@ First a version *without* recompose:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/recompose01.py" }
+    ```{.anytext path="docs/examples/guide/reactivity/recompose01.py" }
     ```
 
 This displays a clock which updates once a second.
@@ -298,7 +298,7 @@ We can simplify this by recomposing rather than refreshing:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/recompose02.py" }
+    ```{.anytext path="docs/examples/guide/reactivity/recompose02.py" }
     ```
 
 In this version, the app is recomposed when the `time` attribute changes, which replaces the `Digits` widget with a new instance and updated time.
@@ -307,9 +307,9 @@ There's no need for the `watch_time` method, because the new `Digits` instance w
 
 ## Compute methods
 
-Compute methods are the final superpower offered by the `reactive` descriptor. Textual runs compute methods to calculate the value of a reactive attribute. Compute methods begin with `compute_` followed by the name of the reactive value.
+Compute methods are the final superpower offered by the `reactive` descriptor. Anytext runs compute methods to calculate the value of a reactive attribute. Compute methods begin with `compute_` followed by the name of the reactive value.
 
-You could be forgiven in thinking this sounds a lot like Python's property decorator. The difference is that Textual will cache the value of compute methods, and update them when any other reactive attribute changes.
+You could be forgiven in thinking this sounds a lot like Python's property decorator. The difference is that Anytext will cache the value of compute methods, and update them when any other reactive attribute changes.
 
 The following example uses a computed attribute. It displays three inputs for each color component (red, green, and blue). If you enter numbers into these inputs, the background color of another widget changes.
 
@@ -330,27 +330,27 @@ The following example uses a computed attribute. It displays three inputs for ea
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/computed01.py"}
+    ```{.anytext path="docs/examples/guide/reactivity/computed01.py"}
     ```
 
-Note the `compute_color` method which combines the color components into a [Color][textual.color.Color] object. It will be recalculated when any of the `red` , `green`, or `blue` attributes are modified.
+Note the `compute_color` method which combines the color components into a [Color][anytext.color.Color] object. It will be recalculated when any of the `red` , `green`, or `blue` attributes are modified.
 
-When the result of `compute_color` changes, Textual will also call `watch_color` since `color` still has the [watch method](#watch-methods) superpower.
-
-!!! note
-
-    Textual will first attempt to call the compute method for a reactive attribute, followed by the validate method, and finally the watch method.
+When the result of `compute_color` changes, Anytext will also call `watch_color` since `color` still has the [watch method](#watch-methods) superpower.
 
 !!! note
 
-    It is best to avoid doing anything slow or CPU-intensive in a compute method. Textual calls compute methods on an object when _any_ reactive attribute changes.
+    Anytext will first attempt to call the compute method for a reactive attribute, followed by the validate method, and finally the watch method.
+
+!!! note
+
+    It is best to avoid doing anything slow or CPU-intensive in a compute method. Anytext calls compute methods on an object when _any_ reactive attribute changes.
 
 ## Setting reactives without superpowers 
 
 You may find yourself in a situation where you want to set a reactive value, but you *don't* want to invoke watchers or the other super powers.
 This is fairly common in constructors which run prior to mounting; any watcher which queries the DOM may break if the widget has not yet been mounted.
 
-To work around this issue, you can call [set_reactive][textual.dom.DOMNode.set_reactive] as an alternative to setting the attribute.
+To work around this issue, you can call [set_reactive][anytext.dom.DOMNode.set_reactive] as an alternative to setting the attribute.
 The `set_reactive` method accepts the reactive attribute (as a class variable) and the new value.
 
 Let's look at an example.
@@ -363,7 +363,7 @@ The following app is intended to cycle through various greeting when you press +
 1. Setting this reactive attribute invokes a watcher.
 2. The watcher attempts to update a label before it is mounted.
 
-If you run this app, you will find Textual raises a `NoMatches` error in `watch_greeting`. 
+If you run this app, you will find Anytext raises a `NoMatches` error in `watch_greeting`.
 This is because the constructor has assigned the reactive before the widget has fully mounted.
 
 The following app contains a fix for this issue:
@@ -378,17 +378,17 @@ The following app contains a fix for this issue:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/set_reactive02.py"}
+    ```{.anytext path="docs/examples/guide/reactivity/set_reactive02.py"}
     ```
 
 The line `self.set_reactive(Greeter.greeting, greeting)` sets the `greeting` attribute but doesn't immediately invoke the watcher.
 
 ## Mutable reactives
 
-Textual can detect when you set a reactive to a new value, but it can't detect when you _mutate_ a value.
-In practice, this means that Textual can detect changes to basic types (int, float, str, etc.), but not if you update a collection, such as a list or dict. 
+Anytext can detect when you set a reactive to a new value, but it can't detect when you _mutate_ a value.
+In practice, this means that Anytext can detect changes to basic types (int, float, str, etc.), but not if you update a collection, such as a list or dict.
 
-You can still use collections and other mutable objects in reactives, but you will need to call [`mutate_reactive`][textual.dom.DOMNode.mutate_reactive] after making changes for the reactive superpowers to work.
+You can still use collections and other mutable objects in reactives, but you will need to call [`mutate_reactive`][anytext.dom.DOMNode.mutate_reactive] after making changes for the reactive superpowers to work.
 
 Here's an example, that uses a reactive list:
 
@@ -403,7 +403,7 @@ Here's an example, that uses a reactive list:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/set_reactive03.py" press="W,i,l,l,enter"}
+    ```{.anytext path="docs/examples/guide/reactivity/set_reactive03.py" press="W,i,l,l,enter"}
     ```
 
 Note the call to `mutate_reactive`. Without it, the display would not update when a new name is appended to the list.
@@ -413,7 +413,7 @@ Note the call to `mutate_reactive`. Without it, the display would not update whe
 Reactive attributes may be *bound* (connected) to attributes on child widgets, so that changes to the parent are automatically reflected in the children.
 This can simplify working with compound widgets where the value of an attribute might be used in multiple places.
 
-To bind reactive attributes, call [data_bind][textual.dom.DOMNode.data_bind] on a widget.
+To bind reactive attributes, call [data_bind][anytext.dom.DOMNode.data_bind] on a widget.
 This method accepts reactives (as class attributes) in positional arguments or keyword arguments.
 
 Let's look at an app that could benefit from data binding.
@@ -442,7 +442,7 @@ In the following code we have a `WorldClock` widget which displays the time in a
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/world_clock01.py"}
+    ```{.anytext path="docs/examples/guide/reactivity/world_clock01.py"}
     ```
 
 We've added three world clocks for London, Paris, and Tokyo.
@@ -469,7 +469,7 @@ The following app calls `data_bind` on the world clock widgets to connect the ap
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/world_clock02.py"}
+    ```{.anytext path="docs/examples/guide/reactivity/world_clock02.py"}
     ```
 
 Note how the addition of the `data_bind` methods negates the need for the watcher in `world_clock01.py`.
@@ -505,5 +505,5 @@ We can make the app continue to work by changing the `data_bind` call to `data_b
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/reactivity/world_clock02.py"}
+    ```{.anytext path="docs/examples/guide/reactivity/world_clock02.py"}
     ```

@@ -2,8 +2,8 @@ from pathlib import Path
 
 from tree_sitter_languages import get_language
 
-from textual.app import App, ComposeResult
-from textual.widgets import TextArea
+from anytext.app import App, ComposeResult
+from anytext.widgets import TextArea
 
 java_language = get_language("java")
 java_highlight_query = (Path(__file__).parent / "java_highlights.scm").read_text()

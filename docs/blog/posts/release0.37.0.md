@@ -3,21 +3,21 @@ draft: false
 date: 2023-09-15
 categories:
   - Release
-title: "Textual 0.37.0 adds a command palette"
+title: "Anytext 0.37.0 adds a command palette"
 authors:
   - willmcgugan
 ---
 
 
-# Textual 0.37.0 adds a command palette
+# Anytext 0.37.0 adds a command palette
 
-Textual version 0.37.0 has landed!
+Anytext version 0.37.0 has landed!
 The highlight of this release is the new command palette.
 
 <!-- more -->
 
 A command palette gives users quick access to features in your app.
-If you hit ctrl+backslash in a Textual app, it will bring up the command palette where you can start typing commands.
+If you hit ctrl+backslash in a Anytext app, it will bring up the command palette where you can start typing commands.
 The commands are matched with a *fuzzy* search, so you only need to type two or three characters to get to any command.
 
 Here's a video of it in action:
@@ -55,15 +55,15 @@ class ColorApp(App):
     COMMANDS = App.COMMANDS | {ColorCommands}
 ```
 
-We're excited about this feature because it is a step towards bringing a common user interface to Textual apps.
+We're excited about this feature because it is a step towards bringing a common user interface to Anytext apps.
 
 !!! quote
 
-    It's a Textual app. I know this.
+    It's a Anytext app. I know this.
 
     &mdash; You, maybe.
 
-The goal is to be able to build apps that may look quite different, but take no time to learn, because once you learn how to use one Textual app, you can use them all.
+The goal is to be able to build apps that may look quite different, but take no time to learn, because once you learn how to use one Anytext app, you can use them all.
 
 See the Guide for details on how to work with the [command palette](../../guide/command_palette.md).
 
@@ -82,4 +82,4 @@ Watch this space, or join the [Discord server](https://discord.gg/Enf6Z3qhVr) if
 
 ## Join us
 
-Join our [Discord server](https://discord.gg/Enf6Z3qhVr) if you want to discuss Textual with the Textualize devs, or the community.
+Join our [Discord server](https://discord.gg/Enf6Z3qhVr) if you want to discuss Anytext with the Textualize devs, or the community.

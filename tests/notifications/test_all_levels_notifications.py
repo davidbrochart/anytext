@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widget import Widget
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.widget import Widget
 
 
 class NotifyWidget(Widget):

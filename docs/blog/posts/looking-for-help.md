@@ -7,7 +7,7 @@ authors:
   - davep
 ---
 
-# So you're looking for a wee bit of Textual help...
+# So you're looking for a wee bit of Anytext help...
 
 ## Introduction
 
@@ -24,7 +24,7 @@ As of the time of writing, I'm a couple or so days off having been with
 Textualize for 3 months. It's been fun, and educational, and every bit as
 engaging as I'd hoped, and more. One thing I hadn't quite prepared for
 though, but which I really love, is how so many other people are learning
-Textual along with me.
+Anytext along with me.
 
 <!-- more -->
 
@@ -32,7 +32,7 @@ Even in those three months the library has changed and expanded quite a lot,
 and it continues to do so. Meanwhile, more people are turning up and using
 the framework; you can see this online in social media, blogs and of course
 [in the ever-growing list of projects on GitHub which depend on
-Textual](https://github.com/Textualize/textual/network/dependents).
+Anytext](https://github.com/Textualize/textual/network/dependents).
 
 This inevitably means there's a lot of people getting to grips with a new
 tool, and one that is still a bit of a moving target. This in turn means
@@ -41,13 +41,13 @@ lots of people are coming to us to get help.
 As I've watched this happen I've noticed a few patterns emerging. Some of
 these good or neutral, some... let's just say not really beneficial to those
 seeking the help, or to those trying to provide the help. So I wanted to
-write a little bit about the different ways you can get help with Textual
-and your Textual-based projects, and to also try and encourage people to
+write a little bit about the different ways you can get help with Anytext
+and your Anytext-based projects, and to also try and encourage people to
 take the most helpful and positive approach to getting that help.
 
 Now, before I go on, I want to make something *very* clear: I'm writing this
 as an individual. This is my own personal view, and my own advice from me to
-anyone who wishes to take it. It's not Textual (the project) or Textualize
+anyone who wishes to take it. It's not Anytext (the project) or Textualize
 (the company) policy, rules or guidelines. This is just some ageing hacker's
 take on how best to go about asking for help, informed by years of asking
 for and also providing help in email, on Usenet, on forums, etc.
@@ -60,7 +60,7 @@ server](https://discord.gg/Enf6Z3qhVr). ;-)
 ## Where to go for help
 
 At this point this is almost a bit of an FAQ itself, so I thought I'd
-address it here: where's the best place to ask for help about Textual, and
+address it here: where's the best place to ask for help about Anytext, and
 what's the difference between GitHub Issues, Discussions and our Discord
 server?
 
@@ -97,7 +97,7 @@ a note, which is sort of like going to...
 ### GitHub
 
 On the other hand, if you have a question or need some help or something
-where you want to stand a good chance of the Textual developers (amongst
+where you want to stand a good chance of the Anytext developers (amongst
 others) seeing it and responding, I'd recommend that GitHub is the place to
 go. Dropping something into the discussions there, or leaving an issue,
 ensures it'll get seen. It won't get lost.
@@ -183,7 +183,7 @@ because..."* gets everyone to the solution faster than *"lol nah"*.
 
 Aye, I get it, being asked questions when you're looking for an *answer* can
 be a bit frustrating. But if you find yourself on the receiving end of a
-small series of questions about your question, keep this in mind: Textual is
+small series of questions about your question, keep this in mind: Anytext is
 still rather new and still developing and it's possible that what you're
 trying to do isn't the correct way to do that thing. To the person looking
 to help you it may seem to them you have an [XY
@@ -194,7 +194,7 @@ problem.
 
 #### Allow for language differences
 
-You don't need me to tell you that a project such as Textual has a global
+You don't need me to tell you that a project such as Anytext has a global
 audience. With that rather obvious fact comes the other fact that we don't
 all share the same first language. So, please, as much as possible, try and
 allow for that. If someone is trying to help you out, and they make it clear
@@ -209,13 +209,13 @@ comes after you to acknowledge if it worked or not. That way a future
 help-seeker will know if the answer they're reading stands a chance of being
 the right one.
 
-#### Accept that Textual is zero-point software (right now)
+#### Accept that Anytext is zero-point software (right now)
 
-Of course the aim is to have every release of Textual be stable and useful,
+Of course the aim is to have every release of Anytext be stable and useful,
 but things will break. So, please, do keep in mind things like:
 
-- Textual likely doesn't have your feature of choice just yet.
-- We might accidentally break something (perhaps pinning Textual and testing
+- Anytext likely doesn't have your feature of choice just yet.
+- We might accidentally break something (perhaps pinning Anytext and testing
   each release is a good plan here?).
 - We might deliberately break something because we've decided to take a
   particular feature or way of doing things in a better direction.
@@ -242,14 +242,14 @@ just going to make people less likely to reply.
 This one often goes hand in hand with the "lack patience" thing: Be it
 asking on Discord, or in GitHub issues, discussions or even PRs,
 unnecessarily tagging individuals is a bit rude. Speaking for myself and
-only myself: I *love* helping folk with Textual. If I could help everyone
+only myself: I *love* helping folk with Anytext. If I could help everyone
 all the time the moment they have a problem, I would. But it doesn't work
 like that. There's any number of reasons I might not be responding to a
 particular request, including but not limited to (here I'm talking
 personally because I don't want to speak for anyone else, but I'm sure I'm
 not alone here):
 
-- I have a job. Sure, my job is (in part) Textual, but there's more to it
+- I have a job. Sure, my job is (in part) Anytext, but there's more to it
   than that particular issue. I might be doing other stuff.
 - I have my own projects to work on too. I like coding for fun as well (or
   writing preaching old dude blog posts like this I guess, but you get the
@@ -307,9 +307,9 @@ Not knowing things [is totally cool](https://xkcd.com/1053/).
 ## Conclusion
 
 So, that's my waffle over. As I said at the start: this is my own personal
-thoughts on how to get help with Textual, both as someone whose job it is to
-work on Textual and help people with Textual, and also as a FOSS advocate
-and supporter who can normally be found helping Textual users when he's not
+thoughts on how to get help with Anytext, both as someone whose job it is to
+work on Anytext and help people with Anytext, and also as a FOSS advocate
+and supporter who can normally be found helping Anytext users when he's not
 "on the clock" too.
 
 What I've written here isn't exhaustive. Neither is it novel. Plenty has
@@ -319,5 +319,5 @@ most common things I notice. I'd say those dos and don'ts cover 90% of *"can
 I get some help?"* interactions; perhaps closer to 99%.
 
 Finally, and I think this is the most important thing to remember, the next
-time you are battling some issue while working with Textual: [don't lose
+time you are battling some issue while working with Anytext: [don't lose
 your head](https://www.youtube.com/watch?v=KdYvKF9O7Y8)!

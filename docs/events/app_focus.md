@@ -2,7 +2,7 @@
 title: AppFocus
 ---
 
-::: textual.events.AppFocus
+::: anytext.events.AppFocus
     options:
       heading_level: 1
 

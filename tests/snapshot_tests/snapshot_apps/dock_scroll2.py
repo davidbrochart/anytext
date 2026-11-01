@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.widgets import Header, Label, Footer
+from anytext.app import App
+from anytext.widgets import Header, Label, Footer
 
 
 # Same as dock_scroll.py but with 2 labels

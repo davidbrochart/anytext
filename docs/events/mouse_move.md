@@ -2,11 +2,11 @@
 title: MouseMove
 ---
 
-::: textual.events.MouseMove
+::: anytext.events.MouseMove
     options:
       heading_level: 1
 
-See [MouseEvent][textual.events.MouseEvent] for the full list of properties and methods.
+See [MouseEvent][anytext.events.MouseEvent] for the full list of properties and methods.
 
 ## See also
 
@@ -14,7 +14,7 @@ See [MouseEvent][textual.events.MouseEvent] for the full list of properties and 
 - [Enter](enter.md)
 - [Leave](leave.md)
 - [MouseDown](mouse_down.md)
-- [MouseEvent][textual.events.MouseEvent]
+- [MouseEvent][anytext.events.MouseEvent]
 - [MouseScrollDown](mouse_scroll_down.md)
 - [MouseScrollLeft](mouse_scroll_left.md)
 - [MouseScrollRight](mouse_scroll_right.md)

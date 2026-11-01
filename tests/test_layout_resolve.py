@@ -4,7 +4,7 @@ from typing import NamedTuple
 
 import pytest
 
-from textual._layout_resolve import layout_resolve
+from anytext._layout_resolve import layout_resolve
 
 
 class Edge(NamedTuple):

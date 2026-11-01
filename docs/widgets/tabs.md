@@ -14,7 +14,7 @@ def compose(self) -> ComposeResult:
     yield Tabs("First tab", "Second tab", Text.from_markup("[u]Third[/u] tab"))
 ```
 
-This will create [Tab][textual.widgets.Tab] widgets internally, with auto-incrementing `id` attributes (`"tab-1"`, `"tab-2"` etc).
+This will create [Tab][anytext.widgets.Tab] widgets internally, with auto-incrementing `id` attributes (`"tab-1"`, `"tab-2"` etc).
 You can also supply `Tab` objects directly in the constructor, which will allow you to explicitly set an `id`. Here's an example:
 
 ```python
@@ -25,16 +25,16 @@ def compose(self) -> ComposeResult:
     )
 ```
 
-When the user switches to a tab by clicking or pressing keys, then `Tabs` will send a [Tabs.TabActivated][textual.widgets.Tabs.TabActivated] message which contains the `tab` that was activated.
+When the user switches to a tab by clicking or pressing keys, then `Tabs` will send a [Tabs.TabActivated][anytext.widgets.Tabs.TabActivated] message which contains the `tab` that was activated.
 You can then use `event.tab.id` attribute to perform any related actions.
 
 ## Clearing tabs
 
-Clear tabs by calling the [clear][textual.widgets.Tabs.clear] method. Clearing the tabs will send a [Tabs.TabActivated][textual.widgets.Tabs.TabActivated] message with the `tab` attribute set to `None`.
+Clear tabs by calling the [clear][anytext.widgets.Tabs.clear] method. Clearing the tabs will send a [Tabs.TabActivated][anytext.widgets.Tabs.TabActivated] message with the `tab` attribute set to `None`.
 
 ## Adding tabs
 
-Tabs may be added dynamically with the [add_tab][textual.widgets.Tabs.add_tab] method, which accepts strings, [Text][rich.text.Text], or [Tab][textual.widgets.Tab] objects.
+Tabs may be added dynamically with the [add_tab][anytext.widgets.Tabs.add_tab] method, which accepts strings, [Text][rich.text.Text], or [Tab][anytext.widgets.Tab] objects.
 
 ## Example
 
@@ -42,7 +42,7 @@ The following example adds a `Tabs` widget above a text label. Press ++a++ to ad
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/tabs.py" press="a,a,a,a,right,right"}
+    ```{.anytext path="docs/examples/widgets/tabs.py" press="a,a,a,a,right,right"}
     ```
 
 === "tabs.py"
@@ -61,14 +61,14 @@ The following example adds a `Tabs` widget above a text label. Press ++a++ to ad
 
 ## Messages
 
-- [Tabs.TabActivated][textual.widgets.Tabs.TabActivated]
-- [Tabs.Cleared][textual.widgets.Tabs.Cleared]
+- [Tabs.TabActivated][anytext.widgets.Tabs.TabActivated]
+- [Tabs.Cleared][anytext.widgets.Tabs.Cleared]
 
 ## Bindings
 
 The Tabs widget defines the following bindings:
 
-::: textual.widgets.Tabs.BINDINGS
+::: anytext.widgets.Tabs.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -80,13 +80,13 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Tabs
+::: anytext.widgets.Tabs
     options:
       heading_level: 2
 
 
 ---
 
-::: textual.widgets.Tab
+::: anytext.widgets.Tab
     options:
       heading_level: 2

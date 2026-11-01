@@ -1,10 +1,10 @@
 import pytest
 
-from textual.geometry import Size
-from textual.layouts.grid import GridLayout
-from textual.layouts.horizontal import HorizontalLayout
-from textual.layouts.vertical import VerticalLayout
-from textual.widget import Widget
+from anytext.geometry import Size
+from anytext.layouts.grid import GridLayout
+from anytext.layouts.horizontal import HorizontalLayout
+from anytext.layouts.vertical import VerticalLayout
+from anytext.widget import Widget
 
 LAYOUTS = [GridLayout, HorizontalLayout, VerticalLayout]
 

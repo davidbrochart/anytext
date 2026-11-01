@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal, Vertical, VerticalScroll
-from textual.widgets import Header, Footer, Static
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal, Vertical, VerticalScroll
+from anytext.widgets import Header, Footer, Static
 
 
 class ScreenSplitApp(App[None]):

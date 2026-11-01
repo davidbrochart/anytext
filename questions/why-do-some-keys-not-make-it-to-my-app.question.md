@@ -8,7 +8,7 @@ alt_titles:
   - "Control and function key isn't working"
 ---
 
-Textual can only ever support key combinations that are passed on by your
+Anytext can only ever support key combinations that are passed on by your
 terminal application. Which keys get passed on can differ from terminal to
 terminal, and from operating system to operating system.
 
@@ -33,4 +33,4 @@ on macOS, and the Windows key on Windows.
 
 If you need to test what [key
 combinations](https://textual.textualize.io/guide/input/#keyboard-input)
-work in different environments you can try them out with `textual keys`.
+work in different environments you can try them out with `anytext keys`.

@@ -78,7 +78,7 @@ td code {
 
 }
 
-.textual-web-demo iframe {
+.anytext-web-demo iframe {
   border: none;
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -87,7 +87,7 @@ td code {
 }
 
 
-.textual-web-demo {
+.anytext-web-demo {
   display: flex;
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -97,7 +97,7 @@ td code {
   transition: 0.3s opacity;
 }
 
-.textual-web-demo.-loaded {
+.anytext-web-demo.-loaded {
   opacity: 1.0;
   transition: 0.3s opacity;
 }

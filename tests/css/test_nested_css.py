@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.color import Color
-from textual.containers import Vertical
-from textual.css.parse import parse
-from textual.css.tokenizer import TokenError, UnexpectedEnd
-from textual.widgets import Button, Label
+from anytext.app import App, ComposeResult
+from anytext.color import Color
+from anytext.containers import Vertical
+from anytext.css.parse import parse
+from anytext.css.tokenizer import TokenError, UnexpectedEnd
+from anytext.widgets import Button, Label
 
 
 class NestedApp(App):

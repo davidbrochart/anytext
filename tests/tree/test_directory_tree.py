@@ -4,9 +4,9 @@ from pathlib import Path
 
 from rich.text import Text
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import DirectoryTree
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import DirectoryTree
 
 
 class DirectoryTreeApp(App[None]):

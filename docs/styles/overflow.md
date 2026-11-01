@@ -36,7 +36,7 @@ The right side has `overflow-y: hidden` which will prevent a scrollbar from bein
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/overflow.py"}
+    ```{.anytext path="docs/examples/styles/overflow.py"}
     ```
 
 === "overflow.py"

@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Switch
+from anytext.app import App, ComposeResult
+from anytext.widgets import Switch
 
 
 async def test_switch_click_doesnt_bubble_up():

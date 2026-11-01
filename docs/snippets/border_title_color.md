@@ -2,7 +2,7 @@ The following examples demonstrates customization of the border color and text s
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/border_title_colors.py"}
+    ```{.anytext path="docs/examples/styles/border_title_colors.py"}
     ```
 
 === "border_title_colors.py"

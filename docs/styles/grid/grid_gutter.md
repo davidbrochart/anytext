@@ -26,7 +26,7 @@ The example below employs a common trick to apply visually consistent spacing ar
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/grid_gutter.py"}
+    ```{.anytext path="docs/examples/styles/grid_gutter.py"}
     ```
 
 === "grid_gutter.py"

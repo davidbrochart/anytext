@@ -55,7 +55,7 @@ Once we have both the mouse coordinates in pixels and the dimensions of the term
 
 Let's see how this looks.
 
-On the left we have the default scrolling, on the right, Textual is using granular mouse coordinates.
+On the left we have the default scrolling, on the right, Anytext is using granular mouse coordinates.
 
 
 | Default scrolling                                                | Smooth scrolling                                                                    |
@@ -64,10 +64,10 @@ On the left we have the default scrolling, on the right, Textual is using granul
 
 Notice how much smoother the motion of the table is, now that it tracks the mouse cursor more accurately.
 
-If you have one of the terminals which support this feature[^2], and at least [Textual](https://github.com/textualize/textual/) 2.0.0 you will be able to see this in action.
+If you have one of the terminals which support this feature[^2], and at least [Anytext](https://github.com/textualize/textual/) 2.0.0 you will be able to see this in action.
 
-I think Textual may be the first library to implement this.
-Let me know, if you have encountered any non-Textual TUI app which implements this kind of smooth scrolling.
+I think Anytext may be the first library to implement this.
+Let me know, if you have encountered any non-Anytext TUI app which implements this kind of smooth scrolling.
 
 ## Join us
 

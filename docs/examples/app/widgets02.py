@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.widgets import Welcome
+from anytext.app import App
+from anytext.widgets import Welcome
 
 
 class WelcomeApp(App):

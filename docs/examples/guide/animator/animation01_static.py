@@ -1,6 +1,6 @@
-from textual._easing import DEFAULT_EASING, EASING
-from textual.app import App, ComposeResult
-from textual.widgets import Static
+from anytext._easing import DEFAULT_EASING, EASING
+from anytext.app import App, ComposeResult
+from anytext.widgets import Static
 
 ease = EASING[DEFAULT_EASING]
 

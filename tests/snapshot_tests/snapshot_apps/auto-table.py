@@ -1,7 +1,7 @@
-from textual.app import App
-from textual.containers import Container, Horizontal, ScrollableContainer, Vertical
-from textual.screen import Screen
-from textual.widgets import DataTable, Header, Label
+from anytext.app import App
+from anytext.containers import Container, Horizontal, ScrollableContainer, Vertical
+from anytext.screen import Screen
+from anytext.widgets import DataTable, Header, Label
 
 
 class LabeledBox(Container):

@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.validation import Number
-from textual.widgets import Input
+from anytext.app import App, ComposeResult
+from anytext.validation import Number
+from anytext.widgets import Input
 
 VALIDATORS = [
     Number(minimum=1, maximum=5),

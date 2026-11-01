@@ -4,8 +4,8 @@ An App to show the current time.
 
 from datetime import datetime
 
-from textual.app import App, ComposeResult
-from textual.widgets import Digits
+from anytext.app import App, ComposeResult
+from anytext.widgets import Digits
 
 
 class ClockApp(App):

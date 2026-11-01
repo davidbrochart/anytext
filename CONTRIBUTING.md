@@ -1,10 +1,10 @@
-# Contributing to Textual
+# Contributing to Anytext
 
-First of all, thanks for taking the time to contribute to Textual!
+First of all, thanks for taking the time to contribute to Anytext!
 
 ## How can I contribute?
 
-You can contribute to Textual in many ways:
+You can contribute to Anytext in many ways:
 
  1. [Report a bug](https://github.com/textualize/textual/issues/new?title=%5BBUG%5D%20short%20bug%20description&template=bug_report.md)
  2. Add a new feature
@@ -14,24 +14,24 @@ You can contribute to Textual in many ways:
 
 ## Setup
 
-To make a code or documentation contribution you will need to set up Textual locally.
+To make a code or documentation contribution you will need to set up Anytext locally.
 You can follow these steps:
 
  1. Make sure you have Poetry installed ([see instructions here](https://python-poetry.org))
- 2. Clone the Textual repository
+ 2. Clone the Anytext repository
  3. Run `poetry shell` to create a virtual environment for the dependencies
  4. Run `make setup` to install all dependencies
- 5. Make sure the latest version of Textual was installed by running the command `textual --version`
+ 5. Make sure the latest version of Anytext was installed by running the command `anytext --version`
  6. Install the pre-commit hooks with the command `pre-commit install`
 
 ([Read this](#makefile-commands) if the command `make` doesn't work for you.)
 
 ## Demo
 
-Once you have Textual installed, run the Textual demo to get an impression of what Textual can do and to double check that everything was installed correctly:
+Once you have Anytext installed, run the Anytext demo to get an impression of what Anytext can do and to double check that everything was installed correctly:
 
 ```bash
-python -m textual
+python -m anytext
 ```
 
 ## Guidelines
@@ -71,7 +71,7 @@ Of course, this does not apply to objective/technical issues with the documentat
 
 ## After opening a PR
 
-When you open a PR, your code will be reviewed by one of the Textual maintainers.
+When you open a PR, your code will be reviewed by one of the Anytext maintainers.
 In that review process,
 
 - We will take a look at all of the changes you are making
@@ -79,7 +79,7 @@ In that review process,
 - We might ask for more tests/more documentation
 - We might ask for some code changes
 
-The sole purpose of those interactions is to make sure that, in the long run, everyone has the best experience possible with Textual and with the feature you are implementing/fixing.
+The sole purpose of those interactions is to make sure that, in the long run, everyone has the best experience possible with Anytext and with the feature you are implementing/fixing.
 
 Don't be discouraged if a reviewer asks for code changes.
 If you go through our history of pull requests, you will see that every single one of the maintainers has had to make changes following a review.
@@ -113,6 +113,6 @@ Join our community on [Discord](https://discord.gg/Enf6Z3qhVr) to get help!
 
 ## Makefile commands
 
-Textual has a `Makefile` file that contains the most common commands used when developing Textual.
+Anytext has a `Makefile` file that contains the most common commands used when developing Anytext.
 ([Read about Make and makefiles on Wikipedia.](https://en.wikipedia.org/wiki/Make_(software)))
 If you don't have Make and you're on Windows, you may want to [install Make](https://stackoverflow.com/q/32127524/2828287).

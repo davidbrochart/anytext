@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal
-from textual.reactive import reactive, var
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal
+from anytext.reactive import reactive, var
+from anytext.widgets import Label
 
 GREETINGS = [
     "Bonjour",
@@ -55,7 +55,7 @@ class NameApp(App):
     BINDINGS = [("space", "greeting")]
 
     def compose(self) -> ComposeResult:
-        yield Greeter(who="Textual")
+        yield Greeter(who="Anytext")
 
     def action_greeting(self) -> None:
         self.greeting_no = (self.greeting_no + 1) % len(GREETINGS)

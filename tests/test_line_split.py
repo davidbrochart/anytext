@@ -1,4 +1,4 @@
-from textual._line_split import line_split
+from anytext._line_split import line_split
 
 
 def test_split_string_to_lines_and_endings():

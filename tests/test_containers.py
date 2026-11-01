@@ -1,7 +1,7 @@
 """Test basic functioning of some containers."""
 
-from textual.app import App, ComposeResult
-from textual.containers import (
+from anytext.app import App, ComposeResult
+from anytext.containers import (
     Center,
     Horizontal,
     HorizontalScroll,
@@ -9,7 +9,7 @@ from textual.containers import (
     Vertical,
     VerticalScroll,
 )
-from textual.widgets import Label
+from anytext.widgets import Label
 
 
 async def test_horizontal_vs_horizontalscroll_scrolling():

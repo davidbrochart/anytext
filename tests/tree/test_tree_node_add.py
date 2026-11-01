@@ -1,7 +1,7 @@
 import pytest
 
-from textual.widgets import Tree
-from textual.widgets.tree import AddNodeError
+from anytext.widgets import Tree
+from anytext.widgets.tree import AddNodeError
 
 
 async def test_tree_node_add_before_and_after_raises_exception():

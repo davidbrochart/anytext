@@ -3,16 +3,16 @@ draft: false
 date: 2023-06-01
 categories:
   - Release
-title: "Textual adds Sparklines, Selection list, Input validation, and tool tips"
+title: "Anytext adds Sparklines, Selection list, Input validation, and tool tips"
 authors:
   - willmcgugan
 ---
 
-# Textual adds Sparklines, Selection list, Input validation, and tool tips
+# Anytext adds Sparklines, Selection list, Input validation, and tool tips
 
-It's been 12 days since the last Textual release, which is longer than our usual release cycle of a week.
+It's been 12 days since the last Anytext release, which is longer than our usual release cycle of a week.
 
-We've been a little distracted with our "dogfood" projects: [Frogmouth](https://github.com/Textualize/frogmouth) and [Trogon](https://github.com/Textualize/trogon). Both of which hit 1000 Github stars in 24 hours. We will be maintaining / updating those, but it is business as usual for this Textual release (and it's a big one). We have such sights to show you.
+We've been a little distracted with our "dogfood" projects: [Frogmouth](https://github.com/Textualize/frogmouth) and [Trogon](https://github.com/Textualize/trogon). Both of which hit 1000 Github stars in 24 hours. We will be maintaining / updating those, but it is business as usual for this Anytext release (and it's a big one). We have such sights to show you.
 
 <!-- more -->
 
@@ -36,7 +36,7 @@ Next up is the [SelectionList](../../widget_gallery.md#selectionlist) widget. Es
 
 ## Tooltips
 
-We've added [tooltips](../../guide/widgets.md#tooltips) to Textual widgets.
+We've added [tooltips](../../guide/widgets.md#tooltips) to Anytext widgets.
 
 The API couldn't be simpler: simply assign a string to the `tooltip` property on any widget.
 This string will be displayed after 300ms when you hover over the widget.
@@ -71,7 +71,7 @@ You could use this API to offer suggestions from a fixed list, or even pull the 
 
 ## Join us
 
-Development on Textual is *fast*.
+Development on Anytext is *fast*.
 We're very responsive to issues and feature requests.
 
 If you have any suggestions, jump on our [Discord server](https://discord.gg/Enf6Z3qhVr) and you may see your feature in the next release!

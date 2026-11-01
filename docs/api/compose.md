@@ -1,5 +1,5 @@
 ---
-title: "textual.compose"
+title: "anytext.compose"
 ---
 
-::: textual.compose.compose
+::: anytext.compose.compose

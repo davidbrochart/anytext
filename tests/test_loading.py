@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widgets import Label, Static
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Label, Static
 
 
 class LoadingApp(App[None]):

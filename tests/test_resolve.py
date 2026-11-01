@@ -2,10 +2,10 @@ from fractions import Fraction
 
 import pytest
 
-from textual._resolve import resolve, resolve_fraction_unit
-from textual.css.scalar import Scalar
-from textual.geometry import Size
-from textual.widget import Widget
+from anytext._resolve import resolve, resolve_fraction_unit
+from anytext.css.scalar import Scalar
+from anytext.geometry import Size
+from anytext.widget import Widget
 
 
 def test_resolve_empty():

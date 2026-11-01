@@ -24,7 +24,7 @@ I was not expecting Will's answer, but the challenge excited me:
 
  > “I thought I'll just throw you in the deep end and have you write some code.”
 
-What happened next was that I spent two days [working on PR #1229](https://github.com/Textualize/textual/pull/1229) to add a new widget to the [Textual](https://github.com/Textualize/textual) code base.
+What happened next was that I spent two days [working on PR #1229](https://github.com/Textualize/textual/pull/1229) to add a new widget to the [Anytext](https://github.com/Textualize/textual) code base.
 At the time of writing, the pull request has not been merged yet.
 Well, to be honest with you, it hasn't even been reviewed by anyone...
 But that won't stop me from blogging about some of the things I learned while creating this PR.
@@ -32,7 +32,7 @@ But that won't stop me from blogging about some of the things I learned while cr
 
 ## The placeholder widget
 
-This PR adds a widget called `Placeholder` to Textual.
+This PR adds a widget called `Placeholder` to Anytext.
 As per the documentation, this widget “is meant to have no complex functionality.
 Use the placeholder widget when studying the layout of your app before having to develop your custom widgets.”
 
@@ -57,9 +57,9 @@ So, how does a code monkey start working on a non-trivial PR within 24 hours of 
 The answer is simple: just copy and paste code!
 But instead of copying and pasting from Stack Overflow, I decided to copy and paste from the internal code base.
 
-My task was to create a new widget, so I thought it would be a good idea to take a look at the implementation of other Textual widgets.
+My task was to create a new widget, so I thought it would be a good idea to take a look at the implementation of other Anytext widgets.
 For some reason I cannot seem to recall, I decided to take a look at the implementation of the button widget that you can find in [_button.py](https://github.com/Textualize/textual/blob/main/src/textual/widgets/_button.py).
-By looking at how the button widget is implemented, I could immediately learn a few useful things about what I needed to do and some other things about how Textual works.
+By looking at how the button widget is implemented, I could immediately learn a few useful things about what I needed to do and some other things about how Anytext works.
 
 For example, a widget can have a class attribute called `DEFAULT_CSS` that specifies the default CSS for that widget.
 I learned this just from staring at the code for the button widget.
@@ -82,7 +82,7 @@ In short, looking at code and files that are related to the things you need to d
 
 ## Handling the placeholder variant
 
-A button widget can have a different variant, which is mostly used by Textual to determine the CSS that should apply to the given button.
+A button widget can have a different variant, which is mostly used by Anytext to determine the CSS that should apply to the given button.
 For the placeholder widget, we want the variant to determine what information the placeholder shows.
 The [original GitHub issue](https://github.com/Textualize/textual/issues/1200) mentions 5 variants for the placeholder:
 
@@ -145,7 +145,7 @@ Can you see what would be wrong if this loop wasn't there?
 ## Updating the render of the placeholder on variant change
 
 If the variant of the placeholder is supposed to determine what information the placeholder shows, then that information must be updated every time the variant of the placeholder changes.
-Thankfully, Textual has reactive attributes and watcher methods, so all I needed to do was...
+Thankfully, Anytext has reactive attributes and watcher methods, so all I needed to do was...
 Defer the problem to another method:
 
 ```py
@@ -228,6 +228,6 @@ After all, I had spent quite some time thinking about how to best implement that
 But then, it was time to write documentation and tests, and I verified that the **best code** is the code that you don't even write!
 The code you don't write is guaranteed to have zero bugs and it also does not need any documentation whatsoever!
 
-So, it was a shame that some lines of code I poured my heart and keyboard into did not get merged into the Textual code base.
+So, it was a shame that some lines of code I poured my heart and keyboard into did not get merged into the Anytext code base.
 On the other hand, I am quite grateful that I won't have to fix the bugs that will certainly reveal themselves in a couple of weeks or months from now.
 Heck, the code hasn't been merged yet and just by writing this blog post I noticed a couple of tweaks that were missing!

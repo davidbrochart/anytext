@@ -9,7 +9,7 @@ hide:
 # Frequently Asked Questions
 
 
-Welcome to the Textual FAQ.
+Welcome to the Anytext FAQ.
 Here we try and answer any question that comes up frequently.
 If you can't find what you are looking for here, see our other [help](./help.md) channels.
 

@@ -1,16 +1,16 @@
-# Save time with Textual containers
+# Save time with Anytext containers
 
-Textual's [containers][textual.containers] provide a convenient way of arranging your widgets. Let's look at them in a little detail.
+Anytext's [containers][anytext.containers] provide a convenient way of arranging your widgets. Let's look at them in a little detail.
 
 !!! info "Are you in the right place?"
 
-    We are talking about Textual container widgets here. Not to be confused with [containerization](https://en.wikipedia.org/wiki/Containerization_(computing))&mdash;which is something else entirely!
+    We are talking about Anytext container widgets here. Not to be confused with [containerization](https://en.wikipedia.org/wiki/Containerization_(computing))&mdash;which is something else entirely!
 
 
 ## What are containers?
 
 Containers are reusable [compound widgets](../guide/widgets.md#compound-widgets) with preset styles to arrange their children.
-For instance, there is a [Horizontal][textual.containers.Horizontal] container which arranges all of its children in a horizontal row.
+For instance, there is a [Horizontal][anytext.containers.Horizontal] container which arranges all of its children in a horizontal row.
 Let's look at a quick example of that:
 
 ```python hl_lines="2 21"
@@ -22,7 +22,7 @@ Let's look at a quick example of that:
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/containers01.py"}
+```{.anytext path="docs/examples/how-to/containers01.py"}
 ```
 
 Note that inside the `Horizontal` block new widgets will be placed to the right of previous widgets, forming a row.
@@ -55,7 +55,7 @@ The other containers are just as simple.
 ## Horizontal and Vertical
 
 We've seen the `Horizontal` container in action.
-The [Vertical][textual.containers.Vertical] container, as you may have guessed, work the same but arranges its children vertically, i.e. from top to bottom.
+The [Vertical][anytext.containers.Vertical] container, as you may have guessed, work the same but arranges its children vertically, i.e. from top to bottom.
 
 You can probably imagine what this looks like, but for sake of completeness, here is an example with a Vertical container:
 
@@ -67,7 +67,7 @@ You can probably imagine what this looks like, but for sake of completeness, her
 
 And here's the output:
 
-```{.textual path="docs/examples/how-to/containers02.py"}
+```{.anytext path="docs/examples/how-to/containers02.py"}
 ```
 
 Three boxes, vertically stacked.
@@ -91,7 +91,7 @@ This will help us visualize the dimensions of the container.
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/containers03.py"}
+```{.anytext path="docs/examples/how-to/containers03.py"}
 ```
 
 Notice how the container is as large as the screen.
@@ -103,7 +103,7 @@ Let's look at what happens if we add another container:
 
 And here's the result:
 
-```{.textual path="docs/examples/how-to/containers04.py"}
+```{.anytext path="docs/examples/how-to/containers04.py"}
 ```
 
 Two horizontal containers divide the remaining screen space in two.
@@ -118,7 +118,7 @@ This makes `Horizontal` and `Vertical` excellent for designing the macro layout 
 
 ## Group containers
 
-The [HorizontalGroup][textual.containers.HorizontalGroup] and [VerticalGroup][textual.containers.VerticalGroup] containers are very similar to their non-group counterparts, but don't expand to fill the screen space.
+The [HorizontalGroup][anytext.containers.HorizontalGroup] and [VerticalGroup][anytext.containers.VerticalGroup] containers are very similar to their non-group counterparts, but don't expand to fill the screen space.
 
 Let's look at an example.
 In the following code, we have two HorizontalGroups with a border so we can visualize their size.
@@ -129,7 +129,7 @@ In the following code, we have two HorizontalGroups with a border so we can visu
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/containers05.py"}
+```{.anytext path="docs/examples/how-to/containers05.py"}
 ```
 
 We can see that the widgets are arranged horizontally as before, but they only use as much vertical space as required to fit.
@@ -147,13 +147,13 @@ In the following example, we will add 10 boxes:
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/containers06.py"}
+```{.anytext path="docs/examples/how-to/containers06.py"}
 ```
 
 We have add 10 `Box` widgets, but there is not enough room for them to fit.
 The remaining boxes are off-screen and can't be viewed unless the user resizes their screen.
 
-If we expect more content that fits, we can replacing the containers with [HorizontalScroll][textual.containers.HorizontalScroll] or [VerticalScroll][textual.containers.VerticalScroll], which will automatically add scrollbars if required.
+If we expect more content that fits, we can replacing the containers with [HorizontalScroll][anytext.containers.HorizontalScroll] or [VerticalScroll][anytext.containers.VerticalScroll], which will automatically add scrollbars if required.
 
 Let's make that change:
 
@@ -163,7 +163,7 @@ Let's make that change:
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/containers07.py"}
+```{.anytext path="docs/examples/how-to/containers07.py"}
 ```
 
 We now have a scrollbar we can click and drag to see all the boxes.
@@ -175,7 +175,7 @@ We now have a scrollbar we can click and drag to see all the boxes.
 
 ## Center, Right, and Middle
 
-The [Center][textual.containers.Center], [Right][textual.containers.Right], and [Middle][textual.containers.Middle] containers are handy for setting the alignment of select widgets.
+The [Center][anytext.containers.Center], [Right][anytext.containers.Right], and [Middle][anytext.containers.Middle] containers are handy for setting the alignment of select widgets.
 
 First lets look at `Center` and `Right` which align their children on the horizontal axis (there is no `Left` container, as this is the default).
 
@@ -191,7 +191,7 @@ Here's an example:
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/containers08.py"}
+```{.anytext path="docs/examples/how-to/containers08.py"}
 ```
 
 Note how `Center` and `Right` expand to fill the horizontal dimension, but are only as tall as they need to be.
@@ -200,7 +200,7 @@ Note how `Center` and `Right` expand to fill the horizontal dimension, but are o
 
     You can set alignment in TCSS with the [align](../styles/align.md) rule.
 
-The [Middle][textual.containers.Middle] container aligns its children to the center of the *vertical* axis.
+The [Middle][anytext.containers.Middle] container aligns its children to the center of the *vertical* axis.
 Let's look at an example.
 The following code aligns three boxes on the vertical axis:
 
@@ -212,7 +212,7 @@ The following code aligns three boxes on the vertical axis:
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/containers09.py"}
+```{.anytext path="docs/examples/how-to/containers09.py"}
 ```
 
 Note how the container expands on the vertical axis, but fits on the horizontal axis.
@@ -220,12 +220,12 @@ Note how the container expands on the vertical axis, but fits on the horizontal 
 ## Other containers
 
 This how-to covers the most common widgets, but isn't exhausted.
-Be sure to visit the [container reference][textual.containers] for the full list.
-There may be new containers added in future versions of Textual.
+Be sure to visit the [container reference][anytext.containers] for the full list.
+There may be new containers added in future versions of Anytext.
 
 ## Custom containers
 
-The builtin [containers][textual.containers] cover a number of common layout patterns, but are unlikely to cover every possible requirement.
+The builtin [containers][anytext.containers] cover a number of common layout patterns, but are unlikely to cover every possible requirement.
 Fortunately, creating your own is easy.
 Just like the builtin containers, you can create a container by extending Widget and adding little TCSS.
 
@@ -244,8 +244,8 @@ class MyContainer(Widget):
 ## Summary
 
 - Containers are compound widgets with preset styles for arranging their children.
-- [`Horizontal`][textual.containers.Horizontal] and [`Vertical`][textual.containers.Vertical] containers stretch to fill available space.
-- [`HorizontalGroup`][textual.containers.HorizontalGroup] and [`VerticalGroup`][textual.containers.VerticalGroup] fit to the height of their contents.
-- [`HorizontalScroll`][textual.containers.HorizontalScroll] and [`VerticalScroll`][textual.containers.VerticalScroll] add automatic scrollbars.
-- [`Center`][textual.containers.Center], [`Right`][textual.containers.Right], and [`Middle`][textual.containers.Middle] set alignment.
+- [`Horizontal`][anytext.containers.Horizontal] and [`Vertical`][anytext.containers.Vertical] containers stretch to fill available space.
+- [`HorizontalGroup`][anytext.containers.HorizontalGroup] and [`VerticalGroup`][anytext.containers.VerticalGroup] fit to the height of their contents.
+- [`HorizontalScroll`][anytext.containers.HorizontalScroll] and [`VerticalScroll`][anytext.containers.VerticalScroll] add automatic scrollbars.
+- [`Center`][anytext.containers.Center], [`Right`][anytext.containers.Right], and [`Middle`][anytext.containers.Middle] set alignment.
 - Custom containers are trivial to create.

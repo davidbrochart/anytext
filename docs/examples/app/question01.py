@@ -1,10 +1,10 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Label, Button
+from anytext.app import App, ComposeResult
+from anytext.widgets import Label, Button
 
 
 class QuestionApp(App[str]):
     def compose(self) -> ComposeResult:
-        yield Label("Do you love Textual?")
+        yield Label("Do you love Anytext?")
         yield Button("Yes", id="yes", variant="primary")
         yield Button("No", id="no", variant="error")
 

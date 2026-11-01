@@ -1,6 +1,6 @@
 """Regression test for https://github.com/Textualize/textual/issues/2229."""
-from textual.app import App, ComposeResult
-from textual.widgets import TabbedContent, TabPane, Tabs, Label
+from anytext.app import App, ComposeResult
+from anytext.widgets import TabbedContent, TabPane, Tabs, Label
 
 
 class QuicklyChangeTabsApp(App[None]):

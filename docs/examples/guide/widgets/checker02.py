@@ -1,8 +1,8 @@
 from rich.segment import Segment
 
-from textual.app import App, ComposeResult
-from textual.strip import Strip
-from textual.widget import Widget
+from anytext.app import App, ComposeResult
+from anytext.strip import Strip
+from anytext.widget import Widget
 
 
 class CheckerBoard(Widget):

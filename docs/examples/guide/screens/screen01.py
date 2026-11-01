@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.widgets import Static
 
 ERROR_TEXT = """
 An error has occurred. To continue:

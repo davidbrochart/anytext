@@ -4,8 +4,8 @@ from rich.segment import Segment
 from rich.style import Style
 from rich.terminal_theme import MONOKAI
 
-from textual.color import Color
-from textual.filter import ANSIToTruecolor
+from anytext.color import Color
+from anytext.filter import ANSIToTruecolor
 
 
 def test_ansi_to_truecolor_8_bit_dim():

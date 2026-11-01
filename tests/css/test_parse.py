@@ -2,16 +2,16 @@ from __future__ import annotations
 
 import pytest
 
-from textual.color import Color
-from textual.css.errors import UnresolvedVariableError
-from textual.css.parse import is_id_selector, substitute_references
-from textual.css.scalar import Scalar, Unit
-from textual.css.stylesheet import Stylesheet, StylesheetParseError
-from textual.css.tokenize import tokenize
-from textual.css.tokenizer import ReferencedBy, Token, TokenError
-from textual.css.transition import Transition
-from textual.geometry import Spacing
-from textual.layouts.vertical import VerticalLayout
+from anytext.color import Color
+from anytext.css.errors import UnresolvedVariableError
+from anytext.css.parse import is_id_selector, substitute_references
+from anytext.css.scalar import Scalar, Unit
+from anytext.css.stylesheet import Stylesheet, StylesheetParseError
+from anytext.css.tokenize import tokenize
+from anytext.css.tokenizer import ReferencedBy, Token, TokenError
+from anytext.css.transition import Transition
+from anytext.geometry import Spacing
+from anytext.layouts.vertical import VerticalLayout
 
 
 class TestVariableReferenceSubstitution:

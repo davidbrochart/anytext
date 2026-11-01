@@ -3,14 +3,14 @@ draft: false
 date: 2023-05-08
 categories:
   - Release
-title: "Textual 0.24.0 adds a Select control"
+title: "Anytext 0.24.0 adds a Select control"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.24.0 adds a Select control
+# Anytext 0.24.0 adds a Select control
 
-Coming just 5 days after the last release, we have version 0.24.0 which we are crowning the King of Textual releases.
+Coming just 5 days after the last release, we have version 0.24.0 which we are crowning the King of Anytext releases.
 At least until it is deposed by version 0.25.0.
 
 <!-- more -->
@@ -20,7 +20,7 @@ Here's a screenshot and code:
 
 === "Output (expanded)"
 
-    ```{.textual path="docs/examples/widgets/select_widget.py" press="tab,enter,down,down"}
+    ```{.anytext path="docs/examples/widgets/select_widget.py" press="tab,enter,down,down"}
     ```
 
 === "select_widget.py"
@@ -37,7 +37,7 @@ Here's a screenshot and code:
 
 ## New styles
 
-This one required new functionality in Textual itself.
+This one required new functionality in Anytext itself.
 The "pull-down" overlay with options presented a difficulty with the previous API.
 The overlay needed to appear over any content below it.
 This is possible (using [layers](https://textual.textualize.io/styles/layers/)), but there was no simple way of positioning it directly under the parent widget.
@@ -82,4 +82,4 @@ There is a surprising number of fixes in this release for just 5 days. See [CHAN
 
 ## Join us
 
-If you want to talk about this update or anything else Textual related, join us on our [Discord server](https://discord.gg/Enf6Z3qhVr).
+If you want to talk about this update or anything else Anytext related, join us on our [Discord server](https://discord.gg/Enf6Z3qhVr).

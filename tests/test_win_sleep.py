@@ -4,7 +4,7 @@ import sys
 
 import pytest
 
-from textual.app import App
+from anytext.app import App
 
 pytestmark = pytest.mark.skipif(
     sys.platform != "win32", reason="We only need to test this on Windows."

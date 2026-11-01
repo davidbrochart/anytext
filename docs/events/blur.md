@@ -1,4 +1,4 @@
-::: textual.events.Blur
+::: anytext.events.Blur
     options:
       heading_level: 1
 

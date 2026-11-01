@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal
-from textual.widgets import Collapsible, Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal
+from anytext.widgets import Collapsible, Label
 
 
 class CollapsibleApp(App[None]):

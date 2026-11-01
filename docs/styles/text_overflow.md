@@ -37,7 +37,7 @@ This option is useful to indicate to the user that there may be more text.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/text_overflow.py"}
+    ```{.anytext path="docs/examples/styles/text_overflow.py"}
     ```
 
 === "text_overflow.py"

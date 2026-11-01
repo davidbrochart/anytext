@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.events import Resize
-from textual.widgets import RichLog
+from anytext.app import App, ComposeResult
+from anytext.events import Resize
+from anytext.widgets import RichLog
 
 from rich.text import Text
 

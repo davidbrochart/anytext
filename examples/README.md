@@ -1,10 +1,10 @@
-# Textual Examples
+# Anytext Examples
 
-This directory contains example Textual applications.
+This directory contains example Anytext applications.
 
 To run them, navigate to the examples directory and enter `python` followed by the name of the Python file.
 
 ```
-cd textual/examples
+cd anytext/examples
 python pride.py
 ```

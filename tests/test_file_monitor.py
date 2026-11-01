@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from textual.file_monitor import FileMonitor
+from anytext.file_monitor import FileMonitor
 
 
 def test_repr() -> None:

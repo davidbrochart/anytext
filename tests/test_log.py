@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Log
+from anytext.app import App, ComposeResult
+from anytext.widgets import Log
 
 
 async def test_process_line():

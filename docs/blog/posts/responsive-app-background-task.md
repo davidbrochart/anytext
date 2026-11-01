@@ -66,7 +66,7 @@ Python is like a very dumb cook who only ever does one thing at a time and waits
 So, by default, Python would act like a cook who fills up a pan with water, starts heating the water, and then stands there staring at the water until it starts boiling instead of doing something else.
 It is by using the module `asyncio` from the standard library that our cook learns to do other tasks while _awaiting_ the completion of the things they already started doing.
 
-[Textual](https://github.com/textualize/textual) is an async framework, which means it knows how to interoperate with the module `asyncio` and this will be the solution to our problem.
+[Anytext](https://github.com/textualize/textual) is an async framework, which means it knows how to interoperate with the module `asyncio` and this will be the solution to our problem.
 By using `asyncio` with the tasks we want to run in the background, we will let the application remain responsive while we load and parse the data we need, or while we crunch the numbers we need to crunch, or while we connect to some slow API over the Internet, or whatever it is you want to do.
 
 The module `asyncio` uses the keyword `async` to know which functions can be run asynchronously.
@@ -127,4 +127,4 @@ The animation below shows just this:
 !!! warning
 
     The animation GIFs in this blog post show low-quality colours in an attempt to reduce the size of the media files you have to download to be able to read this blog post.
-    If you run Textual locally you will see beautiful colours ✨
+    If you run Anytext locally you will see beautiful colours ✨

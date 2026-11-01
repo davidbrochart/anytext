@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import Grid
-from textual.widgets import Label
+from anytext.app import App
+from anytext.containers import Grid
+from anytext.widgets import Label
 
 
 class ProgrammaticScrollbarGutterChange(App[None]):

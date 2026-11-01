@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Container, Vertical
-from textual.widgets import Button, Label, Static
+from anytext.app import App, ComposeResult
+from anytext.containers import Container, Vertical
+from anytext.widgets import Button, Label, Static
 
 
 async def test_remove_single_widget():

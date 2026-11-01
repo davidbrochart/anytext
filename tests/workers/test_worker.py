@@ -2,8 +2,8 @@ import asyncio
 
 import pytest
 
-from textual.app import App
-from textual.worker import (
+from anytext.app import App
+from anytext.worker import (
     DeadlockError,
     NoActiveWorker,
     Worker,

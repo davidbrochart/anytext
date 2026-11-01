@@ -14,7 +14,7 @@ Clicking any of the non-disabled buttons in the example app below will result in
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/button.py"}
+    ```{.anytext path="docs/examples/widgets/button.py"}
     ```
 
 === "button.py"
@@ -39,7 +39,7 @@ Clicking any of the non-disabled buttons in the example app below will result in
 
 ## Messages
 
-- [Button.Pressed][textual.widgets.Button.Pressed]
+- [Button.Pressed][anytext.widgets.Button.Pressed]
 
 ## Bindings
 
@@ -56,11 +56,11 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Button
+::: anytext.widgets.Button
     options:
       heading_level: 2
 
-::: textual.widgets.button
+::: anytext.widgets.button
     options:
       show_root_heading: true
       show_root_toc_entry: true

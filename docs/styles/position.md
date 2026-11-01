@@ -28,7 +28,7 @@ The second label is relative and is displayed offset from the center.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/position.py"}
+    ```{.anytext path="docs/examples/styles/position.py"}
     ```
 
 === "position.py"

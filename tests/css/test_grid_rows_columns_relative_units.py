@@ -5,9 +5,9 @@ The scalars in grid-rows and grid-columns were not aware of the dimension
 they should be relative to.
 """
 
-from textual.css.parse import parse_declarations
-from textual.css.scalar import Unit
-from textual.css.styles import Styles
+from anytext.css.parse import parse_declarations
+from anytext.css.scalar import Unit
+from anytext.css.styles import Styles
 
 
 def test_grid_rows_columns_relative_units_are_correct():

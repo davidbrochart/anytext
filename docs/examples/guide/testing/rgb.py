@@ -1,7 +1,7 @@
-from textual import on
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal
-from textual.widgets import Button, Footer
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal
+from anytext.widgets import Button, Footer
 
 
 class RGBApp(App):

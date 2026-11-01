@@ -1,5 +1,5 @@
 ---
-title: "textual.css.query"
+title: "anytext.css.query"
 ---
 
-::: textual.css.query
+::: anytext.css.query

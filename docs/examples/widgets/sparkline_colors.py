@@ -1,7 +1,7 @@
 from math import sin
 
-from textual.app import App, ComposeResult
-from textual.widgets import Sparkline
+from anytext.app import App, ComposeResult
+from anytext.widgets import Sparkline
 
 
 class SparklineColorsApp(App[None]):

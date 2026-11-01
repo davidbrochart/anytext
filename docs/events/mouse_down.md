@@ -2,18 +2,18 @@
 title: MouseDown
 ---
 
-::: textual.events.MouseDown
+::: anytext.events.MouseDown
     options:
       heading_level: 1
 
-See [MouseEvent][textual.events.MouseEvent] for the full list of properties and methods.
+See [MouseEvent][anytext.events.MouseEvent] for the full list of properties and methods.
 
 ## See also
 
 - [Click](click.md)
 - [Enter](enter.md)
 - [Leave](leave.md)
-- [MouseEvent][textual.events.MouseEvent]
+- [MouseEvent][anytext.events.MouseEvent]
 - [MouseMove](mouse_move.md)
 - [MouseScrollDown](mouse_scroll_down.md)
 - [MouseScrollLeft](mouse_scroll_left.md)

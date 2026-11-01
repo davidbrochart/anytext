@@ -1,5 +1,5 @@
 ---
-title: "textual.dom"
+title: "anytext.dom"
 ---
 
-::: textual.dom
+::: anytext.dom

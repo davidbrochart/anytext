@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from textual.dom import DOMNode
-from textual.suggester import Suggester, SuggestionReady
+from anytext.dom import DOMNode
+from anytext.suggester import Suggester, SuggestionReady
 
 
 class FillSuggester(Suggester):

@@ -12,7 +12,7 @@ The example below shows how you can use a `Static` widget as a simple text label
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/static.py"}
+    ```{.anytext path="docs/examples/widgets/static.py"}
     ```
 
 === "static.py"
@@ -46,6 +46,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Static
+::: anytext.widgets.Static
     options:
       heading_level: 2

@@ -5,17 +5,17 @@ categories:
   - DevLog
 authors:
   - darrenburns
-title: "Things I learned while building Textual's TextArea"
+title: "Things I learned while building Anytext's TextArea"
 ---
 
 # Things I learned building a text editor for the terminal
 
-`TextArea` is the latest widget to be added to Textual's [growing collection](https://textual.textualize.io/widget_gallery/).
+`TextArea` is the latest widget to be added to Anytext's [growing collection](https://textual.textualize.io/widget_gallery/).
 It provides a multi-line space to edit text, and features optional syntax highlighting for a selection of languages.
 
 ![text-area-welcome.gif](../images/text-area-learnings/text-area-welcome.gif)
 
-Adding a `TextArea` to your Textual app is as simple as adding this to your `compose` method:
+Adding a `TextArea` to your Anytext app is as simple as adding this to your `compose` method:
 
 ```python
 yield TextArea()
@@ -27,7 +27,7 @@ Enabling syntax highlighting for a language is as simple as:
 yield TextArea(language="python")
 ```
 
-Working on the `TextArea` widget for Textual taught me a lot about Python and my general
+Working on the `TextArea` widget for Anytext taught me a lot about Python and my general
 approach to software engineering. It gave me an appreciation for the subtle functionality behind
 the editors we use on a daily basis — features we may not even notice, despite
 some engineer spending hours perfecting it to provide a small boost to our development experience.
@@ -200,7 +200,7 @@ So where do we draw the line?
 
 We want to provide a widget which can act as both a basic multiline text area that
 anyone can drop into their app, yet powerful and extensible enough to act as the foundation
-for a Textual-powered text editor.
+for a Anytext-powered text editor.
 
 Yet, the more features we add, the more opinionated the widget becomes, and the less that users
 will feel like they can build it into their _own_ thing.

@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Middle
-from textual.widgets import Placeholder
+from anytext.app import App, ComposeResult
+from anytext.containers import Middle
+from anytext.widgets import Placeholder
 
 
 class Box(Placeholder):

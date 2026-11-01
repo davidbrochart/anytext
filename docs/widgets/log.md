@@ -4,7 +4,7 @@
 
 A Log widget displays lines of text which may be appended to in realtime.
 
-Call [Log.write_line][textual.widgets.Log.write_line] to write a line at a time, or [Log.write_lines][textual.widgets.Log.write_lines] to write multiple lines at once. Call [Log.clear][textual.widgets.Log.clear] to clear the Log widget.
+Call [Log.write_line][anytext.widgets.Log.write_line] to write a line at a time, or [Log.write_lines][anytext.widgets.Log.write_lines] to write multiple lines at once. Call [Log.clear][anytext.widgets.Log.clear] to clear the Log widget.
 
 !!! tip
 
@@ -19,7 +19,7 @@ The example below shows how to write text to a `Log` widget:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/log.py"}
+    ```{.anytext path="docs/examples/widgets/log.py"}
     ```
 
 === "log.py"
@@ -53,6 +53,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Log
+::: anytext.widgets.Log
     options:
       heading_level: 2

@@ -27,7 +27,7 @@ This example shows, from top to bottom, increasing `text-opacity` values.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/text_opacity.py"}
+    ```{.anytext path="docs/examples/styles/text_opacity.py"}
     ```
 
 === "text_opacity.py"

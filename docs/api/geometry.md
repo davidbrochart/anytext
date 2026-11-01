@@ -1,6 +1,6 @@
 ---
-title: "textual.geometry"
+title: "anytext.geometry"
 ---
 
 
-::: textual.geometry
+::: anytext.geometry

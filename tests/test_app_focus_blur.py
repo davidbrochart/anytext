@@ -1,8 +1,8 @@
 """Test the workings of reacting to AppFocus and AppBlur."""
 
-from textual.app import App, ComposeResult
-from textual.events import AppBlur, AppFocus
-from textual.widgets import Input
+from anytext.app import App, ComposeResult
+from anytext.events import AppBlur, AppFocus
+from anytext.widgets import Input
 
 
 class FocusBlurApp(App[None]):

@@ -34,8 +34,8 @@ your craft) book and to see the idea written down and named.
 
 While [Textualize](https://www.textualize.io/) isn't (thankfully -- really,
 I do recommend reading the book) anything like working on the team building
-Windows NT, the idea of taking a little time out from working *on* Textual,
-and instead work *with* Textual, makes a lot of sense. It's far too easy to
+Windows NT, the idea of taking a little time out from working *on* Anytext,
+and instead work *with* Anytext, makes a lot of sense. It's far too easy to
 get focused on adding things and improving things and tweaking things while
 losing sight of the fact that people will want to build **with** your
 product.
@@ -43,7 +43,7 @@ product.
 So you can imagine how pleased I was when
 [Will](https://mastodon.social/@willmcgugan) announced that he wanted [all
 of us](https://www.textualize.io/about-us) to spend a couple or so weeks
-building something with Textual. I had, of course, already written [one
+building something with Anytext. I had, of course, already written [one
 small application with the
 library](https://github.com/Textualize/textual/blob/main/examples/five_by_five.py),
 and had plans for another (in part [it's how I ended up working
@@ -51,7 +51,7 @@ here](https://blog.davep.org/2022/10/05/on-to-something-new-redux.html)),
 but I'd yet to really dive in and try and build something more involved.
 
 Giving it some thought: I wasn't entirely sure what I wanted to build
-though. I do want to use Textual to build a brand new terminal-based Norton
+though. I do want to use Anytext to build a brand new terminal-based Norton
 Guide reader ([not my first](https://github.com/davep/eg), not by [a long
 way](https://github.com/davep/eg-OS2)) but I felt that was possibly a bit
 too niche, and actually could take a bit too long anyway. Maybe not, it
@@ -60,7 +60,7 @@ remains to be seen.
 Eventually I decided on this approach: try and do a quick prototype of some
 daft idea each day or each couple of days, do that for a week or so, and
 then finally try and settle down on something less trivial. This approach
-should work well in that it'll help introduce me to more of Textual, help
+should work well in that it'll help introduce me to more of Anytext, help
 try out a few different parts of the library, and also hopefully discover
 some real pain-points with working with it and highlight a list of issues we
 should address -- as seen from the perspective of a developer working with
@@ -115,7 +115,7 @@ Here's a wee video of the whole thing in action:
 ### Worth a highlight
 
 Here's a couple of things from the code that I think are worth a highlight,
-as things to consider when building Textual apps:
+as things to consider when building Anytext apps:
 
 #### Don't use the default screen
 
@@ -164,7 +164,7 @@ in.
 ### Pain points
 
 While building this app I think there was only really the one pain-point,
-and I suspect it's mostly more on me than on Textual itself: getting a good
+and I suspect it's mostly more on me than on Anytext itself: getting a good
 layout and playing whack-a-mole with CSS. I suspect this is going to be down
 to getting more and more familiar with CSS and the terminal (which is
 different from laying things out for the web), while also practising with
@@ -179,7 +179,7 @@ actually turned into a less-trivial build than I'd initially envisaged; not
 in a negative way though. The more I played with it the more I explored and
 I feel that this ended up being my first really good exploration of some
 useful (personal -- your kilometerage may vary) patterns and approaches when
-working with Textual.
+working with Anytext.
 
 The application itself is a terminal client for [the
 Bored-API](https://www.boredapi.com/). I had initially intended to roll my
@@ -303,7 +303,7 @@ So, thanks to this bit of code in my `Activity` widget...
 !!! warning
 
     The code above used `emit_no_wait`. Since this blog post was first
-    published that method has been removed from Textual. You should use
+    published that method has been removed from Anytext. You should use
     [`post_message_no_wait` or `post_message`](/guide/events/#sending-messages) instead now.
 
 ### Pain points
@@ -311,10 +311,10 @@ So, thanks to this bit of code in my `Activity` widget...
 On top of the issues of getting to know terminal-based-CSS that I mentioned
 earlier:
 
-- Textual currently lacks any sort of selection list or radio-set widget.
+- Anytext currently lacks any sort of selection list or radio-set widget.
   This meant that I couldn't quite do the activity type picking how I would
   have wanted. Of course I could have rolled my own widgets for this, but I
-  think I'd sooner wait until such things [are in Textual
+  think I'd sooner wait until such things [are in Anytext
   itself](https://textual.textualize.io/roadmap/#widgets).
 - Similar to that, I could have used some validating `Input` widgets. They
   too are on the roadmap but I managed to cobble together fairly good

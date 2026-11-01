@@ -2,7 +2,7 @@
 
 The `opacity` style sets the opacity of a widget.
 
-While terminals are not capable of true opacity, Textual can create an approximation by blending widgets with their background color.
+While terminals are not capable of true opacity, Anytext can create an approximation by blending widgets with their background color.
 
 ## Syntax
 
@@ -25,7 +25,7 @@ When the opacity is zero, all we see is the (black) background.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/opacity.py"}
+    ```{.anytext path="docs/examples/styles/opacity.py"}
     ```
 
 === "opacity.py"

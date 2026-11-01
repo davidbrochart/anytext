@@ -3,9 +3,9 @@ import gc
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.containers import Vertical
-from textual.widgets import Footer, Header, Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Vertical
+from anytext.widgets import Footer, Header, Label
 
 
 def count_nodes() -> int:

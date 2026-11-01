@@ -13,7 +13,7 @@ The example below shows how you can use a `Label` widget to display some text.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/label.py"}
+    ```{.anytext path="docs/examples/widgets/label.py"}
     ```
 
 === "label.py"
@@ -41,6 +41,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Label
+::: anytext.widgets.Label
     options:
       heading_level: 2

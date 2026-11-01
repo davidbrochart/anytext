@@ -1,6 +1,6 @@
 ---
-title: "textual.walk"
+title: "anytext.walk"
 ---
 
 
-::: textual.walk
+::: anytext.walk

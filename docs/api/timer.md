@@ -1,5 +1,5 @@
 ---
-title: "textual.timer"
+title: "anytext.timer"
 ---
 
-::: textual.timer
+::: anytext.timer

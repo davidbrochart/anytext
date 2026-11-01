@@ -3,10 +3,10 @@ from rich.segment import Segment
 from rich.style import Style as RichStyle
 from rich.text import Text
 
-from textual._border import render_border_label, render_row
-from textual.content import Content
-from textual.style import Style
-from textual.widget import Widget
+from anytext._border import render_border_label, render_row
+from anytext.content import Content
+from anytext.style import Style
+from anytext.widget import Widget
 
 
 def test_border_render_row():

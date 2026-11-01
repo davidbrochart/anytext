@@ -1,5 +1,5 @@
 ---
-title: "textual.errors"
+title: "anytext.errors"
 ---
 
-::: textual.errors
+::: anytext.errors

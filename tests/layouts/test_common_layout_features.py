@@ -1,7 +1,7 @@
 import pytest
 
-from textual.screen import Screen
-from textual.widget import Widget
+from anytext.screen import Screen
+from anytext.widget import Widget
 
 
 @pytest.mark.parametrize(

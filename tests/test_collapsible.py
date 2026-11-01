@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Collapsible, Label
-from textual.widgets._collapsible import CollapsibleTitle
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import Collapsible, Label
+from anytext.widgets._collapsible import CollapsibleTitle
 
 COLLAPSED_CLASS = "-collapsed"
 

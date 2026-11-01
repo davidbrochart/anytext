@@ -2,11 +2,11 @@ import asyncio
 import time
 from random import randint
 
-from textual.app import App, ComposeResult
-from textual.color import Color
-from textual.containers import Grid, VerticalScroll
-from textual.widget import Widget
-from textual.widgets import Footer, Label
+from anytext.app import App, ComposeResult
+from anytext.color import Color
+from anytext.containers import Grid, VerticalScroll
+from anytext.widget import Widget
+from anytext.widgets import Footer, Label
 
 
 class ColourChanger(Widget):

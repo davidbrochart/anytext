@@ -1,5 +1,5 @@
 ---
-title: "textual.getters"
+title: "anytext.getters"
 ---
 
-::: textual.getters
+::: anytext.getters

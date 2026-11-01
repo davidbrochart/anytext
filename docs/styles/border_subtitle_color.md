@@ -1,6 +1,6 @@
 # Border-subtitle-color
 
-The `border-subtitle-color` style sets the color of the [border_subtitle][textual.widget.Widget.border_subtitle].
+The `border-subtitle-color` style sets the color of the [border_subtitle][anytext.widget.Widget.border_subtitle].
 
 ## Syntax
 

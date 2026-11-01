@@ -27,11 +27,11 @@ You can consider these to be "testing the water", and hopefully representative o
 
 ## The projects
 
-In April we took a break from building [Textual](https://github.com/Textualize/textual), to building apps *with* Textual.
+In April we took a break from building [Anytext](https://github.com/Textualize/textual), to building apps *with* Anytext.
 We had three ideas to work on, and three devs to do the work.
 One idea we parked for later.
 The other two were so promising we devoted more time to them.
-Both projects took around three developer-weeks to build, which also included work on Textual itself and standard duties for responding to issues / community requests.
+Both projects took around three developer-weeks to build, which also included work on Anytext itself and standard duties for responding to issues / community requests.
 We released them in May.
 
 The first project was [Frogmouth](https://github.com/Textualize/frogmouth), a Markdown browser.
@@ -48,7 +48,7 @@ Here's a screenshot:
 !!! info
 
     Quick aside about these "screenshots", because its a common ask.
-    They aren't true screenshots, but rather SVGs exported by Textual.
+    They aren't true screenshots, but rather SVGs exported by Anytext.
 
 We posted Frogmouth on Hacker News and Reddit on a Sunday morning (US time).
 A day later, it had 1,000 stars and lots of positive feedback.

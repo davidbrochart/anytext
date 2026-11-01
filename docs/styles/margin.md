@@ -40,7 +40,7 @@ In the example below we add a large margin to a label, which makes it move away 
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/margin.py"}
+    ```{.anytext path="docs/examples/styles/margin.py"}
     ```
 
 === "margin.py"
@@ -62,7 +62,7 @@ In each cell, we have a placeholder that has its margins set in different ways.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/margin_all.py"}
+    ```{.anytext path="docs/examples/styles/margin_all.py"}
     ```
 
 === "margin_all.py"

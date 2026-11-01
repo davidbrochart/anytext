@@ -25,7 +25,7 @@ and directories:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/directory_tree_filtered.py"}
+    ```{.anytext path="docs/examples/widgets/directory_tree_filtered.py"}
     ```
 
 === "directory_tree_filtered.py"
@@ -44,30 +44,30 @@ and directories:
 
 ## Messages
 
-- [DirectoryTree.FileSelected][textual.widgets.DirectoryTree.FileSelected]
+- [DirectoryTree.FileSelected][anytext.widgets.DirectoryTree.FileSelected]
 
 ## Bindings
 
-The directory tree widget inherits [the bindings from the tree widget][textual.widgets.Tree.BINDINGS].
+The directory tree widget inherits [the bindings from the tree widget][anytext.widgets.Tree.BINDINGS].
 
 ## Component Classes
 
 The directory tree widget provides the following component classes:
 
-::: textual.widgets.DirectoryTree.COMPONENT_CLASSES
+::: anytext.widgets.DirectoryTree.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
 
 ## See Also
 
-* [Tree][textual.widgets.Tree] code reference
+* [Tree][anytext.widgets.Tree] code reference
 
 
 
 ---
 
 
-::: textual.widgets.DirectoryTree
+::: anytext.widgets.DirectoryTree
     options:
       heading_level: 2

@@ -19,7 +19,7 @@ Notice that even though the content is scrolled, the sidebar remains fixed.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/dock_layout1_sidebar.py" press="pagedown,down,down"}
+    ```{.anytext path="docs/examples/guide/layout/dock_layout1_sidebar.py" press="pagedown,down,down"}
     ```
 
 === "dock_layout1_sidebar.py"
@@ -41,7 +41,7 @@ The labels will remain in that position (docked) even if the container they are 
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/dock_all.py"}
+    ```{.anytext path="docs/examples/styles/dock_all.py"}
     ```
 
 === "dock_all.py"

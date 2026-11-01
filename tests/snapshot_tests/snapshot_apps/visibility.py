@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import VerticalScroll
-from textual.widgets import Static
+from anytext.app import App
+from anytext.containers import VerticalScroll
+from anytext.widgets import Static
 
 
 class Visibility(App):

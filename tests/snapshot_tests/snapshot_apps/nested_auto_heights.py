@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Static
 
 
 class NestedAutoApp(App[None]):

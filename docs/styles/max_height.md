@@ -18,7 +18,7 @@ Then, we set `max-height` individually on each placeholder.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/max_height.py"}
+    ```{.anytext path="docs/examples/styles/max_height.py"}
     ```
 
 === "max_height.py"

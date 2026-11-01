@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import RichLog
+from anytext.app import App, ComposeResult
+from anytext.widgets import RichLog
 
 
 class RichLogApp(App):

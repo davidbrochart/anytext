@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import OptionList
-from textual.widgets.option_list import Option
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import OptionList
+from anytext.widgets.option_list import Option
 
 
 class OptionListApp(App[None]):

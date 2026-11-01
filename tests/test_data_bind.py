@@ -1,8 +1,8 @@
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.reactive import ReactiveError, reactive
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.reactive import ReactiveError, reactive
+from anytext.widgets import Label
 
 
 class FooLabel(Label):

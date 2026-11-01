@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import HorizontalScroll, VerticalScroll
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.containers import HorizontalScroll, VerticalScroll
+from anytext.widgets import Label
 
 
 class MyApp(App[None]):

@@ -1,3 +1,3 @@
-::: textual.events.Show
+::: anytext.events.Show
     options:
       heading_level: 1

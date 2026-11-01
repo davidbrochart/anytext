@@ -1,8 +1,8 @@
 import asyncio
 from time import time
 
-from textual.app import App
-from textual.pilot import Pilot
+from anytext.app import App
+from anytext.pilot import Pilot
 
 
 class RefreshApp(App[float]):

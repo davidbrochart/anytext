@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Tree
-from textual.widgets.tree import NodeID, TreeNode
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import Tree
+from anytext.widgets.tree import NodeID, TreeNode
 
 
 class TreeApp(App[None]):

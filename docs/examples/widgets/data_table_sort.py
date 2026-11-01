@@ -1,7 +1,7 @@
 from rich.text import Text
 
-from textual.app import App, ComposeResult
-from textual.widgets import DataTable, Footer
+from anytext.app import App, ComposeResult
+from anytext.widgets import DataTable, Footer
 
 ROWS = [
     ("lane", "swimmer", "country", "time 1", "time 2"),

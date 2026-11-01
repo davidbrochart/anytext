@@ -2,9 +2,9 @@ from itertools import product
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import TextArea
-from textual.widgets.text_area import Selection
+from anytext.app import App, ComposeResult
+from anytext.widgets import TextArea
+from anytext.widgets.text_area import Selection
 
 TEST_TEXT = "\n".join(f"01234567890 - {n}" for n in range(10))
 TEST_SELECTED_TEXT = "567890 - 0\n01234567890 - 1\n01234"

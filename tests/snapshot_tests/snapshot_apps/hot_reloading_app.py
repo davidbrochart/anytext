@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from textual.app import App, ComposeResult
-from textual.containers import Container
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Container
+from anytext.widgets import Label
 
 
 CSS_PATH = (Path(__file__) / "../hot_reloading_app.tcss").resolve()

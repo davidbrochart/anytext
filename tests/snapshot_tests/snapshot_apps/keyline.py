@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Static
-from textual.containers import Horizontal, Vertical, Grid
+from anytext.app import App, ComposeResult
+from anytext.widgets import Static
+from anytext.containers import Horizontal, Vertical, Grid
 
 
 class Box(Static):

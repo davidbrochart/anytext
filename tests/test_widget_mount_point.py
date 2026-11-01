@@ -1,6 +1,6 @@
 import pytest
 
-from textual.widget import MountError, Widget
+from anytext.widget import MountError, Widget
 
 
 class Content(Widget):

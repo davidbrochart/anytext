@@ -1,7 +1,7 @@
 """Test https://github.com/Textualize/textual/issues/2557"""
 
-from textual.app import App, ComposeResult
-from textual.widgets import Select, Button
+from anytext.app import App, ComposeResult
+from anytext.widgets import Select, Button
 
 
 class SelectRebuildApp(App[None]):

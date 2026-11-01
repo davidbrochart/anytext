@@ -1,7 +1,7 @@
-from textual import on
-from textual.app import App, ComposeResult
-from textual.validation import Function, Number, ValidationResult, Validator
-from textual.widgets import Input, Label, Pretty
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.validation import Function, Number, ValidationResult, Validator
+from anytext.widgets import Input, Label, Pretty
 
 
 class InputApp(App):

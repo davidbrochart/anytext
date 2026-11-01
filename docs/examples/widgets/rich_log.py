@@ -4,9 +4,9 @@ import io
 from rich.syntax import Syntax
 from rich.table import Table
 
-from textual import events
-from textual.app import App, ComposeResult
-from textual.widgets import RichLog
+from anytext import events
+from anytext.app import App, ComposeResult
+from anytext.widgets import RichLog
 
 CSV = """lane,swimmer,country,time
 4,Joseph Schooling,Singapore,50.39

@@ -3,21 +3,21 @@
 
 ## What is snapshot testing?
 
-Some tests that run for Textual are snapshot tests.
+Some tests that run for Anytext are snapshot tests.
 When you first run a snapshot test, a screenshot of an app is taken and saved to disk.
 Next time you run it, another screenshot is taken and compared with the original one.
 
 If the screenshots don't match, it means something has changed.
 It's up to you to tell the test system whether that change is expected or not.
 
-This allows us to easily catch regressions in how Textual outputs to the terminal.
+This allows us to easily catch regressions in how Anytext outputs to the terminal.
 
 Snapshot tests run alongside normal unit tests.
 
 ## How do I write a snapshot test?
 
 1. Inject the `snap_compare` fixture into your test.
-2. Pass in the path to the file which contains the Textual app.
+2. Pass in the path to the file which contains the Anytext app.
 
 ```python
 def test_grid_layout_basic_overflow(snap_compare):

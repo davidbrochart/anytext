@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.command import Hit, Hits, Provider
+from anytext.app import App
+from anytext.command import Hit, Hits, Provider
 
 
 class TestSource(Provider):

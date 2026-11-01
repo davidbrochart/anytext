@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.scroll_view import ScrollView
-from textual.strip import Strip
+from anytext.app import App, ComposeResult
+from anytext.scroll_view import ScrollView
+from anytext.strip import Strip
 from rich.segment import Segment
 
 

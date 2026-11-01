@@ -16,7 +16,7 @@ There were some interesting technical challenges in building Toolong that I'd li
 
 !!! note "Python is awesome"
 
-    This isn't specifically [Textual](https://github.com/textualize/textual/) related. These techniques could be employed in any Python project.
+    This isn't specifically [Anytext](https://github.com/textualize/textual/) related. These techniques could be employed in any Python project.
 
 These techniques aren't difficult, and shouldn't be beyond anyone with an intermediate understanding of Python.
 They are the kind of "if you know it you know it" knowledge that you may not need often, but can make a massive difference when you do!
@@ -130,15 +130,15 @@ See [watcher.py](https://github.com/Textualize/toolong/blob/main/src/toolong/wat
     Disappointingly, the Python docs aren't clear on this.
     Toolong will use a polling approach where this selector is unavailable.
 
-## Textual learnings
+## Anytext learnings
 
-This project was a chance for me to "dogfood" Textual.
-Other Textual devs have build some cool projects ([Trogon](https://github.com/Textualize/trogon) and [Frogmouth](https://github.com/Textualize/frogmouth)), but before Toolong I had only ever written example apps for docs.
+This project was a chance for me to "dogfood" Anytext.
+Other Anytext devs have build some cool projects ([Trogon](https://github.com/Textualize/trogon) and [Frogmouth](https://github.com/Textualize/frogmouth)), but before Toolong I had only ever written example apps for docs.
 
-I paid particular attention to Textual error messages when working on Toolong, and improved many of them in Textual.
-Much of what I improved were general programming errors, and not Textual errors per se.
-For instance, if you forget to call `super()` on a widget constructor, Textual used to give a fairly cryptic error.
-It's a fairly common gotcha, even for experience devs, but now Textual will detect that and tell you how to fix it.
+I paid particular attention to Anytext error messages when working on Toolong, and improved many of them in Anytext.
+Much of what I improved were general programming errors, and not Anytext errors per se.
+For instance, if you forget to call `super()` on a widget constructor, Anytext used to give a fairly cryptic error.
+It's a fairly common gotcha, even for experience devs, but now Anytext will detect that and tell you how to fix it.
 
 There's a lot of other improvements which I thought about when working on this app.
 Mostly quality of life features that will make implementing some features more intuitive.
@@ -146,4 +146,4 @@ Keep an eye out for those in the next few weeks.
 
 ## Found this interesting?
 
-If you would like to talk about this post or anything Textual related, join us on the [Discord server](https://discord.gg/Enf6Z3qhVr).
+If you would like to talk about this post or anything Anytext related, join us on the [Discord server](https://discord.gg/Enf6Z3qhVr).

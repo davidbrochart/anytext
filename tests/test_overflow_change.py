@@ -1,7 +1,7 @@
 """Regression test for #1616 https://github.com/Textualize/textual/issues/1616"""
 
-from textual.app import App
-from textual.containers import VerticalScroll
+from anytext.app import App
+from anytext.containers import VerticalScroll
 
 
 async def test_overflow_change_updates_virtual_size_appropriately():

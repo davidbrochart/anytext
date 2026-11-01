@@ -3,11 +3,11 @@ from __future__ import annotations
 import pytest
 from rich.text import Text
 
-from textual.color import Color
-from textual.content import Content, Span
-from textual.style import Style
-from textual.visual import RenderOptions
-from textual.widget import Widget
+from anytext.color import Color
+from anytext.content import Content, Span
+from anytext.style import Style
+from anytext.visual import RenderOptions
+from anytext.widget import Widget
 
 
 def test_blank():

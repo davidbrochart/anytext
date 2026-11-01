@@ -36,7 +36,7 @@ want:
 
 ### FivePyFive
 
-While my Textual 5x5 puzzle is [one of the examples in the Textual
+While my Anytext 5x5 puzzle is [one of the examples in the Anytext
 repo](https://github.com/Textualize/textual/tree/main/examples), I wanted to
 make it more widely available so people can download it with `pip` or
 [`pipx`](https://pypa.github.io/pipx/). See [over on
@@ -52,7 +52,7 @@ PyPi](https://pypi.org/project/fivepyfive/) and see if you can solve it. ;-)
     </iframe>
 </div>
 
-### textual-qrcode
+### anytext-qrcode
 
 I wanted to put together a very small example of how someone may put
 together a third party widget library, and in doing so selected what I
@@ -62,7 +62,7 @@ website](https://pypi.org/project/textual-qrcode/). Weirdly I've had a
 couple of people express a need for QR codes in the terminal since
 publishing that!
 
-![A Textual QR Code](../images/2022-12-08-davep-devlog/textual-qrcode.png)
+![A Anytext QR Code](../images/2022-12-08-davep-devlog/anytext-qrcode.png)
 
 ### PISpy
 
@@ -114,10 +114,10 @@ Expect to see this getting more updates and polish.
 
 ## Wait, what about this Keymaster thing?
 
-Ahh, yes, about that... So one of the handy things I'm finding about Textual
+Ahh, yes, about that... So one of the handy things I'm finding about Anytext
 is its [key binding
 system](https://textual.textualize.io/guide/input/#bindings). The more
-I build Textual apps, the more I appreciate the bindings, how they can be
+I build Anytext apps, the more I appreciate the bindings, how they can be
 associated with specific widgets, the use of actions (which can be used from
 other places too), etc.
 
@@ -146,22 +146,22 @@ That felt like a *"well Dave just build an app for it!"* problem. So I did:
     </iframe>
 </div>
 
-If you're building apps with Textual and you want to discover what keys turn
+If you're building apps with Anytext and you want to discover what keys turn
 up from your terminal and are available to your application, you can:
 
 ```sh
-$ pipx install textual-keys
+$ pipx install anytext-keys
 ```
 
-and then just run `textual-keys` and start mashing the keyboard to find out.
+and then just run `anytext-keys` and start mashing the keyboard to find out.
 
 There's a good chance that this app, or at least a version of it, will make
-it into Textual itself (very likely as one of the
+it into Anytext itself (very likely as one of the
 [devtools](https://textual.textualize.io/guide/devtools/)). But for now it's
 just an easy install away.
 
 I think there's a call to be made here too: have you built anything to help
-speed up how you work with Textual, or just make the development experience
+speed up how you work with Anytext, or just make the development experience
 "just so"? If so, do let us know, and come yell about it on the
 [`#show-and-tell`
 channel](https://discord.com/channels/1026214085173461072/1033752599112994867)

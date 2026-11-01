@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import Horizontal, VerticalScroll
-from textual.widgets import Static
+from anytext.app import App
+from anytext.containers import Horizontal, VerticalScroll
+from anytext.widgets import Static
 
 TEXT = """I must not fear.
 Fear is the mind-killer.

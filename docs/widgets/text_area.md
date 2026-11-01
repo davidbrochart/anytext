@@ -17,7 +17,7 @@ and a variety of keybindings.
 
 By default, the `TextArea` widget is a standard multi-line input box with soft-wrapping enabled.
 
-If you're interested in editing code, you may wish to use the [`TextArea.code_editor`][textual.widgets._text_area.TextArea.code_editor] convenience constructor.
+If you're interested in editing code, you may wish to use the [`TextArea.code_editor`][anytext.widgets._text_area.TextArea.code_editor] convenience constructor.
 This is a method which, by default, returns a new `TextArea` with soft-wrapping disabled, line numbers enabled, and the tab key behavior configured to insert `\t`.
 
 ### Syntax highlighting dependencies
@@ -27,18 +27,18 @@ To enable syntax highlighting, you'll need to install the `syntax` extra depende
 === "pip"
 
     ```
-    pip install "textual[syntax]"
+    pip install "anytext[syntax]"
     ```
 
 === "poetry"
 
     ```
-    poetry add "textual[syntax]"
+    poetry add "anytext[syntax]"
     ```
 
 This will install `tree-sitter` and `tree-sitter-languages`.
 These packages are distributed as binary wheels, so it may limit your applications ability to run in environments where these wheels are not available.
-After installing, you can set the [`language`][textual.widgets._text_area.TextArea.language] reactive attribute on the `TextArea` to enable highlighting.
+After installing, you can set the [`language`][anytext.widgets._text_area.TextArea.language] reactive attribute on the `TextArea` to enable highlighting.
 
 ### Loading text
 
@@ -46,7 +46,7 @@ In this example we load some initial text into the `TextArea`, and set the langu
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/text_area_example.py" columns="42" lines="8"}
+    ```{.anytext path="docs/examples/widgets/text_area_example.py" columns="42" lines="8"}
     ```
 
 === "text_area_example.py"
@@ -55,9 +55,9 @@ In this example we load some initial text into the `TextArea`, and set the langu
     --8<-- "docs/examples/widgets/text_area_example.py"
     ```
 
-To update the content programmatically, set the [`text`][textual.widgets._text_area.TextArea.text] property to a string value.
+To update the content programmatically, set the [`text`][anytext.widgets._text_area.TextArea.text] property to a string value.
 
-To update the parser used for syntax highlighting, set the [`language`][textual.widgets._text_area.TextArea.language] reactive attribute:
+To update the parser used for syntax highlighting, set the [`language`][anytext.widgets._text_area.TextArea.language] reactive attribute:
 
 ```python
 # Set the language to Markdown
@@ -71,18 +71,18 @@ text_area.language = "markdown"
 
 There are a number of ways to retrieve content from the `TextArea`:
 
-- The [`TextArea.text`][textual.widgets._text_area.TextArea.text] property returns all content in the text area as a string.
-- The [`TextArea.selected_text`][textual.widgets._text_area.TextArea.selected_text] property returns the text corresponding to the current selection.
-- The [`TextArea.get_text_range`][textual.widgets._text_area.TextArea.get_text_range] method returns the text between two locations.
+- The [`TextArea.text`][anytext.widgets._text_area.TextArea.text] property returns all content in the text area as a string.
+- The [`TextArea.selected_text`][anytext.widgets._text_area.TextArea.selected_text] property returns the text corresponding to the current selection.
+- The [`TextArea.get_text_range`][anytext.widgets._text_area.TextArea.get_text_range] method returns the text between two locations.
 
 In all cases, when multiple lines of text are retrieved, the [document line separator](#line-separators) will be used.
 
 ### Editing content inside `TextArea`
 
-The content of the `TextArea` can be updated using the [`replace`][textual.widgets._text_area.TextArea.replace] method.
+The content of the `TextArea` can be updated using the [`replace`][anytext.widgets._text_area.TextArea.replace] method.
 This method is the programmatic equivalent of selecting some text and then pasting.
 
-Some other convenient methods are available, such as [`insert`][textual.widgets._text_area.TextArea.insert], [`delete`][textual.widgets._text_area.TextArea.delete], and [`clear`][textual.widgets._text_area.TextArea.clear].
+Some other convenient methods are available, such as [`insert`][anytext.widgets._text_area.TextArea.insert], [`delete`][anytext.widgets._text_area.TextArea.delete], and [`clear`][anytext.widgets._text_area.TextArea.clear].
 
 !!! tip
     The `TextArea.document.end` property returns the location at the end of the
@@ -92,7 +92,7 @@ Some other convenient methods are available, such as [`insert`][textual.widgets.
 
 #### Moving the cursor
 
-The cursor location is available via the [`cursor_location`][textual.widgets._text_area.TextArea.cursor_location] property, which represents
+The cursor location is available via the [`cursor_location`][anytext.widgets._text_area.TextArea.cursor_location] property, which represents
 the location of the cursor as a tuple `(row_index, column_index)`. These indices are zero-based and represent the position of the cursor in the content.
 Writing a new value to `cursor_location` will immediately update the location of the cursor.
 
@@ -114,7 +114,7 @@ Let's select the first two lines of text in a document by adding `text_area.sele
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/text_area_selection.py" columns="42" lines="8"}
+    ```{.anytext path="docs/examples/widgets/text_area_selection.py" columns="42" lines="8"}
     ```
 
 === "text_area_selection.py"
@@ -140,16 +140,16 @@ There are a number of additional utility methods available for interacting with 
 
 Many properties exist on `TextArea` which give information about the current cursor location.
 These properties begin with `cursor_at_`, and return booleans.
-For example, [`cursor_at_start_of_line`][textual.widgets._text_area.TextArea.cursor_at_start_of_line] tells us if the cursor is at a start of line.
+For example, [`cursor_at_start_of_line`][anytext.widgets._text_area.TextArea.cursor_at_start_of_line] tells us if the cursor is at a start of line.
 
 We can also check the location the cursor _would_ arrive at if we were to move it.
-For example, [`get_cursor_right_location`][textual.widgets._text_area.TextArea.get_cursor_right_location] returns the location
+For example, [`get_cursor_right_location`][anytext.widgets._text_area.TextArea.get_cursor_right_location] returns the location
 the cursor would move to if it were to move right.
 A number of similar methods exist, with names like `get_cursor_*_location`.
 
 ##### Cursor movement methods
 
-The [`move_cursor`][textual.widgets._text_area.TextArea.move_cursor] method allows you to move the cursor to a new location while selecting
+The [`move_cursor`][anytext.widgets._text_area.TextArea.move_cursor] method allows you to move the cursor to a new location while selecting
 text, or move the cursor and scroll to keep it centered.
 
 ```python
@@ -158,15 +158,15 @@ text, or move the cursor and scroll to keep it centered.
 text_area.move_cursor((4, 8), select=True)
 ```
 
-The [`move_cursor_relative`][textual.widgets._text_area.TextArea.move_cursor_relative] method offers a very similar interface, but moves the cursor relative
+The [`move_cursor_relative`][anytext.widgets._text_area.TextArea.move_cursor_relative] method offers a very similar interface, but moves the cursor relative
 to its current location.
 
 ##### Common selections
 
 There are some methods available which make common selections easier:
 
-- [`select_line`][textual.widgets._text_area.TextArea.select_line] selects a line by index. Bound to ++f6++ by default.
-- [`select_all`][textual.widgets._text_area.TextArea.select_all] selects all text. Bound to ++f7++ by default.
+- [`select_line`][anytext.widgets._text_area.TextArea.select_line] selects a line by index. Bound to ++f6++ by default.
+- [`select_all`][anytext.widgets._text_area.TextArea.select_all] selects all text. Bound to ++f7++ by default.
 
 ### Themes
 
@@ -178,10 +178,10 @@ the cursor, selection, gutter, and more.
 #### Default theme
 
 The default `TextArea` theme is called `css`, which takes its values entirely from CSS.
-This means that the default appearance of the widget fits nicely into a standard Textual application,
+This means that the default appearance of the widget fits nicely into a standard Anytext application,
 and looks right on both dark and light mode.
 
-When using the `css` theme, you can make use of [component classes][textual.widgets.TextArea.COMPONENT_CLASSES] to style elements of the `TextArea`.
+When using the `css` theme, you can make use of [component classes][anytext.widgets.TextArea.COMPONENT_CLASSES] to style elements of the `TextArea`.
 For example, the CSS code `TextArea .text-area--cursor { background: green; }` will make the cursor `green`.
 
 More complex applications such as code editors may want to use pre-defined themes such as `monokai`.
@@ -197,7 +197,7 @@ The initial theme of the `TextArea` is determined by the `theme` parameter.
 yield TextArea.code_editor("print(123)", language="python", theme="dracula")
 ```
 
-You can check which themes are available using the [`available_themes`][textual.widgets._text_area.TextArea.available_themes] property.
+You can check which themes are available using the [`available_themes`][anytext.widgets._text_area.TextArea.available_themes] property.
 
 ```python
 >>> text_area = TextArea()
@@ -205,7 +205,7 @@ You can check which themes are available using the [`available_themes`][textual.
 {'css', 'dracula', 'github_light', 'monokai', 'vscode_dark'}
 ```
 
-After creating a `TextArea`, you can change the theme by setting the [`theme`][textual.widgets._text_area.TextArea.theme]
+After creating a `TextArea`, you can change the theme by setting the [`theme`][anytext.widgets._text_area.TextArea.theme]
 attribute to one of the available themes.
 
 ```python
@@ -219,12 +219,12 @@ On setting this attribute the `TextArea` will immediately refresh to display the
 !!! note
 
     Custom themes are only relevant for people who are looking to customize syntax highlighting.
-    If you're only editing plain text, and wish to recolor aspects of the `TextArea`, you should use the [provided component classes][textual.widgets.TextArea.COMPONENT_CLASSES].
+    If you're only editing plain text, and wish to recolor aspects of the `TextArea`, you should use the [provided component classes][anytext.widgets.TextArea.COMPONENT_CLASSES].
 
 Using custom (non-builtin) themes is a two-step process:
 
-1. Create an instance of [`TextAreaTheme`][textual.widgets.text_area.TextAreaTheme].
-2. Register it using [`TextArea.register_theme`][textual.widgets._text_area.TextArea.register_theme].
+1. Create an instance of [`TextAreaTheme`][anytext.widgets.text_area.TextAreaTheme].
+2. Register it using [`TextArea.register_theme`][anytext.widgets._text_area.TextArea.register_theme].
 
 ##### 1. Creating a theme
 
@@ -233,7 +233,7 @@ Our theme will also syntax highlight strings as <span style="background-color: r
 
 ```python
 from rich.style import Style
-from textual.widgets.text_area import TextAreaTheme
+from anytext.widgets.text_area import TextAreaTheme
 # ...
 my_theme = TextAreaTheme(
     # This name will be used to refer to the theme...
@@ -258,10 +258,10 @@ The `syntax_styles` attribute of `TextAreaTheme` is used for syntax highlighting
 depends on the `language` currently in use.
 For more details, see [syntax highlighting](#syntax-highlighting).
 
-If you wish to build on an existing theme, you can obtain a reference to it using the [`TextAreaTheme.get_builtin_theme`][textual.widgets.text_area.TextAreaTheme.get_builtin_theme] classmethod:
+If you wish to build on an existing theme, you can obtain a reference to it using the [`TextAreaTheme.get_builtin_theme`][anytext.widgets.text_area.TextAreaTheme.get_builtin_theme] classmethod:
 
 ```python
-from textual.widgets.text_area import TextAreaTheme
+from anytext.widgets.text_area import TextAreaTheme
 
 monokai = TextAreaTheme.get_builtin_theme("monokai")
 ```
@@ -289,13 +289,13 @@ text_area.theme = "my_cool_theme"
 
 This immediately updates the appearance of the `TextArea`:
 
-```{.textual path="docs/examples/widgets/text_area_custom_theme.py" columns="42" lines="8"}
+```{.anytext path="docs/examples/widgets/text_area_custom_theme.py" columns="42" lines="8"}
 ```
 
 ### Tab and Escape behavior
 
 Pressing the ++tab++ key will shift focus to the next widget in your application by default.
-This matches how other widgets work in Textual.
+This matches how other widgets work in Anytext.
 
 To have ++tab++ insert a `\t` character, set the `tab_behavior` attribute to the string value `"indent"`.
 While in this mode, you can shift focus by pressing the ++escape++ key.
@@ -313,7 +313,7 @@ By default, `undo` is bound to <kbd>Ctrl</kbd>+<kbd>Z</kbd> and `redo` to <kbd>C
 
 The `TextArea` uses a heuristic to place _checkpoints_ after certain types of edit.
 When you call `undo`, all of the edits between now and the most recent checkpoint are reverted.
-You can manually add a checkpoint by calling the [`TextArea.history.checkpoint()`][textual.widgets.text_area.EditHistory.checkpoint] instance method.
+You can manually add a checkpoint by calling the [`TextArea.history.checkpoint()`][anytext.widgets.text_area.EditHistory.checkpoint] instance method.
 
 The undo and redo history uses a stack-based system, where a single item on the stack represents a single checkpoint.
 In memory-constrained environments, you may wish to reduce the maximum number of checkpoints that can exist.
@@ -378,7 +378,7 @@ It then moves the cursor so that it lands between the open and closing parenthes
 
 Typing "`def hello(`" into the `TextArea` now results in the bracket automatically being closed:
 
-```{.textual path="docs/examples/widgets/text_area_extended.py" columns="36" lines="4" press="d,e,f,space,h,e,l,l,o,left_parenthesis"}
+```{.anytext path="docs/examples/widgets/text_area_extended.py" columns="36" lines="4" press="d,e,f,space,h,e,l,l,o,left_parenthesis"}
 ```
 
 ### Advanced concepts
@@ -423,7 +423,7 @@ TextAreaTheme(
 ```
 
 To understand which names can be mapped inside `syntax_styles`, we recommend looking at the existing
-themes and highlighting queries (`.scm` files) in the Textual repository.
+themes and highlighting queries (`.scm` files) in the Anytext repository.
 
 !!! tip
 
@@ -433,7 +433,7 @@ themes and highlighting queries (`.scm` files) in the Textual repository.
 
 #### Adding support for custom languages
 
-To add support for a language to a `TextArea`, use the [`register_language`][textual.widgets._text_area.TextArea.register_language] method.
+To add support for a language to a `TextArea`, use the [`register_language`][anytext.widgets._text_area.TextArea.register_language] method.
 
 To register a language, we require two things:
 
@@ -477,7 +477,7 @@ We now have our `Language` and our highlight query, so we can register Java as a
 Running our app, we can see that the Java code is highlighted.
 We can freely edit the text, and the syntax highlighting will update immediately.
 
-```{.textual path="docs/examples/widgets/text_area_custom_language.py" columns="52" lines="8"}
+```{.anytext path="docs/examples/widgets/text_area_custom_language.py" columns="52" lines="8"}
 ```
 
 Recall that we map names (like `@heading`) from the tree-sitter highlight query to Rich style objects inside the `TextAreaTheme.syntax_styles` dictionary.
@@ -495,8 +495,8 @@ If you notice some highlights are missing after registering a language, the issu
 
 If you're building functionality on top of `TextArea`, it may be useful to inspect the `navigator` and `wrapped_document` attributes.
 
-- `navigator` is a [`DocumentNavigator`][textual.widgets.text_area.DocumentNavigator] instance which can give us general information about the cursor's location within a document, as well as where the cursor will move to when certain actions are performed.
-- `wrapped_document` is a [`WrappedDocument`][textual.widgets.text_area.WrappedDocument] instance which can be used to convert document locations to visual locations, taking wrapping into account. It also offers a variety of other convenience methods and properties.
+- `navigator` is a [`DocumentNavigator`][anytext.widgets.text_area.DocumentNavigator] instance which can give us general information about the cursor's location within a document, as well as where the cursor will move to when certain actions are performed.
+- `wrapped_document` is a [`WrappedDocument`][anytext.widgets.text_area.WrappedDocument] instance which can be used to convert document locations to visual locations, taking wrapping into account. It also offers a variety of other convenience methods and properties.
 
 A detailed view of these classes is out of scope, but do note that a lot of the functionality of `TextArea` exists within them, so inspecting them could be worthwhile.
 
@@ -517,14 +517,14 @@ A detailed view of these classes is out of scope, but do note that a lot of the 
 
 ## Messages
 
-- [TextArea.Changed][textual.widgets._text_area.TextArea.Changed]
-- [TextArea.SelectionChanged][textual.widgets._text_area.TextArea.SelectionChanged]
+- [TextArea.Changed][anytext.widgets._text_area.TextArea.Changed]
+- [TextArea.SelectionChanged][anytext.widgets._text_area.TextArea.SelectionChanged]
 
 ## Bindings
 
 The `TextArea` widget defines the following bindings:
 
-::: textual.widgets._text_area.TextArea.BINDINGS
+::: anytext.widgets._text_area.TextArea.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -534,18 +534,18 @@ The `TextArea` widget defines the following bindings:
 The `TextArea` defines component classes that can style various aspects of the widget.
 Styles from the `theme` attribute take priority.
 
-::: textual.widgets.TextArea.COMPONENT_CLASSES
+::: anytext.widgets.TextArea.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
 
 ## See also
 
-- [`Input`][textual.widgets.Input] - single-line text input widget
-- [`TextAreaTheme`][textual.widgets.text_area.TextAreaTheme] - theming the `TextArea`
-- [`DocumentNavigator`][textual.widgets.text_area.DocumentNavigator] - guides cursor movement 
-- [`WrappedDocument`][textual.widgets.text_area.WrappedDocument] - manages wrapping the document 
-- [`EditHistory`][textual.widgets.text_area.EditHistory] - manages the undo stack
+- [`Input`][anytext.widgets.Input] - single-line text input widget
+- [`TextAreaTheme`][anytext.widgets.text_area.TextAreaTheme] - theming the `TextArea`
+- [`DocumentNavigator`][anytext.widgets.text_area.DocumentNavigator] - guides cursor movement
+- [`WrappedDocument`][anytext.widgets.text_area.WrappedDocument] - manages wrapping the document
+- [`EditHistory`][anytext.widgets.text_area.EditHistory] - manages the undo stack
 - The tree-sitter documentation [website](https://tree-sitter.github.io/tree-sitter/).
 - The tree-sitter Python bindings [repository](https://github.com/tree-sitter/py-tree-sitter).
 - `py-tree-sitter-languages` [repository](https://github.com/grantjenks/py-tree-sitter-languages) (provides binary wheels for a large variety of tree-sitter languages).
@@ -556,12 +556,12 @@ Styles from the `theme` attribute take priority.
 
 ---
 
-::: textual.widgets._text_area.TextArea
+::: anytext.widgets._text_area.TextArea
     options:
       heading_level: 2
 
 ---
 
-::: textual.widgets.text_area
+::: anytext.widgets.text_area
     options:
       heading_level: 2

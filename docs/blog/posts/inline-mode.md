@@ -9,7 +9,7 @@ authors:
 
 # Behind the Curtain of Inline Terminal Applications
 
-Textual recently added the ability to run *inline* terminal apps.
+Anytext recently added the ability to run *inline* terminal apps.
 You can see this in action if you run the [calculator example](https://github.com/Textualize/textual/blob/main/examples/calculator.py):
 
 ![Inline Calculator](../images/calcinline.png)
@@ -29,8 +29,8 @@ Here's another app that creates an inline code editor:
 
 === "inline.py"
     ```python 
-    from textual.app import App, ComposeResult
-    from textual.widgets import TextArea
+    from anytext.app import App, ComposeResult
+    from anytext.widgets import TextArea
 
 
     class InlineApp(App):
@@ -81,9 +81,9 @@ Rather than a final newline, we write an escape code that moves the *cursor* bac
 The cursor is where text will be written.
 It's the same cursor you see as you type.
 Normally it will be at the end of the text in the terminal, but it can be moved around terminal with escape codes.
-It can be made invisible (as in Textual apps), but the terminal will keep track of the cursor, even if it can not be seen.
+It can be made invisible (as in Anytext apps), but the terminal will keep track of the cursor, even if it can not be seen.
 
-Textual moves the cursor back to its original starting position so that subsequent frames will overwrite the previous frame.
+Anytext moves the cursor back to its original starting position so that subsequent frames will overwrite the previous frame.
 
 Here's a diagram that shows how the cursor is positioned:
 
@@ -121,7 +121,7 @@ This only really impacts text entry (such as the [Input](https://textual.textual
 
 ## Mouse control
 
-Inline apps in Textual support mouse input, which works the same as fullscreen apps.
+Inline apps in Anytext support mouse input, which works the same as fullscreen apps.
 
 To use the mouse in the terminal you send an escape code which tells the terminal to write encoded mouse coordinates to standard input.
 The mouse coordinates can then be parsed in much the same was as reading keys.
@@ -140,7 +140,7 @@ We can then subtract that coordinate from the physical mouse coordinates, so we 
 
 ## Found this interesting?
 
-If you are interested in Textual, join our [Discord server](https://discord.gg/Enf6Z3qhVr).
+If you are interested in Anytext, join our [Discord server](https://discord.gg/Enf6Z3qhVr).
 
 Or follow me for more terminal shenanigans.
 

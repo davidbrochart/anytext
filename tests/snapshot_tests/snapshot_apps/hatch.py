@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Label
-from textual.containers import Container
+from anytext.app import App, ComposeResult
+from anytext.widgets import Label
+from anytext.containers import Container
 
 
 class HatchApp(App):

@@ -10,8 +10,8 @@ When creating your `App` class, override `__init__` as you would when
 inheriting normally. For example:
 
 ```python
-from textual.app import App, ComposeResult
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.widgets import Static
 
 class Greetings(App[None]):
 

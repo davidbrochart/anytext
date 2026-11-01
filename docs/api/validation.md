@@ -1,6 +1,6 @@
 ---
-title: "textual.validation"
+title: "anytext.validation"
 ---
 
 
-::: textual.validation
+::: anytext.validation

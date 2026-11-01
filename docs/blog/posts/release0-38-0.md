@@ -3,12 +3,12 @@ draft: false
 date: 2023-09-21
 categories:
   - Release
-title: "Textual 0.38.0 adds a syntax aware TextArea"
+title: "Anytext 0.38.0 adds a syntax aware TextArea"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.38.0 adds a syntax aware TextArea
+# Anytext 0.38.0 adds a syntax aware TextArea
 
 This is the second big feature release this month after last week's [command palette](./release0.37.0.md).
 
@@ -16,17 +16,17 @@ This is the second big feature release this month after last week's [command pal
 
 The [TextArea](../../widgets/text_area.md) has finally landed.
 I know a lot of folk have been waiting for this one.
-Textual's TextArea is a fully-featured widget for editing code, with syntax highlighting and line numbers.
+Anytext's TextArea is a fully-featured widget for editing code, with syntax highlighting and line numbers.
 It is highly configurable, and looks great.
 
 Darren Burns (the author of this widget) has penned a terrific write-up on the TextArea.
-See [Things I learned while building Textual's TextArea](./text-area-learnings.md) for some of the challenges he faced.
+See [Things I learned while building Anytext's TextArea](./text-area-learnings.md) for some of the challenges he faced.
 
 
 ## Scoped CSS
 
 Another notable feature added in 0.38.0 is *scoped* CSS.
-A common gotcha in building Textual widgets is that you could write CSS that impacted styles outside of that widget.
+A common gotcha in building Anytext widgets is that you could write CSS that impacted styles outside of that widget.
 
 Consider the following widget:
 
@@ -79,7 +79,7 @@ MyWidget:dark Label {
 
 ## Testing guide
 
-Not strictly part of the release, but we've added a [guide on testing](/guide/testing) Textual apps.
+Not strictly part of the release, but we've added a [guide on testing](/guide/testing) Anytext apps.
 
 As you may know, we are on a mission to make TUIs a serious proposition for critical apps, which makes testing essential.
 We've extracted and documented our internal testing tools, including our snapshot tests pytest plugin [pytest-textual-snapshot](https://pypi.org/project/pytest-textual-snapshot/).
@@ -99,9 +99,9 @@ One feature I am particularly excited by is a widget to generate plots by wrappi
 Check out some early work on this feature:
 
 <div class="video-wrapper">
-<iframe width="1163" height="1005" src="https://www.youtube.com/embed/A3uKzWErC8o" title="Preview of Textual Plot widget" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="1163" height="1005" src="https://www.youtube.com/embed/A3uKzWErC8o" title="Preview of Anytext Plot widget" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
 ## Join us
 
-Join our [Discord server](https://discord.gg/Enf6Z3qhVr) if you want to discuss Textual with the Textualize devs, or the community.
+Join our [Discord server](https://discord.gg/Enf6Z3qhVr) if you want to discuss Anytext with the Textualize devs, or the community.

@@ -1,5 +1,5 @@
 ---
-title: "textual.color"
+title: "anytext.color"
 ---
 
-::: textual.color
+::: anytext.color

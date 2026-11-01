@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import Container, Grid
-from textual.widgets import Placeholder
+from anytext.app import App
+from anytext.containers import Container, Grid
+from anytext.widgets import Placeholder
 
 
 class MarginAllApp(App):

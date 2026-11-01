@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.command import Hit, Hits, Provider
-from textual.screen import Screen
-from textual.widget import Widget
-from textual.widgets import Input
+from anytext.app import App, ComposeResult
+from anytext.command import Hit, Hits, Provider
+from anytext.screen import Screen
+from anytext.widget import Widget
+from anytext.widgets import Input
 
 
 class SimpleSource(Provider):

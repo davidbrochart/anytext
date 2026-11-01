@@ -3,12 +3,12 @@ from decimal import Decimal
 import pytest
 from rich.style import Style
 
-from textual.color import Color
-from textual.css.errors import StyleValueError
-from textual.css.scalar import Scalar, Unit
-from textual.css.styles import RenderStyles, Styles
-from textual.dom import DOMNode
-from textual.widget import Widget
+from anytext.color import Color
+from anytext.css.errors import StyleValueError
+from anytext.css.scalar import Scalar, Unit
+from anytext.css.styles import RenderStyles, Styles
+from anytext.dom import DOMNode
+from anytext.widget import Widget
 
 
 def test_styles_reset():

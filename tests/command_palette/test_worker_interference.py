@@ -2,9 +2,9 @@
 
 from asyncio import sleep
 
-from textual import work
-from textual.app import App
-from textual.command import Hit, Hits, Provider
+from anytext import work
+from anytext.app import App
+from anytext.command import Hit, Hits, Provider
 
 
 class SimpleSource(Provider):

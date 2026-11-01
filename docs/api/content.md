@@ -1,5 +1,5 @@
 ---
-title: "textual.content"
+title: "anytext.content"
 ---
 
-::: textual.content
+::: anytext.content

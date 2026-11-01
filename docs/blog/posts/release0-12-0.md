@@ -3,23 +3,23 @@ draft: false
 date: 2023-02-24
 categories:
   - Release
-title: "Textual 0.12.0 adds syntactical sugar and batch updates"
+title: "Anytext 0.12.0 adds syntactical sugar and batch updates"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.12.0 adds syntactical sugar and batch updates
+# Anytext 0.12.0 adds syntactical sugar and batch updates
 
-It's been just 9 days since the previous release, but we have a few interesting enhancements to the Textual API to talk about.
+It's been just 9 days since the previous release, but we have a few interesting enhancements to the Anytext API to talk about.
 
 <!-- more -->
 
 ## Better compose
 
-We've added a little *syntactical sugar* to Textual's `compose` methods, which aids both
+We've added a little *syntactical sugar* to Anytext's `compose` methods, which aids both
 readability and *editability* (that might not be a word).
 
-First, let's look at the old way of building compose methods. This snippet is taken from the `textual colors` command.
+First, let's look at the old way of building compose methods. This snippet is taken from the `anytext colors` command.
 
 
 ```python
@@ -47,7 +47,7 @@ This code *composes* the following color swatches:
 
 !!! tip
 
-    You can see this by running `textual colors` from the command line.
+    You can see this by running `anytext colors` from the command line.
 
 
 The old way was not all that bad, but it did make it hard to see the structure of your app at-a-glance, and editing compose methods always felt a little laborious.
@@ -72,9 +72,9 @@ You can still construct widgets and containers with positional arguments, but th
 
 ## Batch updates
 
-Textual is smart about performing updates to the screen. When you make a change that might *repaint* the screen, those changes don't happen immediately. Textual makes a note of them, and repaints the screen a short time later (around a 1/60th of a second). Multiple updates are combined so that Textual does less work overall, and there is none of the flicker you might get with multiple repaints.
+Anytext is smart about performing updates to the screen. When you make a change that might *repaint* the screen, those changes don't happen immediately. Anytext makes a note of them, and repaints the screen a short time later (around a 1/60th of a second). Multiple updates are combined so that Anytext does less work overall, and there is none of the flicker you might get with multiple repaints.
 
-Although this works very well, it is possible to introduce a little flicker if you make changes across multiple widgets. And especially if you add or remove many widgets at once. To combat this we have added a [batch_update][textual.app.App.batch_update] context manager which tells Textual to disable screen updates until the end of the with block.
+Although this works very well, it is possible to introduce a little flicker if you make changes across multiple widgets. And especially if you add or remove many widgets at once. To combat this we have added a [batch_update][anytext.app.App.batch_update] context manager which tells Anytext to disable screen updates until the end of the with block.
 
 The new [Markdown](./release0-11-0.md) widget uses this context manager when it updates its content. Here's the code:
 

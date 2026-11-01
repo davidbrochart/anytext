@@ -1,7 +1,7 @@
 from typing import Iterable
 
-from textual.app import App, SystemCommand
-from textual.screen import Screen
+from anytext.app import App, SystemCommand
+from anytext.screen import Screen
 
 
 class BellCommandApp(App):

@@ -1,6 +1,6 @@
 ---
-title: "textual.suggester"
+title: "anytext.suggester"
 ---
 
 
-::: textual.suggester
+::: anytext.suggester

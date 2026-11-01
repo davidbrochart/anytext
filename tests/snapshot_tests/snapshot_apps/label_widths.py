@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.widgets import Label, Static
+from anytext.app import App
+from anytext.widgets import Label, Static
 from rich.panel import Panel
 
 
@@ -39,7 +39,7 @@ class LabelWrap(App):
         yield Label(Panel(self.data), id="p_data")
 
     def on_mount(self):
-        self.theme = "textual-light"
+        self.theme = "anytext-light"
 
 
 if __name__ == "__main__":

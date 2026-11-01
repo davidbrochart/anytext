@@ -1,6 +1,6 @@
 ---
-title: "textual.events"
+title: "anytext.events"
 ---
 
 
-::: textual.events
+::: anytext.events

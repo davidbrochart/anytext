@@ -7,9 +7,9 @@ except ImportError:
 
 from rich.json import JSON
 
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widgets import Input, Static
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Input, Static
 
 
 class DictionaryApp(App):

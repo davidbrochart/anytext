@@ -14,7 +14,7 @@ of multiple `ListItem`s. The arrow keys can be used to navigate the list.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/list_view.py"}
+    ```{.anytext path="docs/examples/widgets/list_view.py"}
     ```
 
 === "list_view.py"
@@ -44,6 +44,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.ListItem
+::: anytext.widgets.ListItem
     options:
       heading_level: 2

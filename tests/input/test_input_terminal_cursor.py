@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.geometry import Offset
-from textual.widgets import Input
+from anytext.app import App, ComposeResult
+from anytext.geometry import Offset
+from anytext.widgets import Input
 
 
 class InputApp(App):

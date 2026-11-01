@@ -4,15 +4,15 @@ We've used event handler methods in many of the examples in this guide. This cha
 
 ## Messages
 
-Events are a particular kind of *message* sent by Textual in response to input and other state changes. Events are reserved for use by Textual, but you can also create custom messages for the purpose of coordinating between widgets in your app.
+Events are a particular kind of *message* sent by Anytext in response to input and other state changes. Events are reserved for use by Anytext, but you can also create custom messages for the purpose of coordinating between widgets in your app.
 
 More on that later, but for now keep in mind that events are also messages, and anything that is true of messages is true of events.
 
 ## Message Queue
 
-Every [App][textual.app.App] and [Widget][textual.widget.Widget] object contains a *message queue*. You can think of a message queue as orders at a restaurant. The chef takes an order and makes the dish. Orders that arrive while the chef is cooking are placed in a line. When the chef has finished a dish they pick up the next order in the line.
+Every [App][anytext.app.App] and [Widget][anytext.widget.Widget] object contains a *message queue*. You can think of a message queue as orders at a restaurant. The chef takes an order and makes the dish. Orders that arrive while the chef is cooking are placed in a line. When the chef has finished a dish they pick up the next order in the line.
 
-Textual processes messages in the same way. Messages are picked off a queue and processed (cooked) by a handler method. This guarantees messages and events are processed even if your code can not handle them right away.
+Anytext processes messages in the same way. Messages are picked off a queue and processed (cooked) by a handler method. This guarantees messages and events are processed even if your code can not handle them right away.
 
 This processing of messages is done within an asyncio Task which is started when you mount the widget. The task monitors a queue for new messages and dispatches them to the appropriate handler when they arrive.
 
@@ -20,7 +20,7 @@ This processing of messages is done within an asyncio Task which is started when
 
     The FastAPI docs have an [excellent introduction](https://fastapi.tiangolo.com/async/) to Python async programming.
 
-By way of an example, let's consider what happens if you were to type "Text" into a `Input` widget. When you hit the ++t++ key, Textual creates a [key][textual.events.Key] event and sends it to the widget's message queue. Ditto for ++e++, ++x++, and ++t++.
+By way of an example, let's consider what happens if you were to type "Text" into a `Input` widget. When you hit the ++t++ key, Anytext creates a [key][anytext.events.Key] event and sends it to the widget's message queue. Ditto for ++e++, ++x++, and ++t++.
 
 The widget's task will pick the first message from the queue (a key event for the ++t++ key) and call the `on_key` method with the event as the first argument. In other words it will call `Input.on_key(event)`, which updates the display to show the new letter.
 
@@ -28,7 +28,7 @@ The widget's task will pick the first message from the queue (a key event for th
 --8<-- "docs/images/events/queue.excalidraw.svg"
 </div>
 
-When the `on_key` method returns, Textual will get the next event from the queue and repeat the process for the remaining keys. At some point the queue will be empty and the widget is said to be in an *idle* state.
+When the `on_key` method returns, Anytext will get the next event from the queue and repeat the process for the remaining keys. At some point the queue will be empty and the widget is said to be in an *idle* state.
 
 !!! note
 
@@ -41,17 +41,17 @@ When the `on_key` method returns, Textual will get the next event from the queue
 
 ## Default behaviors
 
-You may be familiar with Python's [super](https://docs.python.org/3/library/functions.html#super) function to call a function defined in a base class. You will not have to use this in event handlers as Textual will automatically call handler methods defined in a widget's base class(es).
+You may be familiar with Python's [super](https://docs.python.org/3/library/functions.html#super) function to call a function defined in a base class. You will not have to use this in event handlers as Anytext will automatically call handler methods defined in a widget's base class(es).
 
-For instance, let's say we are building the classic game of Pong and we have written a `Paddle` widget which extends [Static][textual.widgets.Static]. When a [Key][textual.events.Key] event arrives, Textual calls `Paddle.on_key` (to respond to ++up++ and ++down++ keys), then `Static.on_key`, and finally `Widget.on_key`.
+For instance, let's say we are building the classic game of Pong and we have written a `Paddle` widget which extends [Static][anytext.widgets.Static]. When a [Key][anytext.events.Key] event arrives, Anytext calls `Paddle.on_key` (to respond to ++up++ and ++down++ keys), then `Static.on_key`, and finally `Widget.on_key`.
 
 ### Preventing default behaviors
 
-If you don't want this behavior you can call [prevent_default()][textual.message.Message.prevent_default] on the event object. This tells Textual not to call any more handlers on base classes.
+If you don't want this behavior you can call [prevent_default()][anytext.message.Message.prevent_default] on the event object. This tells Anytext not to call any more handlers on base classes.
 
 !!! warning
 
-    You won't need `prevent_default` very often. Be sure to know what your base classes do before calling it, or you risk disabling some core features builtin to Textual.
+    You won't need `prevent_default` very often. Be sure to know what your base classes do before calling it, or you risk disabling some core features builtin to Anytext.
 
 ## Bubbling
 
@@ -63,7 +63,7 @@ The following diagram shows an (abbreviated) DOM for a UI with a container and t
 --8<-- "docs/images/events/bubble1.excalidraw.svg"
 </div>
 
-After Textual calls `Button.on_key` the event _bubbles_ to the button's parent and will call `Container.on_key` (if it exists).
+After Anytext calls `Button.on_key` the event _bubbles_ to the button's parent and will call `Container.on_key` (if it exists).
 
 <div class="excalidraw">
 --8<-- "docs/images/events/bubble2.excalidraw.svg"
@@ -79,11 +79,11 @@ The App class is always the root of the DOM, so there is nowhere for the event t
 
 ### Stopping bubbling
 
-Event handlers may stop this bubble behavior by calling the [stop()][textual.message.Message.stop] method on the event or message. You might want to do this if a widget has responded to the event in an authoritative way. For instance when a text input widget responds to a key event it stops the bubbling so that the key doesn't also invoke a key binding.
+Event handlers may stop this bubble behavior by calling the [stop()][anytext.message.Message.stop] method on the event or message. You might want to do this if a widget has responded to the event in an authoritative way. For instance when a text input widget responds to a key event it stops the bubbling so that the key doesn't also invoke a key binding.
 
 ## Custom messages
 
-You can create custom messages for your application that may be used in the same way as events (recall that events are simply messages reserved for use by Textual).
+You can create custom messages for your application that may be used in the same way as events (recall that events are simply messages reserved for use by Anytext).
 
 The most common reason to do this is if you are building a custom widget and you need to inform a parent widget about a state change.
 
@@ -96,11 +96,11 @@ Let's look at an example which defines a custom message. The following example c
     ```
 === "Output"
 
-    ```{.textual path="docs/examples/events/custom01.py"}
+    ```{.anytext path="docs/examples/events/custom01.py"}
     ```
 
 
-Note the custom message class which extends [Message][textual.message.Message]. The constructor stores a [color][textual.color.Color] object which handler methods will be able to inspect.
+Note the custom message class which extends [Message][anytext.message.Message]. The constructor stores a [color][anytext.color.Color] object which handler methods will be able to inspect.
 
 The message class is defined within the widget class itself. This is not strictly required but recommended, for these reasons:
 
@@ -109,15 +109,15 @@ The message class is defined within the widget class itself. This is not strictl
 
 ### Sending messages
 
-To send a message call the [post_message()][textual.message_pump.MessagePump.post_message] method. This will place a message on the widget's message queue and run any message handlers.
+To send a message call the [post_message()][anytext.message_pump.MessagePump.post_message] method. This will place a message on the widget's message queue and run any message handlers.
 
 It is common for widgets to send messages to themselves, and allow them to bubble. This is so a base class has an opportunity to handle the message. We do this in the example above, which means a subclass could add a `on_color_button_selected` if it wanted to handle the message itself.
 
 ## Preventing messages
 
-You can *temporarily* disable posting of messages of a particular type by calling [prevent][textual.message_pump.MessagePump.prevent], which returns a context manager (used with Python's `with` keyword). This is typically used when updating data in a child widget and you don't want to receive notifications that something has changed.
+You can *temporarily* disable posting of messages of a particular type by calling [prevent][anytext.message_pump.MessagePump.prevent], which returns a context manager (used with Python's `with` keyword). This is typically used when updating data in a child widget and you don't want to receive notifications that something has changed.
 
-The following example will play the terminal bell as you type. It does this by handling [Input.Changed][textual.widgets.Input.Changed] and calling [bell()][textual.app.App.bell]. There is a Clear button which sets the input's value to an empty string. This would normally also result in a `Input.Changed` event being sent (and the bell playing). Since we don't want the button to make a sound, the assignment to `value` is wrapped within a [prevent][textual.message_pump.MessagePump.prevent] context manager.
+The following example will play the terminal bell as you type. It does this by handling [Input.Changed][anytext.widgets.Input.Changed] and calling [bell()][anytext.app.App.bell]. There is a Clear button which sets the input's value to an empty string. This would normally also result in a `Input.Changed` event being sent (and the bell playing). Since we don't want the button to make a sound, the assignment to `value` is wrapped within a [prevent][anytext.message_pump.MessagePump.prevent] context manager.
 
 !!! tip
 
@@ -134,18 +134,18 @@ The following example will play the terminal bell as you type. It does this by h
 
 === "Output"
 
-    ```{.textual path="docs/examples/events/prevent.py"}
+    ```{.anytext path="docs/examples/events/prevent.py"}
     ```
 
 
 
 ## Message handlers
 
-Most of the logic in a Textual app will be written in message handlers. Let's explore handlers in more detail.
+Most of the logic in a Anytext app will be written in message handlers. Let's explore handlers in more detail.
 
 ### Handler naming
 
-Textual uses the following scheme to map messages classes on to a Python method.
+Anytext uses the following scheme to map messages classes on to a Python method.
 
 - Start with `"on_"`.
 - Add the message's namespace (if any) converted from CamelCase to snake_case plus an underscore `"_"`.
@@ -177,14 +177,14 @@ This allows you to have similarly named events, without clashing event handler n
     Here's how you would check the handler name for the `Input.Changed` event:
 
     ```py
-    >>> from textual.widgets import Input
+    >>> from anytext.widgets import Input
     >>> Input.Changed.handler_name
     'on_input_changed'
     ```
 
 ### On decorator
 
-In addition to the naming convention, message handlers may be created with the [`on`][textual.on] decorator, which turns a method into a handler for the given message or event.
+In addition to the naming convention, message handlers may be created with the [`on`][anytext.on] decorator, which turns a method into a handler for the given message or event.
 
 For instance, the two methods declared below are equivalent:
 
@@ -218,7 +218,7 @@ In the following example we have three buttons, each of which does something dif
 
 === "Output"
 
-    ```{.textual path="docs/examples/events/on_decorator01.py"}
+    ```{.anytext path="docs/examples/events/on_decorator01.py"}
     ```
 
 Note how the message handler has a chained `if` statement to match the action to the button.
@@ -247,7 +247,7 @@ The following example uses the decorator approach to write individual message ha
 
 === "Output"
 
-    ```{.textual path="docs/examples/events/on_decorator02.py"}
+    ```{.anytext path="docs/examples/events/on_decorator02.py"}
     ```
 
 While there are a few more lines of code, it is clearer what will happen when you click any given button.
@@ -263,9 +263,9 @@ Messages from builtin controls will have this attribute, but you may need to add
 
 #### Applying CSS selectors to arbitrary attributes
 
-The `on` decorator also accepts selectors as keyword arguments that may be used to match other attributes in a Message, provided those attributes are in [`Message.ALLOW_SELECTOR_MATCH`][textual.message.Message.ALLOW_SELECTOR_MATCH].
+The `on` decorator also accepts selectors as keyword arguments that may be used to match other attributes in a Message, provided those attributes are in [`Message.ALLOW_SELECTOR_MATCH`][anytext.message.Message.ALLOW_SELECTOR_MATCH].
 
-The snippet below shows how to match the message [`TabbedContent.TabActivated`][textual.widgets.TabbedContent.TabActivated] only when the tab with id `home` was activated:
+The snippet below shows how to match the message [`TabbedContent.TabActivated`][anytext.widgets.TabbedContent.TabActivated] only when the tab with id `home` was activated:
 
 ```py
 @on(TabbedContent.TabActivated, pane="#home")
@@ -276,7 +276,7 @@ def home_tab(self) -> None:
 
 ### Handler arguments
 
-Message handler methods can be written with or without a positional argument. If you add a positional argument, Textual will call the handler with the event object. The following handler (taken from `custom01.py` above) contains a `message` parameter. The body of the code makes use of the message to set a preset color.
+Message handler methods can be written with or without a positional argument. If you add a positional argument, Anytext will call the handler with the event object. The following handler (taken from `custom01.py` above) contains a `message` parameter. The body of the code makes use of the message to set a preset color.
 
 ```python
     def on_color_button_selected(self, message: ColorButton.Selected) -> None:
@@ -302,7 +302,7 @@ This pattern is a convenience that saves writing out a parameter that may not be
 
 ### Async handlers
 
-Message handlers may be coroutines. If you prefix your handlers with the `async` keyword, Textual will `await` them. This lets your handler use the `await` keyword for asynchronous APIs.
+Message handlers may be coroutines. If you prefix your handlers with the `async` keyword, Anytext will `await` them. This lets your handler use the `await` keyword for asynchronous APIs.
 
 If your event handlers are coroutines it will allow multiple events to be processed concurrently, but bear in mind an individual widget (or app) will not be able to pick up a new message from its message queue until the handler has returned. This is rarely a problem in practice; as long as handlers return within a few milliseconds the UI will remain responsive. But slow handlers might make your app hard to use.
 
@@ -331,7 +331,7 @@ Let's look at an example which looks up word definitions from an [api](https://d
 
 === "Output"
 
-    ```{.textual path="docs/examples/events/dictionary.py"}
+    ```{.anytext path="docs/examples/events/dictionary.py"}
     ```
 
 Note the highlighted line in the above code which calls `asyncio.create_task` to run a coroutine in the background. Without this you would find typing into the text box to be unresponsive.

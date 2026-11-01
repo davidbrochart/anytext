@@ -1,6 +1,6 @@
 from rich.text import Text
 
-from textual.widgets import RichLog
+from anytext.widgets import RichLog
 
 
 async def test_make_renderable_expand_tabs():

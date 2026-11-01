@@ -15,7 +15,7 @@ Each child has an associated tab which will make it visible and hide the others.
 ## Composing
 
 There are two ways to provide the titles for the tab.
-You can pass them as positional arguments to the [TabbedContent][textual.widgets.TabbedContent] constructor:
+You can pass them as positional arguments to the [TabbedContent][anytext.widgets.TabbedContent] constructor:
 
 ```python
 def compose(self) -> ComposeResult:
@@ -25,7 +25,7 @@ def compose(self) -> ComposeResult:
         yield Markdown(PAUL)
 ```
 
-Alternatively you can wrap the content in a [TabPane][textual.widgets.TabPane] widget, which takes the tab title as the first parameter:
+Alternatively you can wrap the content in a [TabPane][anytext.widgets.TabPane] widget, which takes the tab title as the first parameter:
 
 ```python
 def compose(self) -> ComposeResult:
@@ -85,7 +85,7 @@ The following example contains a `TabbedContent` with three tabs.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/tabbed_content.py"}
+    ```{.anytext path="docs/examples/widgets/tabbed_content.py"}
     ```
 
 === "tabbed_content.py"
@@ -109,7 +109,7 @@ For example, to create a `TabbedContent` that has red and green labels:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/tabbed_content_label_color.py"}
+    ```{.anytext path="docs/examples/widgets/tabbed_content_label_color.py"}
     ```
 
 === "tabbed_content.py"
@@ -127,8 +127,8 @@ For example, to create a `TabbedContent` that has red and green labels:
 
 ## Messages
 
-- [TabbedContent.Cleared][textual.widgets.TabbedContent.Cleared]
-- [TabbedContent.TabActivated][textual.widgets.TabbedContent.TabActivated]
+- [TabbedContent.Cleared][anytext.widgets.TabbedContent.Cleared]
+- [TabbedContent.TabActivated][anytext.widgets.TabbedContent.TabActivated]
 
 ## Bindings
 
@@ -148,7 +148,7 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.TabbedContent
+::: anytext.widgets.TabbedContent
     options:
       heading_level: 2
 
@@ -156,6 +156,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.TabPane
+::: anytext.widgets.TabPane
     options:
       heading_level: 2

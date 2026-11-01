@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import VerticalScroll
-from textual.widgets import Placeholder
+from anytext.app import App
+from anytext.containers import VerticalScroll
+from anytext.widgets import Placeholder
 
 
 class MinWidthApp(App):

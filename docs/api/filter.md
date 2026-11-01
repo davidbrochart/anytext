@@ -1,6 +1,6 @@
 ---
-title: "textual.filter"
+title: "anytext.filter"
 ---
 
 
-::: textual.filter
+::: anytext.filter

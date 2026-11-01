@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import Input
+from anytext.app import App, ComposeResult
+from anytext.widgets import Input
 
 _FORWARD_DELETIONS = [
     ((0, 0), "0123456789"),  # Delete nothing

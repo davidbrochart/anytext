@@ -21,7 +21,7 @@ A [`<text-align>`](./text_align.md) can be any of the following values:
 
 !!! tip
 
-    The meanings of `start` and `end` will likely change when RTL languages become supported by Textual.
+    The meanings of `start` and `end` will likely change when RTL languages become supported by Anytext.
 
 ## Examples
 

@@ -1,7 +1,7 @@
 import pytest
 
 from tests.utilities.render import render
-from textual.css._help_text import (
+from anytext.css._help_text import (
     align_help_text,
     border_property_help_text,
     color_property_help_text,

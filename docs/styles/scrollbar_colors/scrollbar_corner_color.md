@@ -16,7 +16,7 @@ The example below sets the scrollbar corner (bottom-right corner of the screen) 
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/scrollbar_corner_color.py" lines=5}
+    ```{.anytext path="docs/examples/styles/scrollbar_corner_color.py" lines=5}
     ```
 
 === "scrollbar_corner_color.py"

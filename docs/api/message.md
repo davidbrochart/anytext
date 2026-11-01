@@ -1,5 +1,5 @@
 ---
-title: "textual.message"
+title: "anytext.message"
 ---
 
-::: textual.message
+::: anytext.message

@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.geometry import Offset
-from textual.widgets import OptionList
-from textual.widgets.option_list import Option, OptionDoesNotExist
+from anytext.app import App, ComposeResult
+from anytext.geometry import Offset
+from anytext.widgets import OptionList
+from anytext.widgets.option_list import Option, OptionDoesNotExist
 
 
 class OptionListApp(App[None]):

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from textual.dom import DOMNode
-from textual.suggester import SuggestFromList, SuggestionReady
+from anytext.dom import DOMNode
+from anytext.suggester import SuggestFromList, SuggestionReady
 
 countries = ["England", "Portugal", "Scotland", "portugal", "PORTUGAL"]
 

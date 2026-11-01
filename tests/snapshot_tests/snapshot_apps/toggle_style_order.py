@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.widgets import Checkbox, Label
+from anytext.app import App
+from anytext.widgets import Checkbox, Label
 
 
 class CheckboxApp(App):

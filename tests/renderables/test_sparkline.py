@@ -4,7 +4,7 @@ from typing import Sequence
 import pytest
 
 from tests.utilities.render import render
-from textual.renderables.sparkline import Sparkline
+from anytext.renderables.sparkline import Sparkline
 
 GREEN = "\x1b[38;2;0;255;0m"
 RED = "\x1b[38;2;255;0;0m"

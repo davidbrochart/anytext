@@ -3,7 +3,7 @@
 In here you'll find some tests for general key binding inheritance, but
 there is an emphasis on the inheriting of movement key bindings as they (as
 of the time of writing) hold a special place in the Widget hierarchy of
-Textual.
+Anytext.
 
 <URL:https://github.com/Textualize/textual/issues/1343> holds much of the
 background relating to this.
@@ -11,16 +11,16 @@ background relating to this.
 
 from __future__ import annotations
 
-from textual.actions import SkipAction
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.containers import Container
-from textual.screen import Screen
-from textual.widget import Widget
-from textual.widgets import Static
+from anytext.actions import SkipAction
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.containers import Container
+from anytext.screen import Screen
+from anytext.widget import Widget
+from anytext.widgets import Static
 
 ##############################################################################
-# These are the movement keys within Textual; they kind of have a special
+# These are the movement keys within Anytext; they kind of have a special
 # status in that they will get bound to movement-related methods.
 MOVEMENT_KEYS = ["up", "down", "left", "right", "home", "end", "pageup", "pagedown"]
 

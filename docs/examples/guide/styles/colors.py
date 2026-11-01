@@ -1,10 +1,10 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.widgets import Static
 
 
 class WidgetApp(App):
     def compose(self) -> ComposeResult:
-        self.widget = Static("Textual")
+        self.widget = Static("Anytext")
         yield self.widget
 
     def on_mount(self) -> None:

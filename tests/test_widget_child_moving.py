@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App
-from textual.widget import Widget, WidgetError
+from anytext.app import App
+from anytext.widget import Widget, WidgetError
 
 
 async def test_move_child_no_direction() -> None:

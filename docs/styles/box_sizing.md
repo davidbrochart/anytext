@@ -23,7 +23,7 @@ The bottom widget has `box-sizing: content-box` which increases the size of the 
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/box_sizing.py"}
+    ```{.anytext path="docs/examples/styles/box_sizing.py"}
     ```
 
 === "box_sizing.py"

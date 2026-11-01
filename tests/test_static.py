@@ -1,5 +1,5 @@
-from textual.content import Content
-from textual.widgets import Static
+from anytext.content import Content
+from anytext.widgets import Static
 
 
 async def test_content_property():

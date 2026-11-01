@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from textual.app import App
+from anytext.app import App
 
 
 async def test_dynamic_disabled():

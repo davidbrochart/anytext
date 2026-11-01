@@ -1,8 +1,8 @@
 from rich.syntax import Syntax
 
-from textual.app import App, ComposeResult, RenderResult
-from textual.reactive import reactive
-from textual.widget import Widget
+from anytext.app import App, ComposeResult, RenderResult
+from anytext.reactive import reactive
+from anytext.widget import Widget
 
 
 class CodeView(Widget):
@@ -21,7 +21,7 @@ class CodeView(Widget):
 
 
 class CodeApp(App):
-    """App to demonstrate Rich renderables in Textual."""
+    """App to demonstrate Rich renderables in Anytext."""
 
     def compose(self) -> ComposeResult:
         with open(__file__) as self_file:

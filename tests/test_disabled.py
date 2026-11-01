@@ -2,9 +2,9 @@
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.containers import Vertical, VerticalScroll
-from textual.widgets import (
+from anytext.app import App, ComposeResult
+from anytext.containers import Vertical, VerticalScroll
+from anytext.widgets import (
     Button,
     Checkbox,
     DataTable,

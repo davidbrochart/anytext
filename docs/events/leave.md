@@ -1,4 +1,4 @@
-::: textual.events.Leave
+::: anytext.events.Leave
     options:
       heading_level: 1
 

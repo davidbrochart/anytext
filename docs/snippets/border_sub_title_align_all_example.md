@@ -3,7 +3,7 @@ Open the code tabs to see the details of the code examples.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/border_sub_title_align_all.py"}
+    ```{.anytext path="docs/examples/styles/border_sub_title_align_all.py"}
     ```
 
 === "border_sub_title_align_all.py"

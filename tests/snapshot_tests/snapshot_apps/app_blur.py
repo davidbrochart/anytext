@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.events import AppBlur
-from textual.widgets import Input
+from anytext.app import App, ComposeResult
+from anytext.events import AppBlur
+from anytext.widgets import Input
 
 class AppBlurApp(App[None]):
 

@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.message import Message
-from textual.widget import Widget
+from anytext.app import App, ComposeResult
+from anytext.message import Message
+from anytext.widget import Widget
 
 
 async def test_message_inheritance_namespace():

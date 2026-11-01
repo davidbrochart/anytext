@@ -8,14 +8,14 @@ from rich.panel import Panel
 from rich.text import Text
 
 from tests.snapshot_tests.language_snippets import SNIPPETS
-from textual import events
-from textual._on import on
-from textual import work
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.color import Color, ColorParseError
-from textual.command import SimpleCommand
-from textual.containers import (
+from anytext import events
+from anytext._on import on
+from anytext import work
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.color import Color, ColorParseError
+from anytext.command import SimpleCommand
+from anytext.containers import (
     Center,
     Container,
     Grid,
@@ -26,12 +26,12 @@ from textual.containers import (
     VerticalScroll,
     HorizontalGroup,
 )
-from textual.content import Content
-from textual.pilot import Pilot
-from textual.reactive import reactive, var
-from textual.renderables.gradient import LinearGradient
-from textual.screen import ModalScreen, Screen
-from textual.widgets import (
+from anytext.content import Content
+from anytext.pilot import Pilot
+from anytext.reactive import reactive, var
+from anytext.renderables.gradient import LinearGradient
+from anytext.screen import ModalScreen, Screen
+from anytext.widgets import (
     Button,
     Collapsible,
     DataTable,
@@ -58,10 +58,10 @@ from textual.widgets import (
     TabbedContent,
     TabPane,
 )
-from textual.theme import Theme
-from textual.widgets.option_list import Option
-from textual.widgets.text_area import BUILTIN_LANGUAGES, Selection, TextAreaTheme
-from textual.widgets.selection_list import Selection as SLSelection
+from anytext.theme import Theme
+from anytext.widgets.option_list import Option
+from anytext.widgets.text_area import BUILTIN_LANGUAGES, Selection, TextAreaTheme
+from anytext.widgets.selection_list import Selection as SLSelection
 
 # These paths should be relative to THIS directory.
 WIDGET_EXAMPLES_DIR = Path("../../docs/examples/widgets")
@@ -994,7 +994,7 @@ def test_css_hot_reloading(snap_compare, monkeypatch):
     """Regression test for https://github.com/Textualize/textual/issues/2063."""
 
     monkeypatch.setenv(
-        "TEXTUAL", "debug"
+        "ANYTEXT", "debug"
     )  # This will make sure we create a file monitor.
 
     async def run_before(pilot):
@@ -1012,7 +1012,7 @@ def test_css_hot_reloading_on_screen(snap_compare, monkeypatch):
     """Regression test for https://github.com/Textualize/textual/issues/3454."""
 
     monkeypatch.setenv(
-        "TEXTUAL", "debug"
+        "ANYTEXT", "debug"
     )  # This will make sure we create a file monitor.
 
     async def run_before(pilot):
@@ -1031,7 +1031,7 @@ def test_datatable_hot_reloading(snap_compare, monkeypatch):
     """Regression test for https://github.com/Textualize/textual/issues/3312."""
 
     monkeypatch.setenv(
-        "TEXTUAL", "debug"
+        "ANYTEXT", "debug"
     )  # This will make sure we create a file monitor.
 
     async def run_before(pilot):
@@ -1051,7 +1051,7 @@ def test_markdown_component_classes_reloading(snap_compare, monkeypatch):
     See https://github.com/Textualize/textual/issues/3464."""
 
     monkeypatch.setenv(
-        "TEXTUAL", "debug"
+        "ANYTEXT", "debug"
     )  # This will make sure we create a file monitor.
 
     async def run_before(pilot):
@@ -1218,7 +1218,7 @@ def test_command_palette_discovery(snap_compare) -> None:
 # --- textual-dev library preview tests ---
 
 
-def test_textual_dev_border_preview(snap_compare):
+def test_anytext_dev_border_preview(snap_compare):
     async def run_before(pilot):
         buttons = pilot.app.query(Button)
         for button in buttons:
@@ -1231,15 +1231,15 @@ def test_textual_dev_border_preview(snap_compare):
     )
 
 
-def test_textual_dev_colors_preview(snap_compare):
+def test_anytext_dev_colors_preview(snap_compare):
     assert snap_compare(SNAPSHOT_APPS_DIR / "dev_previews_color.py")
 
 
-def test_textual_dev_easing_preview(snap_compare):
+def test_anytext_dev_easing_preview(snap_compare):
     assert snap_compare(SNAPSHOT_APPS_DIR / "dev_previews_easing.py")
 
 
-def test_textual_dev_keys_preview(snap_compare):
+def test_anytext_dev_keys_preview(snap_compare):
     assert snap_compare(SNAPSHOT_APPS_DIR / "dev_previews_keys.py", press=["a", "b"])
 
 
@@ -1522,7 +1522,7 @@ def test_recompose(snap_compare):
     assert snap_compare(SNAPSHOT_APPS_DIR / "recompose.py")
 
 
-@pytest.mark.parametrize("theme", ["textual-dark", "textual-light"])
+@pytest.mark.parametrize("theme", ["anytext-dark", "anytext-light"])
 def test_ansi_color_mapping(snap_compare, theme):
     """Test how ANSI colors in Rich renderables are mapped to hex colors."""
 
@@ -2467,13 +2467,13 @@ def test_maximize_allow(snap_compare):
 
         def compose(self) -> ComposeResult:
             yield Label(
-                "Above", classes="-textual-system"
-            )  # Allowed in maximize view because it has class -textual-system
+                "Above", classes="-anytext-system"
+            )  # Allowed in maximize view because it has class -anytext-system
             yield Header()  # Allowed because it matches ALLOW_IN_MAXIMIZED_VIEW
             yield Button("Hello")  # Allowed because it is the maximized widget
             yield Label(
-                "Below", classes="-textual-system"
-            )  # Allowed because it has class -textual-system
+                "Below", classes="-anytext-system"
+            )  # Allowed because it has class -anytext-system
             yield Button("World")  # Not allowed
             yield Footer()  # Not allowed
 
@@ -3710,7 +3710,7 @@ def test_auto_rich_log_width(snap_compare):
     """
 
     class MinimalApp(App):
-        """A minimal Textual app demonstrating the RichLog border issue."""
+        """A minimal Anytext app demonstrating the RichLog border issue."""
 
         CSS = """
         TabbedContent {
@@ -3961,7 +3961,7 @@ def test_enforce_visual(snap_compare):
 
     You should see an OptionList with long wrapping text.
 
-    This is no longer the recommended way of applying overflow ellipsis. Textual will
+    This is no longer the recommended way of applying overflow ellipsis. Anytext will
     largely ignore the "overflow" parameter on Text objects.
 
     """
@@ -4270,7 +4270,7 @@ def test_app_default_classes(snap_compare):
     the classes foo and bar have been added to the app.
 
     """
-    from textual.app import App
+    from anytext.app import App
 
     class DC(App):
         DEFAULT_CLASSES = "foo bar"
@@ -4545,7 +4545,7 @@ def test_pretty_auto(snap_compare):
     You should see 'Hello World' including strings, 3 times in a purple box, top left.
 
     """
-    from textual.widgets import Pretty
+    from anytext.widgets import Pretty
 
     class Demo(App):
         CSS = """
@@ -4918,7 +4918,7 @@ How's that?
 def test_text_opacity_native_ansi(snap_compare) -> None:
     """Test that text-opacity with ansi themes doesn't produce RGB colors.
 
-    Textual can't calculate text opacity with ANSI colors. As a compromize a text-opacity of 50% or less
+    Anytext can't calculate text opacity with ANSI colors. As a compromize a text-opacity of 50% or less
     sets the dim attribute on the style.
 
     You should see 10 labels for wach level of opacity. For opacity 50% and under, the labels

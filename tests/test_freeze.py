@@ -1,8 +1,8 @@
 import pytest
 
-from textual.app import App
-from textual.screen import Screen
-from textual.widgets import Footer, Header, Input
+from anytext.app import App
+from anytext.screen import Screen
+from anytext.widgets import Footer, Header, Input
 
 
 class MyScreen(Screen):

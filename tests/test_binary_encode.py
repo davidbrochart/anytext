@@ -1,6 +1,6 @@
 import pytest
 
-from textual._binary_encode import DecodeError, dump, load
+from anytext._binary_encode import DecodeError, dump, load
 
 
 @pytest.mark.parametrize(

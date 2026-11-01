@@ -1,7 +1,7 @@
 ---
-title: "textual.on"
+title: "anytext.on"
 ---
 
 # On
 
-::: textual.on
+::: anytext.on

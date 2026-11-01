@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from textual.app import App, ComposeResult
-from textual.binding import Binding, Keymap
-from textual.dom import DOMNode
-from textual.widget import Widget
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding, Keymap
+from anytext.dom import DOMNode
+from anytext.widget import Widget
+from anytext.widgets import Label
 
 
 class Counter(App[None]):

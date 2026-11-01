@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import Iterable
 
-from textual.app import App, ComposeResult, SystemCommand
-from textual.containers import Grid
-from textual.screen import ModalScreen, Screen
-from textual.widgets import Button, Label
+from anytext.app import App, ComposeResult, SystemCommand
+from anytext.containers import Grid
+from anytext.screen import ModalScreen, Screen
+from anytext.widgets import Button, Label
 
 
 class QuitScreen(ModalScreen[bool]):

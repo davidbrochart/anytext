@@ -1,3 +1,3 @@
-::: textual.events.Key
+::: anytext.events.Key
     options:
       heading_level: 1

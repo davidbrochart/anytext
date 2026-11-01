@@ -1,4 +1,4 @@
-::: textual.events.Load
+::: anytext.events.Load
     options:
       heading_level: 1
 

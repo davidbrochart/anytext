@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.screen import Screen
-from textual.widgets import TextArea
+from anytext.app import App
+from anytext.screen import Screen
+from anytext.widgets import TextArea
 
 TEXT = """\
 foo

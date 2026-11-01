@@ -8,15 +8,15 @@ authors:
   - willmcgugan
 ---
 
-# Textual 0.6.0 adds a *tree*mendous new widget
+# Anytext 0.6.0 adds a *tree*mendous new widget
 
-A new release of Textual lands 3 weeks after the previous release -- and it's a big one.
+A new release of Anytext lands 3 weeks after the previous release -- and it's a big one.
 
 <!-- more -->
 
 !!! information
 
-    If you're new here, [Textual](https://github.com/Textualize/textual) is TUI framework for Python.
+    If you're new here, [Anytext](https://github.com/Textualize/textual) is TUI framework for Python.
 
 ## Tree Control
 
@@ -28,7 +28,7 @@ Here's a very simple example:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/tree.py"}
+    ```{.anytext path="docs/examples/widgets/tree.py"}
     ```
 
 === "tree.py"
@@ -57,7 +57,7 @@ We have a new [ListView](../../widgets/list_view.md) control to navigate and sel
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/list_view.py"}
+    ```{.anytext path="docs/examples/widgets/list_view.py"}
     ```
 
 === "list_view.py"
@@ -80,7 +80,7 @@ Use this widget in place of custom widgets you have yet to build when designing 
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/placeholder.py" columns="100" lines="45"}
+    ```{.anytext path="docs/examples/widgets/placeholder.py" columns="100" lines="45"}
     ```
 
 === "placeholder.py"
@@ -102,5 +102,5 @@ As always, there are a number of fixes in this release. Mostly related to layout
 
 ## What's next?
 
-The next release will focus on *pain points* we discovered while in a dog-fooding phase (see the [DevLog](https://textual.textualize.io/blog/category/devlog/) for details on what Textual devs have been building).
+The next release will focus on *pain points* we discovered while in a dog-fooding phase (see the [DevLog](https://textual.textualize.io/blog/category/devlog/) for details on what Anytext devs have been building).
 

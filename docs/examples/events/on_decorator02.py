@@ -1,6 +1,6 @@
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Button
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button
 
 
 class OnDecoratorApp(App):
@@ -21,7 +21,7 @@ class OnDecoratorApp(App):
     def toggle_dark(self):
         """Called when the 'toggle dark' button is pressed."""
         self.theme = (
-            "textual-dark" if self.theme == "textual-light" else "textual-light"
+            "anytext-dark" if self.theme == "anytext-light" else "anytext-light"
         )
 
     @on(Button.Pressed, "#quit")  # (3)!

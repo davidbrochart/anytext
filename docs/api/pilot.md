@@ -1,5 +1,5 @@
 ---
-title: "textual.pilot"
+title: "anytext.pilot"
 ---
 
-::: textual.pilot
+::: anytext.pilot

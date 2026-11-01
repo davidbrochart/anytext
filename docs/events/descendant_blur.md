@@ -2,7 +2,7 @@
 title: DescendantBlur
 ---
 
-::: textual.events.DescendantBlur
+::: anytext.events.DescendantBlur
     options:
       heading_level: 1
 

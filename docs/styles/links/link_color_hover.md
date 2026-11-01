@@ -4,7 +4,7 @@ The `link-color-hover` style sets the color of the link text when the mouse curs
 
 !!! note
 
-    `link-color-hover` only applies to Textual action links as described in the [actions guide](../../guide/actions.md#links) and not to regular hyperlinks.
+    `link-color-hover` only applies to Anytext action links as described in the [actions guide](../../guide/actions.md#links) and not to regular hyperlinks.
 
 ## Syntax
 
@@ -12,11 +12,11 @@ The `link-color-hover` style sets the color of the link text when the mouse curs
 link-color-hover: <a href="../../../css_types/color">&lt;color&gt;</a> [<a href="../../../css_types/percentage">&lt;percentage&gt;</a>];
 --8<-- "docs/snippets/syntax_block_end.md"
 
-`link-color-hover` accepts a [`<color>`](../../css_types/color.md) (with an optional opacity level defined by a [`<percentage>`](../../css_types/percentage.md)) that is used to define the color of text enclosed in Textual action links when the mouse pointer is over it.
+`link-color-hover` accepts a [`<color>`](../../css_types/color.md) (with an optional opacity level defined by a [`<percentage>`](../../css_types/percentage.md)) that is used to define the color of text enclosed in Anytext action links when the mouse pointer is over it.
 
 ### Defaults
 
-If not provided, a Textual action link will have `link-color-hover` set to `white`.
+If not provided, a Anytext action link will have `link-color-hover` set to `white`.
 
 ## Example
 

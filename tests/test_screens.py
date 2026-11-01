@@ -5,14 +5,14 @@ import threading
 
 import pytest
 
-from textual import work
-from textual._async import get_runtime, with_task_context
-from textual.app import App, ComposeResult, ScreenStackError
-from textual.events import MouseMove
-from textual.geometry import Offset
-from textual.screen import Screen
-from textual.widgets import Button, Input, Label
-from textual.worker import NoActiveWorker
+from anytext import work
+from anytext._async import get_runtime, with_task_context
+from anytext.app import App, ComposeResult, ScreenStackError
+from anytext.events import MouseMove
+from anytext.geometry import Offset
+from anytext.screen import Screen
+from anytext.widgets import Button, Input, Label
+from anytext.worker import NoActiveWorker
 
 skip_py310 = pytest.mark.skipif(
     sys.version_info.minor == 10 and sys.version_info.major == 3,
@@ -543,11 +543,11 @@ async def test_worker_cancellation():
     it cancelled the first one which was awaiting the screen.
 
     """
-    from textual import on, work
-    from textual.app import App
-    from textual.containers import Vertical
-    from textual.screen import Screen
-    from textual.widgets import Button, Footer, Label
+    from anytext import on, work
+    from anytext.app import App
+    from anytext.containers import Vertical
+    from anytext.screen import Screen
+    from anytext.widgets import Button, Footer, Label
 
     class InfoScreen(Screen[bool]):
         def __init__(self, question: str) -> None:

@@ -3,9 +3,9 @@ Tests for scrolling animations, which are considered a basic animation.
 (An animation that also plays on the level BASIC.)
 """
 
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Label
 
 
 class TallApp(App[None]):

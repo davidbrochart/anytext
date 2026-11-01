@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.color import Gradient
-from textual.containers import Center, Middle
-from textual.widgets import ProgressBar
+from anytext.app import App, ComposeResult
+from anytext.color import Gradient
+from anytext.containers import Center, Middle
+from anytext.widgets import ProgressBar
 
 
 class ProgressApp(App[None]):

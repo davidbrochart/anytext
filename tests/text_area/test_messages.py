@@ -1,10 +1,10 @@
 from typing import List
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.events import Event
-from textual.message import Message
-from textual.widgets import TextArea
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.events import Event
+from anytext.message import Message
+from anytext.widgets import TextArea
 
 
 class TextAreaApp(App):

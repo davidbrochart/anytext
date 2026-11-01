@@ -1,2 +1,2 @@
-# Textual Blog
+# Anytext Blog
 

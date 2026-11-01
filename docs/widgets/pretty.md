@@ -11,7 +11,7 @@ The example below shows a pretty-formatted `dict`, but `Pretty` can display any 
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/pretty.py"}
+    ```{.anytext path="docs/examples/widgets/pretty.py"}
     ```
 
 === "pretty.py"
@@ -39,6 +39,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Pretty
+::: anytext.widgets.Pretty
     options:
         heading_level: 2

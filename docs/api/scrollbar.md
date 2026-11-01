@@ -1,5 +1,5 @@
 ---
-title: "textual.scrollbar"
+title: "anytext.scrollbar"
 ---
 
-::: textual.scrollbar
+::: anytext.scrollbar

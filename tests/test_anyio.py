@@ -6,13 +6,13 @@ import anyio
 import pytest
 import sniffio
 
-from textual import _async, work
-from textual._queue import Queue
-from textual.app import App, ComposeResult
-from textual.await_complete import AwaitComplete
-from textual.screen import ModalScreen
-from textual.widgets import Button, Label, Markdown
-from textual.worker import WorkerCancelled
+from anytext import _async, work
+from anytext._queue import Queue
+from anytext.app import App, ComposeResult
+from anytext.await_complete import AwaitComplete
+from anytext.screen import ModalScreen
+from anytext.widgets import Button, Label, Markdown
+from anytext.worker import WorkerCancelled
 
 
 @pytest.mark.parametrize("backend", ["asyncio", "trio"])
@@ -178,7 +178,7 @@ def test_task_completion_and_timeouts(backend):
 
 @pytest.mark.parametrize("backend", ["asyncio", "trio"])
 def test_directory_tree_command_palette_and_streaming(backend, tmp_path):
-    from textual.widgets import DirectoryTree
+    from anytext.widgets import DirectoryTree
 
     (tmp_path / "folder").mkdir()
     (tmp_path / "file.txt").write_text("test")

@@ -1,6 +1,6 @@
 from functools import partial
 
-from textual._callback import count_parameters
+from anytext._callback import count_parameters
 
 
 def test_functions() -> None:

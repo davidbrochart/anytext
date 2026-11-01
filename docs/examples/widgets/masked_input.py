@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Label, MaskedInput
+from anytext.app import App, ComposeResult
+from anytext.widgets import Label, MaskedInput
 
 
 class MaskedInputApp(App):

@@ -4,13 +4,13 @@ import random
 from datetime import timedelta
 from time import monotonic
 
-from textual import events
-from textual.app import App, ComposeResult
-from textual.containers import Grid
-from textual.reactive import var
-from textual.renderables.gradient import LinearGradient
-from textual.widget import Widget
-from textual.widgets import Digits, Label, Switch
+from anytext import events
+from anytext.app import App, ComposeResult
+from anytext.containers import Grid
+from anytext.reactive import var
+from anytext.renderables.gradient import LinearGradient
+from anytext.widget import Widget
+from anytext.widgets import Digits, Label, Switch
 
 # A nice rainbow of colors.
 COLORS = [

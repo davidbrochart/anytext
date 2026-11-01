@@ -1,6 +1,6 @@
 # Border-subtitle-style
 
-The `border-subtitle-style` style sets the text style of the [border_subtitle][textual.widget.Widget.border_subtitle].
+The `border-subtitle-style` style sets the text style of the [border_subtitle][anytext.widget.Widget.border_subtitle].
 
 
 ## Syntax

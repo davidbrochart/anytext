@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Footer, Placeholder
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.widgets import Footer, Placeholder
 
 
 class DashboardScreen(Screen):

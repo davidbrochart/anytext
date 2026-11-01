@@ -4,11 +4,11 @@ import asyncio
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.message import Message
-from textual.message_pump import MessagePump
-from textual.reactive import Initialize, Reactive, TooManyComputesError, reactive, var
-from textual.widget import Widget
+from anytext.app import App, ComposeResult
+from anytext.message import Message
+from anytext.message_pump import MessagePump
+from anytext.reactive import Initialize, Reactive, TooManyComputesError, reactive, var
+from anytext.widget import Widget
 
 OLD_VALUE = 5_000
 NEW_VALUE = 1_000_000
@@ -83,7 +83,7 @@ async def test_watch_async_init_false():
 
 async def test_watch_async_init_true():
     """Ensure that when init is True in a reactive, its async watcher gets called
-    by Textual eventually, even when the user does not set the value themselves."""
+    by Anytext eventually, even when the user does not set the value themselves."""
 
     class WatchAsyncApp(App):
         count = reactive(OLD_VALUE, init=True)
@@ -175,7 +175,7 @@ async def test_reactive_always_update():
 
 async def test_reactive_with_callable_default():
     """A callable can be supplied as the default value for a reactive.
-    Textual will call it in order to retrieve the default value."""
+    Anytext will call it in order to retrieve the default value."""
 
     class ReactiveCallable(App):
         value = reactive(lambda: 123)
@@ -191,7 +191,7 @@ async def test_reactive_with_callable_default():
 
 
 async def test_validate_init_true():
-    """When init is True for a reactive attribute, Textual should call the validator
+    """When init is True for a reactive attribute, Anytext should call the validator
     AND the watch method when the app starts."""
     validator_call_count = 0
 
@@ -211,7 +211,7 @@ async def test_validate_init_true():
 
 
 async def test_validate_init_true_set_before_dom_ready():
-    """When init is True for a reactive attribute, Textual should call the validator
+    """When init is True for a reactive attribute, Anytext should call the validator
     AND the watch method when the app starts."""
     validator_call_count = 0
 

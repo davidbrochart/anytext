@@ -1,5 +1,5 @@
 ---
-title: "textual.reactive"
+title: "anytext.reactive"
 ---
 
-::: textual.reactive
+::: anytext.reactive

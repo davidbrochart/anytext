@@ -5,8 +5,8 @@ from unittest.mock import Mock
 
 import pytest
 
-from textual._animator import Animator, SimpleAnimation
-from textual._easing import DEFAULT_EASING, EASING
+from anytext._animator import Animator, SimpleAnimation
+from anytext._easing import DEFAULT_EASING, EASING
 
 
 class Animatable:

@@ -34,8 +34,8 @@ VERSION_PATTERN = r"""
 
 
 def test_version():
-    import textual
+    import anytext
 
-    version = textual.__version__
+    version = anytext.__version__
     assert isinstance(version, str)
     assert re.match(VERSION_PATTERN, version, re.VERBOSE) is not None

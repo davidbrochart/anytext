@@ -1,6 +1,6 @@
 ---
-title: "textual.coordinate"
+title: "anytext.coordinate"
 ---
 
 
-::: textual.coordinate
+::: anytext.coordinate

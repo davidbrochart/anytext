@@ -20,7 +20,7 @@ The example below illustrates the relationship between the data, its length, the
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/sparkline_basic.py" lines="5" columns="30"}
+    ```{.anytext path="docs/examples/widgets/sparkline_basic.py" lines="5" columns="30"}
     ```
 
 === "sparkline_basic.py"
@@ -51,7 +51,7 @@ The summary function is what determines the height of each bar.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/sparkline.py" lines="11"}
+    ```{.anytext path="docs/examples/widgets/sparkline.py" lines="11"}
     ```
 
 === "sparkline.py"
@@ -76,7 +76,7 @@ The example below shows how to use component classes to change the colors of the
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/sparkline_colors.py" lines=22}
+    ```{.anytext path="docs/examples/widgets/sparkline_colors.py" lines=22}
     ```
 
 === "sparkline_colors.py"
@@ -112,7 +112,7 @@ This widget has no bindings.
 
 The sparkline widget provides the following component classes:
 
-::: textual.widgets.Sparkline.COMPONENT_CLASSES
+::: anytext.widgets.Sparkline.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -120,6 +120,6 @@ The sparkline widget provides the following component classes:
 ---
 
 
-::: textual.widgets.Sparkline
+::: anytext.widgets.Sparkline
     options:
       heading_level: 2

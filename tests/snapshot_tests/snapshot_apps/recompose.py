@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal, Vertical
-from textual.reactive import reactive
-from textual.widgets import Digits, ProgressBar
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal, Vertical
+from anytext.reactive import reactive
+from anytext.widgets import Digits, ProgressBar
 
 
 class Numbers(Vertical):

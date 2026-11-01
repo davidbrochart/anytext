@@ -7,7 +7,7 @@ A widget to display numerical values in tall multi-line characters.
 The digits 0-9 and characters A-F are supported, in addition to `+`, `-`, `^`, `:`, and `×`.
 Other characters will be displayed in a regular size font.
 
-You can set the text to be displayed in the constructor, or call [`update()`][textual.widgets.Digits.update] to change the text after the widget has been mounted.
+You can set the text to be displayed in the constructor, or call [`update()`][anytext.widgets.Digits.update] to change the text after the widget has been mounted.
 
 !!! note "This widget will respect the [text-align](../styles/text_align.md) rule."
 
@@ -21,7 +21,7 @@ The following example displays a few digits of Pi:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/digits.py"}
+    ```{.anytext path="docs/examples/widgets/digits.py"}
     ```
 
 === "digits.py"
@@ -35,7 +35,7 @@ Here's another example which uses `Digits` to display the current time:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/clock.py"}
+    ```{.anytext path="docs/examples/widgets/clock.py"}
     ```
 
 === "clock.py"
@@ -65,6 +65,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Digits
+::: anytext.widgets.Digits
     options:
       heading_level: 2

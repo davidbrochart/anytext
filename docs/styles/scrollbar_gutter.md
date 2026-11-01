@@ -24,7 +24,7 @@ terminal window.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/scrollbar_gutter.py"}
+    ```{.anytext path="docs/examples/styles/scrollbar_gutter.py"}
     ```
 
 === "scrollbar_gutter.py"

@@ -3,18 +3,18 @@ draft: false
 date: 2023-03-09
 categories:
   - Release
-title: "Textual 0.14.0 shakes up posting messages"
+title: "Anytext 0.14.0 shakes up posting messages"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.14.0 shakes up posting messages
+# Anytext 0.14.0 shakes up posting messages
 
-Textual version 0.14.0 has landed just a week after 0.13.0.
+Anytext version 0.14.0 has landed just a week after 0.13.0.
 
 !!! note
 
-    We like fast releases for Textual. Fast releases means quicker feedback, which means better code.
+    We like fast releases for Anytext. Fast releases means quicker feedback, which means better code.
 
 What's new?
 
@@ -22,9 +22,9 @@ What's new?
 
 We did a little shake-up of posting [messages](../../guide/events.md) which will simplify building widgets. But this does mean a few breaking changes.
 
-There are two methods in Textual to post messages: `post_message` and `post_message_no_wait`. The former was asynchronous (you needed to `await` it), and the latter was a regular method call. These two methods have been replaced with a single `post_message` method.
+There are two methods in Anytext to post messages: `post_message` and `post_message_no_wait`. The former was asynchronous (you needed to `await` it), and the latter was a regular method call. These two methods have been replaced with a single `post_message` method.
 
-To upgrade your project to Textual 0.14.0, you will need to do the following:
+To upgrade your project to Anytext 0.14.0, you will need to do the following:
 
 - Remove `await` keywords from any calls to `post_message`.
 - Replace any calls to `post_message_no_wait` with `post_message`.

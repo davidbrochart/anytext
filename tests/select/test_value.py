@@ -1,8 +1,8 @@
 import pytest
 
-from textual.app import App
-from textual.widgets import Select
-from textual.widgets.select import InvalidSelectValueError
+from anytext.app import App
+from anytext.widgets import Select
+from anytext.widgets.select import InvalidSelectValueError
 
 SELECT_OPTIONS = [(str(n), n) for n in range(3)]
 MORE_OPTIONS = [(str(n), n) for n in range(5, 8)]

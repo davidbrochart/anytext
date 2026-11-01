@@ -28,7 +28,7 @@ This first example shows three labels stacked vertically, each with different co
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/content_align.py"}
+    ```{.anytext path="docs/examples/styles/content_align.py"}
     ```
 
 === "content_align.py"
@@ -50,7 +50,7 @@ Each label has its text aligned differently.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/content_align_all.py"}
+    ```{.anytext path="docs/examples/styles/content_align_all.py"}
     ```
 
 === "content_align_all.py"

@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.color import Gradient
-from textual.widgets import ProgressBar
+from anytext.app import App, ComposeResult
+from anytext.color import Gradient
+from anytext.widgets import ProgressBar
 
 
 class ProgressApp(App[None]):

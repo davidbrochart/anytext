@@ -1,11 +1,11 @@
 ---
-title: "textual.renderables"
+title: "anytext.renderables"
 ---
 
-A collection of Rich renderables which may be returned from a widget's [`render()`][textual.widget.Widget.render] method.
+A collection of Rich renderables which may be returned from a widget's [`render()`][anytext.widget.Widget.render] method.
 
-::: textual.renderables.bar
-::: textual.renderables.blank
-::: textual.renderables.digits
-::: textual.renderables.gradient
-::: textual.renderables.sparkline
+::: anytext.renderables.bar
+::: anytext.renderables.blank
+::: anytext.renderables.digits
+::: anytext.renderables.gradient
+::: anytext.renderables.sparkline

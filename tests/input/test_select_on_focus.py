@@ -1,9 +1,9 @@
 """The standard path of selecting text on focus is well covered by snapshot tests."""
 
-from textual import events
-from textual.app import App, ComposeResult
-from textual.widgets import Input
-from textual.widgets.input import Selection
+from anytext import events
+from anytext.app import App, ComposeResult
+from anytext.widgets import Input
+from anytext.widgets.input import Selection
 
 
 class InputApp(App[None]):

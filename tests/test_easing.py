@@ -6,7 +6,7 @@ the data was collected, and is here tested against the Python implementation.
 
 import pytest
 
-from textual._easing import EASING
+from anytext._easing import EASING
 
 POINTS = [
     0.0,

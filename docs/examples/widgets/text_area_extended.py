@@ -1,6 +1,6 @@
-from textual import events
-from textual.app import App, ComposeResult
-from textual.widgets import TextArea
+from anytext import events
+from anytext.app import App, ComposeResult
+from anytext.widgets import TextArea
 
 
 class ExtendedTextArea(TextArea):

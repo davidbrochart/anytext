@@ -18,7 +18,7 @@ Then, we set `min-width` individually on each placeholder.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/min_width.py"}
+    ```{.anytext path="docs/examples/styles/min_width.py"}
     ```
 
 === "min_width.py"

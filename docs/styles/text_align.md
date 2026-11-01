@@ -20,7 +20,7 @@ This example shows, from top to bottom: `left`, `center`, `right`, and `justify`
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/text_align.py"}
+    ```{.anytext path="docs/examples/styles/text_align.py"}
     ```
 
 === "text_align.py"

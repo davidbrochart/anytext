@@ -18,7 +18,7 @@ The following example displays Markdown from a string and a Table of Contents.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/markdown_viewer.py" columns="100" lines="42"}
+    ```{.anytext path="docs/examples/widgets/markdown_viewer.py" columns="100" lines="42"}
     ```
 
 === "markdown.py"
@@ -47,19 +47,19 @@ This widget has no component classes.
 
 ## See Also
 
-* [Markdown][textual.widgets.Markdown] code reference
+* [Markdown][anytext.widgets.Markdown] code reference
 
 
 
 ---
 
 
-::: textual.widgets.MarkdownViewer
+::: anytext.widgets.MarkdownViewer
     options:
       heading_level: 2
 
 
-::: textual.widgets.markdown
+::: anytext.widgets.markdown
     options:
       show_root_heading: true
       show_root_toc_entry: true

@@ -10,7 +10,7 @@ hatch: (<a href="../../css_types/hatch">&lt;hatch&gt;</a> | CHARACTER) <a href="
 
 The hatch type can be specified with a constant, or a string. For example, `cross` for cross hatch, or `"T"` for a custom character.
 
-The color can be any Textual color value.
+The color can be any Anytext color value.
 
 An optional percentage can be used to set the opacity.
 
@@ -21,7 +21,7 @@ An app to show a few hatch effects.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/hatch.py"}
+    ```{.anytext path="docs/examples/styles/hatch.py"}
     ```
 
 === "hatch.py"

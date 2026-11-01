@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Header, Footer, Label
-from textual.containers import VerticalScroll, Container
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.widgets import Header, Footer, Label
+from anytext.containers import VerticalScroll, Container
 
 
 class Overlay(Container):

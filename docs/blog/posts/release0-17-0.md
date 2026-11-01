@@ -3,12 +3,12 @@ draft: false
 date: 2023-03-29
 categories:
   - Release
-title: "Textual 0.17.0 adds translucent screens and Option List"
+title: "Anytext 0.17.0 adds translucent screens and Option List"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.17.0 adds translucent screens and Option List
+# Anytext 0.17.0 adds translucent screens and Option List
 
 This is a surprisingly large release, given it has been just 7 days since the last version (and we were down a developer for most of that time).
 
@@ -20,7 +20,7 @@ There are two new notable features I want to cover. The first is a compositor ef
 
 ## Translucent screens
 
-Textual has a concept of "screens" which you can think of as independent UI modes, each with their own user interface and logic.
+Anytext has a concept of "screens" which you can think of as independent UI modes, each with their own user interface and logic.
 The App class keeps a stack of these screens so you can switch to a new screen and later return to the previous screen.
 
 !!! tip inline end "Screens"
@@ -63,14 +63,14 @@ See the [docs on screen opacity](../../guide/screens.md#screen-opacity) if you w
 
 ## Option list
 
-Textual has had a [ListView](../../widgets/list_view.md) widget for a while, which is an excellent way of navigating a list of items (actually other widgets). In this release we've added an [OptionList](../../widgets/option_list.md) which is similar in appearance, but uses the [line api](../../guide/widgets.md#line-api) under the hood. The Line API makes it more efficient when you approach thousands of items.
+Anytext has had a [ListView](../../widgets/list_view.md) widget for a while, which is an excellent way of navigating a list of items (actually other widgets). In this release we've added an [OptionList](../../widgets/option_list.md) which is similar in appearance, but uses the [line api](../../guide/widgets.md#line-api) under the hood. The Line API makes it more efficient when you approach thousands of items.
 
-```{.textual path="docs/examples/widgets/option_list_strings.py"}
+```{.anytext path="docs/examples/widgets/option_list_strings.py"}
 ```
 
 The Options List accepts [Rich](https://github.com/Textualize/rich/) *renderable*, which means that anything Rich can render may be displayed in a list. Here's an Option List of tables:
 
-```{.textual path="docs/examples/widgets/option_list_tables.py" columns="100" lines="32"}
+```{.anytext path="docs/examples/widgets/option_list_tables.py" columns="100" lines="32"}
 ```
 
 We plan to build on the `OptionList` widget to implement drop-downs, menus, check lists, etc.
@@ -87,10 +87,10 @@ See [release notes](https://github.com/Textualize/textual/releases/tag/v0.17.0) 
 
 ## Next week
 
-Next week we plan to take a break from building Textual to *building apps* with Textual.
-We do this now and again to give us an opportunity to step back and understand things from the perspective of a developer using Textual.
+Next week we plan to take a break from building Anytext to *building apps* with Anytext.
+We do this now and again to give us an opportunity to step back and understand things from the perspective of a developer using Anytext.
 We will hopefully have something interesting to show from the exercise, and new Open Source apps to share.
 
 ## Join us
 
-If you want to talk about this update or anything else Textual related, join us on our [Discord server](https://discord.gg/Enf6Z3qhVr).
+If you want to talk about this update or anything else Anytext related, join us on our [Discord server](https://discord.gg/Enf6Z3qhVr).

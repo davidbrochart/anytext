@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.widget import Widget
-from textual.widgets import Footer, Switch
-from textual.binding import Binding
+from anytext.app import App, ComposeResult
+from anytext.widget import Widget
+from anytext.widgets import Footer, Switch
+from anytext.binding import Binding
 
 
 class MyWidget(Widget, can_focus=True):

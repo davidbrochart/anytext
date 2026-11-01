@@ -1,4 +1,4 @@
-::: textual.events.Focus
+::: anytext.events.Focus
     options:
       heading_level: 1
 

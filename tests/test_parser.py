@@ -1,4 +1,4 @@
-from textual._parser import Parser
+from anytext._parser import Parser
 
 
 def test_read1():

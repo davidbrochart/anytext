@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.screen import ModalScreen
-from textual.widgets import Button, TextArea
+from anytext.app import App, ComposeResult
+from anytext.screen import ModalScreen
+from anytext.widgets import Button, TextArea
 
 
 class TextAreaDialog(ModalScreen):

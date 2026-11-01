@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widget import Widget
+from anytext.app import App, ComposeResult
+from anytext.widget import Widget
 
 
 async def test_border_subtitle():

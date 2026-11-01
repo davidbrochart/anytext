@@ -1,9 +1,9 @@
 from time import time
 
-from textual.app import App, ComposeResult, RenderableType
-from textual.containers import Container
-from textual.renderables.gradient import LinearGradient
-from textual.widgets import Static
+from anytext.app import App, ComposeResult, RenderableType
+from anytext.containers import Container
+from anytext.renderables.gradient import LinearGradient
+from anytext.widgets import Static
 
 COLORS = [
     "#881177",
@@ -39,7 +39,7 @@ class Splash(Container):
         self.auto_refresh = 1 / 30
 
     def compose(self) -> ComposeResult:
-        yield Static("Making a splash with Textual!")
+        yield Static("Making a splash with Anytext!")
 
     def render(self) -> RenderableType:
         return LinearGradient(time() * 90, STOPS)

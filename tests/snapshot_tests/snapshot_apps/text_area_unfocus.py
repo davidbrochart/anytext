@@ -1,6 +1,6 @@
 """Tests the rendering of the TextArea for all supported languages."""
-from textual.app import App, ComposeResult
-from textual.widgets import TextArea
+from anytext.app import App, ComposeResult
+from anytext.widgets import TextArea
 
 
 class TextAreaUnfocusSnapshot(App):

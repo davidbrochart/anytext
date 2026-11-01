@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.binding import Binding
-from textual.widgets import Footer
+from anytext.app import App, ComposeResult
+from anytext.screen import Screen
+from anytext.binding import Binding
+from anytext.widgets import Footer
 
 
 class ShowBindingScreen(Screen):

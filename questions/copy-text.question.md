@@ -1,11 +1,11 @@
 ---
-title: "How can I select and copy text in a Textual app?"
+title: "How can I select and copy text in a Anytext app?"
 alt_titles:
   - "Can't copy text"
   - "Highlighting and copy text not working"
 ---
 
-Textual supports text selection for most widgets, via click and drag. Press ctrl+c to copy.
+Anytext supports text selection for most widgets, via click and drag. Press ctrl+c to copy.
 
 For widgets that don't yet support text selection, you can try and use your terminal's builtin support.
 Most terminal emulators offer a modifier key which you can hold while you click and drag to restore the behavior you

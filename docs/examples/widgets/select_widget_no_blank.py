@@ -1,6 +1,6 @@
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Header, Select
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import Header, Select
 
 LINES = """I must not fear.
 Fear is the mind-killer.

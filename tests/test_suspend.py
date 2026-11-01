@@ -2,8 +2,8 @@ import sys
 
 import pytest
 
-from textual.app import App, SuspendNotSupported
-from textual.drivers.headless_driver import HeadlessDriver
+from anytext.app import App, SuspendNotSupported
+from anytext.drivers.headless_driver import HeadlessDriver
 
 
 async def test_suspend_not_supported() -> None:

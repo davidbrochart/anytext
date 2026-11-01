@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from textual.css.stylesheet import Stylesheet
+from anytext.css.stylesheet import Stylesheet
 
 
 def test_mega_stylesheet() -> None:

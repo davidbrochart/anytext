@@ -1,7 +1,7 @@
 import pytest
 from rich.color import Color as RichColor
 
-from textual.color import Color, Gradient, Lab, lab_to_rgb, rgb_to_lab
+from anytext.color import Color, Gradient, Lab, lab_to_rgb, rgb_to_lab
 
 
 def test_rich_color():

@@ -4,16 +4,16 @@ App to test layout containers.
 
 from typing import Iterable
 
-from textual.app import App, ComposeResult
-from textual.containers import (
+from anytext.app import App, ComposeResult
+from anytext.containers import (
     Grid,
     Horizontal,
     HorizontalScroll,
     Vertical,
     VerticalScroll,
 )
-from textual.widget import Widget
-from textual.widgets import Button, Input, Label
+from anytext.widget import Widget
+from anytext.widgets import Button, Input, Label
 
 
 def sub_compose() -> Iterable[Widget]:

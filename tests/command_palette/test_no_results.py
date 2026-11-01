@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.command import CommandPalette
-from textual.widgets import OptionList
+from anytext.app import App
+from anytext.command import CommandPalette
+from anytext.widgets import OptionList
 
 
 class CommandPaletteApp(App[None]):

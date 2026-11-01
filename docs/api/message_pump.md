@@ -1,5 +1,5 @@
 ---
-title: "textual.message_pump"
+title: "anytext.message_pump"
 ---
 
-::: textual.message_pump
+::: anytext.message_pump

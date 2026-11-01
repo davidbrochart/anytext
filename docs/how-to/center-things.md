@@ -1,6 +1,6 @@
 # Center things
 
-If you have ever needed to center something in a web page, you will be glad to know it is **much** easier in Textual.
+If you have ever needed to center something in a web page, you will be glad to know it is **much** easier in Anytext.
 
 This article discusses a few different ways in which things can be centered, and the differences between them.
 
@@ -16,11 +16,11 @@ Let's see this in practice with a trivial app containing a [Static](../widgets/s
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/center01.py"}
+```{.anytext path="docs/examples/how-to/center01.py"}
 ```
 
 The container of the widget is the screen, which has the `align: center middle;` rule applied. The
-`center` part tells Textual to align in the horizontal direction, and `middle` tells Textual to align in the vertical direction.
+`center` part tells Anytext to align in the horizontal direction, and `middle` tells Anytext to align in the vertical direction.
 
 The output *may* surprise you.
 The text appears to be aligned in the middle (i.e. vertical edge), but *left* aligned on the horizontal.
@@ -38,7 +38,7 @@ In the next example, we will add a background and a border to our text:
 
 The static widget will now have a blue background and white border:
 
-```{.textual path="docs/examples/how-to/center02.py"}
+```{.anytext path="docs/examples/how-to/center02.py"}
 ```
 
 Note the static widget is as wide as the screen.
@@ -57,7 +57,7 @@ Let's set the width of the Static widget to `auto`, which will make the widget j
 
 If you run this now, you should see the widget is aligned on both axis:
 
-```{.textual path="docs/examples/how-to/center03.py"}
+```{.anytext path="docs/examples/how-to/center03.py"}
 ```
 
 ## Aligning text
@@ -72,7 +72,7 @@ We will also set the width of the widget to something smaller, to force the text
 
 Here's what it looks like with longer text:
 
-```{.textual path="docs/examples/how-to/center04.py"}
+```{.anytext path="docs/examples/how-to/center04.py"}
 ```
 
 Note how the widget is centered, but the text within it is flushed to the left edge.
@@ -85,7 +85,7 @@ Let's center align the longer text by setting this rule:
 
 If you run this, you will see that each line of text is individually centered:
 
-```{.textual path="docs/examples/how-to/center05.py"}
+```{.anytext path="docs/examples/how-to/center05.py"}
 ```
 
 You can also use `text-align` to right align text or justify the text (align to both edges).
@@ -105,11 +105,11 @@ Let's set the height of the Static widget to 9 to give the content room to move:
 
 Here's what it looks like with the larger widget:
 
-```{.textual path="docs/examples/how-to/center06.py"}
+```{.anytext path="docs/examples/how-to/center06.py"}
 ```
 
-Textual aligns a widget's content to the top border by default, which is why the space is below the text.
-We can tell Textual to align the content to the center by setting `content-align: center middle`;
+Anytext aligns a widget's content to the top border by default, which is why the space is below the text.
+We can tell Anytext to align the content to the center by setting `content-align: center middle`;
 
 !!! note
 
@@ -122,7 +122,7 @@ We can tell Textual to align the content to the center by setting `content-align
 
 If you run this now, the content will be centered within the widget:
 
-```{.textual path="docs/examples/how-to/center07.py"}
+```{.anytext path="docs/examples/how-to/center07.py"}
 ```
 
 ## Aligning multiple widgets
@@ -139,7 +139,7 @@ The following code adds two widgets with auto dimensions:
 
 This produces the following output:
 
-```{.textual path="docs/examples/how-to/center08.py"}
+```{.anytext path="docs/examples/how-to/center08.py"}
 ```
 
 We can center both those widgets by applying the `align` rule as before:
@@ -150,14 +150,14 @@ We can center both those widgets by applying the `align` rule as before:
 
 Here's the output:
 
-```{.textual path="docs/examples/how-to/center09.py"}
+```{.anytext path="docs/examples/how-to/center09.py"}
 ```
 
 Note how the widgets are aligned as if they are a single group.
 In other words, their position relative to each other didn't change, just their position relative to the screen.
 
 If you do want to center each widget independently, you can place each widget inside its own container, and set `align` for those containers.
-Textual has a builtin [`Center`][textual.containers.Center] container for just this purpose.
+Anytext has a builtin [`Center`][anytext.containers.Center] container for just this purpose.
 
 Let's wrap our two widgets in a `Center` container:
 
@@ -167,18 +167,18 @@ Let's wrap our two widgets in a `Center` container:
 
 If you run this, you will see that the widgets are centered relative to each other, not just the screen:
 
-```{.textual path="docs/examples/how-to/center10.py"}
+```{.anytext path="docs/examples/how-to/center10.py"}
 ```
 
 ## Summary
 
-Keep the following in mind when you want to center content in Textual:
+Keep the following in mind when you want to center content in Anytext:
 
 - In order to center a widget, it needs to be smaller than its container.
 - The `align` rule is applied to the *parent* of the widget you want to center (i.e. the widget's container).
 - The `text-align` rule aligns text on a line by line basis.
 - The `content-align` rule aligns content *within* a widget.
-- Use the [`Center`][textual.containers.Center] container if you want to align multiple widgets relative to each other.
+- Use the [`Center`][anytext.containers.Center] container if you want to align multiple widgets relative to each other.
 - Add a border if the alignment isn't working as you would expect.
 
 ---

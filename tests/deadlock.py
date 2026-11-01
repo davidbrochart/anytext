@@ -3,9 +3,9 @@ Called by test_pipe.py
 
 """
 
-from textual.app import App
-from textual.binding import Binding
-from textual.widgets import Footer
+from anytext.app import App
+from anytext.binding import Binding
+from anytext.widgets import Footer
 
 
 class MyApp(App[None]):

@@ -1,6 +1,6 @@
 ---
-title: "textual.lazy"
+title: "anytext.lazy"
 ---
 
 
-::: textual.lazy
+::: anytext.lazy

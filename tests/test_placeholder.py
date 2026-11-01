@@ -1,7 +1,7 @@
 import pytest
 
-from textual.widgets import Placeholder
-from textual.widgets._placeholder import InvalidPlaceholderVariant
+from anytext.widgets import Placeholder
+from anytext.widgets._placeholder import InvalidPlaceholderVariant
 
 
 async def test_invalid_placeholder_variant():

@@ -4,10 +4,10 @@ import dataclasses
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.events import Paste
-from textual.widgets import TextArea
-from textual.widgets.text_area import EditHistory, Selection
+from anytext.app import App, ComposeResult
+from anytext.events import Paste
+from anytext.widgets import TextArea
+from anytext.widgets.text_area import EditHistory, Selection
 
 MAX_CHECKPOINTS = 5
 SIMPLE_TEXT = """\

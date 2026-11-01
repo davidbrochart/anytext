@@ -16,7 +16,7 @@ widget. Notice how the `Footer` automatically displays the keybinding.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/footer.py"}
+    ```{.anytext path="docs/examples/widgets/footer.py"}
     ```
 
 === "footer.py"
@@ -54,6 +54,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Footer
+::: anytext.widgets.Footer
     options:
       heading_level: 2

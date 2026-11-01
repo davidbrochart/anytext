@@ -22,7 +22,7 @@ The following examples shows a simple horizontal layout with a thin keyline.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/keyline_horizontal.py"}
+    ```{.anytext path="docs/examples/styles/keyline_horizontal.py"}
     ```
 
 === "keyline.py"
@@ -45,7 +45,7 @@ The following examples shows a grid layout with a *heavy* keyline.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/keyline.py"}
+    ```{.anytext path="docs/examples/styles/keyline.py"}
     ```
 
 === "keyline.py"

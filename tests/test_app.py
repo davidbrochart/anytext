@@ -4,12 +4,12 @@ import contextlib
 import pytest
 from rich.terminal_theme import DIMMED_MONOKAI, MONOKAI, NIGHT_OWLISH
 
-from textual import events
-from textual.app import App, ComposeResult
-from textual.command import SimpleCommand
-from textual.pilot import Pilot, _get_mouse_message_arguments
-from textual.screen import Screen
-from textual.widgets import Button, Input, Label, Static
+from anytext import events
+from anytext.app import App, ComposeResult
+from anytext.command import SimpleCommand
+from anytext.pilot import Pilot, _get_mouse_message_arguments
+from anytext.screen import Screen
+from anytext.widgets import Button, Input, Label, Static
 
 
 def test_batch_update():
@@ -143,7 +143,7 @@ async def test_ansi_theme():
         app.ansi_theme_dark = NIGHT_OWLISH
         assert app.ansi_theme == NIGHT_OWLISH
 
-        app.theme = "textual-light"
+        app.theme = "anytext-light"
         assert app.ansi_theme != NIGHT_OWLISH
 
         app.ansi_theme_light = MONOKAI
@@ -154,13 +154,13 @@ async def test_ansi_theme():
         app.ansi_theme_dark = DIMMED_MONOKAI
         assert app.ansi_theme == MONOKAI
 
-        app.theme = "textual-dark"
+        app.theme = "anytext-dark"
         assert app.ansi_theme == DIMMED_MONOKAI
 
 
 async def test_early_exit():
     """Test exiting early doesn't cause issues."""
-    from textual.app import App
+    from anytext.app import App
 
     class AppExit(App):
         def compose(self):

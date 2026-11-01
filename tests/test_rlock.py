@@ -2,7 +2,7 @@ import asyncio
 
 import pytest
 
-from textual.rlock import RLock
+from anytext.rlock import RLock
 
 
 async def test_simple_lock():

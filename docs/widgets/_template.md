@@ -14,7 +14,7 @@ Example app showing the widget:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/checkbox.py"}
+    ```{.anytext path="docs/examples/widgets/checkbox.py"}
     ```
 
 === "checkbox.py"
@@ -38,7 +38,7 @@ Example app showing the widget:
 
 The WIDGET widget defines the following bindings:
 
-::: textual.widgets.WIDGET.BINDINGS
+::: anytext.widgets.WIDGET.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -48,7 +48,7 @@ The WIDGET widget defines the following bindings:
 
 The WIDGET widget provides the following component classes:
 
-::: textual.widget.WIDGET.COMPONENT_CLASSES
+::: anytext.widget.WIDGET.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -69,6 +69,6 @@ The WIDGET widget provides the following component classes:
 ---
 
 
-::: textual.widgets.WIDGET
+::: anytext.widgets.WIDGET
     options:
       heading_level: 2

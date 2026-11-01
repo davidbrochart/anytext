@@ -1,4 +1,4 @@
-<!-- Template file for a Textual CSS type reference page. -->
+<!-- Template file for a Anytext CSS type reference page. -->
 
 # &lt;type-name&gt;
 

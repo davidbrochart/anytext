@@ -1,6 +1,6 @@
 ---
-title: "textual.scroll_view"
+title: "anytext.scroll_view"
 ---
 
 
-::: textual.scroll_view
+::: anytext.scroll_view

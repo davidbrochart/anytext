@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Container
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.containers import Container
+from anytext.widgets import Static
 
 
 async def test_compositor_scroll_placements():

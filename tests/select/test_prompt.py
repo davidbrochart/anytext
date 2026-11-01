@@ -1,8 +1,8 @@
 from rich.text import Text
 
-from textual.app import App
-from textual.widgets import Select, Static
-from textual.widgets._select import SelectCurrent, SelectOverlay
+from anytext.app import App
+from anytext.widgets import Select, Static
+from anytext.widgets._select import SelectCurrent, SelectOverlay
 
 
 async def test_reactive_prompt_change():

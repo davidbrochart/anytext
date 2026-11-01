@@ -12,7 +12,7 @@ A widget for showing a vertical list of selectable options.
 The `SelectionList` control is a
 [`Generic`](https://docs.python.org/3/library/typing.html#typing.Generic),
 which allows you to set the type of the
-[selection values][textual.widgets.selection_list.Selection.value]. For instance, if
+[selection values][anytext.widgets.selection_list.Selection.value]. For instance, if
 the data type for your values is an integer, you would type the widget as
 follows:
 
@@ -41,7 +41,7 @@ optionally contain a flag for the initial selected state of the option.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/selection_list_tuples.py"}
+    ```{.anytext path="docs/examples/widgets/selection_list_tuples.py"}
     ```
 
 === "selection_list_tuples.py"
@@ -61,11 +61,11 @@ optionally contain a flag for the initial selected state of the option.
 ### Selections as Selection objects
 
 Alternatively, selections can be passed in as
-[`Selection`][textual.widgets.selection_list.Selection]s:
+[`Selection`][anytext.widgets.selection_list.Selection]s:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/selection_list_selections.py"}
+    ```{.anytext path="docs/examples/widgets/selection_list_selections.py"}
     ```
 
 === "selection_list_selections.py"
@@ -86,13 +86,13 @@ Alternatively, selections can be passed in as
 
 Most of the time, when using the `SelectionList`, you will want to know when
 the collection of selected items has changed; this is ideally done using the
-[`SelectedChanged`][textual.widgets.SelectionList.SelectedChanged] message.
+[`SelectedChanged`][anytext.widgets.SelectionList.SelectedChanged] message.
 Here is an example of using that message to update a `Pretty` with the
 collection of selected values:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/selection_list_selected.py"}
+    ```{.anytext path="docs/examples/widgets/selection_list_selected.py"}
     ```
 
 === "selection_list_selections.py"
@@ -117,23 +117,23 @@ collection of selected values:
 
 ## Messages
 
-- [SelectionList.SelectionHighlighted][textual.widgets.SelectionList.SelectionHighlighted]
-- [SelectionList.SelectionToggled][textual.widgets.SelectionList.SelectionToggled]
-- [SelectionList.SelectedChanged][textual.widgets.SelectionList.SelectedChanged]
+- [SelectionList.SelectionHighlighted][anytext.widgets.SelectionList.SelectionHighlighted]
+- [SelectionList.SelectionToggled][anytext.widgets.SelectionList.SelectionToggled]
+- [SelectionList.SelectedChanged][anytext.widgets.SelectionList.SelectedChanged]
 
 ## Bindings
 
 The selection list widget defines the following bindings:
 
-::: textual.widgets.SelectionList.BINDINGS
+::: anytext.widgets.SelectionList.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
 
-It inherits from [`OptionList`][textual.widgets.OptionList]
+It inherits from [`OptionList`][anytext.widgets.OptionList]
 and so also inherits the following bindings:
 
-::: textual.widgets.OptionList.BINDINGS
+::: anytext.widgets.OptionList.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -142,23 +142,23 @@ and so also inherits the following bindings:
 
 The selection list provides the following component classes:
 
-::: textual.widgets.SelectionList.COMPONENT_CLASSES
+::: anytext.widgets.SelectionList.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
 
-It inherits from [`OptionList`][textual.widgets.OptionList] and so also
+It inherits from [`OptionList`][anytext.widgets.OptionList] and so also
 makes use of the following component classes:
 
-::: textual.widgets.OptionList.COMPONENT_CLASSES
+::: anytext.widgets.OptionList.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
 
-::: textual.widgets.SelectionList
+::: anytext.widgets.SelectionList
     options:
       heading_level: 2
 
-::: textual.widgets.selection_list
+::: anytext.widgets.selection_list
     options:
       heading_level: 2

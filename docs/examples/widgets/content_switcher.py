@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Horizontal, VerticalScroll
-from textual.widgets import Button, ContentSwitcher, DataTable, Markdown
+from anytext.app import App, ComposeResult
+from anytext.containers import Horizontal, VerticalScroll
+from anytext.widgets import Button, ContentSwitcher, DataTable, Markdown
 
 MARKDOWN_EXAMPLE = """# Three Flavours Cornetto
 

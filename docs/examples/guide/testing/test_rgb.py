@@ -1,6 +1,6 @@
 from rgb import RGBApp
 
-from textual.color import Color
+from anytext.color import Color
 
 
 async def test_keys():  # (1)!

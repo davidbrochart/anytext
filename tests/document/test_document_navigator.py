@@ -1,8 +1,8 @@
 import pytest
 
-from textual.document._document import Document
-from textual.document._document_navigator import DocumentNavigator
-from textual.document._wrapped_document import WrappedDocument
+from anytext.document._document import Document
+from anytext.document._document_navigator import DocumentNavigator
+from anytext.document._wrapped_document import WrappedDocument
 
 TEXT = """\
 01 3456

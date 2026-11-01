@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import Tab, Tabs
-from textual.widgets._tabs import Underline
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import Tab, Tabs
+from anytext.widgets._tabs import Underline
 
 
 async def test_tab_label():

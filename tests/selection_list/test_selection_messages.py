@@ -8,9 +8,9 @@ that have been modified by the child class.
 
 from __future__ import annotations
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.widgets import OptionList, SelectionList
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.widgets import OptionList, SelectionList
 
 
 class SelectionListApp(App[None]):

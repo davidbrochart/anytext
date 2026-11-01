@@ -27,7 +27,7 @@ The container on the right has its scrollbar hidden.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/scrollbar_visibility.py"}
+    ```{.anytext path="docs/examples/styles/scrollbar_visibility.py"}
     ```
 
 === "scrollbar_visibility.py"

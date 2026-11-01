@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from time import sleep
 
-from textual.notifications import Notification
+from anytext.notifications import Notification
 
 
 def test_message() -> None:

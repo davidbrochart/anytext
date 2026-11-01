@@ -13,7 +13,7 @@ The example below shows how you might create a simple form using two `Input` wid
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/input.py" press="D,a,r,r,e,n"}
+    ```{.anytext path="docs/examples/widgets/input.py" press="D,a,r,r,e,n"}
     ```
 
 === "input.py"
@@ -37,7 +37,7 @@ You can set `type` to any of the following values:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/input_types.py" press="1234"}
+    ```{.anytext path="docs/examples/widgets/input_types.py" press="1234"}
     ```
 
 === "input_types.py"
@@ -65,11 +65,11 @@ This will prevent the user from typing any more characters when the maximum has 
 
 ### Validating Input
 
-You can supply one or more *[validators][textual.validation.Validator]* to the `Input` widget to validate the value.
+You can supply one or more *[validators][anytext.validation.Validator]* to the `Input` widget to validate the value.
 
 All the supplied validators will run when the value changes, the `Input` is submitted, or focus moves _out_ of the `Input`.
 The values `"changed"`, `"submitted"`, and `"blur"`, can be passed as an iterable to the `Input` parameter `validate_on` to request that validation occur only on the respective messages.
-(See [`InputValidationOn`][textual.widgets._input.InputValidationOn] and [`Input.validate_on`][textual.widgets.Input.validate_on].)
+(See [`InputValidationOn`][anytext.widgets._input.InputValidationOn] and [`Input.validate_on`][anytext.widgets.Input.validate_on].)
 For example, the code below creates an `Input` widget that only gets validated when the value is submitted explicitly:
 
 ```python
@@ -78,7 +78,7 @@ input = Input(validate_on=["submitted"])
 
 Validation is considered to have failed if *any* of the validators fail.
 
-You can check whether the validation succeeded or failed inside an [Input.Changed][textual.widgets.Input.Changed], [Input.Submitted][textual.widgets.Input.Submitted], or [Input.Blurred][textual.widgets.Input.Blurred] handler by looking at the `validation_result` attribute on these events.
+You can check whether the validation succeeded or failed inside an [Input.Changed][anytext.widgets.Input.Changed], [Input.Submitted][anytext.widgets.Input.Submitted], or [Input.Blurred][anytext.widgets.Input.Blurred] handler by looking at the `validation_result` attribute on these events.
 
 In the example below, we show how to combine multiple validators and update the UI to tell the user
 why validation failed.
@@ -95,20 +95,20 @@ Click the tabs to see the output for validation failures and successes.
     3. `Palindrome` is a custom `Validator` defined below.
     4. The `Input.Changed` event has a `validation_result` attribute which contains information about the validation that occurred when the value changed.
     5. Here's how we can implement a custom validator which checks if a string is a palindrome. Note how the description passed into `self.failure` corresponds to the message seen on UI.
-    6. Textual offers default styling for the `-invalid` CSS class (a red border), which is automatically applied to `Input` when validation fails. We can also provide custom styling for the `-valid` class, as seen here. In this case, we add a green border around the `Input` to indicate successful validation.
+    6. Anytext offers default styling for the `-invalid` CSS class (a red border), which is automatically applied to `Input` when validation fails. We can also provide custom styling for the `-valid` class, as seen here. In this case, we add a green border around the `Input` to indicate successful validation.
 
 === "Validation Failure"
 
-    ```{.textual path="docs/examples/widgets/input_validation.py" press="-,2,3"}
+    ```{.anytext path="docs/examples/widgets/input_validation.py" press="-,2,3"}
     ```
 
 === "Validation Success"
 
-    ```{.textual path="docs/examples/widgets/input_validation.py" press="4,4"}
+    ```{.anytext path="docs/examples/widgets/input_validation.py" press="4,4"}
     ```
 
-Textual offers several [built-in validators][textual.validation] for common requirements,
-but you can easily roll your own by extending [Validator][textual.validation.Validator],
+Anytext offers several [built-in validators][anytext.validation] for common requirements,
+but you can easily roll your own by extending [Validator][anytext.validation.Validator],
 as seen for `Palindrome` in the example above.
 
 #### Validate Empty
@@ -131,15 +131,15 @@ If you set `valid_empty=True` then empty values will bypass any validators, and 
 
 ## Messages
 
-- [Input.Blurred][textual.widgets.Input.Blurred]
-- [Input.Changed][textual.widgets.Input.Changed]
-- [Input.Submitted][textual.widgets.Input.Submitted]
+- [Input.Blurred][anytext.widgets.Input.Blurred]
+- [Input.Changed][anytext.widgets.Input.Changed]
+- [Input.Submitted][anytext.widgets.Input.Submitted]
 
 ## Bindings
 
 The input widget defines the following bindings:
 
-::: textual.widgets.Input.BINDINGS
+::: anytext.widgets.Input.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -148,7 +148,7 @@ The input widget defines the following bindings:
 
 The input widget provides the following component classes:
 
-::: textual.widgets.Input.COMPONENT_CLASSES
+::: anytext.widgets.Input.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -160,6 +160,6 @@ The input widget provides the following component classes:
 ---
 
 
-::: textual.widgets.Input
+::: anytext.widgets.Input
     options:
       heading_level: 2

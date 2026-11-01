@@ -35,7 +35,7 @@ Short description of the first example.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/style.py"}
+    ```{.anytext path="docs/examples/styles/style.py"}
     ```
 
 === "style.py"
@@ -57,7 +57,7 @@ Short description of the second example.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/style.py"}
+    ```{.anytext path="docs/examples/styles/style.py"}
     ```
 
 === "style.py"

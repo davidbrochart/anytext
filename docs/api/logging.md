@@ -1,4 +1,4 @@
 ---
-title: "textual.logging"
+title: "anytext.logging"
 ---
-::: textual.logging
+::: anytext.logging

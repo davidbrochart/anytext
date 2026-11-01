@@ -2,15 +2,15 @@ from string import ascii_lowercase
 
 import pytest
 
-from textual.app import App
-from textual.binding import (
+from anytext.app import App
+from anytext.binding import (
     Binding,
     BindingError,
     BindingsMap,
     InvalidBinding,
     NoBinding,
 )
-from textual.screen import Screen
+from anytext.screen import Screen
 
 BINDING1 = Binding("a,b", action="action1", description="description1")
 BINDING2 = Binding("c", action="action2", description="description2")

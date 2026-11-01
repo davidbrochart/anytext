@@ -1,9 +1,9 @@
 import asyncio
 import time
 
-from textual.app import App, ComposeResult
-from textual.widget import Widget
-from textual.worker import Worker, WorkerState
+from anytext.app import App, ComposeResult
+from anytext.widget import Widget
+from anytext.worker import Worker, WorkerState
 
 
 def test_worker_manager_init():

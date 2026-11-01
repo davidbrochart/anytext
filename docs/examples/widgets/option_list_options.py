@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Footer, Header, OptionList
-from textual.widgets.option_list import Option
+from anytext.app import App, ComposeResult
+from anytext.widgets import Footer, Header, OptionList
+from anytext.widgets.option_list import Option
 
 
 class OptionListApp(App[None]):

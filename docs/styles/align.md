@@ -25,7 +25,7 @@ This example contains a simple app with two labels centered on the screen with `
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/align.py"}
+    ```{.anytext path="docs/examples/styles/align.py"}
     ```
 
 === "align.py"
@@ -47,7 +47,7 @@ Each label has been aligned differently inside its container, and its text shows
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/align_all.py"}
+    ```{.anytext path="docs/examples/styles/align_all.py"}
     ```
 
 === "align_all.py"

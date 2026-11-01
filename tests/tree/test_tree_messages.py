@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from textual.app import App, ComposeResult
-from textual.containers import Vertical
-from textual.widgets import Button, Tree
+from anytext.app import App, ComposeResult
+from anytext.containers import Vertical
+from anytext.widgets import Button, Tree
 
 
 class MyTree(Tree[None]):

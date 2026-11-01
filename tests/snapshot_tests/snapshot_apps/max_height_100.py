@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import DataTable, Static
+from anytext.app import App, ComposeResult
+from anytext.widgets import DataTable, Static
 
 
 class HappyDataTableFunApp(App[None]):

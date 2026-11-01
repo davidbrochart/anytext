@@ -3,15 +3,15 @@ from typing import Type
 
 import pytest
 
-from textual.app import (
+from anytext.app import (
     ActiveModeError,
     App,
     ComposeResult,
     InvalidModeError,
     UnknownModeError,
 )
-from textual.screen import ModalScreen, Screen
-from textual.widgets import Footer, Header, Label
+from anytext.screen import ModalScreen, Screen
+from anytext.widgets import Footer, Header, Label
 
 
 class ScreenBindingsMixin(Screen[None]):

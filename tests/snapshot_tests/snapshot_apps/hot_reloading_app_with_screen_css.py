@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from textual.app import App, ComposeResult
-from textual.containers import Container
-from textual.screen import Screen
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Container
+from anytext.screen import Screen
+from anytext.widgets import Label
 
 
 SCREEN_CSS_PATH = (Path(__file__) / "../hot_reloading_app_with_screen_css.tcss").resolve()

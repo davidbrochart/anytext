@@ -1,4 +1,4 @@
-from textual._loop import loop_first, loop_first_last, loop_from_index, loop_last
+from anytext._loop import loop_first, loop_first_last, loop_from_index, loop_last
 
 
 def test_loop_first():

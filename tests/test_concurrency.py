@@ -2,8 +2,8 @@ from threading import Thread
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import RichLog
+from anytext.app import App, ComposeResult
+from anytext.widgets import RichLog
 
 
 def test_call_from_thread_app_not_running():

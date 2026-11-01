@@ -10,10 +10,10 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.widgets import SelectionList
-from textual.widgets.option_list import Option
-from textual.widgets.selection_list import Selection, SelectionError
+from anytext.app import App, ComposeResult
+from anytext.widgets import SelectionList
+from anytext.widgets.option_list import Option
+from anytext.widgets.selection_list import Selection, SelectionError
 
 
 class SelectionListApp(App[None]):

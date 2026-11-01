@@ -1,5 +1,5 @@
 ---
-title: "textual.constants"
+title: "anytext.constants"
 ---
 
-::: textual.constants
+::: anytext.constants

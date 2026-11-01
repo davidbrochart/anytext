@@ -3,14 +3,14 @@ draft: false
 date: 2023-02-15
 categories:
   - Release
-title: "Textual 0.11.0 adds a beautiful Markdown widget"
+title: "Anytext 0.11.0 adds a beautiful Markdown widget"
 authors:
   - willmcgugan
 ---
 
-# Textual 0.11.0 adds a beautiful Markdown widget
+# Anytext 0.11.0 adds a beautiful Markdown widget
 
-We released Textual 0.10.0 25 days ago, which is a little longer than our usual release cycle. What have we been up to?
+We released Anytext 0.10.0 25 days ago, which is a little longer than our usual release cycle. What have we been up to?
 
 <!-- more -->
 
@@ -26,7 +26,7 @@ The headline feature of this release is the enhanced Markdown support. Here's a 
 
 There are actually 2 new widgets: [Markdown](./../../widgets/markdown.md) for a simple Markdown document, and [MarkdownViewer](./../../widgets/markdown_viewer.md) which adds browser-like navigation and a table of contents.
 
-Textual has had support for Markdown since day one by embedding a Rich [Markdown](https://rich.readthedocs.io/en/latest/markdown.html) object -- which still gives decent results! This new widget adds dynamic controls such as scrollable code fences and tables, in addition to working links.
+Anytext has had support for Markdown since day one by embedding a Rich [Markdown](https://rich.readthedocs.io/en/latest/markdown.html) object -- which still gives decent results! This new widget adds dynamic controls such as scrollable code fences and tables, in addition to working links.
 
 In future releases we plan on adding more Markdown extensions, and the ability to easily embed custom widgets within the document. I'm sure there are plenty of interesting applications that could be powered by dynamically generated Markdown documents.
 
@@ -34,7 +34,7 @@ In future releases we plan on adding more Markdown extensions, and the ability t
 
 There has been a lot of work on the [DataTable](../../widgets/data_table.md) API. We've added the ability to sort the data, which required that we introduce the concept of row and column keys. You can now reference rows / columns / cells by their coordinate or by row / column key.
 
-Additionally there are new [update_cell][textual.widgets.DataTable.update_cell] and [update_cell_at][textual.widgets.DataTable.update_cell_at] methods to update cells after the data has been populated. Future releases will have more methods to manipulate table data, which will make it a very general purpose (and powerful) widget.
+Additionally there are new [update_cell][anytext.widgets.DataTable.update_cell] and [update_cell_at][anytext.widgets.DataTable.update_cell_at] methods to update cells after the data has been populated. Future releases will have more methods to manipulate table data, which will make it a very general purpose (and powerful) widget.
 
 ## Tree control
 

@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.color import Color
-from textual.widgets import Label
+from anytext.app import App
+from anytext.color import Color
+from anytext.widgets import Label
 
 
 class TintApp(App):

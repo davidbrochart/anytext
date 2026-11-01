@@ -1,8 +1,8 @@
 import pytest
 
-from textual.app import App
-from textual.binding import Binding
-from textual.keys import _character_to_key, format_key, key_to_character
+from anytext.app import App
+from anytext.binding import Binding
+from anytext.keys import _character_to_key, format_key, key_to_character
 
 
 @pytest.mark.parametrize(

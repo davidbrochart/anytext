@@ -1,8 +1,6 @@
 [tool.poetry]
-name = "textual"
+name = "anytext"
 version = "8.2.8"
-homepage = "https://github.com/Textualize/textual"
-repository = "https://github.com/Textualize/textual"
 documentation = "https://textual.textualize.io/"
 
 description = "Modern Text User Interface framework"
@@ -26,7 +24,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 include = [
-    "src/textual/py.typed",
+    "src/anytext/py.typed",
     { path = "docs/examples", format = "sdist" },
     { path = "tests", format = "sdist" },
     # The reason for the slightly convoluted path specification here is that
@@ -37,9 +35,6 @@ include = [
     { path = "docs-offline/**/*", format = "sdist" },
 ]
 exclude = ["tests/snapshot_tests/__snapshots__"]
-
-[tool.poetry.urls]
-"Bug Tracker" = "https://github.com/Textualize/textual/issues"
 
 [tool.ruff]
 target-version = "py39"

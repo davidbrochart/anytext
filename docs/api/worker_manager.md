@@ -1,5 +1,5 @@
 ---
-title: "textual.worker_manager"
+title: "anytext.worker_manager"
 ---
 
-::: textual.worker_manager
+::: anytext.worker_manager

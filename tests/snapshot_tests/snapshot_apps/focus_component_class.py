@@ -1,9 +1,9 @@
 from rich.text import Text
 
-from textual.app import App, ComposeResult, RenderResult
-from textual.containers import VerticalScroll
-from textual.widgets import Header, Footer
-from textual.widget import Widget
+from anytext.app import App, ComposeResult, RenderResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Header, Footer
+from anytext.widget import Widget
 
 
 class Tester(Widget, can_focus=True):

@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.reactive import var
-from textual.widgets import Label, Tab, TabbedContent, TabPane, Tabs
-from textual.widgets._tabbed_content import ContentTab
+from anytext.app import App, ComposeResult
+from anytext.reactive import var
+from anytext.widgets import Label, Tab, TabbedContent, TabPane, Tabs
+from anytext.widgets._tabbed_content import ContentTab
 
 
 async def test_tabbed_content_switch_via_ui():

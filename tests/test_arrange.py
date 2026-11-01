@@ -1,11 +1,11 @@
 import pytest
 
-from textual._arrange import TOP_Z, arrange
-from textual._context import active_app
-from textual.app import App
-from textual.geometry import NULL_OFFSET, Region, Size, Spacing
-from textual.layout import WidgetPlacement
-from textual.widget import Widget
+from anytext._arrange import TOP_Z, arrange
+from anytext._context import active_app
+from anytext.app import App
+from anytext.geometry import NULL_OFFSET, Region, Size, Spacing
+from anytext.layout import WidgetPlacement
+from anytext.widget import Widget
 
 
 async def test_arrange_empty():

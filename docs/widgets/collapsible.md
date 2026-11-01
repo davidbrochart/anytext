@@ -69,17 +69,17 @@ The following example contains three `Collapsible`s in different states.
 
 === "All expanded"
 
-    ```{.textual path="docs/examples/widgets/collapsible.py" press="e"}
+    ```{.anytext path="docs/examples/widgets/collapsible.py" press="e"}
     ```
 
 === "All collapsed"
 
-    ```{.textual path="docs/examples/widgets/collapsible.py" press="c"}
+    ```{.anytext path="docs/examples/widgets/collapsible.py" press="c"}
     ```
 
 === "Mixed"
 
-    ```{.textual path="docs/examples/widgets/collapsible.py"}
+    ```{.anytext path="docs/examples/widgets/collapsible.py"}
     ```
 
 === "collapsible.py"
@@ -95,7 +95,7 @@ The example below shows nested `Collapsible` widgets and how to set their initia
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/collapsible_nested.py"}
+    ```{.anytext path="docs/examples/widgets/collapsible_nested.py"}
     ```
 
 === "collapsible_nested.py"
@@ -111,7 +111,7 @@ The following example shows `Collapsible` widgets with custom expand/collapse sy
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/collapsible_custom_symbol.py"}
+    ```{.anytext path="docs/examples/widgets/collapsible_custom_symbol.py"}
     ```
 
 === "collapsible_custom_symbol.py"
@@ -129,13 +129,13 @@ The following example shows `Collapsible` widgets with custom expand/collapse sy
 
 ## Messages
 
-- [Collapsible.Toggled][textual.widgets.Collapsible.Toggled]
+- [Collapsible.Toggled][anytext.widgets.Collapsible.Toggled]
 
 ## Bindings
 
 The collapsible widget defines the following binding on its title:
 
-::: textual.widgets._collapsible.CollapsibleTitle.BINDINGS
+::: anytext.widgets._collapsible.CollapsibleTitle.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -145,6 +145,6 @@ The collapsible widget defines the following binding on its title:
 This widget has no component classes.
 
 
-::: textual.widgets.Collapsible
+::: anytext.widgets.Collapsible
     options:
       heading_level: 2

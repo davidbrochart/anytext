@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll, Container
-from textual.widgets import Button
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll, Container
+from anytext.widgets import Button
 
 
 class ScrollVisibleMargin(App):

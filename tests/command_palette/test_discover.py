@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.command import CommandPalette, DiscoveryHit, Hit, Hits, Provider
-from textual.widgets import OptionList
+from anytext.app import App
+from anytext.command import CommandPalette, DiscoveryHit, Hit, Hits, Provider
+from anytext.widgets import OptionList
 
 
 class SimpleSource(Provider):

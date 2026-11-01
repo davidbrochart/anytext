@@ -1,6 +1,6 @@
 # Border-title-color
 
-The `border-title-color` style sets the color of the [border_title][textual.widget.Widget.border_title].
+The `border-title-color` style sets the color of the [border_title][anytext.widget.Widget.border_title].
 
 ## Syntax
 

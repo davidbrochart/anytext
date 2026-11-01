@@ -1,5 +1,5 @@
 ---
-title: "Why doesn't Textual look good on macOS?"
+title: "Why doesn't Anytext look good on macOS?"
 alt_titles:
   - "looks bad on macOS"
   - "dashed lines on macOS"
@@ -10,7 +10,7 @@ alt_titles:
   - "macOS terminal"
 ---
 
-You may find that the default macOS Terminal.app doesn't render Textual apps (and likely other TUIs) very well, particularly when it comes to box characters.
+You may find that the default macOS Terminal.app doesn't render Anytext apps (and likely other TUIs) very well, particularly when it comes to box characters.
 For instance, you may find it displays misaligned blocks and lines like this:
 
 <img width="1042" alt="Screenshot 2023-06-19 at 10 43 02" src="https://github.com/Textualize/textual/assets/554369/e61f3876-3dd1-4ac8-b380-22922c89c7d6">
@@ -21,7 +21,7 @@ If you want to use another font, you may have to tweak the line spacing until yo
 
 <img width="737" alt="Screenshot 2023-06-19 at 10 44 00" src="https://github.com/Textualize/textual/assets/554369/0a052a93-b1fd-4327-9d33-d954b51a9ad2">
 
-With these changes, Textual apps render more as intended:
+With these changes, Anytext apps render more as intended:
 
 <img width="1042" alt="Screenshot 2023-06-19 at 10 43 23" src="https://github.com/Textualize/textual/assets/554369/a0c4aa05-c509-4ac1-b0b8-e68ce4433f70">
 

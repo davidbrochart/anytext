@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.widgets import Label
+from anytext.app import App
+from anytext.widgets import Label
 
 
 class LinkBackgroundApp(App):

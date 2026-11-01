@@ -1,5 +1,5 @@
 """
-A simple example of chatting to an LLM with Textual.
+A simple example of chatting to an LLM with Anytext.
 
 Lots of room for improvement here.
 
@@ -11,13 +11,13 @@ See https://textual.textualize.io/blog/2024/09/15/anatomy-of-a-textual-user-inte
 # requires-python = ">=3.12"
 # dependencies = [
 #     "llm",
-#     "textual",
+#     "anytext",
 # ]
 # ///
-from textual import on, work
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widgets import Footer, Header, Input, Markdown
+from anytext import on, work
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Footer, Header, Input, Markdown
 
 try:
     import llm

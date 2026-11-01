@@ -1,6 +1,6 @@
-from textual import __version__
-from textual.app import App, ComposeResult
-from textual.widgets import Static
+from anytext import __version__
+from anytext.app import App, ComposeResult
+from anytext.widgets import Static
 
 
 # Regression test for https://github.com/Textualize/textual/issues/3858

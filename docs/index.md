@@ -13,15 +13,15 @@ hide:
 
 # Welcome
 
-Welcome to the [Textual](https://github.com/Textualize/textual) framework documentation.
+Welcome to the [Anytext](https://github.com/Textualize/textual) framework documentation.
 
 [Get started](./getting_started.md){ .md-button .md-button--primary } or go straight to the [Tutorial](./tutorial.md)
 
 
 
-## What is Textual?
+## What is Anytext?
 
-Textual is a *Rapid Application Development* framework for Python, built by [Textualize.io](https://www.textualize.io).
+Anytext is a *Rapid Application Development* framework for Python, built by [Textualize.io](https://www.textualize.io).
 
 
 Build sophisticated user interfaces with a simple Python API. Run your apps in the terminal *or* a [web browser](https://github.com/Textualize/textual-serve)!
@@ -41,7 +41,7 @@ Build sophisticated user interfaces with a simple Python API. Run your apps in t
 
     ---
 
-    Run Textual on a single board computer if you want to.
+    Run Anytext on a single board computer if you want to.
 
 
 
@@ -49,7 +49,7 @@ Build sophisticated user interfaces with a simple Python API. Run your apps in t
 
     ---
 
-    Textual runs just about everywhere.
+    Anytext runs just about everywhere.
 
 
 
@@ -57,14 +57,14 @@ Build sophisticated user interfaces with a simple Python API. Run your apps in t
 
     ---
 
-    Textual apps can run over SSH.
+    Anytext apps can run over SSH.
 
 
 -   :fontawesome-solid-terminal:{ .lg .middle } __CLI Integration__
 
     ---
 
-    Textual apps can be launched and run from the command prompt.
+    Anytext apps can be launched and run from the command prompt.
 
 
 
@@ -72,7 +72,7 @@ Build sophisticated user interfaces with a simple Python API. Run your apps in t
 
     ---
 
-    Textual is licensed under MIT.
+    Anytext is licensed under MIT.
 
 
 </div>
@@ -81,9 +81,9 @@ Build sophisticated user interfaces with a simple Python API. Run your apps in t
 
 ---
 
-# Built with Textual
+# Built with Anytext
 
-Textual has enabled an ecosystem of applications and tools for developers and non-developers alike.
+Anytext has enabled an ecosystem of applications and tools for developers and non-developers alike.
 
 Here are a few examples.
 
@@ -190,7 +190,7 @@ Click the tabs to see the code behind the example.
 
 === "Pride example"
 
-    ```{.textual path="examples/pride.py"}
+    ```{.anytext path="examples/pride.py"}
     ```
 
 === "pride.py"
@@ -204,7 +204,7 @@ Click the tabs to see the code behind the example.
 
 === "Calculator example"
 
-    ```{.textual path="examples/calculator.py" columns=100 lines=41 press="6,.,2,8,3,1,8,5,3,0,7,1,wait:400"}
+    ```{.anytext path="examples/calculator.py" columns=100 lines=41 press="6,.,2,8,3,1,8,5,3,0,7,1,wait:400"}
     ```
 
 === "calculator.py"

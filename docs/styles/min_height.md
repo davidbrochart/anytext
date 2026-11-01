@@ -18,7 +18,7 @@ Then, we set `min-height` individually on each placeholder.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/min_height.py"}
+    ```{.anytext path="docs/examples/styles/min_height.py"}
     ```
 
 === "min_height.py"

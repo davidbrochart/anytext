@@ -2,10 +2,10 @@ from typing import Union
 
 import pytest
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.validation import Failure, ValidationResult
-from textual.widgets import MaskedInput
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.validation import Failure, ValidationResult
+from anytext.widgets import MaskedInput
 
 InputEvent = Union[MaskedInput.Changed, MaskedInput.Submitted]
 

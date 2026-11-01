@@ -2,7 +2,7 @@
 title: DescendantFocus
 ---
 
-::: textual.events.DescendantFocus
+::: anytext.events.DescendantFocus
     options:
       heading_level: 1
 

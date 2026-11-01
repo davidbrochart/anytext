@@ -4,7 +4,7 @@ The `link-style` style sets the text style for the link text.
 
 !!! note
 
-    `link-style` only applies to Textual action links as described in the [actions guide](../../guide/actions.md#links) and not to regular hyperlinks.
+    `link-style` only applies to Anytext action links as described in the [actions guide](../../guide/actions.md#links) and not to regular hyperlinks.
 
 ## Syntax
 
@@ -12,11 +12,11 @@ The `link-style` style sets the text style for the link text.
 link-style: <a href="../../../css_types/text_style">&lt;text-style&gt;</a>;
 --8<-- "docs/snippets/syntax_block_end.md"
 
-`link-style` will take all the values specified and will apply that styling to text that is enclosed by a Textual action link.
+`link-style` will take all the values specified and will apply that styling to text that is enclosed by a Anytext action link.
 
 ### Defaults
 
-If not provided, a Textual action link will have `link-style` set to `underline`.
+If not provided, a Anytext action link will have `link-style` set to `underline`.
 
 ## Example
 
@@ -25,7 +25,7 @@ It also shows that `link-style` does not affect hyperlinks.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/link_style.py" lines=6}
+    ```{.anytext path="docs/examples/styles/link_style.py" lines=6}
     ```
 
 === "link_style.py"

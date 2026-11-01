@@ -1,118 +1,48 @@
+# Getting started with Anytext
 
-All you need to get started building Textual apps.
-
-## Requirements
-
-Textual requires Python 3.9 or later (if you have a choice, pick the most recent Python). Textual runs on Linux, macOS, Windows and probably any OS where Python also runs. 
-
-!!! info "Your platform"
-
-    ### :fontawesome-brands-linux: Linux (all distros)
-
-    All Linux distros come with a terminal emulator that can run Textual apps.
-
-    If you are using the Linux console (rather than a desktop environment), see [Linux console]](./linux-console.md) for details. 
-
-    ### :material-apple: macOS
-
-    The default terminal app is limited to 256 colors. We recommend installing a newer terminal such as [iterm2](https://iterm2.com/), [Ghostty](https://ghostty.org/), [Kitty](https://sw.kovidgoyal.net/kitty/), or [WezTerm](https://wezfurlong.org/wezterm/).
-
-    ### :material-microsoft-windows: Windows
-
-    The new [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-gb&gl=GB) runs Textual apps beautifully.
-
+Anytext is a fork of [Textual](https://github.com/Textualize/textual) for building
+terminal user interfaces. It requires Python 3.9 or later and runs on Linux,
+macOS, and Windows.
 
 ## Installation
 
-Here's how to install Textual.
-
-### From PyPI
-
-You can install Textual via PyPI, with the following command:
-
-```
-pip install textual
+```sh
+pip install anytext
 ```
 
-If you plan on developing Textual apps, you should also install textual developer tools:
+For syntax highlighting in the [TextArea](widgets/text_area.md) widget:
 
-```
-pip install textual-dev
-```
-
-If you would like to enable syntax highlighting in the [TextArea](./widgets/text_area.md) widget, you should specify the "syntax" extras when you install Textual:
-
-```
-pip install "textual[syntax]"
+```sh
+pip install "anytext[syntax]"
 ```
 
-### From conda-forge
-
-Textual is also available on [conda-forge](https://conda-forge.org/). The preferred package manager for conda-forge is currently [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html):
-
-```
-micromamba install -c conda-forge textual
-```
-
-And for the textual developer tools:
-
-```
-micromamba install -c conda-forge textual-dev
-```
-
-### Textual CLI
-
-If you installed the developer tools you should have access to the `textual` command. There are a number of sub-commands available which will aid you in building Textual apps. Run the following for a list of the available commands:
-
-```bash
-textual --help
-```
-
-See [devtools](guide/devtools.md) for more about the `textual` command.
+To install a local checkout for development, run `pip install -e .` from the
+repository root.
 
 ## Demo
 
-Once you have Textual installed, run the following to get an impression of what it can do:
-
-```bash
-python -m textual
+```sh
+python -m anytext
 ```
 
 ## Examples
 
+From the repository root, run an example:
 
-The Textual repository comes with a number of example apps. To try out the examples, first clone the Textual repository:
-
-=== "HTTPS"
-
-    ```bash
-    git clone https://github.com/Textualize/textual.git
-    ```
-
-=== "SSH"
-
-    ```bash
-    git clone git@github.com:Textualize/textual.git
-    ```
-
-=== "GitHub CLI"
-
-    ```bash
-    gh repo clone Textualize/textual
-    ```
-
-
-With the repository cloned, navigate to the `/examples/` directory where you will find a number of Python files you can run from the command line:
-
-```bash
-cd textual/examples/
-python code_browser.py ../
+```sh
+python examples/calculator.py
 ```
 
-### Widget examples
+The `examples` and `docs/examples` directories contain additional apps and widget
+examples. Import the framework with `from anytext.app import App` and use
+`anytext.widgets` for widgets.
 
-In addition to the example apps, you can also find the code listings used to generate the screenshots in these docs in the `docs/examples` directory.
+## Configuration
 
-## Need help?
+Use `ANYTEXT_*` environment variables for settings, such as `ANYTEXT_THEME`,
+`ANYTEXT_ANIMATIONS`, and `ANYTEXT_FPS`. Built-in themes are named `anytext-dark`
+and `anytext-light`. Feature flags use `ANYTEXT`.
 
-See the [help](./help.md) page for how to get help with Textual, or to report bugs.
+The logging handler is `anytext.logging.AnytextHandler`, and framework CSS classes
+use the `anytext` prefix. Upstream developer tools and snapshot plugins are
+external integrations and may require adaptation before use with Anytext.

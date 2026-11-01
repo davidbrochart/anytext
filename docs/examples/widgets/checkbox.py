@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import VerticalScroll
-from textual.widgets import Checkbox
+from anytext.app import App, ComposeResult
+from anytext.containers import VerticalScroll
+from anytext.widgets import Checkbox
 
 
 class CheckboxApp(App[None]):

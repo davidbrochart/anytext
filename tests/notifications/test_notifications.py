@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from time import sleep
 
-from textual.notifications import Notification, Notifications
+from anytext.notifications import Notification, Notifications
 
 
 def test_empty_to_start_with() -> None:

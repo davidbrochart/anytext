@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.containers import Center, Middle
-from textual.timer import Timer
-from textual.widgets import Footer, ProgressBar
+from anytext.app import App, ComposeResult
+from anytext.containers import Center, Middle
+from anytext.timer import Timer
+from anytext.widgets import Footer, ProgressBar
 
 
 class StyledProgressBar(App[None]):

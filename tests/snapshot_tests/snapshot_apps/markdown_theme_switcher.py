@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Markdown
+from anytext.app import App, ComposeResult
+from anytext.widgets import Markdown
 
 TEST_CODE_MARKDOWN = """
 # This is a H1
@@ -26,7 +26,7 @@ class MarkdownThemeSwitcherApp(App[None]):
         md.code_light_theme = "solarized-light"
 
     def action_toggle_theme(self) -> None:
-        self.theme = "textual-light" if self.theme == "textual-dark" else "textual-dark"
+        self.theme = "anytext-light" if self.theme == "anytext-dark" else "anytext-dark"
 
     def compose(self) -> ComposeResult:
         yield Markdown(TEST_CODE_MARKDOWN)

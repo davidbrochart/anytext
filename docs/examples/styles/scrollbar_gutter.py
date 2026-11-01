@@ -1,5 +1,5 @@
-from textual.app import App
-from textual.widgets import Static
+from anytext.app import App
+from anytext.widgets import Static
 
 TEXT = """I must not fear.
 Fear is the mind-killer.

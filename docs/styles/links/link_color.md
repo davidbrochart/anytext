@@ -4,7 +4,7 @@ The `link-color` style sets the color of the link text.
 
 !!! note
 
-    `link-color` only applies to Textual action links as described in the [actions guide](../../guide/actions.md#links) and not to regular hyperlinks.
+    `link-color` only applies to Anytext action links as described in the [actions guide](../../guide/actions.md#links) and not to regular hyperlinks.
 
 ## Syntax
 
@@ -12,7 +12,7 @@ The `link-color` style sets the color of the link text.
 link-color: <a href="../../../css_types/color">&lt;color&gt;</a> [<a href="../../../css_types/percentage">&lt;percentage&gt;</a>];
 --8<-- "docs/snippets/syntax_block_end.md"
 
-`link-color` accepts a [`<color>`](../../css_types/color.md) (with an optional opacity level defined by a [`<percentage>`](../../css_types/percentage.md)) that is used to define the color of text enclosed in Textual action links.
+`link-color` accepts a [`<color>`](../../css_types/color.md) (with an optional opacity level defined by a [`<percentage>`](../../css_types/percentage.md)) that is used to define the color of text enclosed in Anytext action links.
 
 ## Example
 
@@ -21,7 +21,7 @@ It also shows that `link-color` does not affect hyperlinks.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/link_color.py" lines=6}
+    ```{.anytext path="docs/examples/styles/link_color.py" lines=6}
     ```
 
 === "link_color.py"

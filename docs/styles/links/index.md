@@ -1,11 +1,11 @@
 # Links
 
-Textual supports the concept of inline "links" embedded in text which trigger an action when pressed.
+Anytext supports the concept of inline "links" embedded in text which trigger an action when pressed.
 There are a number of styles which influence the appearance of these links within a widget.
 
 !!! note
 
-    These CSS rules only target Textual action links. Internet hyperlinks are not affected by these styles.
+    These CSS rules only target Anytext action links. Internet hyperlinks are not affected by these styles.
 
 | Property                                              | Description                                                       |
 |-------------------------------------------------------|-------------------------------------------------------------------|
@@ -41,7 +41,7 @@ The second label uses CSS to customize the link color, background, and style.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/links.py"}
+    ```{.anytext path="docs/examples/styles/links.py"}
     ```
 
 === "links.py"

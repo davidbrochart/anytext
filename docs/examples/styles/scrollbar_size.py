@@ -1,6 +1,6 @@
-from textual.app import App
-from textual.containers import ScrollableContainer
-from textual.widgets import Label
+from anytext.app import App
+from anytext.containers import ScrollableContainer
+from anytext.widgets import Label
 
 TEXT = """I must not fear.
 Fear is the mind-killer.

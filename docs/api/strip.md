@@ -1,6 +1,6 @@
 ---
-title: "textual.strip"
+title: "anytext.strip"
 ---
 
 
-::: textual.strip
+::: anytext.strip

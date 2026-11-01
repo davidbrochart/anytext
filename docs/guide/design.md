@@ -1,42 +1,42 @@
 # Themes
 
-Textual comes with several built-in *themes*, and it's easy to create your own.
+Anytext comes with several built-in *themes*, and it's easy to create your own.
 A theme provides variables which can be used in the CSS of your app.
 Click on the tabs below to see how themes can change the appearance of an app.
 
 === "nord"
 
-    ```{.textual path="docs/examples/themes/todo_app.py"}
+    ```{.anytext path="docs/examples/themes/todo_app.py"}
     ```
 
 === "gruvbox"
 
-    ```{.textual path="docs/examples/themes/todo_app.py" press="ctrl+t"}
+    ```{.anytext path="docs/examples/themes/todo_app.py" press="ctrl+t"}
     ```
 
 === "tokyo-night"
 
-    ```{.textual path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t"}
+    ```{.anytext path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t"}
     ```
 
-=== "textual-dark"
+=== "anytext-dark"
 
-    ```{.textual path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t,ctrl+t"}
+    ```{.anytext path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t,ctrl+t"}
     ```
 
 === "solarized-light"
 
-    ```{.textual path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t,ctrl+t,ctrl+t"}
+    ```{.anytext path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t,ctrl+t,ctrl+t"}
     ```
 
 === "atom-one-dark"
 
-    ```{.textual path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t,ctrl+t,ctrl+t,ctrl+t"}
+    ```{.anytext path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t,ctrl+t,ctrl+t,ctrl+t"}
     ```
 
 === "atom-one-light"
 
-    ```{.textual path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t,ctrl+t,ctrl+t,ctrl+t,ctrl+t"}
+    ```{.anytext path="docs/examples/themes/todo_app.py" press="ctrl+t,ctrl+t,ctrl+t,ctrl+t,ctrl+t,ctrl+t"}
     ```
 
 ## Changing the theme
@@ -52,7 +52,7 @@ class MyApp(App):
 ```
 
 A theme must be *registered* before it can be used.
-Textual comes with a selection of built-in themes which are registered by default.
+Anytext comes with a selection of built-in themes which are registered by default.
 
 ## Registering a theme
 
@@ -60,7 +60,7 @@ A theme is a simple Python object which maps variable names to colors.
 Here's an example:
 
 ```python
-from textual.theme import Theme
+from anytext.theme import Theme
 
 arctic_theme = Theme(
     name="arctic",
@@ -86,7 +86,7 @@ arctic_theme = Theme(
 You can register this theme by calling `App.register_theme` in the `on_mount` method of your `App`.
 
 ```python
-from textual.app import App
+from anytext.app import App
 
 class MyApp(App):
     def on_mount(self) -> None:
@@ -102,8 +102,8 @@ class MyApp(App):
 
 ## Theme variables
 
-Themes consist of up to 11 *base colors*, (`primary`, `secondary`, `accent`, etc.), which Textual uses to generate a broad range of CSS variables.
-For example, the `textual-dark` theme defines the *primary* base color as `#004578`.
+Themes consist of up to 11 *base colors*, (`primary`, `secondary`, `accent`, etc.), which Anytext uses to generate a broad range of CSS variables.
+For example, the `anytext-dark` theme defines the *primary* base color as `#004578`.
 
 Here's an example of CSS which uses these variables:
 
@@ -119,7 +119,7 @@ On changing the theme, the values stored in these variables are updated to match
 ## Base colors
 
 When defining a theme, only the `primary` color is required.
-Textual will attempt to generate the other base colors if they're not supplied.
+Anytext will attempt to generate the other base colors if they're not supplied.
 
 The following table lists each of 11 base colors (as used in CSS) and a description of where they are used by default.
 
@@ -130,7 +130,7 @@ The following table lists each of 11 base colors (as used in CSS) and a descript
 | `$foreground` | The default text color, which should be legible on `$background`, `$surface`, and `$panel`.                                                   |
 | `$background` | A color used for the background, where there is no content. Used as the default background color for screens.                                 |
 | `$surface`    | The default background color of widgets, typically sitting on top of `$background`.                                                           |
-| `$panel`      | A color used to differentiate a part of the UI form the main content. Used sparingly in Textual itself.                                       |
+| `$panel`      | A color used to differentiate a part of the UI form the main content. Used sparingly in Anytext itself.                                       |
 | `$boost`      | A color with alpha that can be used to create *layers* on a background.                                                                       |
 | `$warning`    | Indicates a warning. Typically used as a background color. `$text-warning` can be used for foreground.                                        |
 | `$error`      | Indicates an error. Typically used as a background color. `$text-error` can be used for foreground.                                           |
@@ -139,7 +139,7 @@ The following table lists each of 11 base colors (as used in CSS) and a descript
 
 ## Shades
 
-For every color, Textual generates 3 dark shades and 3 light shades.
+For every color, Anytext generates 3 dark shades and 3 light shades.
 
 - Add `-lighten-1`, `-lighten-2`, or `-lighten-3` to the color's variable name to get lighter shades (3 is the lightest).
 - Add `-darken-1`, `-darken-2`, and `-darken-3` to a color to get the darker shades (3 is the darkest).
@@ -149,7 +149,7 @@ For example, `$secondary-darken-1` is a slightly darkened `$secondary`, and `$er
 ## Light and dark themes
 
 Themes can be either *light* or *dark*.
-This setting is specified in the `Theme` constructor via the `dark` argument, and influences how Textual
+This setting is specified in the `Theme` constructor via the `dark` argument, and influences how Anytext
 generates variables.
 Built-in widgets may also use the value of `dark` to influence their appearance.
 
@@ -187,9 +187,9 @@ The theme system defines three CSS variables which you can use to ensure that te
 Colored text is also generated from the base colors, which is guaranteed to be legible against a background of `$background`, `$surface`, and `$panel`.
 For example, `$text-primary` is a version of the `$primary` color tinted to ensure legibility.
 
-=== "Output (Theme: textual-dark)"
+=== "Output (Theme: anytext-dark)"
 
-    ```{.textual path="docs/examples/themes/colored_text.py" lines="9" columns="30"}
+    ```{.anytext path="docs/examples/themes/colored_text.py" lines="9" columns="30"}
     ```
 
 === "colored_text.py"
@@ -205,12 +205,12 @@ These colors are also be guaranteed to be legible when used as the foreground co
 Muted colors are generated from the base colors by blending them with `$background` at 70% opacity.
 For example, `$primary-muted` is a muted version of the `$primary` color.
 
-Textual aims to ensure that the colored text it generates is legible against the corresponding muted color.
+Anytext aims to ensure that the colored text it generates is legible against the corresponding muted color.
 In other words, `$text-primary` text should be legible against a background of `$primary-muted`:
 
-=== "Output (Theme: textual-dark)"
+=== "Output (Theme: anytext-dark)"
 
-    ```{.textual path="docs/examples/themes/muted_backgrounds.py" lines="9" columns="40"}
+    ```{.anytext path="docs/examples/themes/muted_backgrounds.py" lines="9" columns="40"}
     ```
 
 === "muted_backgrounds.py"
@@ -230,7 +230,7 @@ The available muted colors are:
 
 ## Additional variables
 
-Textual uses the base colors as default values for additional variables used throughout the framework.
+Anytext uses the base colors as default values for additional variables used throughout the framework.
 These variables can be overridden by passing a `variables` argument to the `Theme` constructor.
 This also allows you to override variables such as `$primary-muted`, described above.
 
@@ -332,7 +332,7 @@ Here's a comprehensive list of these variables, their purposes, and default valu
 
 ## App-specific variables
 
-The variables above are defined and used by Textual itself.
+The variables above are defined and used by Anytext itself.
 However, you may also wish to expose other variables which are specific to your application.
 
 You can do this by overriding `App.get_theme_variable_defaults` in your `App` subclass.
@@ -345,7 +345,7 @@ If a variable defined in this dictionary is also defined in a theme's `variables
 Run the following from the command line to preview the colors defined in the color system:
 
 ```bash
-textual colors
+anytext colors
 ```
 
 Inside the preview you can change the theme via the Command Palette (++ctrl+p++), and view the base variables and shades generated from the theme.

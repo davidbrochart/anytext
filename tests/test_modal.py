@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual.app import App, ComposeResult
-from textual.containers import Grid
-from textual.screen import ModalScreen
-from textual.widgets import Button, Footer, Header, Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Grid
+from anytext.screen import ModalScreen
+from anytext.widgets import Button, Footer, Header, Label
 
 TEXT = """I must not fear.
 Fear is the mind-killer.

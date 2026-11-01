@@ -1,6 +1,6 @@
 ---
-title: "textual"
+title: "anytext"
 ---
 
 
-::: textual
+::: anytext

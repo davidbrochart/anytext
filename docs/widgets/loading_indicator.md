@@ -10,7 +10,7 @@ Displays pulsating dots to indicate when data is being loaded.
 
 !!! tip
 
-    Widgets have a [`loading`][textual.widget.Widget.loading] reactive which
+    Widgets have a [`loading`][anytext.widget.Widget.loading] reactive which
     you can use to temporarily replace your widget with a `LoadingIndicator`.
     See the [Loading Indicator](../guide/widgets.md#loading-indicator) section
     in the Widgets guide for details.
@@ -22,7 +22,7 @@ Simple usage example:
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/loading_indicator.py"}
+    ```{.anytext path="docs/examples/widgets/loading_indicator.py"}
     ```
 
 === "loading_indicator.py"
@@ -62,6 +62,6 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.LoadingIndicator
+::: anytext.widgets.LoadingIndicator
     options:
       heading_level: 2

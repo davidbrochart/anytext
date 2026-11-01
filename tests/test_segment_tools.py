@@ -1,8 +1,8 @@
 from rich.segment import Segment
 from rich.style import Style
 
-from textual._segment_tools import align_lines, line_crop, line_pad, line_trim
-from textual.geometry import Size
+from anytext._segment_tools import align_lines, line_crop, line_pad, line_trim
+from anytext.geometry import Size
 
 
 def test_line_crop():

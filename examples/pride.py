@@ -1,5 +1,5 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.widgets import Static
 
 
 class PrideApp(App):

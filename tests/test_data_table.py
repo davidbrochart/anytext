@@ -4,14 +4,14 @@ import pytest
 from rich.panel import Panel
 from rich.text import Text
 
-from textual._wait import wait_for_idle
-from textual.actions import SkipAction
-from textual.app import App, ComposeResult, RenderableType
-from textual.coordinate import Coordinate
-from textual.geometry import Offset
-from textual.message import Message
-from textual.widgets import DataTable
-from textual.widgets.data_table import (
+from anytext._wait import wait_for_idle
+from anytext.actions import SkipAction
+from anytext.app import App, ComposeResult, RenderableType
+from anytext.coordinate import Coordinate
+from anytext.geometry import Offset
+from anytext.message import Message
+from anytext.widgets import DataTable
+from anytext.widgets.data_table import (
     CellDoesNotExist,
     CellKey,
     ColumnDoesNotExist,

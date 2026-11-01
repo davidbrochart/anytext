@@ -30,7 +30,7 @@ This example shows background tint applied with alpha from 0 to 100%.
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/background_tint.py"}
+    ```{.anytext path="docs/examples/styles/background_tint.py"}
     ```
 
 === "background_tint.py"
@@ -66,7 +66,7 @@ You can use the same syntax as CSS, or explicitly set a `Color` object for finer
 # Set 20% blue background tint
 widget.styles.background_tint = "blue 20%"
 
-from textual.color import Color
+from anytext.color import Color
 # Set with a color object
 widget.styles.background_tint = Color(120, 60, 100, 0.5)
 ```

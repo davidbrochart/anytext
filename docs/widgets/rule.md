@@ -15,7 +15,7 @@ The example below shows horizontal rules with all the available line styles.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/horizontal_rules.py"}
+    ```{.anytext path="docs/examples/widgets/horizontal_rules.py"}
     ```
 
 === "horizontal_rules.py"
@@ -36,7 +36,7 @@ The example below shows vertical rules with all the available line styles.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/vertical_rules.py"}
+    ```{.anytext path="docs/examples/widgets/vertical_rules.py"}
     ```
 
 === "vertical_rules.py"
@@ -73,11 +73,11 @@ This widget has no component classes.
 ---
 
 
-::: textual.widgets.Rule
+::: anytext.widgets.Rule
     options:
       heading_level: 2
 
-::: textual.widgets.rule
+::: anytext.widgets.rule
     options:
       show_root_heading: true
       show_root_toc_entry: true

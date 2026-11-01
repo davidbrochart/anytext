@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.widget import Widget
-from textual.widgets import Button, Footer
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.widget import Widget
+from anytext.widgets import Button, Footer
 
 
 async def test_footer_bindings() -> None:

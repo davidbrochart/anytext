@@ -1,7 +1,7 @@
 ---
-title: "textual.system_commands"
+title: "anytext.system_commands"
 ---
 
 
 
-::: textual.system_commands
+::: anytext.system_commands

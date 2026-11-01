@@ -1,10 +1,10 @@
 from rich.segment import Segment
 
-from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer
-from textual.scroll_view import ScrollView
-from textual.strip import Strip
-from textual.geometry import Size
+from anytext.app import App, ComposeResult
+from anytext.widgets import Header, Footer
+from anytext.scroll_view import ScrollView
+from anytext.strip import Strip
+from anytext.geometry import Size
 
 
 class TestScrollView(ScrollView, can_focus=True):

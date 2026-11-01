@@ -1,9 +1,9 @@
 from itertools import cycle
 
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.containers import Horizontal, Vertical
-from textual.widgets import Footer, Header, Input, Label, SelectionList
+from anytext.app import App, ComposeResult
+from anytext.binding import Binding
+from anytext.containers import Horizontal, Vertical
+from anytext.widgets import Footer, Header, Input, Label, SelectionList
 
 
 class TodoList(App[None]):
@@ -58,7 +58,7 @@ Screen {
 
     BINDINGS = [Binding("ctrl+t", "cycle_theme", "Cycle theme")]
     THEMES = cycle(
-        ["nord", "gruvbox", "tokyo-night", "textual-dark", "solarized-light"]
+        ["nord", "gruvbox", "tokyo-night", "anytext-dark", "solarized-light"]
     )
 
     def compose(self) -> ComposeResult:

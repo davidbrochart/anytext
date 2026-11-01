@@ -1,4 +1,4 @@
-from textual.css.scalar import Scalar, Unit
+from anytext.css.scalar import Scalar, Unit
 
 
 def test_copy_with_value():

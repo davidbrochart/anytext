@@ -1,9 +1,9 @@
 import pytest
 
-from textual import on
-from textual.app import App, ComposeResult
-from textual.validation import Number, ValidationResult
-from textual.widgets import Input
+from anytext import on
+from anytext.app import App, ComposeResult
+from anytext.validation import Number, ValidationResult
+from anytext.widgets import Input
 
 
 class InputApp(App):

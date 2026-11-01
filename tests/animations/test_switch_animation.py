@@ -3,8 +3,8 @@ Tests for the switch toggle animation, which is considered a basic animation.
 (An animation that also plays on the level BASIC.)
 """
 
-from textual.app import App, ComposeResult
-from textual.widgets import Switch
+from anytext.app import App, ComposeResult
+from anytext.widgets import Switch
 
 
 class SwitchApp(App[None]):

@@ -1,9 +1,9 @@
 # Style Inline Apps
 
-Version 0.55.0 of Textual added support for running apps *inline* (below the prompt).
-Running an inline app is as simple as adding `inline=True` to [`run()`][textual.app.App.run].
+Version 0.55.0 of Anytext added support for running apps *inline* (below the prompt).
+Running an inline app is as simple as adding `inline=True` to [`run()`][anytext.app.App.run].
 
-<iframe width="100%" style="aspect-ratio:757/804;" src="https://www.youtube.com/embed/dxAf3vDr4aQ" title="Textual Inline mode" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" style="aspect-ratio:757/804;" src="https://www.youtube.com/embed/dxAf3vDr4aQ" title="Anytext Inline mode" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 Your apps will typically run inline without modification, but you may want to make some tweaks for inline mode, which you can do with a little CSS.
 This How-To will explain how.
@@ -17,11 +17,11 @@ The following app displays the current time (and keeps it up to date).
 
 1. The `inline=True` runs the app inline.
 
-With Textual's default settings, this clock will be displayed in 5 lines; 3 for the digits and 2 for a top and bottom border.
+With Anytext's default settings, this clock will be displayed in 5 lines; 3 for the digits and 2 for a top and bottom border.
 
 !!! note
 
-    Textual also adds a blank line above inline apps for padding.
+    Anytext also adds a blank line above inline apps for padding.
     To remove this default padding, you can set `INLINE_PADDING = 0` on your app class.
 
 You can change the height or the border with CSS and the `:inline` pseudo-selector, which only matches rules in inline mode.

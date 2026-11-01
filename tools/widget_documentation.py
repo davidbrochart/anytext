@@ -1,17 +1,17 @@
 """
 Helper script to help document all widgets.
 
-This goes through the widgets listed in textual.widgets and prints the scaffolding
+This goes through the widgets listed in anytext.widgets and prints the scaffolding
 for the tables that are used to document the classvars BINDINGS and COMPONENT_CLASSES.
 """
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import textual.widgets
+import anytext.widgets
 
 if TYPE_CHECKING:
-    from textual.binding import Binding
+    from anytext.binding import Binding
 
 
 def print_bindings(widget: str, bindings: list[Binding]) -> None:
@@ -60,10 +60,10 @@ def main() -> None:
     Iterates over all widgets and prints docs tables.
     """
 
-    widgets: list[str] = textual.widgets.__all__
+    widgets: list[str] = anytext.widgets.__all__
 
     for widget in widgets:
-        w = getattr(textual.widgets, widget)
+        w = getattr(anytext.widgets, widget)
         bindings: list[Binding] = w.__dict__.get("BINDINGS", [])
         component_classes: set[str] = getattr(w, "COMPONENT_CLASSES", set())
 

@@ -26,7 +26,7 @@ In the first example, we create a grid with 2 columns and 5 rows, although we do
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/grid_size_both.py"}
+    ```{.anytext path="docs/examples/styles/grid_size_both.py"}
     ```
 
 === "grid_size_both.py"
@@ -49,7 +49,7 @@ In the second example, we create a grid with 2 columns and however many rows are
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/grid_size_columns.py"}
+    ```{.anytext path="docs/examples/styles/grid_size_columns.py"}
     ```
 
 === "grid_size_columns.py"

@@ -1,6 +1,6 @@
 import asyncio
 
-from textual.app import App
+from anytext.app import App
 
 
 class NotificationApp(App[None]):

@@ -2,8 +2,8 @@ import itertools
 
 import pytest
 
-from textual._xterm_parser import XTermParser
-from textual.events import (
+from anytext._xterm_parser import XTermParser
+from anytext.events import (
     Key,
     MouseDown,
     MouseMove,
@@ -14,7 +14,7 @@ from textual.events import (
     MouseUp,
     Paste,
 )
-from textual.messages import TerminalSupportsSynchronizedOutput
+from anytext.messages import TerminalSupportsSynchronizedOutput
 
 
 def chunks(data, size):
@@ -58,7 +58,7 @@ def test_bracketed_paste(parser):
     """When bracketed paste mode is enabled in the terminal emulator and
     the user pastes in some text, it will surround the pasted input
     with the escape codes "\x1b[200~" and "\x1b[201~". The text between
-    these codes corresponds to a single `Paste` event in Textual.
+    these codes corresponds to a single `Paste` event in Anytext.
     """
     pasted_text = "PASTED"
     events = list(parser.feed(f"\x1b[200~{pasted_text}\x1b[201~"))
@@ -72,7 +72,7 @@ def test_bracketed_paste_content_contains_escape_codes(parser):
     """When performing a bracketed paste, if the pasted content contains
     supported ANSI escape sequences, it should not interfere with the paste,
     and no escape sequences within the bracketed paste should be converted
-    into Textual events.
+    into Anytext events.
     """
     pasted_text = "PAS\x0fTED"
     events = list(parser.feed(f"\x1b[200~{pasted_text}\x1b[201~"))
@@ -247,7 +247,7 @@ def test_extended_keys(parser, sequence: str, keys: str) -> None:
     ],
 )
 def test_mouse_click(parser, sequence, event_type, shift, meta):
-    """ANSI codes for mouse should be converted to Textual events"""
+    """ANSI codes for mouse should be converted to Anytext events"""
     events = list(parser.feed(sequence))
 
     assert len(events) == 1

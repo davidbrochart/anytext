@@ -1,4 +1,4 @@
-name: Test Textual module
+name: Test Anytext module
 
 on:
   pull_request:
@@ -41,16 +41,16 @@ jobs:
         if: ${{ matrix.python-version == '3.9' }}
       - name: Test with pytest (Py310+ - with syntax highlighting)
         run: |
-          poetry run pytest tests -v --cov=./src/textual --cov-report=xml:./coverage.xml --cov-report term-missing
+          poetry run pytest tests -v --cov=./src/anytext --cov-report=xml:./coverage.xml --cov-report term-missing
         if: ${{ matrix.python-version != '3.9' }}
       - name: Test with pytest (Py39 - without syntax highlighting)
         run: |
-          poetry run pytest tests -v --cov=./src/textual --cov-report=xml:./coverage.xml --cov-report term-missing -m 'not syntax'
+          poetry run pytest tests -v --cov=./src/anytext --cov-report=xml:./coverage.xml --cov-report term-missing -m 'not syntax'
         if: ${{ matrix.python-version == '3.9' }}
       - name: Upload snapshot report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: snapshot_report_textual
+          name: snapshot_report_anytext
           path: snapshot_report.html
           overwrite: true

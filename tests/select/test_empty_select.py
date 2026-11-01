@@ -1,8 +1,8 @@
 import pytest
 
-from textual.app import App
-from textual.widgets import Select
-from textual.widgets.select import EmptySelectError
+from anytext.app import App
+from anytext.widgets import Select
+from anytext.widgets.select import EmptySelectError
 
 
 async def test_empty_select_is_ok_with_blanks():

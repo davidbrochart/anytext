@@ -23,7 +23,7 @@ After placing the placeholders `#p1`, `#p2`, `#p3`, and `#p4`, the next availabl
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/row_span.py"}
+    ```{.anytext path="docs/examples/styles/row_span.py"}
     ```
 
 === "row_span.py"

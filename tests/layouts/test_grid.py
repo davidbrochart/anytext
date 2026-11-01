@@ -1,6 +1,6 @@
-from textual import containers, widgets
-from textual.app import App, ComposeResult
-from textual.layouts.grid import GridLayout
+from anytext import containers, widgets
+from anytext.app import App, ComposeResult
+from anytext.layouts.grid import GridLayout
 
 
 async def test_grid_size():

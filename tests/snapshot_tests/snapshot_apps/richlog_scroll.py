@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.widgets import RichLog
-from textual.containers import Horizontal
+from anytext.app import App, ComposeResult
+from anytext.widgets import RichLog
+from anytext.containers import Horizontal
 
 
 class RichLogScrollApp(App):

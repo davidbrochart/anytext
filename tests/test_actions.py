@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from textual.actions import ActionError, parse
+from anytext.actions import ActionError, parse
 
 
 @pytest.mark.parametrize(

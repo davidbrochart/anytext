@@ -11,7 +11,7 @@ The example below shows switches in various states.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/switch.py"}
+    ```{.anytext path="docs/examples/widgets/switch.py"}
     ```
 
 === "switch.py"
@@ -34,13 +34,13 @@ The example below shows switches in various states.
 
 ## Messages
 
-- [Switch.Changed][textual.widgets.Switch.Changed]
+- [Switch.Changed][anytext.widgets.Switch.Changed]
 
 ## Bindings
 
 The switch widget defines the following bindings:
 
-::: textual.widgets.Switch.BINDINGS
+::: anytext.widgets.Switch.BINDINGS
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -49,7 +49,7 @@ The switch widget defines the following bindings:
 
 The switch widget provides the following component classes:
 
-::: textual.widgets.Switch.COMPONENT_CLASSES
+::: anytext.widgets.Switch.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -61,6 +61,6 @@ The switch widget provides the following component classes:
 ---
 
 
-::: textual.widgets.Switch
+::: anytext.widgets.Switch
     options:
       heading_level: 2

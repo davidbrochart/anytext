@@ -9,15 +9,15 @@ authors:
 
 # Overhead of Python Asyncio tasks
 
-Every widget in Textual, be it a button, tree view, or a text input, runs an [asyncio](https://docs.python.org/3/library/asyncio.html) task. There is even a task for [scrollbar corners](https://github.com/Textualize/textual/blob/e95a65fa56e5b19715180f9e17c7f6747ba15ec5/src/textual/scrollbar.py#L365) (the little space formed when horizontal and vertical scrollbars meet).
+Every widget in Anytext, be it a button, tree view, or a text input, runs an [asyncio](https://docs.python.org/3/library/asyncio.html) task. There is even a task for [scrollbar corners](https://github.com/Textualize/textual/blob/e95a65fa56e5b19715180f9e17c7f6747ba15ec5/src/textual/scrollbar.py#L365) (the little space formed when horizontal and vertical scrollbars meet).
 
 <!-- more -->
 
 !!! info
 
-    It may be IO that gives AsyncIO its name, but Textual doesn't do any IO of its own. Those tasks are used to power *message queues*, so that widgets (UI components) can do whatever they do at their own pace.
+    It may be IO that gives AsyncIO its name, but Anytext doesn't do any IO of its own. Those tasks are used to power *message queues*, so that widgets (UI components) can do whatever they do at their own pace.
 
-Its fair to say that Textual apps launch a lot of tasks. Which is why when I was trying to optimize startup (for apps with 1000s of widgets) I suspected it was task related.
+Its fair to say that Anytext apps launch a lot of tasks. Which is why when I was trying to optimize startup (for apps with 1000s of widgets) I suspected it was task related.
 
 I needed to know how much of an overhead it was to launch tasks. Tasks are lighter weight than threads, but how much lighter? The only way to know for certain was to profile.
 
@@ -71,6 +71,6 @@ This tells me I can create, run, and shutdown 260K tasks per second.
 
 That's fast.
 
-Clearly `create_task` is as close as you get to free in the Python world, and I would need to look elsewhere for optimizations. Turns out Textual spends far more time processing CSS rules than creating tasks (obvious in retrospect). I've noticed some big wins there, so the next version of Textual will be faster to start apps with a metric tonne of widgets.
+Clearly `create_task` is as close as you get to free in the Python world, and I would need to look elsewhere for optimizations. Turns out Anytext spends far more time processing CSS rules than creating tasks (obvious in retrospect). I've noticed some big wins there, so the next version of Anytext will be faster to start apps with a metric tonne of widgets.
 
 But I still need to know what to do with those scrollbar corners. A task for two characters. I don't even...

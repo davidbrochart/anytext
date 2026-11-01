@@ -26,7 +26,7 @@ However, since `#box1` is on the higher layer, it is drawn on top of `#box2`.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/layout/layers.py"}
+    ```{.anytext path="docs/examples/guide/layout/layers.py"}
     ```
 
 === "layers.py"

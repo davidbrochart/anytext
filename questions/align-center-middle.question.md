@@ -12,7 +12,7 @@ alt_titles:
 !!! tip
 
     See [*How To Center Things*](https://textual.textualize.io/how-to/center-things/) in the
-    Textual documentation for a more comprehensive answer to this question.
+    Anytext documentation for a more comprehensive answer to this question.
 
 To center a widget within a container use
 [`align`](https://textual.textualize.io/styles/align/). But remember that
@@ -23,8 +23,8 @@ For example, here's an app that shows a `Button` in the middle of a
 `Screen`:
 
 ```python
-from textual.app import App, ComposeResult
-from textual.widgets import Button
+from anytext.app import App, ComposeResult
+from anytext.widgets import Button
 
 class ButtonApp(App):
 
@@ -79,9 +79,9 @@ container](https://textual.textualize.io/api/containers/#textual.containers.Cent
 that individually centers it. For example:
 
 ```python
-from textual.app import App, ComposeResult
-from textual.containers import Center
-from textual.widgets import Button
+from anytext.app import App, ComposeResult
+from anytext.containers import Center
+from anytext.widgets import Button
 
 class ButtonApp(App):
 

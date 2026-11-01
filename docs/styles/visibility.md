@@ -36,7 +36,7 @@ Note that the second widget is hidden while leaving a space where it would have 
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/visibility.py"}
+    ```{.anytext path="docs/examples/styles/visibility.py"}
     ```
 
 === "visibility.py"
@@ -63,7 +63,7 @@ The containers all have a white background, and then:
 
 === "Output"
 
-    ```{.textual path="docs/examples/styles/visibility_containers.py"}
+    ```{.anytext path="docs/examples/styles/visibility_containers.py"}
     ```
 
 === "visibility_containers.py"

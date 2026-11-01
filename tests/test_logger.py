@@ -1,9 +1,9 @@
 import inspect
 from typing import Any
 
-from textual import work
-from textual._log import LogGroup, LogVerbosity
-from textual.app import App
+from anytext import work
+from anytext._log import LogGroup, LogVerbosity
+from anytext.app import App
 
 
 async def test_log_from_worker() -> None:
@@ -17,7 +17,7 @@ async def test_log_from_worker() -> None:
             self,
             group: LogGroup,
             verbosity: LogVerbosity,
-            _textual_calling_frame: inspect.Traceback,
+            _anytext_calling_frame: inspect.Traceback,
             *objects: Any,
             **kwargs,
         ) -> None:

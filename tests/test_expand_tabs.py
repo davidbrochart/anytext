@@ -1,6 +1,6 @@
 import pytest
 
-from textual.expand_tabs import expand_tabs_inline, get_tab_widths
+from anytext.expand_tabs import expand_tabs_inline, get_tab_widths
 
 
 @pytest.mark.parametrize(

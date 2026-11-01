@@ -1,4 +1,4 @@
-# Textual Markdown Browser - Demo
+# Anytext Markdown Browser - Demo
 
 This Markdown file contains some examples of Markdown widgets.
 

@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.reactive import reactive
-from textual.widgets import Label, ListItem, ListView
+from anytext.app import App, ComposeResult
+from anytext.reactive import reactive
+from anytext.widgets import Label, ListItem, ListView
 
 
 class ListViewIndexApp(App):

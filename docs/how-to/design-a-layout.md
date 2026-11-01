@@ -2,7 +2,7 @@
 
 This article discusses an approach you can take when designing the layout for your applications.
 
-Textual's layout system is flexible enough to accommodate just about any application design you could conceive of, but it may be hard to know where to start. We will go through a few tips which will help you get over the initial hurdle of designing an application layout.
+Anytext's layout system is flexible enough to accommodate just about any application design you could conceive of, but it may be hard to know where to start. We will go through a few tips which will help you get over the initial hurdle of designing an application layout.
 
 
 ## Tip 1. Make a sketch
@@ -36,10 +36,10 @@ Since these are the outermost widgets, we will begin by adding them.
 
 !!! tip
 
-    Textual has builtin [Header](../widgets/header.md) and [Footer](../widgets/footer.md) widgets which you could use in a real application.
+    Anytext has builtin [Header](../widgets/header.md) and [Footer](../widgets/footer.md) widgets which you could use in a real application.
 
 The following example defines an [app](../guide/app.md), a [screen](../guide/screens.md), and our header and footer widgets.
-Since we're starting from scratch and don't have any functionality for our widgets, we are going to use the [Placeholder][textual.widgets.Placeholder] widget to help us visualize our design.
+Since we're starting from scratch and don't have any functionality for our widgets, we are going to use the [Placeholder][anytext.widgets.Placeholder] widget to help us visualize our design.
 
 In a real app, we would replace these placeholders with more useful content.
 
@@ -56,14 +56,14 @@ In a real app, we would replace these placeholders with more useful content.
 
 === "Output"
 
-    ```{.textual path="docs/examples/how-to/layout01.py"}
+    ```{.anytext path="docs/examples/how-to/layout01.py"}
     ```
 
 ## Tip 3. Apply docks
 
 This app works, but the header and footer don't behave as expected.
 We want both of these widgets to be fixed to an edge of the screen and limited in height.
-In Textual this is known as *docking* which you can apply with the [dock](../styles/dock.md) rule.
+In Anytext this is known as *docking* which you can apply with the [dock](../styles/dock.md) rule.
 
 We will dock the header and footer to the top and bottom edges of the screen respectively, by adding a little [CSS](../guide/CSS.md) to the widget classes:
 
@@ -75,14 +75,14 @@ We will dock the header and footer to the top and bottom edges of the screen res
 
 === "Output"
 
-    ```{.textual path="docs/examples/how-to/layout02.py"}
+    ```{.anytext path="docs/examples/how-to/layout02.py"}
     ```
 
 The `DEFAULT_CSS` class variable is used to set CSS directly in Python code.
 We could define these in an external CSS file, but writing the CSS inline like this can be convenient if it isn't too complex.
 
 When you dock a widget, it reduces the available area for other widgets.
-This means that Textual will automatically compensate for the 6 additional lines reserved for the header and footer.
+This means that Anytext will automatically compensate for the 6 additional lines reserved for the header and footer.
 
 ## Tip 4. Use FR Units for flexible things
 
@@ -90,7 +90,7 @@ After we've added the header and footer, we want the remaining space to be used 
 This area is flexible (will change according to the size of the terminal), so how do we ensure that it takes up precisely the space needed?
 
 The simplest way is to use [fr](../css_types/scalar.md#fraction) units.
-By setting both the width and height to `1fr`, we are telling Textual to divide the space equally amongst the remaining widgets.
+By setting both the width and height to `1fr`, we are telling Anytext to divide the space equally amongst the remaining widgets.
 There is only a single widget, so that widget will fill all of the remaining space.
 
 Let's make that change.
@@ -105,7 +105,7 @@ Let's make that change.
 
 === "Output"
 
-    ```{.textual path="docs/examples/how-to/layout03.py"}
+    ```{.anytext path="docs/examples/how-to/layout03.py"}
     ```
 
 As you can see, the central Columns area will resize with the terminal window.
@@ -130,7 +130,7 @@ Let's replace the `ColumnsContainer` class in the previous example with a `Horiz
 
 === "Output"
 
-    ```{.textual path="docs/examples/how-to/layout04.py"}
+    ```{.anytext path="docs/examples/how-to/layout04.py"}
     ```
 
 The container will appear as blank space until we add some widgets to it.
@@ -149,7 +149,7 @@ We will also define a `Tweet` placeholder and add a few to each column.
 
 === "Output"
 
-    ```{.textual path="docs/examples/how-to/layout05.py"}
+    ```{.anytext path="docs/examples/how-to/layout05.py"}
     ```
 
 Note from the output that each `Column` takes a quarter of the screen width.
@@ -171,7 +171,7 @@ Here's the final example and a reminder of the sketch.
 
 === "Output"
 
-    ```{.textual path="docs/examples/how-to/layout06.py" columns="100" lines="32"}
+    ```{.anytext path="docs/examples/how-to/layout06.py" columns="100" lines="32"}
     ```
 
 === "Sketch"
@@ -187,7 +187,7 @@ In a real app, you would start replacing each of the placeholders with [builtin]
 
 ## Summary
 
-Layout is the first thing you will tackle when building a Textual app.
+Layout is the first thing you will tackle when building a Anytext app.
 The following tips will help you get started.
 
 1. Make a sketch (pen and paper is fine).

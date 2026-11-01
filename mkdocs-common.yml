@@ -1,4 +1,4 @@
-site_name: Textual
+site_name: Anytext
 
 markdown_extensions:
   - attr_list
@@ -22,12 +22,12 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.superfences:
       custom_fences:
-        - name: textual
-          class: textual
-          format: !!python/name:textual._doc.format_svg
+        - name: anytext
+          class: anytext
+          format: !!python/name:anytext._doc.format_svg
         - name: rich
           class: rich
-          format: !!python/name:textual._doc.rich
+          format: !!python/name:anytext._doc.rich
   - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.snippets
@@ -103,7 +103,7 @@ plugins:
       - mkdocs-nav.yml
       - mkdocs-offline.yml
       - mkdocs-online.yml
-      - src/textual
+      - src/anytext
   exclude:
     glob:
       - "**/_template.md"
@@ -119,8 +119,8 @@ extra:
       name: textualizeio on Twitter
     - icon: fontawesome/brands/github
       link: https://github.com/textualize/textual/
-      name: Textual on Github
+      name: Anytext on Github
     - icon: fontawesome/brands/discord
       link: https://discord.gg/Enf6Z3qhVr
-      name: Textual Discord server
+      name: Anytext Discord server
 copyright: Copyright &copy; Textualize, Inc

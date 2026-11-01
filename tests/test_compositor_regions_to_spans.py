@@ -1,5 +1,5 @@
-from textual._compositor import Compositor
-from textual.geometry import Region
+from anytext._compositor import Compositor
+from anytext.geometry import Region
 
 
 def test_regions_to_ranges_no_regions():

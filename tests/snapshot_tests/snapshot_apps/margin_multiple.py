@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult
-from textual.containers import Container, ScrollableContainer, Horizontal
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.containers import Container, ScrollableContainer, Horizontal
+from anytext.widgets import Label
 
 
 class CompoundWidget(ScrollableContainer):

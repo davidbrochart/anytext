@@ -1,6 +1,6 @@
-from textual import events
-from textual.app import App
-from textual.widgets import Input
+from anytext import events
+from anytext.app import App
+from anytext.widgets import Input
 
 
 async def test_paste_app():

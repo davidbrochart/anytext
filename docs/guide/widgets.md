@@ -13,9 +13,9 @@ A widget is a component of your UI responsible for managing a rectangular region
 
 ## Custom widgets
 
-There is a growing collection of [builtin widgets](../widgets/index.md) in Textual, but you can build entirely custom widgets that work in the same way.
+There is a growing collection of [builtin widgets](../widgets/index.md) in Anytext, but you can build entirely custom widgets that work in the same way.
 
-The first step in building a widget is to import and extend a widget class. This can either be [Widget][textual.widget.Widget] which is the base class of all widgets, or one of its subclasses.
+The first step in building a widget is to import and extend a widget class. This can either be [Widget][anytext.widget.Widget] which is the base class of all widgets, or one of its subclasses.
 
 Let's create a simple custom widget to display a greeting.
 
@@ -24,14 +24,14 @@ Let's create a simple custom widget to display a greeting.
 --8<-- "docs/examples/guide/widgets/hello01.py"
 ```
 
-The highlighted lines define a custom widget class with just a [render()][textual.widget.Widget.render] method.
-Textual will display whatever is returned from render in the [content](./content.md) area of your widget.
+The highlighted lines define a custom widget class with just a [render()][anytext.widget.Widget.render] method.
+Anytext will display whatever is returned from render in the [content](./content.md) area of your widget.
 
 Note that the text contains tags in square brackets, i.e. `[b]`.
 This is [content markup](./content.md#markup) which allows you to embed various styles within your content.
 If you run this you will find that `World` is in bold.
 
-```{.textual path="docs/examples/guide/widgets/hello01.py"}
+```{.anytext path="docs/examples/guide/widgets/hello01.py"}
 ```
 
 This (very simple) custom widget may be [styled](./styles.md) in the same way as builtin widgets, and targeted with CSS. Let's add some CSS to this app.
@@ -51,12 +51,12 @@ This (very simple) custom widget may be [styled](./styles.md) in the same way as
 
 The addition of the CSS has completely transformed our custom widget.
 
-```{.textual path="docs/examples/guide/widgets/hello02.py"}
+```{.anytext path="docs/examples/guide/widgets/hello02.py"}
 ```
 
 ## Static widget
 
-While you can extend the Widget class, a subclass will typically be a better starting point. The [Static][textual.widgets.Static] class is a widget subclass which caches the result of render, and provides an [update()][textual.widgets.Static.update] method to update the content area.
+While you can extend the Widget class, a subclass will typically be a better starting point. The [Static][anytext.widgets.Static] class is a widget subclass which caches the result of render, and provides an [update()][anytext.widgets.Static.update] method to update the content area.
 
 Let's use Static to create a widget which cycles through "hello" in various languages.
 
@@ -74,7 +74,7 @@ Let's use Static to create a widget which cycles through "hello" in various lang
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/hello03.py"}
+    ```{.anytext path="docs/examples/guide/widgets/hello03.py"}
     ```
 
 Note that there is no `render()` method on this widget. The Static class is handling the render for us. Instead we call `update()` when we want to update the content within the widget.
@@ -85,7 +85,7 @@ The `next_word` method updates the greeting. We call this method from the mount 
 
 When building an app it is best to keep your CSS in an external file. This allows you to see all your CSS in one place, and to enable live editing. However if you intend to distribute a widget (via PyPI for instance) it can be convenient to bundle the code and CSS together. You can do this by adding a `DEFAULT_CSS` class variable inside your widget class.
 
-Textual's builtin widgets bundle CSS in this way, which is why you can see nicely styled widgets without having to copy any CSS code.
+Anytext's builtin widgets bundle CSS in this way, which is why you can see nicely styled widgets without having to copy any CSS code.
 
 Here's the Hello example again, this time the widget has embedded default CSS:
 
@@ -103,7 +103,7 @@ Here's the Hello example again, this time the widget has embedded default CSS:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/hello04.py"}
+    ```{.anytext path="docs/examples/guide/widgets/hello04.py"}
     ```
 
 #### Scoped CSS
@@ -147,7 +147,7 @@ Let's use links in the hello example so that the greeting becomes a link which u
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/hello05.py"}
+    ```{.anytext path="docs/examples/guide/widgets/hello05.py"}
     ```
 
 If you run this example you will see that the greeting has been underlined, which indicates it is clickable. If you click on the greeting it will run the `next_word` action which updates the next word.
@@ -155,7 +155,7 @@ If you run this example you will see that the greeting has been underlined, whic
 
 ## Border titles
 
-Every widget has a [`border_title`][textual.widgets.Widget.border_title] and [`border_subtitle`][textual.widgets.Widget.border_subtitle] attribute.
+Every widget has a [`border_title`][anytext.widgets.Widget.border_title] and [`border_subtitle`][anytext.widgets.Widget.border_subtitle] attribute.
 Setting `border_title` will display text within the top border, and setting `border_subtitle` will display text within the bottom border.
 
 !!! note
@@ -163,7 +163,7 @@ Setting `border_title` will display text within the top border, and setting `bor
     Border titles will only display if the widget has a [border](../styles/border.md) enabled.
 
 The default value for these attributes is empty string, which disables the title.
-You can change the default value for the title attributes with the [`BORDER_TITLE`][textual.widget.Widget.BORDER_TITLE] and [`BORDER_SUBTITLE`][textual.widget.Widget.BORDER_SUBTITLE] class variables.
+You can change the default value for the title attributes with the [`BORDER_TITLE`][anytext.widget.Widget.BORDER_TITLE] and [`BORDER_SUBTITLE`][anytext.widget.Widget.BORDER_SUBTITLE] class variables.
 
 Let's demonstrate setting a title, both as a class variable and an instance variable:
 
@@ -185,7 +185,7 @@ Let's demonstrate setting a title, both as a class variable and an instance vari
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/hello06.py"}
+    ```{.anytext path="docs/examples/guide/widgets/hello06.py"}
     ```
 
 Note that titles are limited to a single line of text.
@@ -223,7 +223,7 @@ Here's an example of a simple focusable widget:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/counter01.py"}
+    ```{.anytext path="docs/examples/guide/widgets/counter01.py"}
     ```
 
 
@@ -254,7 +254,7 @@ With our bindings in place, we can now change the count of the _currently focuse
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/counter02.py" press="up,tab,down,down"}
+    ```{.anytext path="docs/examples/guide/widgets/counter02.py" press="up,tab,down,down"}
     ```
 
 ## Rich renderables
@@ -279,12 +279,12 @@ This app will "play" fizz buzz by displaying a table of the first 15 numbers and
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/fizzbuzz01.py"}
+    ```{.anytext path="docs/examples/guide/widgets/fizzbuzz01.py"}
     ```
 
 ## Content size
 
-Textual will auto-detect the dimensions of the content area from rich renderables if width or height is set to `auto`. You can override auto dimensions by implementing [get_content_width()][textual.widget.Widget.get_content_width] or [get_content_height()][textual.widget.Widget.get_content_height].
+Anytext will auto-detect the dimensions of the content area from rich renderables if width or height is set to `auto`. You can override auto dimensions by implementing [get_content_width()][anytext.widget.Widget.get_content_width] or [get_content_height()][anytext.widget.Widget.get_content_height].
 
 Let's modify the default width for the fizzbuzz example. By default, the table will be just wide enough to fix the columns. Let's force it to be 50 characters wide.
 
@@ -303,7 +303,7 @@ Let's modify the default width for the fizzbuzz example. By default, the table w
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/fizzbuzz02.py"}
+    ```{.anytext path="docs/examples/guide/widgets/fizzbuzz02.py"}
     ```
 
 Note that we've added `expand=True` to tell the `Table` to expand beyond the optimal width, so that it fills the 50 characters returned by `get_content_width`.
@@ -319,7 +319,7 @@ You can use tooltips to add supplementary information or help messages.
     Some users prefer to use the keyboard exclusively and may never see tooltips.
 
 
-To add a tooltip, assign to the widget's [`tooltip`][textual.widgets.Widget.tooltip] property.
+To add a tooltip, assign to the widget's [`tooltip`][anytext.widgets.Widget.tooltip] property.
 You can set text or any other [Rich](https://github.com/Textualize/rich) renderable.
 
 The following example adds a tooltip to a button:
@@ -332,12 +332,12 @@ The following example adds a tooltip to a button:
 
 === "Output (before hover)"
 
-    ```{.textual path="docs/examples/guide/widgets/tooltip01.py"}
+    ```{.anytext path="docs/examples/guide/widgets/tooltip01.py"}
     ```
 
 === "Output (after hover)"
 
-    ```{.textual path="docs/examples/guide/widgets/tooltip01.py" hover="Button"}
+    ```{.anytext path="docs/examples/guide/widgets/tooltip01.py" hover="Button"}
     ```
 
 ### Customizing the tooltip
@@ -353,17 +353,17 @@ Add a rule to your CSS that targets `Tooltip`. Here's an example:
 
 === "Output (before hover)"
 
-    ```{.textual path="docs/examples/guide/widgets/tooltip02.py"}
+    ```{.anytext path="docs/examples/guide/widgets/tooltip02.py"}
     ```
 
 === "Output (after hover)"
 
-    ```{.textual path="docs/examples/guide/widgets/tooltip02.py" hover="Button"}
+    ```{.anytext path="docs/examples/guide/widgets/tooltip02.py" hover="Button"}
     ```
 
 ## Loading indicator
 
-Widgets have a [`loading`][textual.widget.Widget.loading] reactive which when set to `True` will temporarily replace your widget with a [`LoadingIndicator`](../widgets/loading_indicator.md).
+Widgets have a [`loading`][anytext.widget.Widget.loading] reactive which when set to `True` will temporarily replace your widget with a [`LoadingIndicator`](../widgets/loading_indicator.md).
 
 You can use this to indicate to the user that the app is currently working on getting data, and there will be content when that data is available.
 Let's look at an example of this.
@@ -380,7 +380,7 @@ Let's look at an example of this.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/loading01.py"}
+    ```{.anytext path="docs/examples/guide/widgets/loading01.py"}
     ```
 
 
@@ -394,9 +394,9 @@ When the (simulated) data has been retrieved, we reset the `loading` property to
 
 ## Line API
 
-A downside of widgets that return Rich renderables is that Textual will redraw the entire widget when its state is updated or it changes size.
+A downside of widgets that return Rich renderables is that Anytext will redraw the entire widget when its state is updated or it changes size.
 If a widget is large enough to require scrolling, or updates frequently, then this redrawing can make your app feel less responsive.
-Textual offers an alternative API which reduces the amount of work required to refresh a widget, and makes it possible to update portions of a widget (as small as a single character) without a full redraw. This is known as the *line API*.
+Anytext offers an alternative API which reduces the amount of work required to refresh a widget, and makes it possible to update portions of a widget (as small as a single character) without a full redraw. This is known as the *line API*.
 
 !!! note
 
@@ -404,14 +404,14 @@ Textual offers an alternative API which reduces the amount of work required to r
 
 ### Render Line method
 
-To build a widget with the line API, implement a `render_line` method rather than a `render` method. The `render_line` method takes a single integer argument `y` which is an offset from the top of the widget, and should return a [Strip][textual.strip.Strip] object containing that line's content.
-Textual will call this method as required to get content for every row of characters in the widget.
+To build a widget with the line API, implement a `render_line` method rather than a `render` method. The `render_line` method takes a single integer argument `y` which is an offset from the top of the widget, and should return a [Strip][anytext.strip.Strip] object containing that line's content.
+Anytext will call this method as required to get content for every row of characters in the widget.
 
 <div class="excalidraw">
 --8<-- "docs/images/render_line.excalidraw.svg"
 </div>
 
-Let's look at an example before we go into the details. The following Textual app implements a widget with the line API that renders a checkerboard pattern. This might form the basis of a chess / checkers game. Here's the code:
+Let's look at an example before we go into the details. The following Anytext app implements a widget with the line API that renders a checkerboard pattern. This might form the basis of a chess / checkers game. Here's the code:
 
 === "checker01.py"
 
@@ -421,7 +421,7 @@ Let's look at an example before we go into the details. The following Textual ap
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/checker01.py"}
+    ```{.anytext path="docs/examples/guide/widgets/checker01.py"}
     ```
 
 
@@ -431,7 +431,7 @@ You may have noticed that the checkerboard widget makes use of some objects we h
 
 #### Segment and Style
 
-A [Segment](https://rich.readthedocs.io/en/latest/protocol.html#low-level-render) is a class borrowed from the [Rich](https://github.com/Textualize/rich) project. It is small object (actually a named tuple) which bundles a string to be displayed and a [Style](https://rich.readthedocs.io/en/latest/style.html) which tells Textual how the text should look (color, bold, italic etc).
+A [Segment](https://rich.readthedocs.io/en/latest/protocol.html#low-level-render) is a class borrowed from the [Rich](https://github.com/Textualize/rich) project. It is small object (actually a named tuple) which bundles a string to be displayed and a [Style](https://rich.readthedocs.io/en/latest/style.html) which tells Anytext how the text should look (color, bold, italic etc).
 
 Let's look at a simple segment which would produce the text "Hello, World!" in bold.
 
@@ -445,11 +445,11 @@ This would create the following object:
 --8<-- "docs/images/segment.excalidraw.svg"
 </div>
 
-Both Rich and Textual work with segments to generate content. A Textual app is the result of combining hundreds, or perhaps thousands, of segments,
+Both Rich and Anytext work with segments to generate content. A Anytext app is the result of combining hundreds, or perhaps thousands, of segments,
 
 #### Strips
 
-A [Strip][textual.strip.Strip] is a container for a number of segments covering a single *line* (or row) in the Widget. A Strip will contain at least one segment, but often many more.
+A [Strip][anytext.strip.Strip] is a container for a number of segments covering a single *line* (or row) in the Widget. A Strip will contain at least one segment, but often many more.
 
 A `Strip` is constructed from a list of `Segment` objects. Here's now you might construct a strip that displays the text "Hello, World!", but with the second word in bold:
 
@@ -470,7 +470,7 @@ The `Strip` constructor has an optional second parameter, which should be the *c
 strip = Strip(segments, 13)
 ```
 
-Note that the cell length parameter is _not_ the total number of characters in the string. It is the number of terminal "cells". Some characters (such as Asian language characters and certain emoji) take up the space of two Western alphabet characters. If you don't know in advance the number of cells your segments will occupy, it is best to omit the length parameter so that Textual calculates it automatically.
+Note that the cell length parameter is _not_ the total number of characters in the string. It is the number of terminal "cells". Some characters (such as Asian language characters and certain emoji) take up the space of two Western alphabet characters. If you don't know in advance the number of cells your segments will occupy, it is best to omit the length parameter so that Anytext calculates it automatically.
 
 ### Component classes
 
@@ -488,7 +488,7 @@ The following example replaces our hard-coded colors with component classes.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/checker02.py"}
+    ```{.anytext path="docs/examples/guide/widgets/checker02.py"}
     ```
 
 The `COMPONENT_CLASSES` class variable above adds two class names: `checkerboard--white-square` and `checkerboard--black-square`. These are set in the `DEFAULT_CSS` but can modified in the app's `CSS` class variable or external CSS.
@@ -497,14 +497,14 @@ The `COMPONENT_CLASSES` class variable above adds two class names: `checkerboard
 
     Component classes typically begin with the name of the widget followed by *two* hyphens. This is a convention to avoid potential name clashes.
 
-The `render_line` method calls [get_component_rich_style][textual.widget.Widget.get_component_rich_style] to get `Style` objects from the CSS, which we apply to the segments to create a more colorful looking checkerboard.
+The `render_line` method calls [get_component_rich_style][anytext.widget.Widget.get_component_rich_style] to get `Style` objects from the CSS, which we apply to the segments to create a more colorful looking checkerboard.
 
 ### Scrolling
 
-A Line API widget can be made to scroll by extending the [ScrollView][textual.scroll_view.ScrollView] class (rather than `Widget`).
+A Line API widget can be made to scroll by extending the [ScrollView][anytext.scroll_view.ScrollView] class (rather than `Widget`).
 The `ScrollView` class will do most of the work, but we will need to manage the following details:
 
-1. The `ScrollView` class requires a *virtual size*, which is the size of the scrollable content and should be set via the `virtual_size` property. If this is larger than the widget then Textual will add scrollbars.
+1. The `ScrollView` class requires a *virtual size*, which is the size of the scrollable content and should be set via the `virtual_size` property. If this is larger than the widget then Anytext will add scrollbars.
 2. We need to update the `render_line` method to generate strips for the visible area of the widget, taking into account the current position of the scrollbars.
 
 Let's add scrolling to our checkerboard example. A standard 8 x 8 board isn't sufficient to demonstrate scrolling so we will make the size of the board configurable and set it to 100 x 100, for a total of 10,000 squares.
@@ -517,18 +517,18 @@ Let's add scrolling to our checkerboard example. A standard 8 x 8 board isn't su
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/checker03.py"}
+    ```{.anytext path="docs/examples/guide/widgets/checker03.py"}
     ```
 
 The virtual size is set in the constructor to match the total size of the board, which will enable scrollbars (unless you have your terminal zoomed out very far). You can update the `virtual_size` attribute dynamically as required, but our checkerboard isn't going to change size so we only need to set it once.
 
-The `render_line` method gets the *scroll offset* which is an [Offset][textual.geometry.Offset] containing the current position of the scrollbars. We add `scroll_offset.y` to the `y` argument because `y` is relative to the top of the widget, and we need a Y coordinate relative to the scrollable content.
+The `render_line` method gets the *scroll offset* which is an [Offset][anytext.geometry.Offset] containing the current position of the scrollbars. We add `scroll_offset.y` to the `y` argument because `y` is relative to the top of the widget, and we need a Y coordinate relative to the scrollable content.
 
 We also need to compensate for the position of the horizontal scrollbar. This is done in the call to `strip.crop` which *crops* the strip to the visible area between `scroll_x` and `scroll_x + self.size.width`.
 
 !!! tip
 
-    [Strip][textual.strip.Strip] objects are immutable, so methods will return a new Strip rather than modifying the original.
+    [Strip][anytext.strip.Strip] objects are immutable, so methods will return a new Strip rather than modifying the original.
 
 <div class="excalidraw">
 --8<-- "docs/images/scroll_view.excalidraw.svg"
@@ -550,26 +550,26 @@ Here's the code:
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/widgets/checker04.py"}
+    ```{.anytext path="docs/examples/guide/widgets/checker04.py"}
     ```
 
 We've added a style to the checkerboard which is the color of the highlighted square, with a default of "darkred".
 We will need this when we come to render the highlighted square.
 
-We've also added a [reactive variable](./reactivity.md) called `cursor_square` which will hold the coordinate of the square underneath the mouse. Note that we have used [var][textual.reactive.var] which gives us reactive superpowers but won't automatically refresh the whole widget, because we want to update only the squares under the cursor.
+We've also added a [reactive variable](./reactivity.md) called `cursor_square` which will hold the coordinate of the square underneath the mouse. Note that we have used [var][anytext.reactive.var] which gives us reactive superpowers but won't automatically refresh the whole widget, because we want to update only the squares under the cursor.
 
-The `on_mouse_move` handler takes the mouse coordinates from the [MouseMove][textual.events.MouseMove] object and calculates the coordinate of the square underneath the mouse. There's a little math here, so let's break it down.
+The `on_mouse_move` handler takes the mouse coordinates from the [MouseMove][anytext.events.MouseMove] object and calculates the coordinate of the square underneath the mouse. There's a little math here, so let's break it down.
 
 - The event contains the coordinates of the mouse relative to the top left of the widget, but we need the coordinate relative to the top left of board which depends on the position of the scrollbars.
 We can perform this conversion by adding `self.scroll_offset` to `event.offset`.
 - Once we have the board coordinate underneath the mouse we divide the x coordinate by 8 and divide the y coordinate by 4 to give us the coordinate of a square.
 
-If the cursor square coordinate calculated in `on_mouse_move` changes, Textual will call `watch_cursor_square` with the previous coordinate and new coordinate of the square. This method works out the regions of the widget to update and essentially does the reverse of the steps we took to go from mouse coordinates to square coordinates.
-The `get_square_region` function calculates a [Region][textual.geometry.Region] object for each square and uses them as a positional argument in a call to [refresh][textual.widget.Widget.refresh]. Passing Region objects to `refresh` tells Textual to update only the cells underneath those regions, and not the entire widget.
+If the cursor square coordinate calculated in `on_mouse_move` changes, Anytext will call `watch_cursor_square` with the previous coordinate and new coordinate of the square. This method works out the regions of the widget to update and essentially does the reverse of the steps we took to go from mouse coordinates to square coordinates.
+The `get_square_region` function calculates a [Region][anytext.geometry.Region] object for each square and uses them as a positional argument in a call to [refresh][anytext.widget.Widget.refresh]. Passing Region objects to `refresh` tells Anytext to update only the cells underneath those regions, and not the entire widget.
 
 !!! note
 
-    Textual is smart about performing updates. If you refresh multiple regions, Textual will combine them into as few non-overlapping regions as possible.
+    Anytext is smart about performing updates. If you refresh multiple regions, Anytext will combine them into as few non-overlapping regions as possible.
 
 The final step is to update the `render_line` method to use the cursor style when rendering the square underneath the mouse.
 
@@ -604,10 +604,10 @@ The following is an example of a compound widget.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/compound/compound01.py"}
+    ```{.anytext path="docs/examples/guide/compound/compound01.py"}
     ```
 
-The `InputWithLabel` class bundles an [Input](../widgets/input.md) with a [Label](../widgets/label.md) to create a new widget that displays a right-aligned label next to an input control. You can re-use this `InputWithLabel` class anywhere in a Textual app, including in other widgets.
+The `InputWithLabel` class bundles an [Input](../widgets/input.md) with a [Label](../widgets/label.md) to create a new widget that displays a right-aligned label next to an input control. You can re-use this `InputWithLabel` class anywhere in a Anytext app, including in other widgets.
 
 ## Coordinating widgets
 
@@ -659,7 +659,7 @@ In the following code we will implement the three widgets. There will be no func
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/compound/byte01.py" columns="90" line="30"}
+    ```{.anytext path="docs/examples/guide/compound/byte01.py" columns="90" line="30"}
     ```
 
 Note the `compose()` methods of each of the widgets.
@@ -694,7 +694,7 @@ def action_set_true(self):
     self.query_one(Switch).value = 1
 ```
 
-If a child needs to update a parent, it should send a message with [post_message][textual.message_pump.MessagePump.post_message].
+If a child needs to update a parent, it should send a message with [post_message][anytext.message_pump.MessagePump.post_message].
 
 Here's an example of posting message:
 
@@ -729,10 +729,10 @@ Let's extend the `ByteEditor` so that clicking any of the 8 `BitSwitch` widgets 
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/compound/byte02.py" columns="90" line="30", press="tab,tab,tab,enter"}
+    ```{.anytext path="docs/examples/guide/compound/byte02.py" columns="90" line="30", press="tab,tab,tab,enter"}
     ```
 
-- The `BitSwitch` widget now has an `on_switch_changed` method which will handle a [`Switch.Changed`][textual.widgets.Switch.Changed] message, sent when the user clicks a switch. We use this to store the new value of the bit, and sent a new custom message, `BitSwitch.BitChanged`.
+- The `BitSwitch` widget now has an `on_switch_changed` method which will handle a [`Switch.Changed`][anytext.widgets.Switch.Changed] message, sent when the user clicks a switch. We use this to store the new value of the bit, and sent a new custom message, `BitSwitch.BitChanged`.
 - The `ByteEditor` widget handles the `BitSwitch.Changed` message by calculating the decimal value and setting it on the input.
 
 The following is a (simplified) DOM diagram to show how the new message is processed:
@@ -765,8 +765,8 @@ This is an example of "attributes down".
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/compound/byte03.py" columns="90" line="30", press="1,0,0"}
+    ```{.anytext path="docs/examples/guide/compound/byte03.py" columns="90" line="30", press="1,0,0"}
     ```
 
 - When the user edits the input, the [Input](../widgets/input.md) widget sends a `Changed` event, which we handle with `on_input_changed` by setting `self.value`, which is a reactive value we added to `ByteEditor`.
-- If the value has changed, Textual will call `watch_value` which sets the value of each of the eight switches. Because we are working with children of the `ByteEditor`, we can set attributes directly without going via a message.
+- If the value has changed, Anytext will call `watch_value` which sets the value of each of the eight switches. Because we are working with children of the `ByteEditor`, we can set attributes directly without going via a message.

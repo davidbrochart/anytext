@@ -1,6 +1,6 @@
 import os
-from textual.app import App
-from textual.widgets import RichLog
+from anytext.app import App
+from anytext.widgets import RichLog
 
 
 class RichLogTest(App):

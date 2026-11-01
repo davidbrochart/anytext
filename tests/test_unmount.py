@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textual import events
-from textual.app import App, ComposeResult
-from textual.containers import Container
-from textual.screen import Screen
+from anytext import events
+from anytext.app import App, ComposeResult
+from anytext.containers import Container
+from anytext.screen import Screen
 
 
 async def test_unmount() -> None:

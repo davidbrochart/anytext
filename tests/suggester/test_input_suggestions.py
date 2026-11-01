@@ -2,9 +2,9 @@ import string
 
 import pytest
 
-from textual.app import App, ComposeResult
-from textual.suggester import SuggestFromList
-from textual.widgets import Input
+from anytext.app import App, ComposeResult
+from anytext.suggester import SuggestFromList
+from anytext.widgets import Input
 
 
 class SuggestionsApp(App[ComposeResult]):

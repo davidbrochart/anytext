@@ -22,10 +22,10 @@ The default value is `default`.
 
 Many builtin widgets and scrollbars set the mouse pointer.
 
-Run the Textual demo to see the mouse pointer change (hover over buttons or click and drag a scrollbar):
+Run the Anytext demo to see the mouse pointer change (hover over buttons or click and drag a scrollbar):
 
 ```
-python -m textual
+python -m anytext
 ```
 
 ## CSS

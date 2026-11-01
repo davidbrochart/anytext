@@ -3,11 +3,11 @@ from pathlib import Path
 import pytest
 from rich.text import Text
 
-import textual.widgets._markdown as MD
-from textual.app import App, ComposeResult
-from textual.content import Content
-from textual.geometry import Offset
-from textual.widgets import Markdown, MarkdownViewer, Tree
+import anytext.widgets._markdown as MD
+from anytext.app import App, ComposeResult
+from anytext.content import Content
+from anytext.geometry import Offset
+from anytext.widgets import Markdown, MarkdownViewer, Tree
 
 TEST_MARKDOWN = """\
 * [First]({{file}}#first)

@@ -10,7 +10,7 @@ assignees: ''
 
 Hi,
 
-I have maintained Rich and Textual for many years, and I will continue to do so.
+I have maintained Rich and Anytext for many years, and I will continue to do so.
 But please be aware that it takes a lot of my time to review issues and this has only increased in the AI age.
 I can't always allocate the time, so you may have to wait for a response.
 
@@ -24,12 +24,12 @@ willmcgugan+textual@gmail.com
 
 Have you checked closed issues? (https://github.com/Textualize/textual/issues?q=is%3Aissue+is%3Aclosed)
 
-Have you checked against the most recent version of Textual? (https://pypi.org/search/?q=textual)
+Have you checked against the most recent version of Anytext? (https://pypi.org/search/?q=textual)
 
 ## Consider discussions!
 
 Issues are for actionable items only.
-If Textual crashes or behaves differently from the docs, then submit an issue.
+If Anytext crashes or behaves differently from the docs, then submit an issue.
 If you want to know how to do something, or you have a suggestion for a new feature, then open a discussion (https://github.com/Textualize/textual/discussions/).
 
 For realtime help, join our discord server (https://discord.gg/Enf6Z3qhVr)

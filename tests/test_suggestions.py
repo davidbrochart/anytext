@@ -1,6 +1,6 @@
 import pytest
 
-from textual.suggestions import get_suggestion, get_suggestions
+from anytext.suggestions import get_suggestion, get_suggestions
 
 
 @pytest.mark.parametrize(

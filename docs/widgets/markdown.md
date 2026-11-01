@@ -18,7 +18,7 @@ The following example displays Markdown from a string.
 
 === "Output"
 
-    ```{.textual path="docs/examples/widgets/markdown.py"}
+    ```{.anytext path="docs/examples/widgets/markdown.py"}
     ```
 
 === "markdown.py"
@@ -33,9 +33,9 @@ This widget has no reactive attributes.
 
 ## Messages
 
-- [Markdown.TableOfContentsUpdated][textual.widgets.Markdown.TableOfContentsUpdated]
-- [Markdown.TableOfContentsSelected][textual.widgets.Markdown.TableOfContentsSelected]
-- [Markdown.LinkClicked][textual.widgets.Markdown.LinkClicked]
+- [Markdown.TableOfContentsUpdated][anytext.widgets.Markdown.TableOfContentsUpdated]
+- [Markdown.TableOfContentsSelected][anytext.widgets.Markdown.TableOfContentsSelected]
+- [Markdown.LinkClicked][anytext.widgets.Markdown.LinkClicked]
 
 ## Bindings
 
@@ -45,7 +45,7 @@ This widget has no bindings.
 
 The markdown widget provides the following component classes:
 
-::: textual.widgets.Markdown.COMPONENT_CLASSES
+::: anytext.widgets.Markdown.COMPONENT_CLASSES
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -54,12 +54,12 @@ The markdown widget provides the following component classes:
 ## See Also
 
 
-* [MarkdownViewer][textual.widgets.MarkdownViewer] code reference
+* [MarkdownViewer][anytext.widgets.MarkdownViewer] code reference
 
 
 ---
 
 
-::: textual.widgets.Markdown
+::: anytext.widgets.Markdown
     options:
       heading_level: 2

@@ -2,9 +2,9 @@
 App to test alignment containers.
 """
 
-from textual.app import App, ComposeResult
-from textual.containers import Center, Middle
-from textual.widgets import Button
+from anytext.app import App, ComposeResult
+from anytext.containers import Center, Middle
+from anytext.widgets import Button
 
 
 class AlignContainersApp(App[None]):

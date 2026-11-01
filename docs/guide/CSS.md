@@ -1,16 +1,16 @@
-# Textual CSS
+# Anytext CSS
 
-Textual uses CSS to apply style to widgets. If you have any exposure to web development you will have encountered CSS, but don't worry if you haven't: this chapter will get you up to speed.
+Anytext uses CSS to apply style to widgets. If you have any exposure to web development you will have encountered CSS, but don't worry if you haven't: this chapter will get you up to speed.
 
 !!! tip "VSCode User?"
 
-    The official [Textual CSS](https://marketplace.visualstudio.com/items?itemName=Textualize.textual-syntax-highlighter) extension adds syntax highlighting for both external files and inline CSS.
+    The official [Anytext CSS](https://marketplace.visualstudio.com/items?itemName=Textualize.textual-syntax-highlighter) extension adds syntax highlighting for both external files and inline CSS.
 
 ## Stylesheets
 
-CSS stands for _Cascading Stylesheet_. A stylesheet is a list of styles and rules about how those styles should be applied to a web page. In the case of Textual, the stylesheet applies [styles](./styles.md) to widgets, but otherwise it is the same idea.
+CSS stands for _Cascading Stylesheet_. A stylesheet is a list of styles and rules about how those styles should be applied to a web page. In the case of Anytext, the stylesheet applies [styles](./styles.md) to widgets, but otherwise it is the same idea.
 
-Let's look at some Textual CSS.
+Let's look at some Anytext CSS.
 
 ```css
 Header {
@@ -36,7 +36,7 @@ Header {
 }
 ```
 
-The first line is a _selector_ which tells Textual which widget(s) to modify. In the above example, the styles will be applied to a widget defined by the Python class `Header`.
+The first line is a _selector_ which tells Anytext which widget(s) to modify. In the above example, the styles will be applied to a widget defined by the Python class `Header`.
 
 ```css hl_lines="2 3 4 5 6"
 Header {
@@ -50,16 +50,16 @@ Header {
 
 The lines inside the curly braces contains CSS _rules_, which consist of a rule name and rule value separated by a colon and ending in a semicolon. Such rules are typically written one per line, but you could add additional rules as long as they are separated by semicolons.
 
-The first rule in the above example reads `"dock: top;"`. The rule name is `dock` which tells Textual to place the widget on an edge of the screen. The text after the colon is `top` which tells Textual to dock to the _top_ of the screen. Other valid values for `dock` are "right", "bottom", or "left"; but "top" is most appropriate for a header.
+The first rule in the above example reads `"dock: top;"`. The rule name is `dock` which tells Anytext to place the widget on an edge of the screen. The text after the colon is `top` which tells Anytext to dock to the _top_ of the screen. Other valid values for `dock` are "right", "bottom", or "left"; but "top" is most appropriate for a header.
 
 
 ## The DOM
 
-The DOM, or _Document Object Model_, is a term borrowed from the web world. Textual doesn't use documents but the term has stuck. In Textual CSS, the DOM is an arrangement of widgets you can visualize as a tree-like structure.
+The DOM, or _Document Object Model_, is a term borrowed from the web world. Anytext doesn't use documents but the term has stuck. In Anytext CSS, the DOM is an arrangement of widgets you can visualize as a tree-like structure.
 
 Some widgets contain other widgets: for instance, a list control widget will likely also have item widgets, or a dialog widget may contain button widgets. These _child_ widgets form the branches of the tree.
 
-Let's look at a trivial Textual app.
+Let's look at a trivial Anytext app.
 
 === "dom1.py"
 
@@ -69,7 +69,7 @@ Let's look at a trivial Textual app.
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/dom1.py"}
+    ```{.anytext path="docs/examples/guide/dom1.py"}
     ```
 
 This example creates an instance of `ExampleApp`, which will implicitly create a `Screen` object. In DOM terms, the `Screen` is a _child_ of `ExampleApp`.
@@ -91,7 +91,7 @@ This doesn't look much like a tree yet. Let's add a header and a footer to this 
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/dom2.py"}
+    ```{.anytext path="docs/examples/guide/dom2.py"}
     ```
 
 With a header and a footer widget the DOM looks like this:
@@ -108,10 +108,10 @@ Both Header and Footer are children of the Screen object.
 
 To further explore the DOM, we're going to build a simple dialog with a question and two buttons. To do this we're going to import and use a few more builtin widgets:
 
-- [`textual.containers.Container`][textual.containers.Container] For our top-level dialog.
-- [`textual.containers.Horizontal`][textual.containers.Horizontal] To arrange widgets left to right.
-- [`textual.widgets.Static`][textual.widgets.Static] For simple content.
-- [`textual.widgets.Button`][textual.widgets.Button] For a clickable button.
+- [`anytext.containers.Container`][anytext.containers.Container] For our top-level dialog.
+- [`anytext.containers.Horizontal`][anytext.containers.Horizontal] To arrange widgets left to right.
+- [`anytext.widgets.Static`][anytext.widgets.Static] For simple content.
+- [`anytext.widgets.Button`][anytext.widgets.Button] For a clickable button.
 
 
 ```python hl_lines="12 13 14 15 16 17 18 19 20" title="dom3.py"
@@ -128,7 +128,7 @@ Here's the DOM created by the above code:
 
 Here's the output from this example:
 
-```{.textual path="docs/examples/guide/dom3.py"}
+```{.anytext path="docs/examples/guide/dom3.py"}
 
 ```
 
@@ -141,7 +141,7 @@ To add a stylesheet set the `CSS_PATH` classvar to a relative path:
 
 !!! note "What are TCSS files?"
 
-    Textual CSS files are typically given the extension `.tcss` to differentiate them from browser CSS (`.css`).
+    Anytext CSS files are typically given the extension `.tcss` to differentiate them from browser CSS (`.css`).
 
 
 ```python hl_lines="9" title="dom4.py"
@@ -157,17 +157,17 @@ Here's the CSS file we are applying:
 --8<-- "docs/examples/guide/dom4.tcss"
 ```
 
-The CSS contains a number of rule sets with a selector and a list of rules. You can also add comments with text between `/*` and `*/` which will be ignored by Textual. Add comments to leave yourself reminders or to temporarily disable selectors.
+The CSS contains a number of rule sets with a selector and a list of rules. You can also add comments with text between `/*` and `*/` which will be ignored by Anytext. Add comments to leave yourself reminders or to temporarily disable selectors.
 
 With the CSS in place, the output looks very different:
 
-```{.textual path="docs/examples/guide/dom4.py"}
+```{.anytext path="docs/examples/guide/dom4.py"}
 
 ```
 
 ### Using multiple CSS files
 
-You can also set the `CSS_PATH` class variable to a list of paths. Textual will combine the rules from all of the supplied paths.
+You can also set the `CSS_PATH` class variable to a list of paths. Anytext will combine the rules from all of the supplied paths.
 
 ### Why CSS?
 
@@ -177,7 +177,7 @@ A major advantage of CSS is that it separates how your app _looks_ from how it _
 
 A second advantage of CSS is that you can customize builtin and third-party widgets just as easily as you can your own app or widgets.
 
-Finally, Textual CSS allows you to _live edit_ the styles in your app. If you run your application with the following command, any changes you make to the CSS file will be instantly updated in the terminal:
+Finally, Anytext CSS allows you to _live edit_ the styles in your app. If you run your application with the following command, any changes you make to the CSS file will be instantly updated in the terminal:
 
 ```bash
 textual run my_app.py --dev
@@ -187,11 +187,11 @@ Being able to iterate on the design without restarting the application makes it 
 
 ## Selectors
 
-A selector is the text which precedes the curly braces in a set of rules. It tells Textual which widgets it should apply the rules to.
+A selector is the text which precedes the curly braces in a set of rules. It tells Anytext which widgets it should apply the rules to.
 
 Selectors can target a kind of widget or a very specific widget. For instance, you could have a selector that modifies all buttons, or you could target an individual button used in one dialog. This gives you a lot of flexibility in customizing your user interface.
 
-Let's look at the selectors supported by Textual CSS.
+Let's look at the selectors supported by Anytext CSS.
 
 ### Type selector
 
@@ -199,7 +199,7 @@ The _type_ selector matches the name of the (Python) class.
 Consider the following widget class:
 
 ```python
-from textual.widgets import Static
+from anytext.widgets import Static
 
 class Alert(Static):
     pass
@@ -228,7 +228,7 @@ Static {
     The fact that the type selector matches base classes is a departure from browser CSS which doesn't have the same concept.
 
 You may have noticed that the `border` rule exists in both `Static` and `Alert`.
-When this happens, Textual will use the most recently defined sub-class.
+When this happens, Anytext will use the most recently defined sub-class.
 So `Alert` wins over `Static`, and `Static` wins over `Widget` (the base class of all widgets).
 Hence if both rules were in a stylesheet, `Alert` widgets would have a "solid red" border and not a "round green" border.
 
@@ -293,12 +293,12 @@ Class name selectors may be _chained_ together by appending another full stop an
 
 Unlike the `id` attribute, a widget's classes can be changed after the widget was created. Adding and removing CSS classes is the recommended way of changing the display while your app is running. There are a few methods you can use to manage CSS classes.
 
-- [add_class()][textual.dom.DOMNode.add_class] Adds one or more classes to a widget.
-- [remove_class()][textual.dom.DOMNode.remove_class] Removes class name(s) from a widget.
-- [toggle_class()][textual.dom.DOMNode.toggle_class] Removes a class name if it is present, or adds the name if it's not already present.
-- [has_class()][textual.dom.DOMNode.has_class] Checks if one or more classes are set on a widget.
-- [set_class()][textual.css.query.DOMQuery.set_class] Sets or removes a class dependant on a boolean.
-- [classes][textual.dom.DOMNode.classes] Is a frozen set of the class(es) set on a widget.
+- [add_class()][anytext.dom.DOMNode.add_class] Adds one or more classes to a widget.
+- [remove_class()][anytext.dom.DOMNode.remove_class] Removes class name(s) from a widget.
+- [toggle_class()][anytext.dom.DOMNode.toggle_class] Removes a class name if it is present, or adds the name if it's not already present.
+- [has_class()][anytext.dom.DOMNode.has_class] Checks if one or more classes are set on a widget.
+- [set_class()][anytext.css.query.DOMQuery.set_class] Sets or removes a class dependant on a boolean.
+- [classes][anytext.dom.DOMNode.classes] Is a frozen set of the class(es) set on a widget.
 
 
 ### Universal selector
@@ -327,7 +327,7 @@ See [Combinators](#combinators) for more details on combining selectors like thi
 
 ### Pseudo classes
 
-Pseudo classes can be used to match widgets in a particular state. Pseudo classes are set automatically by Textual. For instance, you might want a button to have a green background when the mouse cursor moves over it. We can do this with the `:hover` pseudo selector.
+Pseudo classes can be used to match widgets in a particular state. Pseudo classes are set automatically by Anytext. For instance, you might want a button to have a green background when the mouse cursor moves over it. We can do this with the `:hover` pseudo selector.
 
 ```css
 Button:hover {
@@ -407,7 +407,7 @@ We can use the following CSS to style all buttons which have a parent with an ID
 
 ## Specificity
 
-It is possible that several selectors match a given widget. If the same style is applied by more than one selector then Textual needs a way to decide which rule _wins_. It does this by following these rules:
+It is possible that several selectors match a given widget. If the same style is applied by more than one selector then Anytext needs a way to decide which rule _wins_. It does this by following these rules:
 
 - The selector with the most IDs wins. For instance `#next` beats `.button` and `#dialog #next` beats `#next`. If the selectors have the same number of IDs then move to the next rule.
 
@@ -434,7 +434,7 @@ Button:hover {
 ## CSS Variables
 
 You can define variables to reduce repetition and encourage consistency in your CSS.
-Variables in Textual CSS are prefixed with `$`.
+Variables in Anytext CSS are prefixed with `$`.
 Here's an example of how you might define a variable called `$border`:
 
 ```css
@@ -521,7 +521,7 @@ These could eventually form the basis for buttons, but for this demonstration we
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/css/nesting01.py"}
+    ```{.anytext path="docs/examples/guide/css/nesting01.py"}
     ```
 
 The CSS is quite straightforward; there is one rule for the container, one for all buttons, and one rule for each of the buttons.
@@ -547,7 +547,7 @@ The following produces identical results to the previous example, but adds nesti
 
 === "Output"
 
-    ```{.textual path="docs/examples/guide/css/nesting02.py"}
+    ```{.anytext path="docs/examples/guide/css/nesting02.py"}
     ```
 
 !!! tip
@@ -565,7 +565,7 @@ The two remaining rules are nested within the button rule, which means they will
 
 You may have noticed that the rules for the button styles contain a syntax we haven't seen before.
 The rule for the Yes button is `&.affirmative`.
-The ampersand (`&`) is known as the *nesting selector* and it tells Textual that the selector should be combined with the selector from the outer rule set.
+The ampersand (`&`) is known as the *nesting selector* and it tells Anytext that the selector should be combined with the selector from the outer rule set.
 
 So `&.affirmative` in the example above, produces the equivalent of `#questions .button.affirmative` which selects a widget with both the `button` and `affirmative` classes.
 Without `&` it would be equivalent to `#questions .button .affirmative` (note the additional space) which would only match a widget with class `affirmative` inside a container with class `button`.

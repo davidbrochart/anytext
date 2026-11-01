@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from textual.validation import (
+from anytext.validation import (
     URL,
     Failure,
     Function,

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from textual import events
-from textual.app import App, ComposeResult
-from textual.geometry import Offset, Region, Size
-from textual.reactive import var
-from textual.strip import Strip
-from textual.scroll_view import ScrollView
+from anytext import events
+from anytext.app import App, ComposeResult
+from anytext.geometry import Offset, Region, Size
+from anytext.reactive import var
+from anytext.strip import Strip
+from anytext.scroll_view import ScrollView
 
 from rich.segment import Segment
 from rich.style import Style

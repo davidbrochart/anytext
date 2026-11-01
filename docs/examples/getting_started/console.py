@@ -1,11 +1,11 @@
 """
-Simulates a screenshot of the Textual devtools
+Simulates a screenshot of the Anytext devtools
 """
 
 from textual_dev.renderables import DevConsoleHeader
 
-from textual.app import App
-from textual.widgets import Static
+from anytext.app import App
+from anytext.widgets import Static
 
 
 class ConsoleApp(App):

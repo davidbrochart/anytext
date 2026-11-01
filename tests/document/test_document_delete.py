@@ -1,6 +1,6 @@
 import pytest
 
-from textual.widgets.text_area import Document, EditResult
+from anytext.widgets.text_area import Document, EditResult
 
 TEXT = """I must not fear.
 Fear is the mind-killer.

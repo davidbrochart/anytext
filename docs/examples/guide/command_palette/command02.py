@@ -3,10 +3,10 @@ from __future__ import annotations
 from functools import partial
 from pathlib import Path
 
-from textual.app import App, ComposeResult
-from textual.command import Hit, Hits, Provider
-from textual.containers import VerticalScroll
-from textual.widgets import Static
+from anytext.app import App, ComposeResult
+from anytext.command import Hit, Hits, Provider
+from anytext.containers import VerticalScroll
+from anytext.widgets import Static
 
 
 class PythonFileCommands(Provider):

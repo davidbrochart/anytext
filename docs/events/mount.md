@@ -1,4 +1,4 @@
-::: textual.events.Mount
+::: anytext.events.Mount
     options:
       heading_level: 1
 

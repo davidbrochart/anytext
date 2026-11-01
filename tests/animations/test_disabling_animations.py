@@ -2,9 +2,9 @@
 Test that generic animations can be disabled.
 """
 
-from textual.app import App, ComposeResult
-from textual.color import Color
-from textual.widgets import Label
+from anytext.app import App, ComposeResult
+from anytext.color import Color
+from anytext.widgets import Label
 
 
 class SingleLabelApp(App[None]):
