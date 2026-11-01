@@ -28,7 +28,7 @@ import rich.repr
 import sniffio
 from typing_extensions import TypeAlias
 
-from anytext import _async
+from anytext import _async, constants
 from anytext.message import Message
 
 if TYPE_CHECKING:
@@ -162,6 +162,10 @@ class Worker(Generic[ResultType]):
             exit_on_error: Exit the app if the worker raises an error. Set to `False` to suppress exceptions.
             thread: Mark the worker as a thread worker.
         """
+        if thread and not constants.THREADS_ENABLED:
+            raise WorkerError(
+                "Thread workers are disabled; use an async worker in thread-free mode"
+            )
         self._node = node
         self._work = work
         self.name = name
@@ -170,7 +174,7 @@ class Worker(Generic[ResultType]):
             description if len(description) <= 1000 else description[:1000] + "..."
         )
         self.exit_on_error = exit_on_error
-        self.cancelled_event: Event = Event()
+        self.cancelled_event = Event() if constants.THREADS_ENABLED else _async.Event()
         """A threading event set when the worker is cancelled."""
         self._thread_worker = thread
         self._state = WorkerState.PENDING

@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import threading
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, BinaryIO, Iterator, Literal, TextIO
 
-from anytext import _async, events, log, messages
+from anytext import _async, constants, events, log, messages
 from anytext.events import MouseUp
 
 if TYPE_CHECKING:
@@ -15,6 +14,9 @@ if TYPE_CHECKING:
 
 class Driver(ABC):
     """A base class for drivers."""
+
+    requires_threads = False
+    """Whether the driver requires native threads."""
 
     def __init__(
         self,
@@ -32,6 +34,10 @@ class Driver(ABC):
             mouse: Enable mouse support,
             size: Initial size of the terminal or `None` to detect.
         """
+        if self.requires_threads and not constants.THREADS_ENABLED:
+            raise RuntimeError(
+                "This terminal driver requires threads; use CallbackDriver"
+            )
         self._app = app
         self._debug = debug
         self._mouse = mouse
@@ -77,8 +83,8 @@ class Driver(ABC):
         Args:
             event: A message to process.
         """
-        # NOTE: This runs in a thread.
-        # Avoid calling methods on the app.
+        # Native drivers may call this from an input thread. Host-driven drivers
+        # call it on the app loop. Keep delivery safe in both cases.
         message.set_sender(self._app)
         if self.cursor_origin is None:
             offset_x = 0
@@ -236,10 +242,12 @@ class Driver(ABC):
 
         """
 
-        def save_file_thread(binary: BinaryIO | TextIO, mode: str) -> None:
+        def save_file(binary: BinaryIO | TextIO, mode: str) -> None:
             try:
                 with open(
-                    save_path, mode, encoding=encoding or "utf-8"
+                    save_path,
+                    mode,
+                    **({} if "b" in mode else {"encoding": encoding or "utf-8"}),
                 ) as destination_file:
                     read = binary.read
                     write = destination_file.write
@@ -265,13 +273,21 @@ class Driver(ABC):
                 if not binary.closed:
                     binary.close()
 
-        if isinstance(binary, BinaryIO):
+        from io import BufferedIOBase, RawIOBase
+
+        if isinstance(binary, (BufferedIOBase, RawIOBase)):
             mode = "wb"
         else:
             mode = "w"
 
-        thread = threading.Thread(target=save_file_thread, args=(binary, mode))
-        thread.start()
+        async def save() -> None:
+            try:
+                await _async.run_sync(save_file, binary, mode)
+            finally:
+                if not binary.closed:
+                    binary.close()
+
+        _async.create_task(save(), name="save-file")
 
     def _delivery_complete(
         self, delivery_key: str, save_path: Path | None, name: str | None
@@ -280,8 +296,7 @@ class Driver(ABC):
 
         Delivers a DeliveryComplete event to the app.
         """
-        self._app.call_from_thread(
-            self._app.post_message,
+        self._app.post_message(
             events.DeliveryComplete(key=delivery_key, path=save_path, name=name),
         )
 
@@ -292,7 +307,6 @@ class Driver(ABC):
 
         Delivers a DeliveryFailed event to the app.
         """
-        self._app.call_from_thread(
-            self._app.post_message,
+        self._app.post_message(
             events.DeliveryFailed(key=delivery_key, exception=exception, name=name),
         )

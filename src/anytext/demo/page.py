@@ -4,7 +4,7 @@ import inspect
 
 from rich.syntax import Syntax
 
-from anytext import work
+from anytext import _async, work
 from anytext.app import ComposeResult
 from anytext.binding import Binding
 from anytext.containers import ScrollableContainer
@@ -64,12 +64,16 @@ class PageScreen(Screen):
         )
     ]
 
-    @work(thread=True)
-    def get_code(self, source_file: str) -> str | None:
+    @work
+    async def get_code(self, source_file: str) -> str | None:
         """Read code from disk, or return `None` on error."""
         try:
-            with open(source_file, "rt", encoding="utf-8") as file_:
-                return file_.read()
+
+            def read():
+                with open(source_file, "rt", encoding="utf-8") as file_:
+                    return file_.read()
+
+            return await _async.run_sync(read)
         except Exception:
             return None
 

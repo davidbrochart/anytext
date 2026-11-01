@@ -3,6 +3,8 @@ from time import monotonic, perf_counter
 
 from anyio import sleep as anyio_sleep
 
+from anytext import constants
+
 WINDOWS = sys.platform == "win32"
 
 
@@ -25,7 +27,10 @@ if WINDOWS:
         Args:
             secs: Number of seconds to sleep for.
         """
-        await win_sleep(secs)
+        if constants.THREADS_ENABLED:
+            await win_sleep(secs)
+        else:
+            await anyio_sleep(secs)
 
 else:
 

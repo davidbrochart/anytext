@@ -4,11 +4,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable, ClassVar, Iterable, Iterator
 
-import anyio
 from rich.style import Style
 from rich.text import Text, TextType
 
-from anytext import work
+from anytext import _async, work
 from anytext._queue import Queue
 from anytext.await_complete import AwaitComplete
 from anytext.message import Message
@@ -508,8 +507,8 @@ class DirectoryTree(Tree[DirEntry]):
         except OSError:
             pass
 
-    @work(thread=True, exit_on_error=False)
-    def _load_directory(self, node: TreeNode[DirEntry]) -> list[Path]:
+    @work(exit_on_error=False)
+    async def _load_directory(self, node: TreeNode[DirEntry]) -> list[Path]:
         """Load the directory contents for a given node.
 
         Args:
@@ -521,10 +520,15 @@ class DirectoryTree(Tree[DirEntry]):
         assert node.data is not None
         path = node.data.path
         path = path.expanduser().resolve()
-        return sorted(
-            self.filter_paths(self._directory_content(path, get_current_worker())),
-            key=lambda path: (not self._safe_is_dir(path), path.name.lower()),
-        )
+        worker = get_current_worker()
+
+        def load() -> list[Path]:
+            return sorted(
+                self.filter_paths(self._directory_content(path, worker)),
+                key=lambda path: (not self._safe_is_dir(path), path.name.lower()),
+            )
+
+        return await _async.run_sync(load)
 
     @work(exclusive=True, group="_loader")
     async def _loader(self) -> None:
@@ -539,8 +543,7 @@ class DirectoryTree(Tree[DirEntry]):
             async with self.lock:
                 cursor_node = self.cursor_node
                 try:
-                    # Spin up a short-lived thread that will load the content of
-                    # the directory associated with that node.
+                    # Load through the platform's synchronous-work adapter.
                     content = await self._load_directory(node).wait()
                 except WorkerCancelled:
                     # The worker was cancelled, that would suggest we're all
@@ -565,7 +568,7 @@ class DirectoryTree(Tree[DirEntry]):
         dir_entry = event.node.data
         if dir_entry is None:
             return
-        if await anyio.to_thread.run_sync(self._safe_is_dir, dir_entry.path):
+        if await _async.run_sync(self._safe_is_dir, dir_entry.path):
             if event.node.data is not None:
                 await self._add_to_load_queue(event.node)
         else:
@@ -577,7 +580,7 @@ class DirectoryTree(Tree[DirEntry]):
         dir_entry = event.node.data
         if dir_entry is None:
             return
-        if await anyio.to_thread.run_sync(self._safe_is_dir, dir_entry.path):
+        if await _async.run_sync(self._safe_is_dir, dir_entry.path):
             if event.node.data is not None:
                 self.post_message(self.DirectorySelected(event.node, dir_entry.path))
         else:

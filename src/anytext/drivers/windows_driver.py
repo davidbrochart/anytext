@@ -15,6 +15,8 @@ if TYPE_CHECKING:
 class WindowsDriver(Driver):
     """Powers display and input for Windows."""
 
+    requires_threads = True
+
     def __init__(
         self,
         app: App,

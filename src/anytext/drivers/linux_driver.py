@@ -37,6 +37,8 @@ KITTY_REPORT_ASSOCIATED_TEXT: Final = 0b00010000
 class LinuxDriver(Driver):
     """Powers display and input for Linux / MacOS"""
 
+    requires_threads = True
+
     def __init__(
         self,
         app: App,
@@ -192,6 +194,21 @@ class LinuxDriver(Driver):
         assert self._writer_thread is not None, "Driver must be in application mode"
         self._writer_thread.write(data)
 
+    def _start_writer(self) -> None:
+        """Start the native output mechanism."""
+        self._writer_thread = WriterThread(self._file)
+        self._writer_thread.start()
+
+    def _start_input(self) -> None:
+        """Start the native input mechanism."""
+        self._key_thread = Thread(target=self._run_input_thread, name="anytext-input")
+        self._key_thread.start()
+
+    def _stop_input(self) -> None:
+        """Stop the native input mechanism."""
+        if self._key_thread is not None:
+            self._key_thread.join()
+
     def start_application_mode(self):
         """Start application mode."""
 
@@ -234,8 +251,7 @@ class LinuxDriver(Driver):
             event = events.Resize(anytext_size, anytext_size)
             self._app.post_message(event)
 
-        self._writer_thread = WriterThread(self._file)
-        self._writer_thread.start()
+        self._start_writer()
 
         def on_terminal_resize(signum, stack) -> None:
             if not self._in_band_window_resize:
@@ -286,9 +302,7 @@ class LinuxDriver(Driver):
             self.write(f"\x1b[>{KITTY_PROTOCOL_FLAG}u")
 
         self.flush()
-        self._key_thread = Thread(target=self._run_input_thread, name="anytext-input")
-
-        self._key_thread.start()
+        self._start_input()
         self._request_terminal_sync_mode_support()
         self._query_in_band_window_resize()
         self._enable_bracketed_paste()
@@ -352,8 +366,7 @@ class LinuxDriver(Driver):
                 signal.signal(signal.SIGWINCH, signal.SIG_DFL)
                 self._disable_mouse_support()
                 self.exit_event.set()
-                if self._key_thread is not None:
-                    self._key_thread.join()
+                self._stop_input()
                 self.exit_event.clear()
                 try:
                     termios.tcflush(self.fileno, termios.TCIFLUSH)

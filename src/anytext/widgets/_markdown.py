@@ -1250,7 +1250,7 @@ class Markdown(Widget):
             those that can be raised by calling [`Path.read_text`][pathlib.Path.read_text].
         """
         path, anchor = self.sanitize_location(str(path))
-        data = await anyio.to_thread.run_sync(partial(path.read_text, encoding="utf-8"))
+        data = await _async.run_sync(partial(path.read_text, encoding="utf-8"))
         await self.update(data)
         if anchor:
             self.goto_anchor(anchor)
@@ -1399,7 +1399,7 @@ class Markdown(Widget):
 
             # Lock so that you can't update with more than one document simultaneously
             async with self.lock:
-                tokens = await anyio.to_thread.run_sync(parser.parse, markdown)
+                tokens = await _async.run_sync(parser.parse, markdown)
 
                 # Remove existing blocks for the first batch only
                 removed: bool = False

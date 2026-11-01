@@ -25,6 +25,8 @@ if TYPE_CHECKING:
 
 @rich.repr.auto(angular=True)
 class LinuxInlineDriver(Driver):
+    requires_threads = True
+
     def __init__(
         self,
         app: App,

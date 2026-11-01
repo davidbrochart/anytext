@@ -5,6 +5,7 @@ This module contains constants, which may be set in environment variables.
 from __future__ import annotations
 
 import os
+import sys
 from typing import get_args
 
 from typing_extensions import Final, TypeGuard
@@ -105,6 +106,14 @@ def _get_anytext_animations() -> AnimationLevel:
     if _is_valid_animation_level(value):
         return value
     return "full"
+
+
+# WASM builds generally cannot create Python threads. Keep the decision explicit
+# so desktop applications can exercise exactly the same execution path.
+THREADS_ENABLED: Final[bool] = get_environ(
+    "ANYTEXT_THREADS", "1"
+) != "0" and sys.platform not in {"emscripten", "wasi"}
+"""Allow thread workers and native terminal drivers. Disabled with ANYTEXT_THREADS=0."""
 
 
 DEBUG: Final[bool] = _get_environ_bool("ANYTEXT_DEBUG")

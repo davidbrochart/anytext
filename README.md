@@ -42,6 +42,13 @@ Upstream tools such as `textual-dev`, `textual-serve`, and
 `pytest-textual-snapshot` are external packages and may require adaptation for
 this fork. External package names and links keep their original names.
 
+## WebAssembly and thread-free hosts
+
+On Pyodide/WASM, Anytext automatically uses a thread-free runtime and a
+host-driven terminal driver. Set `ANYTEXT_THREADS=0` before importing Anytext to
+exercise this mode on desktop Python. See the [WASM guide](docs/guide/wasm.md) for
+terminal callbacks, async workers, limitations, and the Pyodide smoke test.
+
 ## License and attribution
 
 Anytext retains the original MIT license and original copyright notices. See [LICENSE](LICENSE).

@@ -134,3 +134,7 @@ sandbox/
 
 # Snapshot tests output
 #__snapshots__/
+
+# Browser test dependencies and diagnostic artifacts
+tests/browser/node_modules/
+tests/browser/test-results/

@@ -8,7 +8,7 @@ from rich.highlighter import Highlighter, ReprHighlighter
 from rich.style import Style
 from rich.text import Text
 
-from anytext import work
+from anytext import _async, work
 from anytext._line_split import line_split
 from anytext.cache import LRUCache
 from anytext.geometry import Size
@@ -127,9 +127,9 @@ class Log(ScrollView, can_focus=True):
         """
         return _sub_escape("�", line.expandtabs())
 
-    @work(thread=True)
-    def _update_size(self, updates: int, lines: list[str]) -> None:
-        """A thread worker to update the width in the background.
+    @work
+    async def _update_size(self, updates: int, lines: list[str]) -> None:
+        """Update the width in the background.
 
         Args:
             updates: The update index at the time of invocation.
@@ -137,8 +137,10 @@ class Log(ScrollView, can_focus=True):
         """
         if lines:
             _process_line = self._process_line
-            max_length = max(cell_len(_process_line(line)) for line in lines)
-            self.app.call_from_thread(self._update_maximum_width, updates, max_length)
+            max_length = await _async.run_sync(
+                lambda: max(cell_len(_process_line(line)) for line in lines)
+            )
+            self._update_maximum_width(updates, max_length)
 
     def _prune_max_lines(self) -> None:
         """Prune lines if there are more than the maximum."""

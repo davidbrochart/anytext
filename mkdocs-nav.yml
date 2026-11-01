@@ -22,6 +22,7 @@ nav:
       - "guide/animation.md"
       - "guide/screens.md"
       - "guide/workers.md"
+      - "guide/wasm.md"
       - "guide/command_palette.md"
       - "guide/testing.md"
   - "widget_gallery.md"

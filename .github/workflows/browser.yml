@@ -1,0 +1,52 @@
+name: Browser tests
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/browser.yml"
+      - "src/anytext/**"
+      - "examples/browser/**"
+      - "tests/browser/**"
+      - "tools/serve_browser.py"
+      - "pyproject.toml"
+  push:
+    branches: [main, anytext]
+    paths:
+      - ".github/workflows/browser.yml"
+      - "src/anytext/**"
+      - "examples/browser/**"
+      - "tests/browser/**"
+      - "tools/serve_browser.py"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  chromium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: tests/browser
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: tests/browser/package-lock.json
+      - run: python -m pip install poetry-core
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-test-results
+          path: tests/browser/test-results/
+          if-no-files-found: ignore

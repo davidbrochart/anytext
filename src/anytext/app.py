@@ -569,7 +569,7 @@ class App(Generic[ReturnType], DOMNode):
 
     def __init__(
         self,
-        driver_class: Type[Driver] | None = None,
+        driver_class: Callable[..., Driver] | None = None,
         css_path: CSSPathType | None = None,
         watch_css: bool = False,
         ansi_color: bool | None = None,
@@ -577,7 +577,7 @@ class App(Generic[ReturnType], DOMNode):
         """Create an instance of an app.
 
         Args:
-            driver_class: Driver class or `None` to auto-detect.
+            driver_class: Driver class or factory, or `None` to auto-detect.
                 This will be used by some Anytext tools.
             css_path: Path to CSS or `None` to use the `CSS_PATH` class variable.
                 To load multiple CSS files, pass a list of strings or paths which
@@ -1594,6 +1594,15 @@ class App(Generic[ReturnType], DOMNode):
                     f"Unable to import {driver_import!r}; {driver_class!r} is not a Driver class "
                 )
             return driver_class
+
+        if not constants.THREADS_ENABLED:
+            if sys.platform not in {"emscripten", "wasi", "win32"}:
+                from anytext.drivers.linux_async_driver import LinuxAsyncDriver
+
+                return LinuxAsyncDriver
+            from anytext.drivers.callback_driver import CallbackDriver
+
+            return CallbackDriver
 
         if WINDOWS:
             from anytext.drivers.windows_driver import WindowsDriver
@@ -3310,12 +3319,12 @@ class App(Generic[ReturnType], DOMNode):
             Driver instance.
         """
         driver: Driver
-        driver_class: type[Driver]
+        driver_class: Callable[..., Driver]
         if headless:
             from anytext.drivers.headless_driver import HeadlessDriver
 
             driver_class = HeadlessDriver
-        elif inline and not WINDOWS:
+        elif inline and not WINDOWS and constants.THREADS_ENABLED:
             from anytext.drivers.linux_inline_driver import LinuxInlineDriver
 
             driver_class = LinuxInlineDriver

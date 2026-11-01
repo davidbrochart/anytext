@@ -40,6 +40,8 @@ class _ExitInput(Exception):
 class WebDriver(Driver):
     """A headless driver that may be run remotely."""
 
+    requires_threads = True
+
     def __init__(
         self,
         app: App[Any],

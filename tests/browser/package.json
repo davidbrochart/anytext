@@ -1,0 +1,14 @@
+{
+  "name": "anytext-browser-tests",
+  "private": true,
+  "scripts": {
+    "test": "node --test browser.test.cjs",
+    "install-browser": "playwright install chromium"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

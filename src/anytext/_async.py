@@ -9,13 +9,15 @@ from __future__ import annotations
 import socket
 import threading
 from collections import deque
-from contextlib import asynccontextmanager
+from contextlib import AsyncExitStack, asynccontextmanager
 from contextvars import ContextVar
 from functools import wraps
 from typing import Any, Awaitable, Callable, Generic, TypeVar
 
 import anyio
 from anyio.from_thread import BlockingPortal
+
+from anytext import constants
 
 T = TypeVar("T")
 _runtime: ContextVar[Runtime] = ContextVar("anytext_runtime")
@@ -228,11 +230,26 @@ async def shield(awaitable):
         return await awaitable
 
 
-class Runtime:
-    """Own background tasks and marshal callbacks from terminal input threads.
+async def run_sync(callback: Callable[..., T], *args: Any) -> T:
+    """Run built-in synchronous work, without requiring threads on WASM.
 
-    A socket wakes the async dispatcher without blocking input threads. In
-    particular, driver shutdown may safely join those threads on the UI thread.
+    Thread-free work runs on the app loop and must be bounded. Checkpoints allow
+    cancellation and other tasks to run before and after the operation.
+    """
+    if constants.THREADS_ENABLED:
+        return await anyio.to_thread.run_sync(callback, *args)
+    await anyio.lowlevel.checkpoint()
+    result = callback(*args)
+    await anyio.lowlevel.checkpoint()
+    return result
+
+
+class Runtime:
+    """Own app tasks, with an optional bridge for native input threads.
+
+    Thread-free hosts use only the task group. Native drivers also use a socket
+    to wake the async dispatcher without blocking input threads, so shutdown may
+    safely join those threads on the UI thread.
     """
 
     def __init__(self, group, portal) -> None:
@@ -240,11 +257,17 @@ class Runtime:
         self.portal = portal
         self.thread_id = threading.get_ident()
         self._callbacks: deque = deque()
-        self._reader, self._writer = socket.socketpair()
-        self._reader.setblocking(False)
-        self._writer.setblocking(False)
+        self._reader = self._writer = None
+        if portal is not None:
+            self._reader, self._writer = socket.socketpair()
+            self._reader.setblocking(False)
+            self._writer.setblocking(False)
 
     def call_soon_threadsafe(self, callback, *args) -> None:
+        if self._writer is None:
+            raise RuntimeError(
+                "Cross-thread callbacks are disabled in thread-free mode"
+            )
         self._callbacks.append((callback, args))
         try:
             self._writer.send(b"\0")
@@ -252,6 +275,7 @@ class Runtime:
             pass
 
     async def dispatch(self) -> None:
+        assert self._reader is not None
         while True:
             await anyio.wait_readable(self._reader)
             try:
@@ -263,6 +287,9 @@ class Runtime:
                 callback(*args)
 
     def call_from_thread(self, callback):
+        if self.portal is None:
+            raise RuntimeError("Thread workers are disabled in thread-free mode")
+
         async def invoke():
             token = _runtime.set(self)
             try:
@@ -273,8 +300,10 @@ class Runtime:
         return self.portal.call(invoke)
 
     def close(self) -> None:
-        self._reader.close()
-        self._writer.close()
+        if self._reader is not None:
+            self._reader.close()
+        if self._writer is not None:
+            self._writer.close()
 
 
 @asynccontextmanager
@@ -283,10 +312,16 @@ async def task_context():
     runtime = None
     try:
         async with anyio.create_task_group() as group:
-            async with BlockingPortal() as portal:
+            async with AsyncExitStack() as stack:
+                portal = (
+                    await stack.enter_async_context(BlockingPortal())
+                    if constants.THREADS_ENABLED
+                    else None
+                )
                 runtime = Runtime(group, portal)
                 token = _runtime.set(runtime)
-                group.start_soon(runtime.dispatch)
+                if portal is not None:
+                    group.start_soon(runtime.dispatch)
                 try:
                     yield runtime
                 except BaseException as caught:
