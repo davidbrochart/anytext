@@ -140,9 +140,35 @@ test("The official demo runs in Pyodide without threads under a Pages project pa
     assert.equal(await python(page, "constants.THREADS_ENABLED"), false);
     assert.equal(await python(page, "os.environ.get('ANYTEXT_THREADS') is None"), true);
     assert.equal(await python(page, "browser_app._runtime.portal is None"), true);
+    assert.equal(await page.evaluate(() => window.anytextDemo.terminal.unicode.activeVersion), "11");
 
     await waitForPython(page, "isinstance(browser_app, DemoApp) and browser_app.current_mode == 'home'");
     await waitForTerminalText(page, "What is Anytext?");
+    await waitForTerminalText(page, "🐍");
+    await waitForTerminalText(page, "👇");
+    const emojiCells = await page.evaluate(() => {
+      const terminal = window.anytextDemo.terminal;
+      const found = [];
+      for (let y = 0; y < terminal.buffer.active.length; y++) {
+        const line = terminal.buffer.active.getLine(y);
+        for (let x = 0; x < terminal.cols; x++) {
+          const cell = line.getCell(x);
+          if (["🐍", "👇"].includes(cell.getChars())) {
+            found.push({ text: cell.getChars(), width: cell.getWidth(),
+              continuation: line.getCell(x + 1)?.getWidth() });
+          }
+        }
+      }
+      return found;
+    });
+    assert.deepEqual(new Set(emojiCells.map(cell => cell.text)), new Set(["🐍", "👇"]));
+    const richWidths = JSON.parse(await python(page,
+      "import json; from rich.cells import cell_len; json.dumps({c: cell_len(c) for c in ['🐍', '👇']})"));
+    for (const cell of emojiCells) {
+      assert.equal(cell.width, richWidths[cell.text], `${cell.text} must occupy the same cells in xterm and Rich`);
+      assert.equal(cell.continuation, 0, "A wide emoji must reserve its second terminal cell");
+    }
+    t.diagnostic("Rendered demo emoji widths agree with Rich");
     const keyboard = page.locator(".xterm-helper-textarea");
     await keyboard.press("c");
     await waitForPython(page, "browser_app.screen.__class__.__name__ == 'CodeScreen'");
@@ -234,6 +260,14 @@ test("The official demo runs in Pyodide without threads under a Pages project pa
     assert.equal(await python(page, "browser_driver._parser_task is None"), true);
     assert.equal(await python(page, "len(forbidden_operations)"), 0);
     assert.equal(await page.locator("#error").isVisible(), false);
+    const rightEdges = await page.evaluate(async (widths) => {
+      const terminal = window.anytextDemo.terminal;
+      terminal.resize(20, 4);
+      const rows = ["🐍", "👇"].map(emoji => emoji + " ".repeat(19 - widths[emoji]) + "|");
+      await new Promise(resolve => terminal.write("\x1b[?7l\x1b[2J\x1b[H" + rows.join("\r\n"), resolve));
+      return rows.map((_, y) => terminal.buffer.active.getLine(terminal.buffer.active.baseY + y).getCell(19).getChars());
+    }, richWidths);
+    assert.deepEqual(rightEdges, ["|", "|"], "Emoji must not shift the right edge or scrollbar column");
     assert.deepEqual(errors, []);
     t.diagnostic("Shutdown and no-thread/socket guards passed");
     failed = false;

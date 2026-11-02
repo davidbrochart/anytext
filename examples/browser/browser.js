@@ -16,8 +16,11 @@ try {
     fontFamily: "ui-monospace, SFMono-Regular, Consolas, monospace",
     fontSize: 14,
     theme: { background: "#0c0e14" },
-    allowProposedApi: false,
+    // Selecting a Unicode width provider requires xterm's proposed Unicode API.
+    allowProposedApi: true,
   });
+  terminal.loadAddon(new Unicode11Addon.Unicode11Addon());
+  terminal.unicode.activeVersion = "11";
   fit = new FitAddon.FitAddon();
   terminal.loadAddon(fit);
   terminal.open(document.querySelector("#terminal"));

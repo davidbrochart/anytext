@@ -50,6 +50,8 @@ The test checks:
 - Loading static assets and the wheel under a GitHub Pages project path.
 - Startup without Python thread creation, AnyIO thread offloads, or socket pairs.
 - The official Home screen and source-code viewer.
+- Emoji occupy the same cells as Rich expects, without shifting right-edge markers
+  or the scrollbar column.
 - Widgets screen input and button activation through keyboard and terminal mouse events.
 - Project links through the browser host and SVG screenshot downloads.
 - Game setup and the async shuffle worker.

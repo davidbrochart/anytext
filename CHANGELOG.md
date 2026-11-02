@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The hosted browser demo runs the bundled `DemoApp`, including Home, Widgets,
   Projects, and Game, with browser links and SVG screenshot downloads.
 
+### Fixed
+
+- Enabled Unicode 11 character widths in the browser terminal to prevent clipped
+  emoji and shifted scrollbar columns on emoji-containing lines.
+
 ## [9.0.0] - 2026-11-02
 
 Anytext is a fork of Textual, based on upstream version 8.2.8. Earlier entries
