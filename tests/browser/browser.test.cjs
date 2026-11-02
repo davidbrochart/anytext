@@ -16,14 +16,14 @@ let serverLog = "";
 async function startServer() {
   server = spawn(
     process.env.ANYTEXT_TEST_PYTHON || "python",
-    [path.join(repo, "tools/serve_browser.py"), "--port", "0"],
+    [path.join(repo, "tools/serve_browser.py"), "--port", "0", "--base-path", "anytext"],
     { cwd: repo, stdio: ["ignore", "pipe", "pipe"] },
   );
   await new Promise((resolve, reject) => {
     const timeout = setTimeout(() => reject(new Error(`Server startup timed out:\n${serverLog}`)), 30000);
     function record(chunk) {
       serverLog += chunk.toString();
-      const match = serverLog.match(/Open (http:\/\/127\.0\.0\.1:\d+\/)/);
+      const match = serverLog.match(/Open (http:\/\/127\.0\.0\.1:\d+\/\S*)/);
       if (match) {
         baseURL = match[1];
         clearTimeout(timeout);
@@ -48,6 +48,7 @@ before(async () => {
     });
   }
   await startServer();
+  assert.ok(baseURL.endsWith("/anytext/"), "Exercise a GitHub Pages project URL");
   browser = await chromium.launch({
     headless: true,
     executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,

@@ -8,6 +8,7 @@ on:
       - "examples/browser/**"
       - "tests/browser/**"
       - "tools/serve_browser.py"
+      - "tools/build_browser.py"
       - "pyproject.toml"
   push:
     branches: [main, anytext]
@@ -17,6 +18,7 @@ on:
       - "examples/browser/**"
       - "tests/browser/**"
       - "tools/serve_browser.py"
+      - "tools/build_browser.py"
       - "pyproject.toml"
   workflow_dispatch:
 

@@ -3,62 +3,37 @@
 from __future__ import annotations
 
 import argparse
-import json
+import re
 from functools import partial
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from urllib.parse import urlsplit
+
+from build_browser import build_browser_site
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8000)
+    parser.add_argument(
+        "--base-path", default="", help="Serve under a project path, e.g. anytext"
+    )
     args = parser.parse_args()
-    try:
-        from poetry.core.masonry.api import build_wheel
-    except ImportError:
-        parser.error(
-            "Install the build backend first: python -m pip install poetry-core"
-        )
+    base_path = args.base_path.strip("/")
+    if base_path and not re.fullmatch(r"[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*", base_path):
+        parser.error("--base-path must contain ordinary directory names")
 
-    repo = Path(__file__).resolve().parent.parent
     with TemporaryDirectory(prefix="anytext-browser-") as temporary:
-        # Poetry's build API builds the current working directory.
-        import os
-
-        previous = Path.cwd()
         try:
-            os.chdir(repo)
-            wheel = build_wheel(temporary)
-        finally:
-            os.chdir(previous)
-        wheel_path = Path(temporary) / wheel
-
-        class Handler(SimpleHTTPRequestHandler):
-            def do_GET(self) -> None:
-                path = urlsplit(self.path).path
-                if path == "/wheel.json":
-                    self.send_bytes(
-                        json.dumps({"wheel": f"/wheels/{wheel}"}).encode(),
-                        "application/json",
-                    )
-                elif path == f"/wheels/{wheel}":
-                    self.send_bytes(wheel_path.read_bytes(), "application/octet-stream")
-                else:
-                    super().do_GET()
-
-            def send_bytes(self, data: bytes, content_type: str) -> None:
-                self.send_response(200)
-                self.send_header("Content-Type", content_type)
-                self.send_header("Content-Length", str(len(data)))
-                self.send_header("Cache-Control", "no-store")
-                self.end_headers()
-                self.wfile.write(data)
-
-        handler = partial(Handler, directory=str(repo / "examples" / "browser"))
+            build_browser_site(Path(temporary) / base_path)
+        except ImportError:
+            parser.error(
+                "Install the build backend first: python -m pip install poetry-core"
+            )
+        handler = partial(SimpleHTTPRequestHandler, directory=temporary)
         with HTTPServer(("127.0.0.1", args.port), handler) as server:
-            print(f"Open http://127.0.0.1:{server.server_port}/", flush=True)
+            suffix = f"{base_path}/" if base_path else ""
+            print(f"Open http://127.0.0.1:{server.server_port}/{suffix}", flush=True)
             print(
                 "Serving this checkout. Internet access is needed for browser dependencies.",
                 flush=True,

@@ -31,10 +31,10 @@ try {
   const pyodide = await loadPyodide();
   // Expose the interpreter and terminal for inspection in browser devtools.
   window.anytextDemo = { pyodide, terminal };
-  status.textContent = "Installing this checkout…";
+  status.textContent = "Installing Anytext…";
   await pyodide.loadPackage("micropip");
   const manifestResponse = await fetch("wheel.json", { cache: "no-store" });
-  if (!manifestResponse.ok) throw new Error("Could not find the locally built wheel");
+  if (!manifestResponse.ok) throw new Error("Could not load the demo package manifest");
   const manifest = await manifestResponse.json();
   pyodide.globals.set("wheel_url", new URL(manifest.wheel, location.href).href);
   await pyodide.runPythonAsync("import micropip; await micropip.install(wheel_url)");

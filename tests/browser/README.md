@@ -3,6 +3,8 @@
 This test runs the checkout's browser example in headless Chromium with actual
 Pyodide/WASM and xterm.js. It starts and stops its own server on an available
 localhost port; it does not require the demo server to be running already.
+The server uses the static site builder and serves the demo under `/anytext/`,
+so the same test verifies GitHub Pages project paths and relative wheel URLs.
 
 From the repository root, using Node.js 20 or later:
 
@@ -45,6 +47,7 @@ TMPDIR="$PWD/.cache/browser-tmp" npm test --prefix tests/browser
 The test checks:
 
 - Loading the wheel built from this checkout into real Emscripten Python.
+- Loading static assets and the wheel under a GitHub Pages project path.
 - Startup without Python thread creation, AnyIO thread offloads, or socket pairs.
 - Keyboard input, submission, and the resulting rendered log text.
 - Button activation through both keyboard and terminal mouse escape sequences.

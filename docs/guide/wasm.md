@@ -32,6 +32,9 @@ use `CallbackDriver`, without native terminal APIs.
 
 ## Try it in your browser
 
+The [hosted browser demo](https://davidbrochart.github.io/anytext/) runs entirely
+in your browser, with no Python server.
+
 From the repository root:
 
 ```sh
@@ -49,6 +52,26 @@ resize the window, and use Quit (or Ctrl+Q) to check shutdown. Reload starts a
 fresh interpreter. You can edit `examples/browser/app.py` and reload to try your
 own widgets. After changes under `src/anytext`, restart the server to rebuild the
 wheel. Use `--port 8001` if port 8000 is occupied.
+
+### Static hosting and GitHub Pages
+
+Build a directory that can be served by any static web host:
+
+```sh
+python -m pip install poetry-core
+python tools/build_browser.py --output .cache/browser-site
+python -m http.server --directory .cache/browser-site 8000
+```
+
+The directory includes the demo, a wheel built from this checkout, and a package
+manifest with relative URLs. It works at both a site root and a project path
+such as `/anytext/`. You can preview the project path locally with
+`python tools/serve_browser.py --base-path anytext`.
+
+The `Browser demo on GitHub Pages` workflow builds and deploys this directory
+after relevant pushes to `main`, or when run manually. Enable it once in the
+repository's **Settings → Pages → Build and deployment → Source → GitHub Actions**.
+The expected URL is `https://davidbrochart.github.io/anytext/`.
 
 ## Connect a terminal
 
