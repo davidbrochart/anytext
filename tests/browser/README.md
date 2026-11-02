@@ -1,6 +1,6 @@
 # Browser regression test
 
-This test runs the checkout's browser example in headless Chromium with actual
+This test runs the bundled `DemoApp` in headless Chromium with actual
 Pyodide/WASM and xterm.js. It starts and stops its own server on an available
 localhost port; it does not require the demo server to be running already.
 The server uses the static site builder and serves the demo under `/anytext/`,
@@ -49,8 +49,10 @@ The test checks:
 - Loading the wheel built from this checkout into real Emscripten Python.
 - Loading static assets and the wheel under a GitHub Pages project path.
 - Startup without Python thread creation, AnyIO thread offloads, or socket pairs.
-- Keyboard input, submission, and the resulting rendered log text.
-- Button activation through both keyboard and terminal mouse escape sequences.
+- The official Home screen and source-code viewer.
+- Widgets screen input and button activation through keyboard and terminal mouse events.
+- Project links through the browser host and SVG screenshot downloads.
+- Game setup and the async shuffle worker.
 - Propagation of browser terminal width and height changes to Anytext.
 - Shutdown, cancellation of the parser task, and removal of the app runtime.
 - Unhandled JavaScript errors, browser console errors, and failed requests.

@@ -32,8 +32,9 @@ use `CallbackDriver`, without native terminal APIs.
 
 ## Try it in your browser
 
-The [hosted browser demo](https://davidbrochart.github.io/anytext/) runs entirely
-in your browser, with no Python server.
+The [hosted browser demo](https://davidbrochart.github.io/anytext/) runs the same
+bundled `DemoApp` as `python -m anytext`, entirely in your browser with no Python
+server. Explore its Home, Widgets, Projects, and Game screens.
 
 From the repository root:
 
@@ -47,11 +48,12 @@ wheel; the browser installs that wheel into Pyodide and renders the app with
 xterm.js. No published Anytext package is used. Internet access is required to
 load Pyodide, xterm.js, and Python dependencies; first startup may take a moment.
 
-Type a message and press Enter, activate Count with the mouse or Tab/Enter,
-resize the window, and use Quit (or Ctrl+Q) to check shutdown. Reload starts a
-fresh interpreter. You can edit `examples/browser/app.py` and reload to try your
-own widgets. After changes under `src/anytext`, restart the server to rebuild the
-wheel. Use `--port 8001` if port 8000 is occupied.
+Use H, W, P, G or the app footer to switch screens. The Widgets screen includes
+buttons and input fields; C opens the current page's source code. Project links
+open browser tabs, and Ctrl+S downloads an SVG screenshot. Ctrl+Q quits; Reload
+starts a fresh interpreter. The browser adapter lives in `examples/browser/app.py`.
+After changes under `src/anytext`, restart the server to rebuild the wheel.
+Use `--port 8001` if port 8000 is occupied.
 
 ### Static hosting and GitHub Pages
 

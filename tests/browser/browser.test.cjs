@@ -1,6 +1,6 @@
 const assert = require("node:assert/strict");
 const { spawn } = require("node:child_process");
-const { mkdir, unlink, writeFile } = require("node:fs/promises");
+const { mkdir, readFile, unlink, writeFile } = require("node:fs/promises");
 const path = require("node:path");
 const { once } = require("node:events");
 const { before, after, test } = require("node:test");
@@ -88,11 +88,11 @@ function python(page, expression) {
   return page.evaluate((code) => window.anytextDemo.pyodide.runPython(code), expression);
 }
 
-function waitForPython(page, expression) {
+function waitForPython(page, expression, timeout = 10000) {
   return page.waitForFunction(
     (code) => window.anytextDemo.pyodide.runPython(code),
     expression,
-    { timeout: 10000 },
+    { timeout },
   );
 }
 
@@ -105,7 +105,7 @@ function waitForTerminalText(page, text) {
   }, text, { timeout: 10000 });
 }
 
-test("Pyodide runs the local wheel without threads and handles terminal interaction", { timeout: 180000 }, async (t) => {
+test("The official demo runs in Pyodide without threads under a Pages project path", { timeout: 180000 }, async (t) => {
   const context = await browser.newContext({ viewport: { width: 1200, height: 850 } });
   await context.tracing.start({ screenshots: true, snapshots: true });
   const page = await context.newPage();
@@ -141,36 +141,82 @@ test("Pyodide runs the local wheel without threads and handles terminal interact
     assert.equal(await python(page, "os.environ.get('ANYTEXT_THREADS') is None"), true);
     assert.equal(await python(page, "browser_app._runtime.portal is None"), true);
 
+    await waitForPython(page, "isinstance(browser_app, DemoApp) and browser_app.current_mode == 'home'");
+    await waitForTerminalText(page, "What is Anytext?");
     const keyboard = page.locator(".xterm-helper-textarea");
-    await keyboard.pressSequentially("hello browser");
-    await waitForPython(page, "browser_app.query_one(Input).value == 'hello browser'");
-    await keyboard.press("Enter");
-    await waitForPython(page, "browser_app.query_one(Input).value == ''");
-    await waitForTerminalText(page, "You typed: hello browser");
-    t.diagnostic("Typing, submission and rendered log output passed");
+    await keyboard.press("c");
+    await waitForPython(page, "browser_app.screen.__class__.__name__ == 'CodeScreen'");
+    assert.equal(await python(page, "'class HomeScreen' in browser_app.screen.code"), true);
+    await keyboard.press("Escape");
+    await waitForPython(page, "browser_app.screen.__class__.__name__ == 'HomeScreen'");
+    t.diagnostic("Official Home screen and source-code viewer passed");
 
-    await keyboard.press("Tab");
+    await keyboard.press("w");
+    await waitForPython(page, "browser_app.current_mode == 'widgets' and len(browser_app.screen.query('Buttons Button')) > 1");
+    await python(page, "browser_app.screen.query_one('Buttons Button').focus(); None");
     await keyboard.press("Enter");
-    await waitForPython(page, "browser_app.count == 1");
-    await waitForTerminalText(page, "Count button pressed: 1");
-    // A second press is intentionally ignored during Button's active effect.
-    await waitForPython(page, "not browser_app.query_one('#count').has_class('-active')");
+    await waitForTerminalText(page, "you pressed Default");
+    await python(page, "list(browser_app.screen.query('Buttons Button'))[1].focus(); None");
+    await waitForPython(page, "list(browser_app.screen.query('Buttons Button'))[1].has_focus");
     const button = JSON.parse(await python(page,
-      "import json; json.dumps(list(browser_app.query_one('#count').region))"));
+      "import json; json.dumps(list(list(browser_app.screen.query('Buttons Button'))[1].region))"));
     const screen = await page.locator(".xterm-screen").boundingBox();
     assert.ok(screen);
-    const cells = await page.evaluate(() => ({
+    const buttonCells = await page.evaluate(() => ({
       cols: window.anytextDemo.terminal.cols,
       rows: window.anytextDemo.terminal.rows,
     }));
     await page.mouse.click(
-      screen.x + (button[0] + button[2] / 2) * screen.width / cells.cols,
-      screen.y + (button[1] + button[3] / 2) * screen.height / cells.rows,
+      screen.x + (button[0] + button[2] / 2) * screen.width / buttonCells.cols,
+      screen.y + (button[1] + button[3] / 2) * screen.height / buttonCells.rows,
     );
-    await waitForPython(page, "browser_app.count == 2");
-    await waitForTerminalText(page, "Count button pressed: 2");
-    t.diagnostic("Keyboard and mouse activation passed");
+    await waitForTerminalText(page, "you pressed Primary");
+    await waitForPython(page, "len(browser_app.screen.query('Inputs Input')) > 0");
+    await python(page, "browser_app.screen.query_one('Inputs Input').focus(); None");
+    await waitForPython(page, "browser_app.screen.query_one('Inputs Input').has_focus");
+    await keyboard.pressSequentially("hello browser");
+    await waitForPython(page, "browser_app.screen.query_one('Inputs Input').value == 'hello browser'");
+    await keyboard.press("Escape");
+    await waitForPython(page, "browser_app.screen.focused is None");
+    t.diagnostic("Official Widgets screen, typing, keyboard and mouse buttons passed");
 
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      keyboard.press("Control+s"),
+    ]);
+    assert.ok(download.suggestedFilename().endsWith(".svg"));
+    assert.ok((await readFile(await download.path(), "utf8")).includes("<svg"));
+    t.diagnostic("SVG screenshot download passed");
+
+    await keyboard.press("p");
+    await waitForPython(page, "browser_app.current_mode == 'projects' and len(browser_app.screen.query('Project')) > 0");
+    const projectURL = await python(page, "browser_app.screen.query_one('Project').project_info.url");
+    await page.evaluate(() => {
+      window.openedLinks = [];
+      window.open = (...args) => { window.openedLinks.push(args); return null; };
+    });
+    await python(page, "browser_app.screen.query_one('Project').focus(); None");
+    await keyboard.press("Enter");
+    await page.waitForFunction(() => window.openedLinks.length === 1);
+    assert.deepEqual(await page.evaluate(() => window.openedLinks[0]),
+      [projectURL, "_blank", "noopener,noreferrer"]);
+    t.diagnostic("Official Projects screen and browser links passed");
+
+    await keyboard.press("g");
+    await waitForPython(page, "browser_app.current_mode == 'game'");
+    await keyboard.press("n");
+    await waitForPython(page, "browser_app.screen.__class__.__name__ == 'GameDialogScreen'");
+    await python(page, "browser_app.screen.query_one('#level').value = (3, 3); browser_app.screen.query_one('Button').focus(); None");
+    await keyboard.press("Enter");
+    await waitForPython(page, "browser_app.screen.__class__.__name__ == 'GameScreen' and browser_app.screen.query_one('Game').state == 'playing'", 30000);
+    t.diagnostic("Official Game screen, setup and async shuffle passed");
+    await keyboard.press("h");
+    await waitForPython(page, "browser_app.current_mode == 'home'");
+
+    const cells = await page.evaluate(() => ({
+      cols: window.anytextDemo.terminal.cols,
+      rows: window.anytextDemo.terminal.rows,
+    }));
     await page.setViewportSize({ width: 950, height: 650 });
     await page.waitForFunction((previous) => {
       const { pyodide, terminal } = window.anytextDemo;

@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Static browser demo builder and GitHub Pages deployment workflow, with browser
   regression coverage for project paths such as `/anytext/`.
+- The hosted browser demo runs the bundled `DemoApp`, including Home, Widgets,
+  Projects, and Game, with browser links and SVG screenshot downloads.
 
 ## [9.0.0] - 2026-11-02
 

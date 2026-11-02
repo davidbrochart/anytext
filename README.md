@@ -2,7 +2,7 @@
 
 Anytext is a fork of [Textual](https://github.com/Textualize/textual), a Python framework for building terminal user interfaces.
 
-[Try the browser demo](https://davidbrochart.github.io/anytext/).
+[Try the official demo in your browser](https://davidbrochart.github.io/anytext/).
 
 ## Installation
 

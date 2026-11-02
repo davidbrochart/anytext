@@ -39,6 +39,20 @@ try {
   pyodide.globals.set("wheel_url", new URL(manifest.wheel, location.href).href);
   await pyodide.runPythonAsync("import micropip; await micropip.install(wheel_url)");
   pyodide.globals.set("terminal_write", (data) => terminal.write(data));
+  pyodide.globals.set("terminal_open_url", (url) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+  pyodide.globals.set("terminal_download", (filename, content, mimeType) => {
+    const data = content?.toJs ? content.toJs() : content;
+    const url = URL.createObjectURL(new Blob([data], { type: mimeType }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
   pyodide.globals.set("terminal_cols", terminal.cols);
   pyodide.globals.set("terminal_rows", terminal.rows);
   pyodide.globals.set("browser_ready", () => {
