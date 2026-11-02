@@ -5,6 +5,65 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [9.0.0] - 2026-11-02
+
+Anytext is a fork of Textual, based on upstream version 8.2.8. Earlier entries
+below record the inherited upstream history.
+
+### Added
+
+- AnyIO-based application runtime, with asyncio and Trio backends. Select a backend
+  with `App.run(backend="asyncio")` or `App.run(backend="trio")`; `run_async()` uses
+  the caller's running backend.
+- Thread-free execution with `ANYTEXT_THREADS=0`, enabled automatically on
+  WebAssembly platforms. Explicit thread workers are rejected in this mode.
+- `CallbackDriver` for host-provided terminal input, output, and resize events,
+  including browser applications running under Pyodide.
+- `LinuxAsyncDriver` for thread-free terminal input on Linux and macOS. Windows
+  terminal drivers still require threads; thread-free Windows hosts can provide
+  their own terminal through `CallbackDriver`.
+- Browser demo, local demo server, and automated Chromium/Pyodide and native
+  terminal regression tests.
+- PyPI trusted publishing through `.github/workflows/release.yml`, triggered when
+  a GitHub release is published. The release tag must match the package version,
+  with an optional `v` prefix.
+
+### Changed
+
+- Renamed the distribution, imports, and demo command to `anytext`. Configuration
+  variables use `ANYTEXT_*`, feature flags use `ANYTEXT`, and the default themes
+  are `anytext-dark` and `anytext-light`. External upstream package names, links,
+  and attribution are retained.
+- Require Python 3.11 or later and AnyIO 4.11 or later; add Python 3.15 to CI.
+- Terminal workers and output writes are managed through AnyIO. Shutdown awaits
+  worker completion without blocking the event loop.
+- Cross-thread `post_message()` waits until the message has been inserted into
+  the app's queue, without waiting for its handler to run. AnyIO's thread bridge
+  replaces the application-owned socket pair and callback dispatcher.
+
+### Breaking changes
+
+- `App.suspend()` is now an async context manager: replace `with app.suspend()`
+  with `async with app.suspend()` inside an async function.
+- `Worker.cancelled_event.wait()` is now asynchronous and must be awaited.
+  Synchronous workers can continue checking `Worker.is_cancelled` or
+  `Worker.cancelled_event.is_set()`.
+- Native terminal driver shutdown hooks are now asynchronous. Code calling
+  `disable_input()`, `stop_application_mode()`, or `close()` directly must await
+  asynchronous implementations. Driver suspension and resumption are also async;
+  the app supports both synchronous and asynchronous lifecycle hooks on custom
+  drivers.
+
+### Fixed
+
+- Adapted the external snapshot plugin to load Anytext applications while keeping
+  compatibility with upstream developer-tool previews.
+- Corrected locked CI dependencies and made scrolling and tab underline animation
+  tests independent of refresh timing.
+- Restored the terminal after async suspension, including when the suspended
+  operation raises an exception, and handled native stop/continue signals through
+  the app loop.
+
 ## [8.2.8] - 2026-06-30
 
 ### Fixed
