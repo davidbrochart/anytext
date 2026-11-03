@@ -141,7 +141,7 @@ async function dragStackedPaneToLimits(page) {
   await waitForPython(page, "browser_app.screen.query_one('#split-demo').second.second_size == browser_app.screen.query_one('#split-demo').second.min_second");
   await assertPaneBoxBorders(page);
   await page.mouse.up();
-  assert.equal(await python(page, "browser_app.mouse_captured is None"), true);
+  await waitForPython(page, "browser_app.mouse_captured is None");
 }
 
 test("The official demo runs in Pyodide without threads under a Pages project path", { timeout: 180000 }, async (t) => {
@@ -250,7 +250,7 @@ test("The official demo runs in Pyodide without threads under a Pages project pa
     await page.mouse.move(splitX + 6 * splitScreen.width / splitCells.cols, splitY, { steps: 6 });
     await page.mouse.up();
     await waitForPython(page, `browser_app.screen.query_one('#split-demo').first_size == ${split.size + 6}`);
-    assert.equal(await python(page, "browser_app.mouse_captured is None"), true);
+    await waitForPython(page, "browser_app.mouse_captured is None");
     const nestedSplit = JSON.parse(await python(page,
       "json.dumps({'size': browser_app.screen.query_one('#split-demo').second.first_size, 'divider': list(browser_app.screen.query_one('#split-demo').second.divider.region)})"));
     const nestedX = splitScreen.x + (nestedSplit.divider[0] + nestedSplit.divider[2] / 2) * splitScreen.width / splitCells.cols;
@@ -260,7 +260,7 @@ test("The official demo runs in Pyodide without threads under a Pages project pa
     await page.mouse.move(nestedX, nestedY + 2 * splitScreen.height / splitCells.rows, { steps: 4 });
     await page.mouse.up();
     await waitForPython(page, `browser_app.screen.query_one('#split-demo').second.first_size == ${nestedSplit.size + 2}`);
-    assert.equal(await python(page, "browser_app.mouse_captured is None"), true);
+    await waitForPython(page, "browser_app.mouse_captured is None");
     await dragStackedPaneToLimits(page);
     t.diagnostic("Horizontal and nested vertical split-pane mouse dragging passed");
     await python(page, "browser_app.screen.query_one('#split-show-divider').focus(); None");
@@ -277,7 +277,7 @@ test("The official demo runs in Pyodide without threads under a Pages project pa
     await page.mouse.move(hiddenX + 3 * splitScreen.width / splitCells.cols, hiddenY, { steps: 3 });
     await page.mouse.up();
     await waitForPython(page, `browser_app.screen.query_one('#split-demo').first_size == ${hiddenSplit.size + 3}`);
-    assert.equal(await python(page, "browser_app.mouse_captured is None"), true);
+    await waitForPython(page, "browser_app.mouse_captured is None");
     assert.equal(await python(page, "browser_app.screen.query_one('#split-demo').second.first.parent.region.bottom == browser_app.screen.query_one('#split-demo').second.second.parent.region.y"), true);
     await dragStackedPaneToLimits(page);
     t.diagnostic("Visible and invisible pane borders survive dragging to both limits");

@@ -18,10 +18,29 @@ CHILD = """
 import json
 import os
 import socket
+import signal
 from pathlib import Path
 import anyio
+from anytext import events
 from anytext.app import App, ComposeResult
 from anytext.widgets import Button, Input
+
+# Queueing messages can wake async tasks and must be deferred out of the raw
+# Python signal handler, which can interrupt the backend's scheduler itself.
+in_resize_handler = False
+original_signal = signal.signal
+def register_signal(signum, handler):
+    if signum == signal.SIGWINCH and callable(handler):
+        callback = handler
+        def handler(*args):
+            global in_resize_handler
+            in_resize_handler = True
+            try:
+                callback(*args)
+            finally:
+                in_resize_handler = False
+    return original_signal(signum, handler)
+signal.signal = register_signal
 
 state_path = Path(os.environ["TEST_STATE"])
 def forbidden(*args, **kwargs):
@@ -82,6 +101,10 @@ class TerminalApp(App):
         self.suspensions += 1
         self.query_one(Input).focus()
         self.record()
+    def post_message(self, message):
+        if isinstance(message, events.Resize):
+            assert not in_resize_handler, "Resize was queued inside a raw signal handler"
+        return super().post_message(message)
     def on_resize(self, event):
         self.last_size = list(event.size)
     def on_input_changed(self, event: Input.Changed):
@@ -160,7 +183,10 @@ def test_terminal_io(tmp_path, backend, threads, inline):
                     return state
             assert process.poll() is None, transcript.decode(errors="replace")
             time.sleep(0.01)
-        pytest.fail(transcript.decode(errors="replace"))
+        pytest.fail(
+            f"Last state: {state_path.read_text() if state_path.exists() else None}\n"
+            + transcript.decode(errors="replace")
+        )
 
     try:
         wait_for(lambda state: state["ready"] and state.get("button", [0, 0, 0])[2])

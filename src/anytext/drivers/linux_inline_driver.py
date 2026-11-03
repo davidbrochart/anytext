@@ -18,6 +18,7 @@ from anytext._parser import ParseError
 from anytext._thread_worker import ThreadWorker
 from anytext._xterm_parser import XTermParser
 from anytext.driver import Driver
+from anytext.drivers._signal_monitor import SignalMonitor
 from anytext.geometry import Size
 
 if TYPE_CHECKING:
@@ -178,6 +179,8 @@ class LinuxInlineDriver(Driver):
             except ParseError:
                 pass
 
+    _resize_monitor: SignalMonitor | None = None
+
     def start_application_mode(self) -> None:
 
         def send_size_event(clear: bool = False) -> None:
@@ -197,14 +200,13 @@ class LinuxInlineDriver(Driver):
                     self.write("\x1b[2J")
                 await self._app._post_message(event)
 
-            # Signal handlers may run outside the app task context. Dispatch
-            # the update through the app instead of spawning a task here.
+            # Keep the screen update ordered with other app messages.
             self._app.call_later(update_size)
 
-        def on_terminal_resize(signum, stack) -> None:
+        def on_terminal_resize() -> None:
             send_size_event(clear=True)
 
-        signal.signal(signal.SIGWINCH, on_terminal_resize)
+        self._resize_monitor = SignalMonitor(signal.SIGWINCH, on_terminal_resize)
 
         self.write("\x1b[?25l")  # Hide cursor
         self.write("\033[?1004h")  # Enable FocusIn/FocusOut.
@@ -286,7 +288,9 @@ class LinuxInlineDriver(Driver):
         )
 
     async def disable_input(self) -> None:
-        signal.signal(signal.SIGWINCH, signal.SIG_DFL)
+        if self._resize_monitor is not None:
+            await self._resize_monitor.stop()
+            self._resize_monitor = None
         self._disable_mouse_support()
         worker = getattr(self, "_key_thread", None)
         if worker is not None:

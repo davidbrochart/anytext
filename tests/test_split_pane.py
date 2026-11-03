@@ -24,7 +24,9 @@ class SplitApp(App):
         self.changes.append(event)
 
 
-async def wait_for_split_layout(pilot: Pilot, split: SplitPane, size: Size) -> None:
+async def wait_for_split_layout(
+    pilot: Pilot, split: SplitPane, size: Size = Size(81, 25)
+) -> None:
     """Wait for both the resize message and the resulting child layout."""
     dimension = "width" if split.orientation == "horizontal" else "height"
     available = getattr(size, dimension) - int(split.show_divider)
@@ -33,6 +35,7 @@ async def wait_for_split_layout(pilot: Pilot, split: SplitPane, size: Size) -> N
             await pilot.pause()
             if (
                 split.content_size == size
+                and split._last_content_size == size
                 and split.first_size + split.second_size == available
                 and getattr(split.first.parent.size, dimension) == split.first_size
                 and getattr(split.second.parent.size, dimension) == split.second_size
@@ -45,8 +48,8 @@ async def wait_for_split_layout(pilot: Pilot, split: SplitPane, size: Size) -> N
 async def test_drag_and_capture(orientation):
     app = SplitApp(orientation)
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
         split = app.split
+        await wait_for_split_layout(pilot, split)
         initial = split.first_size
         region = split.divider.region
         start = region.offset
@@ -79,8 +82,8 @@ async def test_drag_and_capture(orientation):
 async def test_minima_and_outside_release(orientation):
     app = SplitApp(orientation, min_first=4, min_second=5)
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
         split = app.split
+        await wait_for_split_layout(pilot, split)
         await pilot.mouse_down(split.divider)
         await pilot.hover(offset=(0, 0))
         assert split.first_size == 4
@@ -96,8 +99,8 @@ async def test_minima_and_outside_release(orientation):
 async def test_keyboard_and_reset(orientation, key):
     app = SplitApp(orientation, position=0.25, min_first=3, min_second=4)
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
         split = app.split
+        await wait_for_split_layout(pilot, split)
         split.divider.focus()
         initial = split.first_size
         await pilot.press(key)
@@ -130,7 +133,8 @@ async def test_nested_splits_resize_independently():
     app = App()
     async with app.run_test(size=(81, 25)) as pilot:
         await app.mount(outer)
-        await pilot.pause()
+        await wait_for_split_layout(pilot, outer)
+        await wait_for_split_layout(pilot, inner, Size(40, 25))
         assert (outer.first_size, inner.first_size) == (40, 12)
         await pilot.mouse_down(inner.divider)
         await pilot.hover(offset=(inner.divider.region.x, inner.divider.region.y + 3))
@@ -138,7 +142,8 @@ async def test_nested_splits_resize_independently():
         assert inner.first_size == 15
         assert outer.first_size == 40
         outer.position = 0.25
-        await pilot.pause()
+        await wait_for_split_layout(pilot, outer)
+        await wait_for_split_layout(pilot, inner, Size(60, 25))
         assert outer.first_size == 20
         assert inner.size.width == 60
         assert inner.first_size == 15
@@ -147,8 +152,8 @@ async def test_nested_splits_resize_independently():
 async def test_capture_cleanup_on_disable_remove_and_cancel():
     app = SplitApp()
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
         split = app.split
+        await wait_for_split_layout(pilot, split)
         await pilot.mouse_down(split.divider)
         await pilot.hover(offset=(split.divider.region.x + 5, 0))
         assert split.first_size == 45
@@ -171,7 +176,7 @@ async def test_content_buttons_do_not_start_drag():
     app = App()
     async with app.run_test(size=(81, 25)) as pilot:
         await app.mount(split)
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split, app.size)
         assert await pilot.click(button)
         assert app.mouse_captured is None
         assert split.position == 0.5
@@ -180,17 +185,17 @@ async def test_content_buttons_do_not_start_drag():
 async def test_orientation_and_dynamic_minima():
     app = SplitApp()
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
         split = app.split
+        await wait_for_split_layout(pilot, split)
         split.orientation = "vertical"
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split)
         assert split.first.parent.size == (81, 12)
         assert split.divider.size == (81, 1)
         split.min_first = 18
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split)
         assert (split.first_size, split.second_size) == (18, 6)
         split.min_second = 18
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split)
         assert (split.first_size, split.second_size) == (12, 12)
 
 
@@ -215,7 +220,7 @@ def test_backend_independence(backend):
     async def check():
         app = SplitApp()
         async with app.run_test(size=(81, 25)) as pilot:
-            await pilot.pause()
+            await wait_for_split_layout(pilot, app.split)
             app.split.divider.focus()
             await pilot.press("right")
             assert app.split.first_size == 41
@@ -226,10 +231,11 @@ def test_backend_independence(backend):
 async def test_resize_during_drag_releases_capture():
     app = SplitApp()
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
+        await wait_for_split_layout(pilot, app.split)
         await pilot.mouse_down(app.split.divider)
         assert app.mouse_captured is app.split.divider
         await pilot.resize_terminal(81, 30)
+        await wait_for_split_layout(pilot, app.split, Size(81, 30))
         assert app.mouse_captured is None
         assert app.split.first_size == 40
 
@@ -237,11 +243,12 @@ async def test_resize_during_drag_releases_capture():
 async def test_clicking_constrained_divider_preserves_preferred_ratio():
     app = SplitApp(position=0.25, min_first=10, min_second=10)
     async with app.run_test(size=(13, 25)) as pilot:
-        await pilot.pause()
+        await wait_for_split_layout(pilot, app.split, Size(13, 25))
         assert app.split.first_size == 6
         await pilot.click(app.split.divider)
         assert app.split.position == 0.25
         await pilot.resize_terminal(81, 25)
+        await wait_for_split_layout(pilot, app.split)
         assert app.split.first_size == 20
 
 
@@ -249,8 +256,8 @@ async def test_clicking_constrained_divider_preserves_preferred_ratio():
 async def test_hidden_divider_uses_no_space_and_still_drags(orientation):
     app = SplitApp(orientation, show_divider=False)
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
         split = app.split
+        await wait_for_split_layout(pilot, split)
         total = 81 if orientation == "horizontal" else 25
         assert split.first_size + split.second_size == total
         first = split.first.parent.region
@@ -298,19 +305,19 @@ async def test_hidden_divider_does_not_erase_pane_content():
 async def test_toggle_divider_visibility_and_orientation():
     app = SplitApp()
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
         split = app.split
+        await wait_for_split_layout(pilot, split)
         await pilot.mouse_down(split.divider)
         split.show_divider = False
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split)
         assert app.mouse_captured is None
         assert split.first_size + split.second_size == 81
         split.orientation = "vertical"
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split)
         assert split.first_size + split.second_size == 25
         assert split.second.parent.region.y == split.first.parent.region.bottom
         split.show_divider = True
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split)
         assert split.first_size + split.second_size == 24
         assert split.divider.region.y == split.first.parent.region.bottom
         assert split.second.parent.region.y == split.divider.region.bottom
@@ -320,8 +327,8 @@ async def test_toggle_divider_visibility_and_orientation():
 async def test_hidden_divider_with_collapsed_pane(position):
     app = SplitApp(position=position, min_first=0, min_second=0, show_divider=False)
     async with app.run_test(size=(21, 5)) as pilot:
-        await pilot.pause()
         split = app.split
+        await wait_for_split_layout(pilot, split, Size(21, 5))
         assert split.first_size + split.second_size == 21
         assert split.divider.region.x in (0, 20)
         assert app.get_widget_at(*split.divider.region.offset)[0] is split.divider
@@ -333,13 +340,11 @@ async def test_hidden_divider_with_collapsed_pane(position):
 
 
 async def test_hidden_divider_preserves_wide_character_at_boundary():
-    from anytext.geometry import Size
-
     split = SplitPane(Static("L" * 8 + "🐍"), Static("R" * 11), show_divider=False)
     app = App()
     async with app.run_test(size=(21, 5)) as pilot:
         await app.mount(split)
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split, app.size)
         assert split.first_size == 10
         assert (
             app.screen._compositor.render_strips(Size(21, 5))[0].text
@@ -354,18 +359,18 @@ async def test_demo_horizontal_drag_preserves_both_box_borders(show_divider):
     app = App()
     async with app.run_test(size=(81, 40)) as pilot:
         await app.mount(SplitPanes())
-        await pilot.pause()
         outer = app.query_one("#split-demo", SplitPane)
+        await wait_for_split_layout(pilot, outer, Size(81, 14))
         split = outer.second
         split.show_divider = show_divider
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split, Size(40, 14))
         for end_y in (0, 39, 0, 39):
             divider = split.divider.region
             start = (divider.x + divider.width // 2, divider.y + divider.height // 2)
             await pilot.mouse_down(offset=start)
             await pilot.hover(offset=(start[0], end_y))
             await pilot.mouse_up(offset=(start[0], end_y))
-            await pilot.pause()
+            await wait_for_split_layout(pilot, split, Size(40, 14))
             strips = app.screen._compositor.render_strips(app.size)
             for pane in (split.first, split.second):
                 region = pane.region
