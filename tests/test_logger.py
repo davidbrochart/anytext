@@ -1,6 +1,8 @@
 import inspect
 from typing import Any
 
+import anyio
+
 from anytext import work
 from anytext._log import LogGroup, LogVerbosity
 from anytext.app import App
@@ -30,13 +32,13 @@ async def test_log_from_worker() -> None:
 
         def on_mount(self) -> None:
             self.do_work()
-            self.call_after_refresh(self.exit)
 
         @work(thread=True)
         def do_work(self) -> None:
             self.log("HELLO from do_work")
 
     app = LogApp()
-    async with app.run_test() as pilot:
-        await pilot.pause()
+    async with app.run_test():
+        with anyio.fail_after(5):
+            await app.workers.wait_for_complete()
         assert ("HELLO from do_work",) in log_messages

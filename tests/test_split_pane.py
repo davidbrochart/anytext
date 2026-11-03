@@ -4,6 +4,8 @@ import anyio
 import pytest
 
 from anytext.app import App, ComposeResult
+from anytext.geometry import Size
+from anytext.pilot import Pilot
 from anytext.widgets import Button, SplitPane, Static
 
 
@@ -20,6 +22,23 @@ class SplitApp(App):
 
     def on_split_pane_changed(self, event):
         self.changes.append(event)
+
+
+async def wait_for_split_layout(pilot: Pilot, split: SplitPane, size: Size) -> None:
+    """Wait for both the resize message and the resulting child layout."""
+    dimension = "width" if split.orientation == "horizontal" else "height"
+    available = getattr(size, dimension) - int(split.show_divider)
+    with anyio.fail_after(5):
+        while True:
+            await pilot.pause()
+            if (
+                split.content_size == size
+                and split.first_size + split.second_size == available
+                and getattr(split.first.parent.size, dimension) == split.first_size
+                and getattr(split.second.parent.size, dimension) == split.second_size
+            ):
+                return
+            await anyio.sleep(0.01)
 
 
 @pytest.mark.parametrize("orientation", ["horizontal", "vertical"])
@@ -94,12 +113,14 @@ async def test_keyboard_and_reset(orientation, key):
 async def test_parent_resize_preserves_preferred_ratio():
     app = SplitApp(position=0.25, min_first=10, min_second=10)
     async with app.run_test(size=(81, 25)) as pilot:
-        await pilot.pause()
+        await wait_for_split_layout(pilot, app.split, Size(81, 25))
         assert app.split.first_size == 20
         await pilot.resize_terminal(13, 25)
+        await wait_for_split_layout(pilot, app.split, Size(13, 25))
         assert (app.split.first_size, app.split.second_size) == (6, 6)
         assert app.split.position == 0.25
         await pilot.resize_terminal(121, 25)
+        await wait_for_split_layout(pilot, app.split, Size(121, 25))
         assert (app.split.first_size, app.split.second_size) == (30, 90)
 
 
@@ -257,19 +278,18 @@ async def test_hidden_divider_uses_no_space_and_still_drags(orientation):
 
 
 async def test_hidden_divider_does_not_erase_pane_content():
-    from anytext.geometry import Size
-
     split = SplitPane(Static("L" * 40), Static("R" * 40), show_divider=False)
     app = App()
     async with app.run_test(size=(21, 5)) as pilot:
         await app.mount(split)
-        await pilot.pause()
+        await wait_for_split_layout(pilot, split, Size(21, 5))
         expected = "L" * split.first_size + "R" * split.second_size
         assert app.screen._compositor.render_strips(Size(21, 5))[0].text == expected
         split.divider.focus()
         await pilot.hover(split.divider)
         assert app.screen._compositor.render_strips(Size(21, 5))[0].text == expected
         await pilot.press("right")
+        await wait_for_split_layout(pilot, split, Size(21, 5))
         assert split.first_size == 11
         expected = "L" * split.first_size + "R" * split.second_size
         assert app.screen._compositor.render_strips(Size(21, 5))[0].text == expected
