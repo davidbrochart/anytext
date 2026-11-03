@@ -291,6 +291,13 @@ Display numerical data.
 ```{.anytext path="docs/examples/widgets/sparkline.py" lines="11"}
 ```
 
+## SplitPane
+
+Two panes with a draggable, keyboard-accessible divider. Supports horizontal and
+vertical layouts and nested splits.
+
+[SplitPane reference](./widgets/split_pane.md){ .md-button .md-button--primary }
+
 ## Static
 
 Displays simple static content. Typically used as a base class.

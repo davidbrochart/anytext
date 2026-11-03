@@ -31,6 +31,7 @@ from ._rule import Rule as Rule
 from ._select import Select as Select
 from ._selection_list import SelectionList as SelectionList
 from ._sparkline import Sparkline as Sparkline
+from ._split_pane import SplitPane as SplitPane
 from ._static import Static as Static
 from ._switch import Switch as Switch
 from ._tabbed_content import TabbedContent as TabbedContent

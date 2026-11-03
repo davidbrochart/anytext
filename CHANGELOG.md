@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `SplitPane`: draggable horizontal and vertical split panes, with minimum sizes,
+  keyboard resizing, nesting, proportional terminal resize behavior, and optional
+  invisible dividers that occupy no layout space.
 - Static browser demo builder and GitHub Pages deployment workflow, with browser
   regression coverage for project paths such as `/anytext/`.
 - The hosted browser demo runs the bundled `DemoApp`, including Home, Widgets,

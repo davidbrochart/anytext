@@ -1016,7 +1016,9 @@ class Compositor:
         intersection = Region.intersection
         extend = list.extend
 
-        for region, clip in self.visible_widgets.values():
+        for widget, (region, clip) in self.visible_widgets.items():
+            if not widget._rendering_enabled:
+                continue
             x, y, region_width, region_height = intersection(region, clip)
             if region_width and region_height:
                 region_cuts = (x, x + region_width)
@@ -1052,12 +1054,13 @@ class Compositor:
             widget_regions = [
                 (widget, region, clip)
                 for widget, (region, clip) in visible_widgets.items()
-                if crop_overlaps(clip)
+                if crop_overlaps(clip) and widget._rendering_enabled
             ]
         else:
             widget_regions = [
                 (widget, region, clip)
                 for widget, (region, clip) in visible_widgets.items()
+                if widget._rendering_enabled
             ]
 
         intersection = _Region.intersection

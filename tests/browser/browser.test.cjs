@@ -105,6 +105,45 @@ function waitForTerminalText(page, text) {
   }, text, { timeout: 10000 });
 }
 
+async function assertPaneBoxBorders(page) {
+  await waitForPython(page, "browser_app.screen.query_one('#split-demo').second.first.region.height == browser_app.screen.query_one('#split-demo').second.first_size and browser_app.screen.query_one('#split-demo').second.second.region.height == browser_app.screen.query_one('#split-demo').second.second_size");
+  const boxes = JSON.parse(await python(page,
+    "json.dumps([list(browser_app.screen.query_one('#split-demo').second.first.region), list(browser_app.screen.query_one('#split-demo').second.second.region)])"));
+  await page.waitForFunction((regions) => {
+    const buffer = window.anytextDemo.terminal.buffer.active;
+    return regions.every(([x, y, width, height]) => {
+      const top = buffer.getLine(buffer.baseY + y);
+      const bottom = buffer.getLine(buffer.baseY + y + height - 1);
+      if (!top || !bottom) return false;
+      if (top.getCell(x)?.getChars() !== "╭" || top.getCell(x + width - 1)?.getChars() !== "╮" ||
+          bottom.getCell(x)?.getChars() !== "╰" || bottom.getCell(x + width - 1)?.getChars() !== "╯") return false;
+      for (let column = x + 1; column < x + width - 1; column++) {
+        if (top.getCell(column)?.getChars() !== "─" || bottom.getCell(column)?.getChars() !== "─") return false;
+      }
+      return true;
+    });
+  }, boxes);
+}
+
+async function dragStackedPaneToLimits(page) {
+  const divider = JSON.parse(await python(page,
+    "json.dumps(list(browser_app.screen.query_one('#split-demo').second.divider.region))"));
+  const screen = await page.locator(".xterm-screen").boundingBox();
+  const cells = await page.evaluate(() => ({cols: window.anytextDemo.terminal.cols, rows: window.anytextDemo.terminal.rows}));
+  const x = screen.x + (divider[0] + divider[2] / 2) * screen.width / cells.cols;
+  const y = screen.y + (divider[1] + 0.5) * screen.height / cells.rows;
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x, screen.y + 0.5 * screen.height / cells.rows, {steps: 5});
+  await waitForPython(page, "browser_app.screen.query_one('#split-demo').second.first_size == browser_app.screen.query_one('#split-demo').second.min_first");
+  await assertPaneBoxBorders(page);
+  await page.mouse.move(x, screen.y + (cells.rows - 1.5) * screen.height / cells.rows, {steps: 5});
+  await waitForPython(page, "browser_app.screen.query_one('#split-demo').second.second_size == browser_app.screen.query_one('#split-demo').second.min_second");
+  await assertPaneBoxBorders(page);
+  await page.mouse.up();
+  assert.equal(await python(page, "browser_app.mouse_captured is None"), true);
+}
+
 test("The official demo runs in Pyodide without threads under a Pages project path", { timeout: 180000 }, async (t) => {
   const context = await browser.newContext({ viewport: { width: 1200, height: 850 } });
   await context.tracing.start({ screenshots: true, snapshots: true });
@@ -197,6 +236,52 @@ test("The official demo runs in Pyodide without threads under a Pages project pa
       screen.y + (button[1] + button[3] / 2) * screen.height / buttonCells.rows,
     );
     await waitForTerminalText(page, "you pressed Primary");
+    await waitForPython(page, "len(browser_app.screen.query('#split-demo')) == 1");
+    await python(page, "browser_app.clear_notifications(); browser_app.screen.query_one('#split-demo').scroll_visible(animate=False); None");
+    await waitForPython(page, "browser_app.screen.query_one('#split-demo').region.y >= 0 and browser_app.screen.query_one('#split-demo').region.bottom < browser_app.size.height");
+    const split = JSON.parse(await python(page,
+      "json.dumps({'size': browser_app.screen.query_one('#split-demo').first_size, 'divider': list(browser_app.screen.query_one('#split-demo').divider.region)})"));
+    const splitScreen = await page.locator(".xterm-screen").boundingBox();
+    const splitCells = await page.evaluate(() => ({ cols: window.anytextDemo.terminal.cols, rows: window.anytextDemo.terminal.rows }));
+    const splitX = splitScreen.x + (split.divider[0] + 0.5) * splitScreen.width / splitCells.cols;
+    const splitY = splitScreen.y + (split.divider[1] + split.divider[3] / 2) * splitScreen.height / splitCells.rows;
+    await page.mouse.move(splitX, splitY);
+    await page.mouse.down();
+    await page.mouse.move(splitX + 6 * splitScreen.width / splitCells.cols, splitY, { steps: 6 });
+    await page.mouse.up();
+    await waitForPython(page, `browser_app.screen.query_one('#split-demo').first_size == ${split.size + 6}`);
+    assert.equal(await python(page, "browser_app.mouse_captured is None"), true);
+    const nestedSplit = JSON.parse(await python(page,
+      "json.dumps({'size': browser_app.screen.query_one('#split-demo').second.first_size, 'divider': list(browser_app.screen.query_one('#split-demo').second.divider.region)})"));
+    const nestedX = splitScreen.x + (nestedSplit.divider[0] + nestedSplit.divider[2] / 2) * splitScreen.width / splitCells.cols;
+    const nestedY = splitScreen.y + (nestedSplit.divider[1] + 0.5) * splitScreen.height / splitCells.rows;
+    await page.mouse.move(nestedX, nestedY);
+    await page.mouse.down();
+    await page.mouse.move(nestedX, nestedY + 2 * splitScreen.height / splitCells.rows, { steps: 4 });
+    await page.mouse.up();
+    await waitForPython(page, `browser_app.screen.query_one('#split-demo').second.first_size == ${nestedSplit.size + 2}`);
+    assert.equal(await python(page, "browser_app.mouse_captured is None"), true);
+    await dragStackedPaneToLimits(page);
+    t.diagnostic("Horizontal and nested vertical split-pane mouse dragging passed");
+    await python(page, "browser_app.screen.query_one('#split-show-divider').focus(); None");
+    await keyboard.press("Space");
+    await waitForPython(page, "not browser_app.screen.query_one('#split-demo').show_divider and not browser_app.screen.query_one('#split-demo').second.show_divider");
+    await python(page, "browser_app.screen.query_one('#split-demo').scroll_visible(animate=False); None");
+    await waitForPython(page, "browser_app.screen.query_one('#split-demo').first.parent.region.right == browser_app.screen.query_one('#split-demo').second.parent.region.x");
+    const hiddenSplit = JSON.parse(await python(page,
+      "json.dumps({'size': browser_app.screen.query_one('#split-demo').first_size, 'divider': list(browser_app.screen.query_one('#split-demo').divider.region)})"));
+    const hiddenX = splitScreen.x + (hiddenSplit.divider[0] + 0.5) * splitScreen.width / splitCells.cols;
+    const hiddenY = splitScreen.y + (hiddenSplit.divider[1] + hiddenSplit.divider[3] / 2) * splitScreen.height / splitCells.rows;
+    await page.mouse.move(hiddenX, hiddenY);
+    await page.mouse.down();
+    await page.mouse.move(hiddenX + 3 * splitScreen.width / splitCells.cols, hiddenY, { steps: 3 });
+    await page.mouse.up();
+    await waitForPython(page, `browser_app.screen.query_one('#split-demo').first_size == ${hiddenSplit.size + 3}`);
+    assert.equal(await python(page, "browser_app.mouse_captured is None"), true);
+    assert.equal(await python(page, "browser_app.screen.query_one('#split-demo').second.first.parent.region.bottom == browser_app.screen.query_one('#split-demo').second.second.parent.region.y"), true);
+    await dragStackedPaneToLimits(page);
+    t.diagnostic("Visible and invisible pane borders survive dragging to both limits");
+    t.diagnostic("Invisible zero-gap divider toggling and browser mouse dragging passed");
     await waitForPython(page, "len(browser_app.screen.query('Inputs Input')) > 0");
     await python(page, "browser_app.screen.query_one('Inputs Input').focus(); None");
     await waitForPython(page, "browser_app.screen.query_one('Inputs Input').has_focus");
