@@ -41,6 +41,7 @@ if typing.TYPE_CHECKING:
     from anytext.widgets._select import Select
     from anytext.widgets._selection_list import SelectionList
     from anytext.widgets._sparkline import Sparkline
+    from anytext.widgets._split_pane import SplitPane
     from anytext.widgets._static import Static
     from anytext.widgets._switch import Switch
     from anytext.widgets._tabbed_content import TabbedContent, TabPane
@@ -83,6 +84,7 @@ __all__ = [
     "Select",
     "SelectionList",
     "Sparkline",
+    "SplitPane",
     "Static",
     "Switch",
     "Tab",

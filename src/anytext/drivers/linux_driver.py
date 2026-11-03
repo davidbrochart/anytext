@@ -18,6 +18,7 @@ from anytext._parser import ParseError
 from anytext._thread_worker import ThreadWorker
 from anytext._xterm_parser import XTermParser
 from anytext.driver import Driver
+from anytext.drivers._signal_monitor import SignalMonitor
 from anytext.drivers._writer_thread import WriterThread
 from anytext.geometry import Size
 from anytext.message import Message
@@ -63,6 +64,7 @@ class LinuxDriver(Driver):
         self.attrs_before: list[Any] | None = None
         self._key_thread: ThreadWorker | None = None
         self._writer_thread: WriterThread | None = None
+        self._resize_monitor: SignalMonitor | None = None
 
         # If we've finally and properly come back from a SIGSTOP we want to
         # be able to ask the app to publish its resume signal; to do that we
@@ -256,11 +258,11 @@ class LinuxDriver(Driver):
 
         self._start_writer()
 
-        def on_terminal_resize(signum, stack) -> None:
+        def on_terminal_resize() -> None:
             if not self._in_band_window_resize:
                 send_size_event()
 
-        signal.signal(signal.SIGWINCH, on_terminal_resize)
+        self._resize_monitor = SignalMonitor(signal.SIGWINCH, on_terminal_resize)
         send_size_event()
 
         self.write("\x1b[?1049h")  # Alt screen
@@ -364,7 +366,9 @@ class LinuxDriver(Driver):
 
     async def disable_input(self) -> None:
         """Stop input without blocking the app loop."""
-        signal.signal(signal.SIGWINCH, signal.SIG_DFL)
+        if self._resize_monitor is not None:
+            await self._resize_monitor.stop()
+            self._resize_monitor = None
         self._disable_mouse_support()
         from anytext._callback import invoke
 

@@ -626,6 +626,11 @@ class Widget(DOMNode):
         self.styles.offset = ScalarOffset.from_offset(offset)
 
     @property
+    def _rendering_enabled(self) -> bool:
+        """Whether this widget paints, independently of layout and hit testing."""
+        return True
+
+    @property
     def opacity(self) -> float:
         """Total opacity of widget."""
         opacity = 1.0

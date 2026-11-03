@@ -35,6 +35,7 @@ from anytext.widgets import (
     RichLog,
     Select,
     Sparkline,
+    SplitPane,
     Static,
     Switch,
     TabbedContent,
@@ -105,6 +106,52 @@ Press `return` to active a button when focused (or click it).
             yield Button("Primary", variant="primary", disabled=True)
             yield Button("Warning", variant="warning", disabled=True)
             yield Button("Error", variant="error", disabled=True)
+
+
+class SplitPanes(containers.VerticalGroup):
+    """Nested, interactively resizable panes."""
+
+    ALLOW_MAXIMIZE = True
+    DEFAULT_CLASSES = "column"
+    DEFAULT_CSS = """
+    SplitPanes {
+        #split-demo { height: 14; }
+        #split-options { height: auto; align-vertical: middle; }
+        .split-example {
+            height: 1fr;
+            border: round $primary;
+            padding: 1;
+        }
+    }
+    """
+
+    def compose(self) -> ComposeResult:
+        yield Markdown(
+            "## Split panes\n\nDrag a divider to resize panes. "
+            "Tab to a divider and use the arrow keys, or Enter to reset."
+        )
+        with containers.HorizontalGroup(id="split-options"):
+            yield Switch(True, id="split-show-divider")
+            yield Label("Show dividers (invisible dividers take no extra space)")
+        yield SplitPane(
+            Static("Left pane", classes="split-example"),
+            SplitPane(
+                Static("Top pane", classes="split-example"),
+                Static("Bottom pane", classes="split-example"),
+                orientation="vertical",
+                # Border + padding on both sides, plus one row of text.
+                min_first=5,
+                min_second=5,
+            ),
+            min_first=12,
+            min_second=20,
+            id="split-demo",
+        )
+
+    @on(Switch.Changed, "#split-show-divider")
+    def toggle_dividers(self, event: Switch.Changed) -> None:
+        for split in self.query(SplitPane):
+            split.show_divider = event.value
 
 
 class Checkboxes(containers.VerticalGroup):
@@ -795,6 +842,7 @@ class WidgetsScreen(PageScreen):
         with lazy.Reveal(containers.VerticalScroll(can_focus=True)):
             yield Markdown(WIDGETS_MD, classes="column")
             yield Buttons()
+            yield SplitPanes()
             yield Checkboxes()
             yield Datatables()
             yield Inputs()
