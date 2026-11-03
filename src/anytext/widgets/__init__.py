@@ -17,6 +17,7 @@ if typing.TYPE_CHECKING:
     from anytext.widgets._data_table import DataTable
     from anytext.widgets._digits import Digits
     from anytext.widgets._directory_tree import DirectoryTree
+    from anytext.widgets._floating_window import FloatingWindow
     from anytext.widgets._footer import Footer
     from anytext.widgets._header import Header
     from anytext.widgets._help_panel import HelpPanel
@@ -59,6 +60,7 @@ __all__ = [
     "DataTable",
     "Digits",
     "DirectoryTree",
+    "FloatingWindow",
     "Footer",
     "Header",
     "HelpPanel",

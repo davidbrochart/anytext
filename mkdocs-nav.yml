@@ -156,6 +156,7 @@ nav:
           - "widgets/data_table.md"
           - "widgets/digits.md"
           - "widgets/directory_tree.md"
+          - "widgets/floating_window.md"
           - "widgets/footer.md"
           - "widgets/header.md"
           - "widgets/index.md"

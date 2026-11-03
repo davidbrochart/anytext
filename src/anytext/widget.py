@@ -4317,6 +4317,10 @@ class Widget(DOMNode):
         """
         self.app._mouse_down_widget = None
 
+    def _get_mouse_down_target(self, event: events.MouseDown) -> Widget | None:
+        """Optionally intercept a descendant's mouse-down before delivery."""
+        return None
+
     def _forward_event(self, event: events.Event) -> None:
         event._set_forwarded()
         self.post_message(event)

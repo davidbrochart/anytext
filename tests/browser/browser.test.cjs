@@ -42,7 +42,7 @@ async function startServer() {
 
 before(async () => {
   await mkdir(artifacts, { recursive: true });
-  for (const name of ["server.log", "browser-errors.json", "failure.png", "trace.zip"]) {
+  for (const name of ["server.log", "browser-errors.json", "failure.png", "floating-windows.png", "trace.zip"]) {
     await unlink(path.join(artifacts, name)).catch((error) => {
       if (error.code !== "ENOENT") throw error;
     });
@@ -282,6 +282,48 @@ test("The official demo runs in Pyodide without threads under a Pages project pa
     await dragStackedPaneToLimits(page);
     t.diagnostic("Visible and invisible pane borders survive dragging to both limits");
     t.diagnostic("Invisible zero-gap divider toggling and browser mouse dragging passed");
+    await waitForPython(page, "len(browser_app.screen.query('#floating-editor')) == 1");
+    await python(page, "browser_app.screen.query_one('#floating-desktop').scroll_visible(animate=False); None");
+    await waitForPython(page, "browser_app.screen.query_one('#floating-desktop').region.y >= 0 and browser_app.screen.query_one('#floating-desktop').region.bottom < browser_app.size.height");
+    const floating = JSON.parse(await python(page,
+      "json.dumps(list(browser_app.screen.query_one('#floating-editor').region))"));
+    const floatScreen = await page.locator(".xterm-screen").boundingBox();
+    const floatCells = await page.evaluate(() => ({ cols: window.anytextDemo.terminal.cols, rows: window.anytextDemo.terminal.rows }));
+    const cellWidth = floatScreen.width / floatCells.cols;
+    const cellHeight = floatScreen.height / floatCells.rows;
+    const cornerX = floatScreen.x + (floating[0] + floating[2] - 0.5) * cellWidth;
+    const cornerY = floatScreen.y + (floating[1] + floating[3] - 0.5) * cellHeight;
+    await page.mouse.move(cornerX, cornerY);
+    await page.mouse.down();
+    await waitForPython(page, "browser_app.mouse_captured is browser_app.screen.query_one('#floating-editor')");
+    await page.mouse.move(cornerX + 4 * cellWidth, cornerY + 2 * cellHeight, { steps: 4 });
+    await page.mouse.up();
+    await waitForPython(page, `tuple(browser_app.screen.query_one('#floating-editor').region.size) == (${floating[2] + 4}, ${floating[3] + 2}) and browser_app.mouse_captured is None`);
+    const bodyX = floatScreen.x + (floating[0] + 4.5) * cellWidth;
+    const bodyY = floatScreen.y + (floating[1] + 3.5) * cellHeight;
+    await page.keyboard.down("Alt");
+    await page.mouse.move(bodyX, bodyY);
+    await page.mouse.down();
+    await waitForPython(page, "browser_app.mouse_captured is browser_app.screen.query_one('#floating-editor')");
+    await page.mouse.move(bodyX + 4 * cellWidth, bodyY + 2 * cellHeight, { steps: 4 });
+    await page.mouse.up();
+    await page.keyboard.up("Alt");
+    await waitForPython(page, `tuple(browser_app.screen.query_one('#floating-editor').region) == (${floating[0] + 4}, ${floating[1] + 2}, ${floating[2] + 4}, ${floating[3] + 2}) and browser_app.mouse_captured is None`);
+    await python(page, "browser_app.screen.query_one('#floating-editor').styles.border = ('none', 'white'); None");
+    await waitForPython(page, "tuple(browser_app.screen.query_one('#floating-editor').styles.border.spacing) == (0, 0, 0, 0)");
+    const resizeX = floatScreen.x + (floating[0] + 4 + floating[2] + 4 - 3.5) * cellWidth;
+    const resizeY = floatScreen.y + (floating[1] + 2 + floating[3] + 2 - 3.5) * cellHeight;
+    await page.keyboard.down("Alt");
+    await page.mouse.move(resizeX, resizeY);
+    await page.mouse.down({ button: "right" });
+    await waitForPython(page, "browser_app.mouse_captured is browser_app.screen.query_one('#floating-editor')");
+    await page.mouse.move(resizeX + 3 * cellWidth, resizeY + cellHeight, { steps: 3 });
+    await page.mouse.up({ button: "right" });
+    await page.keyboard.up("Alt");
+    await waitForPython(page, `tuple(browser_app.screen.query_one('#floating-editor').region) == (${floating[0] + 4}, ${floating[1] + 2}, ${floating[2] + 7}, ${floating[3] + 3}) and browser_app.mouse_captured is None`);
+    t.diagnostic("Alt-right-drag resizes a borderless floating window over a text editor");
+    await page.screenshot({ path: path.join(artifacts, "floating-windows.png") });
+    t.diagnostic("Floating-window corner resizing and Alt-drag movement over a text editor passed");
     await waitForPython(page, "len(browser_app.screen.query('Inputs Input')) > 0");
     await python(page, "browser_app.screen.query_one('Inputs Input').focus(); None");
     await waitForPython(page, "browser_app.screen.query_one('Inputs Input').has_focus");

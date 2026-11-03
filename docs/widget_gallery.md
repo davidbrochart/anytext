@@ -81,6 +81,17 @@ A tree view of files and folders.
 ```{.anytext path="docs/examples/widgets/directory_tree.py"}
 ```
 
+## FloatingWindow
+
+A floating container with draggable edges and corners. Alt+drag inside it to
+move it.
+
+[FloatingWindow reference](./widgets/floating_window.md){ .md-button .md-button--primary }
+
+```{.anytext path="docs/examples/widgets/floating_window.py" columns="80" lines="28"}
+```
+
+
 ## Footer
 
 A footer to display and interact with key bindings.

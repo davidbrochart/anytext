@@ -6,6 +6,7 @@ from ._content_switcher import ContentSwitcher as ContentSwitcher
 from ._data_table import DataTable as DataTable
 from ._digits import Digits as Digits
 from ._directory_tree import DirectoryTree as DirectoryTree
+from ._floating_window import FloatingWindow as FloatingWindow
 from ._footer import Footer as Footer
 from ._header import Header as Header
 from ._help_panel import HelpPanel as HelpPanel

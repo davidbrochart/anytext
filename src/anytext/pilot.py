@@ -151,6 +151,7 @@ class Pilot(Generic[ReturnType]):
         shift: bool = False,
         meta: bool = False,
         control: bool = False,
+        button: int = 1,
     ) -> bool:
         """Simulate a [`MouseUp`][anytext.events.MouseUp] event at a specified position.
 
@@ -168,6 +169,7 @@ class Pilot(Generic[ReturnType]):
             shift: Simulate the event with the shift key held down.
             meta: Simulate the event with the meta key held down.
             control: Simulate the event with the control key held down.
+            button: Indexed mouse button to release (1 for left, 3 for right).
 
         Raises:
             OutOfBounds: If the position for the event is outside of the (visible) screen.
@@ -181,7 +183,7 @@ class Pilot(Generic[ReturnType]):
                 [MouseMove, MouseUp],
                 widget=widget,
                 offset=offset,
-                button=1,
+                button=button,
                 shift=shift,
                 meta=meta,
                 control=control,
