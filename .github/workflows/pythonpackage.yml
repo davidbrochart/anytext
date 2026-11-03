@@ -1,4 +1,4 @@
-name: Test Anytext module
+name: Test
 
 on:
   pull_request:
