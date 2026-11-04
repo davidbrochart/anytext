@@ -1930,6 +1930,16 @@ class Screen(Generic[ScreenResultType], Widget):
                 self.set_focus(None)
             else:
                 if isinstance(event, events.MouseDown):
+                    # Ancestors may own a modifier gesture even when a child
+                    # normally captures the mouse or stops event propagation.
+                    if not self.app.mouse_captured:
+                        for ancestor in widget.ancestors_with_self:
+                            if not isinstance(ancestor, Widget):
+                                break
+                            target = ancestor._get_mouse_down_target(event)
+                            if target is not None:
+                                widget, region = target, target.region
+                                break
                     focusable_widget = self.get_focusable_widget_at(event.x, event.y)
                     if (
                         focusable_widget is not None

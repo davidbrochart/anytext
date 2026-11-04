@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `FloatingWindow`: resize floating containers by dragging edges and corners, and
+  move them with modifier-left-drag or resize with modifier-right-drag.
 - `SplitPane`: draggable horizontal and vertical split panes, with minimum sizes,
   keyboard resizing, nesting, proportional terminal resize behavior, and optional
   invisible dividers that occupy no layout space.

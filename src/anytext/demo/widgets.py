@@ -21,6 +21,7 @@ from anytext.widgets import (
     Checkbox,
     DataTable,
     Digits,
+    FloatingWindow,
     Footer,
     Input,
     Label,
@@ -152,6 +153,36 @@ class SplitPanes(containers.VerticalGroup):
     def toggle_dividers(self, event: Switch.Changed) -> None:
         for split in self.query(SplitPane):
             split.show_divider = event.value
+
+
+class FloatingWindows(containers.VerticalGroup):
+    """Interactively move and resize floating windows."""
+
+    DEFAULT_CLASSES = "column"
+    DEFAULT_CSS = """
+    FloatingWindows {
+        #floating-desktop {
+            height: 20;
+            layers: floating-windows;
+            background: $background;
+        }
+        #floating-editor { width: 36; height: 11; offset: 2 1; }
+        #floating-tools { width: 24; height: 7; offset: 40 11; }
+    }
+    """
+
+    def compose(self) -> ComposeResult:
+        yield Markdown(
+            "## Floating windows\n\nDrag an edge or corner to resize. "
+            "Alt+left-drag moves a window; Alt+right-drag resizes it, even without borders. "
+            "Escape cancels."
+        )
+        with containers.Container(id="floating-desktop"):
+            with FloatingWindow(title="Editor", id="floating-editor"):
+                yield TextArea("# Resize or move this editor\n\nprint('Hello!')\n")
+            with FloatingWindow(id="floating-tools"):
+                yield Label("No title bar needed")
+                yield Button("Try me")
 
 
 class Checkboxes(containers.VerticalGroup):
@@ -843,6 +874,7 @@ class WidgetsScreen(PageScreen):
             yield Markdown(WIDGETS_MD, classes="column")
             yield Buttons()
             yield SplitPanes()
+            yield FloatingWindows()
             yield Checkboxes()
             yield Datatables()
             yield Inputs()
