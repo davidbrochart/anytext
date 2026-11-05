@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Keep completed scroll positions aligned with their targets so fractional
+  scrollbar drags do not leave sparkline animations permanently paused.
 - Enabled Unicode 11 character widths in the browser terminal to prevent clipped
   emoji and shifted scrollbar columns on emoji-containing lines.
 

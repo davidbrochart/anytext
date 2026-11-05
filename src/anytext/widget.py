@@ -2812,12 +2812,14 @@ class Widget(DOMNode):
             if maybe_scroll_x:
                 assert x is not None
                 scroll_x = self.scroll_x
-                self.scroll_target_x = self.scroll_x = x
+                self.scroll_target_x = x
+                self.scroll_x = self.scroll_target_x
                 scrolled_x = scroll_x != self.scroll_x
             if maybe_scroll_y:
                 assert y is not None
                 scroll_y = self.scroll_y
-                self.scroll_target_y = self.scroll_y = y
+                self.scroll_target_y = y
+                self.scroll_y = self.scroll_target_y
                 scrolled_y = scroll_y != self.scroll_y
 
             self._last_scroll_time = monotonic()

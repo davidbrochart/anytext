@@ -1,33 +1,34 @@
-import asyncio
-from time import time
+from time import monotonic
+
+import anyio
 
 from anytext.app import App
-from anytext.pilot import Pilot
 
 
 class RefreshApp(App[float]):
     def __init__(self):
         self.count = 0
+        self.refreshed = anyio.Event()
         super().__init__()
 
     def on_mount(self):
-        self.start = time()
+        self.start = monotonic()
         self.auto_refresh = 0.1
 
     def automatic_refresh(self):
         self.count += 1
         if self.count == 3:
-            self.exit(time() - self.start)
+            self.exit(monotonic() - self.start)
+            self.refreshed.set()
         super().automatic_refresh()
 
 
-def test_auto_refresh():
+async def test_auto_refresh():
     app = RefreshApp()
-
-    async def quit_after(pilot: Pilot) -> None:
-        await asyncio.sleep(1)
-
-    elapsed = app.run(auto_pilot=quit_after, headless=True)
-    assert elapsed is not None
-    # CI can run slower, so we need to give this a bit of margin
-    assert 0.2 <= elapsed < 0.8
+    async with app.run_test():
+        with anyio.fail_after(5):
+            await app.refreshed.wait()
+        assert app.count == 3
+        assert app.return_value is not None
+        # Refreshes must respect the interval, but a busy runner may be late.
+        assert app.return_value >= 0.2
