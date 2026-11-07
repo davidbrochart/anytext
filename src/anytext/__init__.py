@@ -24,6 +24,7 @@ if TYPE_CHECKING:
 
 __all__ = [
     "__version__",  # type: ignore
+    "alias_textual",
     "log",
     "on",
     "work",
@@ -50,6 +51,18 @@ else:
 
             return version("anytext")
         raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def alias_textual() -> None:
+    """Make ``textual`` imports resolve to Anytext, process-wide.
+
+    Call at application startup, before importing Textual-dependent libraries.
+    Repeated calls are harmless; already loaded real Textual modules are rejected.
+    See :func:`anytext.compat.alias_textual` for compatibility details.
+    """
+    from anytext.compat import alias_textual as install_alias
+
+    install_alias()
 
 
 class LoggerError(Exception):

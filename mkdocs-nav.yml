@@ -8,6 +8,7 @@ nav:
       - "guide/index.md"
       - "guide/devtools.md"
       - "guide/app.md"
+      - "guide/textual_compatibility.md"
       - "guide/styles.md"
       - "guide/CSS.md"
       - "guide/queries.md"
