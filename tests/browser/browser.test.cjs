@@ -379,6 +379,27 @@ test("The official demo runs in Pyodide without threads under a Pages project pa
     }, cells, { timeout: 10000 });
     t.diagnostic("Resize passed");
 
+    await python(page, `
+from anytext import alias_textual
+alias_textual()
+import anytext
+import textual
+from textual.app import App as LegacyApp
+from textual.widgets import Pretty as LegacyPretty
+from anytext.widgets import Pretty
+import textual.widgets._pretty
+from textual._context import active_app as legacy_context
+from anytext._context import active_app
+assert textual is anytext
+from anytext.app import App as AnytextApp
+assert LegacyApp is AnytextApp
+assert isinstance(browser_app, LegacyApp)
+assert LegacyPretty is Pretty
+assert legacy_context is active_app
+assert __import__('sys').modules['textual.widgets._pretty'].__spec__.name == 'anytext.widgets._pretty'
+`);
+    t.diagnostic("Textual import aliases share Anytext classes and context in Pyodide");
+
     await keyboard.press("Control+q");
     await page.waitForFunction(() =>
       document.querySelector("#status").textContent.startsWith("App stopped"),
