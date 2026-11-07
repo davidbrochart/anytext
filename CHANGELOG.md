@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `alias_textual()`: opt-in import aliases so Textual-dependent libraries share
   Anytext modules, classes, and application contexts without changing imports.
+  Also accepts legacy framework CSS selectors, DOM identifiers, and default theme
+  names when the alias is activated.
 - `FloatingWindow`: resize floating containers by dragging edges and corners, and
   move them with modifier-left-drag or resize with modifier-right-drag.
 - `SplitPane`: draggable horizontal and vertical split panes, with minimum sizes,

@@ -32,6 +32,56 @@ def test_importing_compat_does_not_activate_aliases():
     )
 
 
+def test_native_name_handling_has_no_compatibility_calls():
+    run_isolated(
+        """
+        import sys
+        from anytext import alias_textual, _compat_names
+        from anytext._node_list import NodeList
+        from anytext.dom import DOMNode
+        from anytext.widgets import Static
+        from anytext.css.parse import parse_selectors
+
+        normalizers = {
+            _compat_names.normalize_id.__code__,
+            _compat_names.normalize_class.__code__,
+            _compat_names.normalize_theme.__code__,
+        }
+        calls = []
+        def profile(frame, event, arg):
+            if event == 'call' and frame.f_code in normalizers:
+                calls.append(frame.f_code.co_name)
+
+        original_lookup = NodeList._get_by_id
+        original_has_class = DOMNode.has_class
+        sys.setprofile(profile)
+        try:
+            widget = Static(id='example', classes='example')
+            widget.has_class('example')
+            widget.add_class('other')
+            widget.remove_class('other')
+            widget.toggle_class('other')
+            widget.update_classes({'other': False})
+            widget.classes = 'example'
+            NodeList()._get_by_id('example')
+            parse_selectors('#example.example')
+        finally:
+            sys.setprofile(None)
+        assert not calls, calls
+        assert NodeList._get_by_id is original_lookup
+        assert DOMNode.has_class is original_has_class
+
+        alias_textual()
+        assert NodeList._get_by_id is not original_lookup
+        assert DOMNode.has_class is not original_has_class
+        lookup, has_class = NodeList._get_by_id, DOMNode.has_class
+        alias_textual()
+        assert NodeList._get_by_id is lookup
+        assert DOMNode.has_class is has_class
+    """
+    )
+
+
 def test_preloaded_modules_and_idempotent_setup():
     run_isolated(
         """
@@ -242,12 +292,16 @@ def test_textual_app_runs_with_shared_context_without_threads(backend):
 
 def test_unmodified_snapshot_plugin_accepts_anytext_apps(tmp_path):
     (tmp_path / "pytest.ini").write_text("[pytest]\n")
+    (tmp_path / "legacy.tcss").write_text(
+        ".-theme-textual-dark Label { color: #123456; }\n"
+    )
     (tmp_path / "existing_library.py").write_text(
         dedent(
             """
         from textual.app import App, ComposeResult
         from textual.widgets import Label
         class ExistingApp(App):
+            CSS_PATH = "legacy.tcss"
             def compose(self) -> ComposeResult:
                 yield Label('An unchanged Textual app')
     """
@@ -283,3 +337,233 @@ def test_unmodified_snapshot_plugin_accepts_anytext_apps(tmp_path):
     run_isolated(source, "--snapshot-update", cwd=tmp_path, env=env)
     run_isolated(source, cwd=tmp_path, env=env)
     assert len(list(tmp_path.rglob("*.svg"))) == 2
+
+
+def test_css_name_compatibility_is_opt_in():
+    run_isolated(
+        """
+        from anytext.app import App, InvalidThemeError
+        from anytext.widgets import Static
+        from anytext.css.parse import parse_selectors
+        node = Static('content', id='textual-tooltip', classes='-textual-compact')
+        assert node.id == 'textual-tooltip'
+        assert node.classes == frozenset({'-textual-compact'})
+        assert not node.has_class('-anytext-compact')
+        selectors = parse_selectors('#textual-tooltip.-textual-compact')[0].selectors
+        assert [selector.name for selector in selectors] == ['textual-tooltip', '-textual-compact']
+        app = App()
+        assert app.get_theme('textual-dark') is None
+        try:
+            app.theme = 'textual-light'
+        except InvalidThemeError:
+            pass
+        else:
+            raise AssertionError('Legacy theme names must require activation')
+    """
+    )
+
+
+def test_aliasing_invalidates_cached_legacy_selectors():
+    run_isolated(
+        """
+        from anytext.css.parse import parse_selectors
+        before = parse_selectors('#textual-tooltip.-textual-system')[0].selectors
+        assert [s.name for s in before] == ['textual-tooltip', '-textual-system']
+        from anytext import alias_textual
+        alias_textual()
+        after = parse_selectors('#textual-tooltip.-textual-system')[0].selectors
+        assert [s.name for s in after] == ['anytext-tooltip', '-anytext-system']
+        # Activation must not mutate selector objects held by callers.
+        assert [s.name for s in before] == ['textual-tooltip', '-textual-system']
+    """
+    )
+
+
+@pytest.mark.parametrize(
+    "legacy, canonical",
+    [
+        ("textual-tooltip", "anytext-tooltip"),
+        ("textual-toastrack", "anytext-toastrack"),
+        ("--textual-toast-example", "--anytext-toast-example"),
+    ],
+)
+def test_legacy_id_construction_and_lookup(legacy, canonical):
+    run_isolated(
+        """
+        import sys
+        from anytext import alias_textual
+        alias_textual()
+        from textual.widgets import Static
+        from textual.walk import walk_breadth_search_id
+        legacy, canonical = sys.argv[1:]
+        node = Static('content', id=legacy)
+        assert node.id == canonical
+        assert walk_breadth_search_id(node, legacy) is node
+        other = Static('other')
+        other.id = legacy
+        assert other.id == canonical
+    """,
+        legacy,
+        canonical,
+    )
+
+
+@pytest.mark.parametrize(
+    "legacy, canonical",
+    [
+        ("-textual-system", "-anytext-system"),
+        ("-textual-compact", "-anytext-compact"),
+        ("-textual-loading-indicator", "-anytext-loading-indicator"),
+        ("--textual-command-palette", "--anytext-command-palette"),
+        ("-theme-textual-dark", "-theme-anytext-dark"),
+        ("-theme-textual-light", "-theme-anytext-light"),
+    ],
+)
+def test_legacy_class_mutations_use_canonical_storage(legacy, canonical):
+    run_isolated(
+        """
+        import sys
+        from anytext import alias_textual
+        alias_textual()
+        from textual.widgets import Static
+        legacy, canonical = sys.argv[1:]
+        node = Static('content', classes=legacy)
+        assert node.classes == frozenset({canonical})
+        assert node.has_class(legacy, canonical)
+        node.remove_class(legacy)
+        assert not node.has_class(canonical)
+        node.add_class(legacy)
+        assert node.has_class(canonical)
+        node.toggle_class(legacy)
+        assert not node.has_class(canonical)
+        node.set_class(True, legacy)
+        assert node.has_class(canonical)
+        node.update_classes({legacy: False})
+        assert not node.has_class(canonical)
+        node.update_classes({legacy: True})
+        assert node.has_class(canonical)
+        node.set_classes([legacy])
+        assert node.classes == frozenset({canonical})
+        node.classes = legacy + ' my-textual-custom'
+        assert node.classes == frozenset({canonical, 'my-textual-custom'})
+    """,
+        legacy,
+        canonical,
+    )
+
+
+def test_legacy_tcss_and_queries_work_without_changing_user_files(tmp_path):
+    css = """
+    /* textual-tooltip remains in this comment and in the unused string. */
+    $caption: "textual-tooltip";
+    $my-textual-color: #123456;
+    #textual-tooltip { color: $my-textual-color; }
+    #textual-toastrack { padding: 1; }
+    .-theme-textual-light #my-textual-panel { color: #ABCDEF; }
+    .-theme-textual-dark #my-textual-panel { color: #FEDCBA; }
+    #my-textual-panel.project-textual-class { background: #234567; }
+    """
+    css_path = tmp_path / "textual-tooltip.tcss"
+    css_path.write_text(css)
+    run_isolated(
+        """
+        import sys
+        import anyio
+        from pathlib import Path
+        from anytext import alias_textual
+        alias_textual()
+        from textual import on
+        from textual.app import App
+        from textual.widget import Widget
+        from textual.widgets import Button, Label
+        class LegacyWidget(Widget):
+            DEFAULT_CSS = '''
+            LegacyWidget {
+                Button {
+                    &.-textual-compact { background: #2468AC; }
+                }
+            }
+            '''
+            def compose(self):
+                yield Button('Compact', compact=True)
+        class ExistingApp(App):
+            CSS_PATH = sys.argv[1]
+            handled = False
+            @on(Button.Pressed, '.-textual-compact')
+            def compact_pressed(self):
+                self.handled = True
+            def compose(self):
+                yield Label('my-textual-content', id='my-textual-panel', classes='project-textual-class')
+                yield LegacyWidget()
+            def on_mount(self):
+                self.theme = 'textual-light'
+        async def main():
+            app = ExistingApp()
+            async with app.run_test(tooltips=True, notifications=True) as pilot:
+                label = app.query_one('#my-textual-panel')
+                button = app.query_one('Button.-textual-compact')
+                tooltip = app.screen.query_one('#textual-tooltip')
+                toasts = app.screen.query_one('#textual-toastrack')
+                assert app.screen.get_child_by_id('textual-tooltip') is tooltip
+                assert app.screen.get_widget_by_id('textual-tooltip') is tooltip
+                assert app.get_widget_by_id('textual-toastrack') is toasts
+                assert app.query_one('#anytext-tooltip') is tooltip
+                assert tooltip.id == 'anytext-tooltip'
+                assert tooltip.has_class('-textual-system')
+                assert list(app.query('.-textual-system')) == list(app.query('.-anytext-system'))
+                assert app.query_one('LegacyWidget > Button.-textual-compact') is button
+                assert list(app.query('Button').filter('.-textual-compact')) == [button]
+                with anyio.fail_after(5):
+                    while label.styles.color.hex != '#ABCDEF':
+                        await pilot.pause()
+                        await anyio.sleep(.01)
+                assert label.styles.background.hex == '#234567'
+                assert button.styles.background.hex == '#2468AC'
+                await pilot.click(button)
+                assert app.handled
+                assert tooltip.styles.color.hex == '#123456'
+                assert toasts.styles.padding == (1, 1, 1, 1)
+                assert str(label.content) == 'my-textual-content'
+                assert label.id == 'my-textual-panel'
+                assert label.has_class('project-textual-class')
+                assert app.theme == 'anytext-light'
+                assert app.has_class('-theme-textual-light')
+                app.action_toggle_dark()
+                with anyio.fail_after(5):
+                    while label.styles.color.hex != '#FEDCBA':
+                        await pilot.pause()
+                        await anyio.sleep(.01)
+                assert app.theme == 'anytext-dark'
+        anyio.run(main)
+    """,
+        str(css_path),
+    )
+    assert css_path.read_text() == css
+
+
+def test_theme_aliases_cover_lookup_registration_and_removal():
+    run_isolated(
+        """
+        from anytext import alias_textual
+        alias_textual()
+        from textual.app import App
+        from textual.theme import Theme
+        app = App()
+        assert app.get_theme('missing, textual-dark') is app.get_theme('anytext-dark')
+        assert app.get_theme('textual-light') is app.get_theme('anytext-light')
+        original = Theme(name='textual-dark', primary='#123456')
+        app.register_theme(original)
+        assert original.name == 'textual-dark'
+        assert app.get_theme('textual-dark').name == 'anytext-dark'
+        assert app.get_theme('textual-dark').primary == '#123456'
+        app.theme = 'textual-dark'
+        assert app.theme == 'anytext-dark'
+        app.unregister_theme('textual-dark')
+        assert app.get_theme('anytext-dark') is None
+        custom = Theme(name='textual-custom', primary='#abcdef')
+        app.register_theme(custom)
+        assert app.get_theme('textual-custom') is custom
+        app.theme = 'textual-custom'
+        assert app.theme == 'textual-custom'
+    """
+    )

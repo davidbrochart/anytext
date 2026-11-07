@@ -399,6 +399,47 @@ assert legacy_context is active_app
 assert __import__('sys').modules['textual.widgets._pretty'].__spec__.name == 'anytext.widgets._pretty'
 `);
     t.diagnostic("Textual import aliases share Anytext classes and context in Pyodide");
+    await python(page, `
+from textual import on
+from textual.screen import Screen
+from textual.widgets import Button
+_compat_original_theme = browser_app.theme
+class LegacyCSSScreen(Screen):
+    SCOPED_CSS = False
+    CSS = """
+    LegacyCSSScreen Button.-textual-compact { width: 32; background: #2468AC; }
+    .-theme-textual-light LegacyCSSScreen #compat-button { color: #123456; }
+    """
+    def compose(self):
+        yield Button('Textual CSS works', id='compat-button', compact=True)
+    @on(Button.Pressed, '.-textual-compact')
+    def pressed(self):
+        self.query_one(Button).label = 'Legacy selector fired'
+async def show_legacy_css():
+    browser_app.theme = 'textual-light'
+    await browser_app.push_screen(LegacyCSSScreen())
+browser_app.call_later(show_legacy_css)
+`);
+    await waitForPython(page, "browser_app.screen.__class__.__name__ == 'LegacyCSSScreen' and browser_app.screen.query_one(Button).styles.background.hex == '#2468AC' and browser_app.screen.query_one(Button).styles.color.hex == '#123456'");
+    await waitForTerminalText(page, "Textual CSS works");
+    await python(page, `
+assert browser_app.theme == 'anytext-light'
+assert browser_app.has_class('-theme-textual-light')
+assert browser_app.screen.query_one('#textual-tooltip') is browser_app.screen.query_one('#anytext-tooltip')
+assert browser_app.screen.get_child_by_id('textual-tooltip').has_class('-textual-system')
+browser_app.screen.query_one(Button).focus()
+`);
+    await waitForPython(page, "browser_app.screen.query_one(Button).has_focus");
+    await keyboard.press("Enter");
+    await waitForTerminalText(page, "Legacy selector fired");
+    await python(page, `
+async def close_legacy_css():
+    await browser_app.pop_screen()
+    browser_app.theme = _compat_original_theme
+browser_app.call_later(close_legacy_css)
+`);
+    await waitForPython(page, "browser_app.screen.__class__.__name__ == 'HomeScreen' and browser_app.theme == _compat_original_theme");
+    t.diagnostic("Legacy CSS, selector handlers, DOM IDs, and theme aliases passed in Pyodide");
 
     await keyboard.press("Control+q");
     await page.waitForFunction(() =>

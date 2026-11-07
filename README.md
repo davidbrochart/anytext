@@ -58,7 +58,8 @@ import your_textual_library
 ```
 
 Imports such as `textual.app` and `textual.widgets` then share Anytext's modules
-and classes. See the [compatibility guide](docs/guide/textual_compatibility.md) for
+and classes. Legacy framework CSS selectors, DOM lookups, and default theme names
+are also supported. See the [compatibility guide](docs/guide/textual_compatibility.md) for
 startup order, pytest plugins, and dependency metadata limitations.
 
 ## WebAssembly and thread-free hosts

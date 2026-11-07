@@ -53,11 +53,14 @@ def alias_textual() -> None:
     """Route ``textual`` imports to the corresponding Anytext modules.
 
     Call this once at application startup, before importing any library that
-    imports Textual. Repeated calls are harmless. Already imported Anytext
-    modules are supported, but loading the real Textual first raises
+    imports Textual, constructs widgets, or loads stylesheets. Repeated calls
+    are harmless. Already imported Anytext modules are supported, but loading
+    the real Textual first raises
     ``RuntimeError`` rather than mixing two framework implementations.
 
     Both import names share the same module objects, classes, and app contexts.
+    Known legacy CSS identifiers, DOM lookups, and default theme names are
+    accepted while stored names remain canonical Anytext names.
     Canonical module metadata and the Anytext version are preserved. This is a
     process-wide import alias; it does not alter installed distribution metadata,
     dependency resolution, command-line entry points, or environment settings.
@@ -79,10 +82,11 @@ def alias_textual() -> None:
     # Public names renamed by the fork remain available after opting in.
     # Load these small modules now so imports through the package's existing
     # attributes work as well as imports handled by the alias finder.
-    from anytext import errors, logging
+    from anytext import _compat_names, errors, logging
 
     setattr(errors, "TextualError", errors.AnytextError)
     setattr(logging, "TextualHandler", logging.AnytextHandler)
+    _compat_names.enable()
 
     if not any(isinstance(finder, _TextualAliasFinder) for finder in sys.meta_path):
         sys.meta_path.insert(0, _TextualAliasFinder())
