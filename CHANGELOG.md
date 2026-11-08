@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [9.1.0] - 2026-11-08
+
 ### Added
 
 - `alias_textual()`: opt-in import aliases so Textual-dependent libraries share
