@@ -42,7 +42,7 @@ jobs:
           node-version: "22"
           cache: npm
           cache-dependency-path: tests/browser/package-lock.json
-      - run: python -m pip install poetry-core
+      - run: python -m pip install "uv_build>=0.13.5,<0.14"
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm test

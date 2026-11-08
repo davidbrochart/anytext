@@ -9,7 +9,7 @@ on:
       - "examples/browser/**"
       - "tools/build_browser.py"
       - "pyproject.toml"
-      - "poetry.lock"
+      - "uv.lock"
   workflow_dispatch:
 
 permissions:
@@ -33,7 +33,7 @@ jobs:
           python-version: "3.12"
       - uses: actions/configure-pages@v5
       - name: Install build backend
-        run: python -m pip install poetry-core
+        run: python -m pip install "uv_build>=0.13.5,<0.14"
       - name: Build static demo
         run: python tools/build_browser.py
       - uses: actions/upload-pages-artifact@v4

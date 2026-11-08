@@ -1,4 +1,4 @@
-run := poetry run
+run := uv run --extra syntax
 
 .PHONY: test
 test:
@@ -81,19 +81,19 @@ docs-deploy: clean-screenshot-cache docs-online-nav
 
 .PHONY: build
 build: docs-build-offline
-	poetry build
+	uv build
 
 .PHONY: clean
 clean: clean-screenshot-cache clean-offline-docs
 
 .PHONY: setup
 setup:
-	poetry install
-	poetry install --extras syntax
+	uv sync --extra syntax
 
 .PHONY: update
 update:
-	poetry update
+	uv lock --upgrade
+	uv sync --extra syntax
 
 .PHONY: install-pre-commit
 install-pre-commit:

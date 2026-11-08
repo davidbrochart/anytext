@@ -17,12 +17,12 @@ You can contribute to Anytext in many ways:
 To make a code or documentation contribution you will need to set up Anytext locally.
 You can follow these steps:
 
- 1. Make sure you have Poetry installed ([see instructions here](https://python-poetry.org))
+ 1. Make sure you have uv installed ([see instructions here](https://docs.astral.sh/uv/getting-started/installation/))
  2. Clone the Anytext repository
- 3. Run `poetry shell` to create a virtual environment for the dependencies
- 4. Run `make setup` to install all dependencies
- 5. Make sure the latest version of Anytext was installed by running the command `anytext --version`
- 6. Install the pre-commit hooks with the command `pre-commit install`
+ 3. Change into the repository directory
+ 4. Run `make setup` (or `uv sync --extra syntax`) to create the environment and install dependencies
+ 5. Make sure the latest version of Anytext was installed by running the command `uv run anytext --version`
+ 6. Install the pre-commit hooks with the command `uv run pre-commit install`
 
 ([Read this](#makefile-commands) if the command `make` doesn't work for you.)
 
@@ -31,7 +31,7 @@ You can follow these steps:
 Once you have Anytext installed, run the Anytext demo to get an impression of what Anytext can do and to double check that everything was installed correctly:
 
 ```bash
-python -m anytext
+uv run python -m anytext
 ```
 
 ## Guidelines

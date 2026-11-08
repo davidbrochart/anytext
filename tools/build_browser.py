@@ -11,7 +11,7 @@ from shutil import copy2
 
 def build_browser_site(output: Path) -> None:
     """Bundle browser assets and this checkout's wheel with relative URLs."""
-    from poetry.core.masonry.api import build_wheel
+    from uv_build import build_wheel
 
     repo = Path(__file__).resolve().parent.parent
     output = output.resolve()
@@ -39,7 +39,9 @@ def main() -> None:
     try:
         build_browser_site(args.output)
     except ImportError:
-        parser.error("Install the build backend: python -m pip install poetry-core")
+        parser.error(
+            "Install the build backend: python -m pip install 'uv_build>=0.13.5,<0.14'"
+        )
     print(f"Built static demo in {args.output.resolve()}", flush=True)
 
 

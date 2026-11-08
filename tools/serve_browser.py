@@ -28,7 +28,7 @@ def main() -> None:
             build_browser_site(Path(temporary) / base_path)
         except ImportError:
             parser.error(
-                "Install the build backend first: python -m pip install poetry-core"
+                "Install the build backend first: python -m pip install 'uv_build>=0.13.5,<0.14'"
             )
         handler = partial(SimpleHTTPRequestHandler, directory=temporary)
         with HTTPServer(("127.0.0.1", args.port), handler) as server:
