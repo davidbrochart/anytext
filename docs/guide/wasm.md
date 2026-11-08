@@ -39,7 +39,7 @@ server. Explore its Home, Widgets, Projects, and Game screens.
 From the repository root:
 
 ```sh
-python -m pip install poetry-core
+python -m pip install "uv_build>=0.13.5,<0.14"
 python tools/serve_browser.py
 ```
 
@@ -60,7 +60,7 @@ Use `--port 8001` if port 8000 is occupied.
 Build a directory that can be served by any static web host:
 
 ```sh
-python -m pip install poetry-core
+python -m pip install "uv_build>=0.13.5,<0.14"
 python tools/build_browser.py --output .cache/browser-site
 python -m http.server --directory .cache/browser-site 8000
 ```
@@ -174,7 +174,7 @@ checks real browser input, keyboard/mouse buttons, resizing, shutdown, and the
 thread/socket guards:
 
 ```sh
-python -m pip install poetry-core
+python -m pip install "uv_build>=0.13.5,<0.14"
 npm ci --prefix tests/browser
 npm run install-browser --prefix tests/browser
 npm test --prefix tests/browser

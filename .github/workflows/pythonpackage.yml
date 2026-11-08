@@ -40,18 +40,19 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v4.1.1
-      - name: Install Poetry
-        run: pipx install poetry==2.5.1
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "poetry"
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.13.5"
+          enable-cache: true
       - name: Install dependencies
-        run: poetry install --no-interaction --extras syntax
+        run: uv sync --locked --extra syntax
       - name: Test with pytest
         run: |
-          poetry run pytest tests -v --cov=./src/anytext --cov-report=xml:./coverage.xml --cov-report term-missing
+          uv run --locked --extra syntax pytest tests -v --cov=./src/anytext --cov-report=xml:./coverage.xml --cov-report term-missing
       - name: Upload snapshot report
         if: always()
         uses: actions/upload-artifact@v4

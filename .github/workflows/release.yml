@@ -25,7 +25,7 @@ jobs:
           import tomllib
 
           with open("pyproject.toml", "rb") as metadata:
-              project = tomllib.load(metadata)["tool"]["poetry"]
+              project = tomllib.load(metadata)["project"]
           if project["name"] != "anytext":
               raise SystemExit("The release tag must point to the Anytext fork")
           version = project["version"]

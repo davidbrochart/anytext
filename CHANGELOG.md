@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Use uv for development environments and dependency locking, with standard
+  project metadata and `uv_build` for source distributions and wheels.
+
 ## [9.1.0] - 2026-11-08
 
 ### Added
