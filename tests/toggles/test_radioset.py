@@ -56,7 +56,8 @@ async def test_radio_sets_toggle():
         assert pilot.app.query_one("#from_buttons", RadioSet).pressed_button is not None
         assert pilot.app.query_one("#from_strings", RadioSet).pressed_index == 2
         assert pilot.app.query_one("#from_strings", RadioSet).pressed_button is not None
-        assert pilot.app.events_received == [
+        # Separate radio sets have independent message pumps; either may report first.
+        assert sorted(pilot.app.events_received) == [
             ("from_buttons", 0, [True, False, False]),
             ("from_strings", 2, [False, False, True]),
         ]
