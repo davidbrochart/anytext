@@ -44,6 +44,24 @@ Upstream tools such as `textual-dev`, `textual-serve`, and
 `pytest-textual-snapshot` are external packages and may require adaptation for
 this fork. External package names and links keep their original names.
 
+## Textual-compatible imports
+
+Applications can let existing Textual-dependent libraries use Anytext without
+changing their imports:
+
+```python
+from anytext import alias_textual
+
+alias_textual()  # Before importing Textual-dependent libraries.
+
+import your_textual_library
+```
+
+Imports such as `textual.app` and `textual.widgets` then share Anytext's modules
+and classes. Legacy framework CSS selectors, DOM lookups, and default theme names
+are also supported. See the [compatibility guide](docs/guide/textual_compatibility.md) for
+startup order, pytest plugins, and dependency metadata limitations.
+
 ## WebAssembly and thread-free hosts
 
 On Pyodide/WASM, Anytext automatically uses a thread-free runtime and a
