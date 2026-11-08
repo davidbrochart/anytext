@@ -6,7 +6,6 @@ from functools import partial
 
 import anyio
 import pytest
-import pytest_asyncio
 
 from anytext import _async, constants
 from anytext.app import App, ComposeResult
@@ -15,7 +14,7 @@ from anytext.widgets import DirectoryTree, Input, Log, Markdown
 from anytext.worker import WorkerError
 
 
-@pytest_asyncio.fixture
+@pytest.fixture
 async def no_threads(monkeypatch):
     monkeypatch.setattr(constants, "THREADS_ENABLED", False)
 

@@ -119,17 +119,17 @@ class SimpleAnimation(Animation):
         if factor == 1.0:
             value = self.final_value
         elif isinstance(self.start_value, Animatable):
-            assert isinstance(
-                self.end_value, Animatable
-            ), "end_value must be animatable"
+            assert isinstance(self.end_value, Animatable), (
+                "end_value must be animatable"
+            )
             value = self.start_value.blend(self.end_value, eased_factor)
         else:
-            assert isinstance(
-                self.start_value, (int, float)
-            ), f"`start_value` must be float, not {self.start_value!r}"
-            assert isinstance(
-                self.end_value, (int, float)
-            ), f"`end_value` must be float, not {self.end_value!r}"
+            assert isinstance(self.start_value, (int, float)), (
+                f"`start_value` must be float, not {self.start_value!r}"
+            )
+            assert isinstance(self.end_value, (int, float)), (
+                f"`end_value` must be float, not {self.end_value!r}"
+            )
 
             if self.end_value > self.start_value:
                 eased_factor = self.easing(factor)

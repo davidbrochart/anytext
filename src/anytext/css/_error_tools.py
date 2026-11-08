@@ -27,4 +27,4 @@ def friendly_list(
         word1, word2 = words
         return f"{word1} {joiner} {word2}"
     else:
-        return f'{", ".join(words[:-1])}, {joiner} {words[-1]}'
+        return f"{', '.join(words[:-1])}, {joiner} {words[-1]}"

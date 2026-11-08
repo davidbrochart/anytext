@@ -1,4 +1,4 @@
-import asyncio
+import anyio
 
 from anytext._context import active_message_pump
 from anytext.app import App
@@ -17,11 +17,12 @@ class CallLaterApp(App[None]):
 async def test_call_later() -> None:
     """Check that call later makes a call."""
     app = CallLaterApp()
-    called_event = asyncio.Event()
+    called_event = anyio.Event()
 
     async with app.run_test():
         app.call_later(called_event.set)
-        await asyncio.wait_for(called_event.wait(), 1)
+        with anyio.fail_after(1):
+            await called_event.wait()
 
 
 async def test_call_after_refresh() -> None:
@@ -30,7 +31,7 @@ async def test_call_after_refresh() -> None:
 
     display_count = -1
 
-    called_event = asyncio.Event()
+    called_event = anyio.Event()
 
     callback_message_pump: MessagePump | None = None
 
@@ -43,7 +44,8 @@ async def test_call_after_refresh() -> None:
 
     async with app.run_test():
         app.call_after_refresh(callback)
-        await asyncio.wait_for(called_event.wait(), 1)
+        with anyio.fail_after(1):
+            await called_event.wait()
         app_display_count = app.display_count
         assert app_display_count == display_count
         # Should be app because the callback should be in the same context as app

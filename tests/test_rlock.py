@@ -1,5 +1,4 @@
-import asyncio
-
+import anyio
 import pytest
 
 from anytext.rlock import RLock
@@ -36,21 +35,23 @@ async def test_multiple_tasks() -> None:
 
     started: list[int] = []
     done: list[int] = []
+    task_started = {n: anyio.Event() for n in (1, 2)}
 
     async def test_task(n: int) -> None:
         started.append(n)
+        task_started[n].set()
         async with lock:
             done.append(n)
 
-    async with lock:
-        assert done == []
-        task1 = asyncio.create_task(test_task(1))
-        assert sorted(started) == []
-        task2 = asyncio.create_task(test_task(2))
-        await asyncio.sleep(0)
-        assert sorted(started) == [1, 2]
+    async with anyio.create_task_group() as group:
+        async with lock:
+            assert done == []
+            group.start_soon(test_task, 1)
+            group.start_soon(test_task, 2)
+            with anyio.fail_after(1):
+                await task_started[1].wait()
+                await task_started[2].wait()
+            assert sorted(started) == [1, 2]
+            assert done == []
 
-    await task1
-    assert 1 in done
-    await task2
-    assert 2 in done
+    assert sorted(done) == [1, 2]

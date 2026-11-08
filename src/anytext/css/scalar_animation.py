@@ -25,9 +25,9 @@ class ScalarAnimation(Animation):
         on_complete: CallbackType | None = None,
         level: AnimationLevel = "full",
     ):
-        assert (
-            speed is not None or duration is not None
-        ), "One of speed or duration required"
+        assert speed is not None or duration is not None, (
+            "One of speed or duration required"
+        )
         self.widget = widget
         self.styles = styles
         self.start_time = start_time

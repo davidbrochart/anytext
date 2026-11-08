@@ -189,9 +189,9 @@ class Provider(ABC):
             screen: A reference to the active screen.
         """
         if match_style is not None:
-            assert isinstance(
-                match_style, Style
-            ), "match_style must be a Visual style (from anytext.style import Style)"
+            assert isinstance(match_style, Style), (
+                "match_style must be a Visual style (from anytext.style import Style)"
+            )
         self.__screen = screen
         self.__match_style = match_style
         self._init_task: Task | None = None
@@ -335,9 +335,7 @@ class SimpleCommand(NamedTuple):
     """The description of the command."""
 
 
-CommandListItem: TypeAlias = (
-    "SimpleCommand | tuple[str, IgnoreReturnCallbackType, str | None] | tuple[str, IgnoreReturnCallbackType]"
-)
+CommandListItem: TypeAlias = "SimpleCommand | tuple[str, IgnoreReturnCallbackType, str | None] | tuple[str, IgnoreReturnCallbackType]"
 
 
 class SimpleProvider(Provider):

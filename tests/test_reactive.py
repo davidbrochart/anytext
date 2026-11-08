@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-import asyncio
-
+import anyio
 import pytest
 
 from anytext.app import App, ComposeResult
@@ -18,7 +17,6 @@ async def test_initialize():
     """Test that the default accepts an Initialize instance."""
 
     class InitializeApp(App):
-
         def get_names(self) -> list[str]:
             return ["foo", "bar", "baz"]
 
@@ -60,7 +58,7 @@ async def test_watch_async_init_false():
         count = reactive(OLD_VALUE, init=False)
         watcher_old_value = None
         watcher_new_value = None
-        watcher_called_event = asyncio.Event()
+        watcher_called_event = anyio.Event()
 
         async def watch_count(self, old_value: int, new_value: int) -> None:
             self.watcher_old_value = old_value
@@ -72,7 +70,8 @@ async def test_watch_async_init_false():
         app.count = NEW_VALUE
         assert app.count == NEW_VALUE  # Value is set immediately
         try:
-            await asyncio.wait_for(app.watcher_called_event.wait(), timeout=0.05)
+            with anyio.fail_after(0.05):
+                await app.watcher_called_event.wait()
         except TimeoutError:
             pytest.fail("Async watch method (watch_count) wasn't called within timeout")
 
@@ -87,7 +86,7 @@ async def test_watch_async_init_true():
 
     class WatchAsyncApp(App):
         count = reactive(OLD_VALUE, init=True)
-        watcher_called_event = asyncio.Event()
+        watcher_called_event = anyio.Event()
         watcher_old_value = None
         watcher_new_value = None
 
@@ -99,7 +98,8 @@ async def test_watch_async_init_true():
     app = WatchAsyncApp()
     async with app.run_test():
         try:
-            await asyncio.wait_for(app.watcher_called_event.wait(), timeout=0.05)
+            with anyio.fail_after(0.05):
+                await app.watcher_called_event.wait()
         except TimeoutError:
             pytest.fail(
                 "Async watcher wasn't called within timeout when reactive init = True"

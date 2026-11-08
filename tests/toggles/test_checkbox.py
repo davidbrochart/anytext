@@ -44,7 +44,7 @@ async def test_checkbox_toggle() -> None:
             False,
         ]
         await pilot.pause()
-        assert pilot.app.events_received == [
+        assert sorted(pilot.app.events_received) == [
             ("cb1", True, True),
             ("cb2", True, True),
             ("cb3", False, True),

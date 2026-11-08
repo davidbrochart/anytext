@@ -2,6 +2,7 @@
 
 import socket
 from concurrent.futures import ThreadPoolExecutor
+from contextvars import ContextVar
 
 import anyio
 import pytest
@@ -9,6 +10,52 @@ import pytest
 from anytext import _async
 from anytext.app import App
 from anytext.message import Message
+
+
+@pytest.mark.parametrize("backend", ["asyncio", "trio"])
+@pytest.mark.parametrize("worker_backend", ["asyncio", "trio"])
+def test_bridge_from_async_thread_worker(backend, worker_backend):
+    """An async worker may own a different loop in its native worker thread."""
+    marker = ContextVar("bridge_marker", default=None)
+
+    class Ping(Message):
+        pass
+
+    async def check():
+        app = App()
+        async with app.run_test():
+            runtime = app._runtime
+
+            def sync_callback():
+                assert runtime.in_event_loop()
+                assert _async.get_runtime() is runtime
+                assert marker.get() == "worker"
+                return 42
+
+            async def async_callback():
+                await anyio.sleep(0)
+                return sync_callback()
+
+            def fail():
+                raise ValueError("callback failed")
+
+            async def worker():
+                marker.set("worker")
+                assert not runtime.in_event_loop()
+                assert runtime.run_sync_from_thread(sync_callback) == 42
+                assert app.call_from_thread(async_callback) == 42
+                with pytest.raises(ValueError, match="callback failed"):
+                    runtime.run_sync_from_thread(fail)
+                with pytest.raises(ValueError, match="callback failed"):
+                    app.call_from_thread(fail)
+                assert app.post_message(Ping())
+
+            with anyio.fail_after(10):
+                await anyio.to_thread.run_sync(
+                    lambda: anyio.run(worker, backend=worker_backend)
+                )
+
+    anyio.run(check, backend=backend)
 
 
 @pytest.mark.parametrize("backend", ["asyncio", "trio"])

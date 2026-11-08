@@ -1,6 +1,6 @@
-import asyncio
 import gc
 
+import anyio
 import pytest
 
 from anytext.app import App, ComposeResult
@@ -55,7 +55,7 @@ async def _count_app_nodes() -> None:
     assert count_nodes() == 0
 
     await run_app()
-    await asyncio.sleep(0)
+    await anyio.sleep(0)
 
     gc.collect()
 

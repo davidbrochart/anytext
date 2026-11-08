@@ -53,17 +53,17 @@ from anytext.walk import walk_breadth_first, walk_breadth_search_id, walk_depth_
 from anytext.worker_manager import WorkerManager
 
 if TYPE_CHECKING:
-    from typing_extensions import Self, TypeAlias
     from _typeshed import SupportsRichComparison
-
     from rich.console import RenderableType
+    from typing_extensions import Self, TypeAlias
+
     from anytext.app import App
     from anytext.css.query import DOMQuery, QueryType
     from anytext.css.types import CSSLocation
     from anytext.message import Message
     from anytext.screen import Screen
     from anytext.widget import Widget
-    from anytext.worker import Worker, WorkType, ResultType
+    from anytext.worker import ResultType, Worker, WorkType
 
 from typing_extensions import Literal
 

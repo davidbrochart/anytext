@@ -8,7 +8,6 @@ from anytext.widgets import Footer, Pretty, Static, TextArea
 
 
 class MarkupPlayground(App):
-
     TITLE = "Markup Playground"
     CSS = """
     Screen {        

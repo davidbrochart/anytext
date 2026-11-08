@@ -1,5 +1,6 @@
-import asyncio
 import time
+
+import anyio
 
 from anytext.app import App, ComposeResult
 from anytext.widget import Widget
@@ -26,7 +27,7 @@ async def test_run_worker_async() -> None:
     class WorkerWidget(Widget):
         async def work(self) -> str:
             nonlocal work_result
-            await asyncio.sleep(0.02)
+            await anyio.sleep(0.02)
             work_result = "foo"
             return "foo"
 

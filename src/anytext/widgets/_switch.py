@@ -5,8 +5,9 @@ from typing import TYPE_CHECKING, ClassVar
 from rich.console import RenderableType
 
 if TYPE_CHECKING:
-    from anytext.app import RenderResult
     from typing_extensions import Self
+
+    from anytext.app import RenderResult
 
 from anytext.binding import Binding, BindingType
 from anytext.events import Click

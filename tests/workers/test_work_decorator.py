@@ -1,7 +1,7 @@
-import asyncio
 from time import sleep
 from typing import Callable, List, Tuple
 
+import anyio
 import pytest
 
 from anytext import work
@@ -19,12 +19,12 @@ class WorkApp(App):
 
     @work
     async def async_work(self) -> str:
-        await asyncio.sleep(0.1)
+        await anyio.sleep(0.1)
         return "foo"
 
     @work(thread=True)
     async def async_thread_work(self) -> str:
-        await asyncio.sleep(0.1)
+        await anyio.sleep(0.1)
         return "foo"
 
     @work(thread=True)

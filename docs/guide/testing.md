@@ -23,16 +23,35 @@ Your test code will help you find bugs early, and alert you if you accidentally 
 
 ## Testing frameworks for Anytext
 
-Anytext is an async framework powered by Python's [asyncio](https://docs.python.org/3/library/asyncio.html) library.
-While Anytext doesn't require a particular test framework, it must provide support for asyncio testing.
+Anytext is an async framework powered by [AnyIO](https://anyio.readthedocs.io/),
+with support for asyncio and Trio. Your test framework must support asynchronous tests.
 
 You can use any test framework you are familiar with, but we will be using [pytest](https://docs.pytest.org/)
-along with the [pytest-asyncio](https://pytest-asyncio.readthedocs.io/) plugin in this chapter.
+along with [AnyIO's pytest plugin](https://anyio.readthedocs.io/en/stable/testing.html) in this chapter.
 
-By default, the `pytest-asyncio` plugin requires each async test to be decorated with `@pytest.mark.asyncio`.
-You can avoid having to add this marker to every async test
-by setting `asyncio_mode = auto` in your pytest configuration
-or by running pytest with the `--asyncio-mode=auto` option.
+Install pytest and Trio alongside Anytext, then enable automatic async test discovery
+in your `pyproject.toml`:
+
+```toml
+[tool.pytest.ini_options]
+anyio_mode = "auto"
+```
+
+AnyIO parameterizes async tests over asyncio and Trio by default. You can make the
+backend selection explicit in `conftest.py`, as Anytext's own test suite does:
+
+```python
+import pytest
+
+
+@pytest.fixture(params=["asyncio", "trio"])
+def anyio_backend(request):
+    return request.param
+```
+
+Use AnyIO operations such as `anyio.sleep()` and `anyio.Event()` in shared tests so
+they work on both backends. Tests that start their own event loop manage their
+backend separately.
 
 ## Testing apps
 

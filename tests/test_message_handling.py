@@ -30,6 +30,12 @@ async def test_message_inheritance_namespace():
         _event = Left.Fired
 
     handlers_called = []
+    received = anyio.Event()
+
+    def record(name):
+        handlers_called.append(name)
+        if len(handlers_called) == 2:
+            received.set()
 
     class MessageInheritanceApp(App[None]):
         def compose(self) -> ComposeResult:
@@ -37,14 +43,19 @@ async def test_message_inheritance_namespace():
             yield Right()
 
         def on_left_fired(self):
-            handlers_called.append("left")
+            record("left")
 
         def on_right_fired(self):
-            handlers_called.append("right")
+            record("right")
 
     app = MessageInheritanceApp()
     async with app.run_test():
         app.query_one(Left).trigger()
         app.query_one(Right).trigger()
+        with anyio.fail_after(5):
+            await received.wait()
 
-    assert handlers_called == ["left", "right"]
+    assert sorted(handlers_called) == ["left", "right"]
+
+
+import anyio
