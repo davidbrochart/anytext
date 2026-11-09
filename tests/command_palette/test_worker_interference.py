@@ -1,6 +1,6 @@
 """Tests for https://github.com/Textualize/textual/issues/3615"""
 
-from asyncio import sleep
+from anyio import sleep
 
 from anytext import work
 from anytext.app import App

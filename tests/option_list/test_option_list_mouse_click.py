@@ -7,7 +7,9 @@ from anytext.widgets.option_list import Option
 
 
 class OptionListApp(App[None]):
-    messages: list[str] = []
+    def __init__(self) -> None:
+        super().__init__()
+        self.messages: list[str] = []
 
     def compose(self) -> ComposeResult:
         yield OptionList(

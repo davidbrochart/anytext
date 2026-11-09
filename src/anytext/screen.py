@@ -1474,7 +1474,6 @@ class Screen(Generic[ScreenResultType], Widget):
         self._update_auto_focus()
 
         if self.is_attached:
-
             if event.refresh_styles:
                 self.update_node_styles(animate=False)
             if self._size != size:
@@ -1829,7 +1828,6 @@ class Screen(Generic[ScreenResultType], Widget):
             self._handle_mouse_move(event)
 
             if self._selecting and self._select_state is not None:
-
                 select_widget, select_offset = self.get_widget_and_offset_at(
                     event.x, event.y
                 )

@@ -1,4 +1,4 @@
-import asyncio
+import anyio
 
 from anytext.app import App
 
@@ -38,7 +38,7 @@ async def test_app_with_notifications_that_expire() -> None:
             pilot.app.notify("test", timeout=(0.01 if bool(n % 2) else 60))
 
         # Wait until the 0.01 timeout expires on all notifications (plus some leeway)
-        await asyncio.sleep(0.25)
+        await anyio.sleep(0.25)
         assert len(pilot.app._notifications) == 5
 
 

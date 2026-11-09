@@ -191,9 +191,9 @@ class SelectState(NamedTuple):
     @property
     def content_offsets(self) -> tuple[Offset, Offset]:
         """Get the content offset in select order."""
-        assert (
-            self.end is not None
-        ), "Unavailable until there is an end point to the selection"
+        assert self.end is not None, (
+            "Unavailable until there is an end point to the selection"
+        )
         start_offset = self.start.content_offset
         end_offset = self.end.content_offset
         assert start_offset is not None
@@ -271,9 +271,9 @@ class SelectState(NamedTuple):
         return SelectState(pointer_offset, self.start, select_end)
 
     def _apply_content_selections(self, selections: dict[Widget, Selection]):
-        assert (
-            self.end is not None
-        ), "Unavailable until there is an end point to the selection"
+        assert self.end is not None, (
+            "Unavailable until there is an end point to the selection"
+        )
         start_widget = self.start.content_widget
         start_content_offset = self.start.content_offset
         start_offset = self.start.pointer_start_offset
@@ -295,9 +295,9 @@ class SelectState(NamedTuple):
             selections[end_widget] = Selection(None, end_content_offset)
 
     def _walk_selected_widgets(self) -> list[Widget]:
-        assert (
-            self.end is not None
-        ), "Unavailable until there is an end point to the selection"
+        assert self.end is not None, (
+            "Unavailable until there is an end point to the selection"
+        )
 
         selection_bounds = self.selection_bounds
         select_container = self.select_container

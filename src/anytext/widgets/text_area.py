@@ -12,13 +12,13 @@ from anytext.document._history import EditHistory
 from anytext.document._syntax_aware_document import SyntaxAwareDocument
 from anytext.document._wrapped_document import WrappedDocument
 from anytext.widgets._text_area import (
+    BUILTIN_LANGUAGES,
     EndColumn,
     Highlight,
     HighlightName,
     LanguageDoesNotExist,
     StartColumn,
     ThemeDoesNotExist,
-    BUILTIN_LANGUAGES,
 )
 
 __all__ = [

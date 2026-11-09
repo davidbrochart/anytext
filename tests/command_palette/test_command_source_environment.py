@@ -28,8 +28,9 @@ class CommandPaletteApp(App[None]):
         self.action_command_palette()
 
 
-async def test_command_source_environment() -> None:
+async def test_command_source_environment(monkeypatch) -> None:
     """The command source should see the app and default screen."""
+    monkeypatch.setattr(SimpleSource, "environment", set())
     async with CommandPaletteApp().run_test() as pilot:
         base_screen, *_ = pilot.app.children
         assert base_screen is not None

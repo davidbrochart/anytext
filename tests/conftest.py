@@ -5,6 +5,12 @@ from __future__ import annotations
 import pytest
 
 
+@pytest.fixture(params=["asyncio", "trio"])
+def anyio_backend(request):
+    """Exercise asynchronous tests with both supported backends."""
+    return request.param
+
+
 @pytest.fixture
 def snap_compare(snap_compare, monkeypatch):
     """Let the upstream snapshot plugin load Anytext apps as well as its previews.

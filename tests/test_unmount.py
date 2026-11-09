@@ -7,7 +7,7 @@ from anytext.screen import Screen
 
 
 async def test_unmount() -> None:
-    """Test unmount events are received in reverse DOM order."""
+    """Every node unmounts before its parent; sibling order is unspecified."""
     unmount_ids: list[str] = []
 
     class UnmountWidget(Container):
@@ -50,5 +50,16 @@ async def test_unmount() -> None:
         "MyScreen#main",
     ]
 
-
-    assert unmount_ids == expected
+    assert sorted(unmount_ids) == sorted(expected)
+    positions = {name: index for index, name in enumerate(unmount_ids)}
+    for parent, children in (
+        ("bar", ("bar1", "bar2")),
+        ("baz", ("baz1", "baz2")),
+        ("top", ("bar", "baz")),
+    ):
+        for child in children:
+            assert (
+                positions[f"UnmountWidget#{child}-True-0"]
+                < positions[f"UnmountWidget#{parent}-True-0"]
+            )
+    assert positions["UnmountWidget#top-True-0"] < positions["MyScreen#main"]

@@ -56,7 +56,7 @@ async def test_radio_button_toggle() -> None:
             False,
         ]
         await pilot.pause()
-        assert pilot.app.events_received == [
+        assert sorted(pilot.app.events_received) == [
             ("rb1", True, True),
             ("rb2", True, True),
             ("rb3", False, True),

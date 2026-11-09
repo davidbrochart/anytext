@@ -1,5 +1,4 @@
-import asyncio
-
+import anyio
 import pytest
 
 from anytext.app import App
@@ -105,7 +104,7 @@ async def test_run_success() -> None:
 
 async def test_run_error() -> None:
     async def run_error() -> str:
-        await asyncio.sleep(0.1)
+        await anyio.sleep(0.1)
         1 / 0
         return "Never"
 
@@ -124,7 +123,7 @@ async def test_run_cancel() -> None:
     """Test run may be cancelled."""
 
     async def run_error() -> str:
-        await asyncio.sleep(0.1)
+        await anyio.sleep(0.1)
         return "Never"
 
     class ErrorApp(App):
@@ -134,7 +133,7 @@ async def test_run_cancel() -> None:
     async with app.run_test():
         worker: Worker[str] = Worker(app, run_error)
         worker._start(app)
-        await asyncio.sleep(0)
+        await anyio.sleep(0)
         worker.cancel()
         assert worker.is_cancelled
         with pytest.raises(WorkerCancelled):
@@ -145,7 +144,7 @@ async def test_run_cancel_immediately() -> None:
     """Edge case for cancelling immediately."""
 
     async def run_error() -> str:
-        await asyncio.sleep(0.1)
+        await anyio.sleep(0.1)
         return "Never"
 
     class ErrorApp(App):

@@ -32,9 +32,13 @@ from anytext import Logger, _async, events, log, messages
 from anytext._async import Task, create_task
 from anytext._callback import invoke
 from anytext._compat import cached_property
-from anytext._context import NoActiveAppError, active_app, active_message_pump
+from anytext._context import (
+    NoActiveAppError,
+    active_app,
+    active_message_pump,
+    prevent_message_types_stack,
+)
 from anytext._context import message_hook as message_hook_context_var
-from anytext._context import prevent_message_types_stack
 from anytext._on import OnNoWidget
 from anytext._queue import Queue, QueueEmpty
 from anytext._time import time
@@ -476,9 +480,9 @@ class MessagePump(metaclass=_MessagePumpMeta):
                 due to calling it within the node's own task.
 
         """
-        assert (
-            self._task is not None
-        ), "Node must be running before calling wait_for_refresh"
+        assert self._task is not None, (
+            "Node must be running before calling wait_for_refresh"
+        )
         if _async.current_task() is self._task:
             return False
         refreshed_event = _async.Event()
@@ -728,8 +732,7 @@ class MessagePump(metaclass=_MessagePumpMeta):
                 await self._on_message(message)
                 if perf_counter() - start > SLOW_THRESHOLD / 1000:
                     log.warning(
-                        f"method=<{self.__class__.__name__}."
-                        f"{message.handler_name}>",
+                        f"method=<{self.__class__.__name__}.{message.handler_name}>",
                         f"Took over {SLOW_THRESHOLD}ms to process.",
                         "\nTo avoid screen freezes, consider using a worker.",
                     )

@@ -16,17 +16,12 @@ repos:
       - id: check-vcs-permalinks  # ensures that links to vcs websites are permalinks
       - id: end-of-file-fixer  # ensures that a file is either empty, or ends with one newline
       - id: mixed-line-ending  # replaces or checks mixed line ending
-  - repo: https://github.com/pycqa/isort
-    rev: '5.13.2'
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.4
     hooks:
-      - id: isort
-        name: isort (python)
-        language_version: '3.11'
-        args: ['--profile', 'black', '--filter-files']
-  - repo: https://github.com/psf/black
-    rev: '24.1.1'
-    hooks:
-      - id: black
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
   - repo: https://github.com/hadialqattan/pycln  # removes unused imports
     rev: v2.5.0
     hooks:

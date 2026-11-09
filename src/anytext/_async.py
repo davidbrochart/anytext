@@ -7,7 +7,7 @@ handles here retain the optionally-awaitable operations used by the public API.
 from __future__ import annotations
 
 from contextlib import AsyncExitStack, asynccontextmanager
-from contextvars import ContextVar
+from contextvars import ContextVar, copy_context
 from functools import wraps
 from typing import Any, Awaitable, Callable, Generic, TypeVar
 
@@ -275,7 +275,54 @@ class Runtime:
             finally:
                 _runtime.reset(token)
 
+        if self._in_foreign_trio_loop():
+            return self._call_from_foreign_trio_loop(invoke, asynchronous=False)
         return anyio.from_thread.run_sync(invoke, token=self.token)
+
+    def _in_foreign_trio_loop(self) -> bool:
+        """Identify a Trio loop running inside an async thread worker."""
+        if self.backend != "trio":
+            return False
+        try:
+            return (
+                sniffio.current_async_library() == "trio"
+                and anyio.lowlevel.current_token() != self.token
+            )
+        except RuntimeError:
+            return False
+
+    # TODO: Remove this workaround and both _in_foreign_trio_loop() branches
+    # once the fix in https://github.com/agronholm/anyio/pull/1469 is released
+    # and Anytext's minimum AnyIO version includes it.
+    def _call_from_foreign_trio_loop(self, callback, *, asynchronous):
+        """Bridge a different Trio loop without creating another worker thread.
+
+        Trio's from_thread helpers reject every running Trio loop, including a
+        loop in a different thread. Its public token submission API accepts
+        this case, so use it to deliver work to the owning task group.
+        """
+        from concurrent.futures import Future as BlockingFuture
+
+        result = BlockingFuture()
+        context = copy_context()
+
+        async def run():
+            try:
+                result.set_result(await callback())
+            except BaseException as error:
+                result.set_exception(error)
+
+        def dispatch():
+            try:
+                if asynchronous:
+                    self.group.start_soon(run)
+                else:
+                    result.set_result(callback())
+            except BaseException as error:
+                result.set_exception(error)
+
+        self.token.native_token.run_sync_soon(context.run, dispatch)
+        return result.result()
 
     def call_from_thread(self, callback):
         if self.portal is None:
@@ -288,6 +335,8 @@ class Runtime:
             finally:
                 _runtime.reset(token)
 
+        if self._in_foreign_trio_loop():
+            return self._call_from_foreign_trio_loop(invoke, asynchronous=True)
         return self.portal.call(invoke)
 
 

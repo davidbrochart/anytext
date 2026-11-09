@@ -49,11 +49,19 @@ uv run python -m anytext
 Before you open your PR, please go through this checklist and make sure you've checked all the items that apply:
 
  - [ ] Update the `CHANGELOG.md`
- - [ ] Format your code with black (`make format`)
+ - [ ] Sort imports and format your code with Ruff (`make format`)
  - [ ] All your code has docstrings in the style of the rest of the codebase
  - [ ] Your code passes all tests (`make test`)
 
 ([Read this](#makefile-commands) if the command `make` doesn't work for you.)
+
+## Development checks
+
+Development checks use Ruff for formatting and import sorting, and Zuban in
+mypy compatibility mode for type checking (`make typecheck`). Zuban reads the
+existing `mypy.ini` configuration. Async tests use AnyIO's pytest plugin with
+both asyncio and Trio for asynchronous tests. Tests that explicitly start their
+own event loop manage their backend separately.
 
 ## Updating and building the documentation
 

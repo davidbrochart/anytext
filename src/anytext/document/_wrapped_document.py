@@ -311,14 +311,18 @@ class WrappedDocument:
 
         if offset_data is not None:
             line_index, section_y = offset_data
-            location = line_index, get_target_document_column(
+            location = (
                 line_index,
-                x,
-                section_y,
+                get_target_document_column(
+                    line_index,
+                    x,
+                    section_y,
+                ),
             )
         else:
-            location = len(self._wrap_offsets) - 1, get_target_document_column(
-                -1, x, -1
+            location = (
+                len(self._wrap_offsets) - 1,
+                get_target_document_column(-1, x, -1),
             )
 
         # Offset doesn't match any line => land on bottom wrapped line

@@ -57,14 +57,12 @@ from anytext.geometry import NULL_SPACING, Spacing, SpacingDimensions, clamp
 
 if TYPE_CHECKING:
     from anytext.canvas import CanvasLineType
-    from anytext.layout import Layout
     from anytext.css.styles import StylesBase
+    from anytext.layout import Layout
 
 from anytext.css.types import AlignHorizontal, AlignVertical, DockEdge, EdgeType
 
-BorderDefinition: TypeAlias = (
-    "Sequence[tuple[EdgeType, str | Color] | None] | tuple[EdgeType, str | Color] | Literal['none']"
-)
+BorderDefinition: TypeAlias = "Sequence[tuple[EdgeType, str | Color] | None] | tuple[EdgeType, str | Color] | Literal['none']"
 
 PropertyGetType = TypeVar("PropertyGetType")
 PropertySetType = TypeVar("PropertySetType")
@@ -681,8 +679,11 @@ class LayoutProperty:
                 or a `Layout` object.
         """
 
-        from anytext.layouts.factory import Layout  # Prevents circular import
-        from anytext.layouts.factory import MissingLayout, get_layout
+        from anytext.layouts.factory import (
+            Layout,  # Prevents circular import
+            MissingLayout,
+            get_layout,
+        )
 
         _rich_traceback_omit = True
         if layout is None:

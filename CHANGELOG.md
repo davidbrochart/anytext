@@ -9,8 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Replace Black and isort with Ruff, mypy with Zuban, and pytest-asyncio with
+  AnyIO's pytest plugin for development checks and asynchronous tests.
+- Run asynchronous tests against both asyncio and Trio, using backend-neutral
+  synchronization in shared tests.
 - Use uv for development environments and dependency locking, with standard
   project metadata and `uv_build` for source distributions and wheels.
+
+### Fixed
+
+- Allow async thread workers running their own Trio loop to call back into a
+  Trio application and launch nested workers.
 
 ## [9.1.0] - 2026-11-08
 

@@ -71,7 +71,7 @@ class HSL(NamedTuple):
             """Format a float."""
             return f"{number:.1f}".rstrip("0").rstrip(".")
 
-        return f"hsl({as_str(h*360)},{as_str(s*100)}%,{as_str(l*100)}%)"
+        return f"hsl({as_str(h * 360)},{as_str(s * 100)}%,{as_str(l * 100)}%)"
 
 
 class HSV(NamedTuple):
@@ -352,7 +352,7 @@ class Color(NamedTuple):
         return (
             f"#{r:02X}{g:02X}{b:02X}"
             if a == 1
-            else f"#{r:02X}{g:02X}{b:02X}{int(a*255):02X}"
+            else f"#{r:02X}{g:02X}{b:02X}{int(a * 255):02X}"
         )
 
     @property

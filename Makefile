@@ -22,15 +22,17 @@ coverage:
 
 .PHONY: typecheck
 typecheck:
-	$(run) mypy src/anytext
+	$(run) zuban mypy src/anytext
 
 .PHONY: format
 format:
-	$(run) black src
+	$(run) ruff check --fix src
+	$(run) ruff format src
 
 .PHONY: format-check
 format-check:
-	$(run) black --check src
+	$(run) ruff check src
+	$(run) ruff format --check src
 
 .PHONY: clean-screenshot-cache
 clean-screenshot-cache:

@@ -3,7 +3,7 @@
 Make sure that calls to render only happen after a widget being mounted.
 """
 
-import asyncio
+import anyio
 
 from anytext.app import App
 from anytext.widget import Widget
@@ -14,7 +14,7 @@ class W(Widget):
         return self.renderable
 
     async def on_mount(self):
-        await asyncio.sleep(0.1)
+        await anyio.sleep(0.1)
         self.renderable = "1234"
 
 
