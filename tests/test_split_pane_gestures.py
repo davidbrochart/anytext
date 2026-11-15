@@ -173,7 +173,12 @@ async def test_swap_capture_cleanup(change):
         else:
             app.split.disabled = True
         await pilot.pause()
+        if change == "hidden":
+            # The refresh at the end of pause posts Hide; drain that message
+            # before checking the cleanup performed by the Hide handler.
+            await pilot.pause()
         assert app.mouse_captured is None
+        assert app.split._drag_preview is None
         assert app.split.first is app.first and app.split.second is app.second
         assert not app.swaps
 
