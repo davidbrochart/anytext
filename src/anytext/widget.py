@@ -1510,6 +1510,112 @@ class Widget(DOMNode):
 
         return await_mount
 
+    def reparent(
+        self,
+        parent: Widget,
+        *,
+        before: int | str | Widget | None = None,
+        after: int | str | Widget | None = None,
+    ) -> Self:
+        """Move this mounted widget to another parent on the same screen.
+
+        The widget and its descendants retain their state, workers, timers, and
+        focus. No mount, unmount, or compose events are sent. Layout and CSS are
+        updated for the new ancestry. Focus is reset if the destination makes
+        the focused widget hidden or disabled.
+
+        Args:
+            parent: Mounted widget which will become the new parent.
+            before: Child index, selector, or widget to insert before.
+            after: Child index, selector, or widget to insert after.
+
+        Returns:
+            This widget.
+
+        Raises:
+            MountError: A widget is unmounted or being removed, both placement
+                arguments were given, or the insertion point belongs to a
+                different parent.
+            WidgetError: The move would create a cycle, move a screen, or cross
+                screens.
+            DuplicateIds: The destination already has a child with this ID.
+
+        Note:
+            Only one of ``before`` and ``after`` may be provided. Without either,
+            the widget is appended to the destination's children. Call
+            ``mount`` to add a new widget; ``reparent`` only moves live widgets.
+        """
+        from anytext.screen import Screen
+
+        if isinstance(self, Screen):
+            raise WidgetError("Screens cannot be reparented")
+        if parent is self or self in parent.ancestors:
+            raise WidgetError(
+                "A widget cannot be reparented into itself or a descendant"
+            )
+        if before is not None and after is not None:
+            raise MountError("Only one of 'before' or 'after' may be provided")
+        for widget in (self, parent):
+            if (
+                not widget.is_mounted
+                or not widget.is_attached
+                or widget._closing
+                or widget._pruning
+            ):
+                raise MountError(
+                    "Reparenting requires mounted widgets not being removed"
+                )
+        old_parent = self.parent
+        if not isinstance(old_parent, Widget) or self not in old_parent._nodes:
+            raise MountError(
+                "Only widgets in their parent's children can be reparented"
+            )
+        screen = self.screen
+        if screen is not parent.screen:
+            raise WidgetError("Widgets can only be reparented within the same screen")
+        if parent is not old_parent and self.id is not None:
+            parent._nodes._ensure_unique_id(self.id)
+
+        index = len(parent._nodes)
+        spot = before if before is not None else after
+        if spot is not None:
+            destination, index = parent._find_mount_point(spot)
+            if destination is not parent:
+                raise MountError(
+                    "The insertion point must be a child of the new parent"
+                )
+            if after is not None:
+                index = len(parent._nodes) if index == -1 else index + 1
+            if index < 0:
+                index = max(0, len(parent._nodes) + index)
+            index = min(index, len(parent._nodes))
+        if parent is old_parent and old_parent._nodes.index(self) < index:
+            index -= 1
+
+        focused = screen.focused
+        moving_focus = focused is not None and (
+            focused is self or self in focused.ancestors
+        )
+        old_parent._nodes._remove(self)
+        self._attach(parent)
+        parent._nodes._insert(index, self)
+        # Ancestor selectors, inheritance, :empty, sibling order and focus-within
+        # may all have changed, including outside the moved subtree.
+        screen.update_node_styles(animate=False)
+        old_parent.refresh(layout=True)
+        parent.refresh(layout=True)
+        screen.refresh_bindings()
+        if moving_focus and focused is not None:
+            if parent is not old_parent:
+                old_parent.post_message(events.DescendantBlur(focused))
+            if not focused.focusable or any(
+                not node.display for node in focused.ancestors_with_self
+            ):
+                screen._reset_focus(focused)
+            elif parent is not old_parent:
+                parent.post_message(events.DescendantFocus(focused))
+        return self
+
     def _refresh_styles(self) -> None:
         """Request refresh of styles on idle."""
         self._refresh_styles_required = True

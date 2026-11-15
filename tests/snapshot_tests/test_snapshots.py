@@ -4994,3 +4994,23 @@ def test_screen_padding_select_move_down(snap_compare) -> None:
         assert selected_text == SENTENCE
 
     assert snap_compare(CrashApp(), run_before=run_before)
+
+
+def test_split_pane_floating_preview(snap_compare):
+    """Moving a pane displays its rendered content above the layout."""
+    from anytext.widgets import SplitPane
+
+    class PreviewApp(App):
+        """Show a simple pair of panes for the drag snapshot."""
+
+        def compose(self):
+            """Mount distinguishable source and destination content."""
+            yield SplitPane(Static("Source pane", id="source"), Static("Drop here"))
+
+    async def drag(pilot):
+        """Leave the floating preview visible at a new position."""
+        await pilot.mouse_down("#source", offset=(2, 1), meta=True)
+        await pilot.hover(offset=(15, 5))
+        await pilot.pause()
+
+    assert snap_compare(PreviewApp(), terminal_size=(60, 16), run_before=drag)

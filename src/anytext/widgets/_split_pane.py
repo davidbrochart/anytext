@@ -5,14 +5,43 @@ from __future__ import annotations
 from math import isfinite
 from typing import ClassVar, Iterator, Literal
 
-from anytext import events
+from anytext import errors, events
 from anytext.binding import Binding, BindingType
-from anytext.geometry import Offset
+from anytext.geometry import Offset, Size
 from anytext.message import Message
 from anytext.reactive import reactive
+from anytext.strip import Strip
 from anytext.widget import Widget
+from anytext.widgets._floating_window import FloatingWindow
 
 SplitOrientation = Literal["horizontal", "vertical"]
+PaneSide = Literal["first", "second"]
+DragModifier = Literal["alt", "ctrl", "shift"]
+
+
+class _PaneDragPreview(FloatingWindow, can_focus=False):
+    """Paint a frozen pane while its live widget remains mounted."""
+
+    ALLOW_SELECT = False
+    DEFAULT_CSS = """
+    _PaneDragPreview {
+        border: none;
+        padding: 0;
+        min-width: 1;
+        min-height: 1;
+        overlay: screen;
+    }
+    """
+
+    def __init__(self, strips: list[Strip]) -> None:
+        super().__init__(movable=False, resizable=False)
+        self._strips = strips
+
+    def render_line(self, y: int) -> Strip:
+        """Preserve the pane's rendered colors and text during the drag."""
+        return (
+            self._strips[y] if y < len(self._strips) else Strip.blank(self.size.width)
+        )
 
 
 class _SplitPaneContent(Widget):
@@ -26,6 +55,7 @@ class _SplitPaneContent(Widget):
         min-width: 0;
         min-height: 0;
         overflow: hidden hidden;
+        &.-drag-source { opacity: 35%; }
     }
     """
 
@@ -69,7 +99,10 @@ class _SplitPaneDivider(Widget, can_focus=True):
         self.split_pane = split_pane
         self._drag_origin: Offset | None = None
         self._drag_size = 0
+        self._drag_button = 1
         self._drag_position = 0.5
+        self._drag_targets: list[tuple[SplitPane, int, float]] | None = None
+        self._drag_bounds: tuple[SplitPane, Size, Size] | None = None
         self.tooltip = "Drag to resize; arrows adjust, Enter resets"
 
     def render(self) -> str:
@@ -85,27 +118,95 @@ class _SplitPaneDivider(Widget, can_focus=True):
 
     def cancel_drag(self) -> None:
         self._drag_origin = None
+        self._drag_targets = None
+        self._drag_bounds = None
         self.remove_class("-dragging")
         if self.is_mounted:
             self.release_mouse()
 
+    def _resize_bounds_changed(self) -> bool:
+        """Distinguish terminal/container resizing from our own divider changes."""
+        if self._drag_bounds is None:
+            return False
+        root, size, screen_size = self._drag_bounds
+        return (
+            not self.is_attached
+            or not root.is_attached
+            or not root.display
+            or root.content_size != size
+            or self.screen.size != screen_size
+        )
+
     def _resize_to_mouse(self, event: events.MouseEvent) -> None:
         if self._drag_origin is not None:
+            if self._resize_bounds_changed():
+                self.cancel_drag()
+                return
             delta = event.screen_offset - self._drag_origin
-            distance = (
-                delta.x if self.split_pane.orientation == "horizontal" else delta.y
+            targets = (
+                self._drag_targets
+                if self._drag_targets is not None
+                else [(self.split_pane, self._drag_size, self._drag_position)]
             )
-            self.split_pane._set_first_size(self._drag_size + distance)
+            for split, size, _ in targets:
+                distance = delta.x if split.orientation == "horizontal" else delta.y
+                split._set_first_size(size + distance)
 
     def _on_mouse_down(self, event: events.MouseDown) -> None:
-        if event.button != 1:
+        if self.is_disabled:
+            return
+        if event.button != 1 and not (
+            event.button == 3 and self.split_pane._modifier_active(event)
+        ):
             return
         event.stop()
         event.prevent_default()
-        self.focus()
+        self.screen.clear_selection()
+        self.suppress_click()
+        self.screen.set_focus(self, scroll_visible=False)
+        self._drag_button = event.button
         self._drag_origin = event.screen_offset
         self._drag_size = self.split_pane.first_size
         self._drag_position = self.split_pane.position
+        if event.button == 3:
+            targets = []
+            axes = set()
+            root = self.split_pane
+            side = self.split_pane._pane_at(event.screen_offset)
+            pane = (
+                self.split_pane._first_pane
+                if side == "first"
+                else self.split_pane._second_pane
+            )
+            region = pane.region
+            edges = {
+                "horizontal": "second"
+                if event.screen_x < region.x + region.width / 2
+                else "first",
+                "vertical": "second"
+                if event.screen_y < region.y + region.height / 2
+                else "first",
+            }
+            for ancestor in self.split_pane.ancestors_with_self:
+                if isinstance(ancestor, SplitPane):
+                    root = ancestor
+                    if (
+                        ancestor.orientation not in axes
+                        and not ancestor.is_disabled
+                        and ancestor._modifier_active(event)
+                        and (
+                            side is None
+                            and ancestor is self.split_pane
+                            or ancestor._pane_at(event.screen_offset)
+                            == edges[ancestor.orientation]
+                        )
+                    ):
+                        axes.add(ancestor.orientation)
+                        targets.append(
+                            (ancestor, ancestor.first_size, ancestor.position)
+                        )
+            self._drag_targets = targets
+            self._drag_bounds = (root, root.content_size, self.screen.size)
         self.add_class("-dragging")
         self.capture_mouse()
 
@@ -116,7 +217,7 @@ class _SplitPaneDivider(Widget, can_focus=True):
             self._resize_to_mouse(event)
 
     def _on_mouse_up(self, event: events.MouseUp) -> None:
-        if self._drag_origin is not None:
+        if self._drag_origin is not None and event.button == self._drag_button:
             event.stop()
             event.prevent_default()
             self._resize_to_mouse(event)
@@ -124,11 +225,15 @@ class _SplitPaneDivider(Widget, can_focus=True):
 
     def _on_mouse_release(self) -> None:
         if self.app.mouse_captured is not self:
-            self._drag_origin = None
-            self.remove_class("-dragging")
+            self.cancel_drag()
 
     def _on_blur(self) -> None:
+        # Mouse-down interception may focus us again before a queued Blur from
+        # the content's initial focus is delivered.
+        if self.is_attached and self.screen.focused is self:
+            return
         self.cancel_drag()
+        self.split_pane._cancel_swap(restore_focus=False)
 
     def _on_unmount(self) -> None:
         self.cancel_drag()
@@ -149,7 +254,13 @@ class _SplitPaneDivider(Widget, can_focus=True):
 
     def action_cancel(self) -> None:
         if self._drag_origin is not None:
-            self.split_pane.position = self._drag_position
+            targets = (
+                self._drag_targets
+                if self._drag_targets is not None
+                else [(self.split_pane, self._drag_size, self._drag_position)]
+            )
+            for split, _, position in targets:
+                split.position = position
             self.cancel_drag()
         else:
             self.blur()
@@ -176,6 +287,14 @@ class SplitPane(Widget):
         &.-vertical { layout: vertical; }
     }
     """
+    BINDINGS: ClassVar[list[BindingType]] = [
+        Binding("escape", "cancel_swap", show=False, priority=True),
+    ]
+    drag_modifier: reactive[DragModifier] = reactive("alt", init=False)
+    """Modifier for pane swapping and resizing: alt, ctrl, or shift."""
+    swappable: reactive[bool] = reactive(True, init=False)
+    """Allow modifier-left-drag to swap pane content."""
+
     orientation: reactive[SplitOrientation] = reactive("horizontal", init=False)
     """Pane layout: horizontal (side by side) or vertical (stacked)."""
     position: reactive[float] = reactive(0.5, init=False)
@@ -201,6 +320,27 @@ class SplitPane(Widget):
         def control(self) -> SplitPane:
             return self.split_pane
 
+    class Swapped(Message):
+        """Two panes exchanged their live content widgets."""
+
+        def __init__(
+            self,
+            split_pane: SplitPane,
+            other: SplitPane,
+            pane: Widget,
+            other_pane: Widget,
+        ) -> None:
+            super().__init__()
+            self.split_pane = split_pane
+            self.other = other
+            self.pane = pane
+            self.other_pane = other_pane
+
+        @property
+        def control(self) -> SplitPane:
+            """The split in which the drag started."""
+            return self.split_pane
+
     def __init__(
         self,
         first: Widget,
@@ -209,6 +349,8 @@ class SplitPane(Widget):
         orientation: SplitOrientation = "horizontal",
         position: float = 0.5,
         show_divider: bool = True,
+        drag_modifier: DragModifier = "alt",
+        swappable: bool = True,
         min_first: int = 1,
         min_second: int = 1,
         name: str | None = None,
@@ -217,6 +359,11 @@ class SplitPane(Widget):
         disabled: bool = False,
     ) -> None:
         """Create a split with two content widgets and an initial split ratio."""
+        self._drag_pane: PaneSide | None = None
+        self._drag_focus: Widget | None = None
+        self._drag_preview: _PaneDragPreview | None = None
+        self._drag_origin = Offset()
+        self._drag_preview_origin = Offset()
         if first is second:
             raise ValueError("SplitPane requires two distinct widgets")
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
@@ -231,6 +378,8 @@ class SplitPane(Widget):
         self.orientation = orientation
         self.position = position
         self.show_divider = show_divider
+        self.drag_modifier = drag_modifier
+        self.swappable = swappable
         self.min_first = min_first
         self.min_second = min_second
 
@@ -254,6 +403,231 @@ class SplitPane(Widget):
         yield self._divider
         yield self._second_pane
 
+    def validate_drag_modifier(self, value: DragModifier) -> DragModifier:
+        """Match the configurable modifier used by FloatingWindow."""
+        if value not in {"alt", "ctrl", "shift"}:
+            raise ValueError("drag_modifier must be 'alt', 'ctrl', or 'shift'")
+        return value
+
+    def watch_drag_modifier(self) -> None:
+        """End gestures when their modifier changes."""
+        self._cancel_resize_gesture()
+        self._cancel_swap()
+
+    def watch_swappable(self) -> None:
+        """End a pane drag if swapping is disabled."""
+        self._cancel_swap()
+
+    def _modifier_active(self, event: events.MouseEvent) -> bool:
+        """Check the configured modifier before intercepting content input."""
+        return getattr(
+            event, "meta" if self.drag_modifier == "alt" else self.drag_modifier
+        )
+
+    def _pane_at(self, position: Offset) -> PaneSide | None:
+        """Find the content pane under a screen coordinate, excluding the divider."""
+        for side, wrapper in (
+            ("first", self._first_pane),
+            ("second", self._second_pane),
+        ):
+            if wrapper.region.contains(position.x, position.y):
+                return "first" if side == "first" else "second"
+        return None
+
+    def _get_mouse_down_target(self, event: events.MouseDown) -> Widget | None:
+        """Own modifier gestures before a descendant can consume mouse input."""
+        if self.is_disabled or not self._modifier_active(event):
+            return None
+        if self._pane_at(event.screen_offset) is None:
+            return None
+        if event.button == 3:
+            return self._divider
+        if event.button == 1 and self.swappable:
+            return self
+        return None
+
+    async def _on_mouse_down(self, event: events.MouseDown) -> None:
+        """Capture a pane swap without moving or selecting its content."""
+        if (
+            self.is_disabled
+            or not self.swappable
+            or event.button != 1
+            or not self._modifier_active(event)
+        ):
+            return
+        side = self._pane_at(event.screen_offset)
+        if side is None:
+            return
+        event.stop()
+        event.prevent_default()
+        self.screen.clear_selection()
+        self.suppress_click()
+        self._drag_pane = side
+        self._drag_focus = self.screen.focused
+        self.screen.set_focus(self._divider, scroll_visible=False)
+        self.capture_mouse()
+        pane = self._first_pane if side == "first" else self._second_pane
+        region = pane.region.intersection(self.screen.region)
+        strips = self.screen._compositor.render_strips()
+        preview = _PaneDragPreview(
+            [
+                strip.crop(region.x, region.right)
+                for strip in strips[region.y : region.bottom]
+            ]
+        )
+        preview.styles.width = region.width
+        preview.styles.height = region.height
+        preview.styles.offset = region.offset
+        self._drag_origin = event.screen_offset
+        self._drag_preview_origin = region.offset
+        self._drag_preview = preview
+        pane.add_class("-drag-source")
+        await self.screen.mount(preview)
+
+    def _on_mouse_move(self, event: events.MouseMove) -> None:
+        """Consume motion while pane content is captured for a drop."""
+        if self._drag_pane is not None:
+            event.stop()
+            event.prevent_default()
+            if self._drag_preview is not None:
+                self._drag_preview.styles.offset = (
+                    self._drag_preview_origin + event.screen_offset - self._drag_origin
+                )
+
+    async def _on_mouse_up(self, event: events.MouseUp) -> None:
+        """Exchange content with the innermost eligible split at the drop point."""
+        if self._drag_pane is None or event.button != 1:
+            return
+        event.stop()
+        event.prevent_default()
+        side = self._drag_pane
+        target = next(
+            (
+                widget
+                for widget, _ in self.screen.get_widgets_at(
+                    event.screen_x, event.screen_y
+                )
+                if not isinstance(widget, _PaneDragPreview)
+                and self._drag_preview not in widget.ancestors
+            ),
+            None,
+        )
+        if target is None:
+            self._cancel_swap()
+            return
+        self._cancel_swap()
+        for ancestor in target.ancestors_with_self:
+            if isinstance(ancestor, SplitPane):
+                other_side = ancestor._pane_at(event.screen_offset)
+                if other_side is not None:
+                    await self._swap_panes(side, ancestor, other_side)
+                    break
+
+    def _cancel_swap(self, *, restore_focus: bool = True) -> None:
+        """Release capture and optionally restore the pre-drag keyboard focus."""
+        if self._drag_pane is None:
+            return
+        focus = self._drag_focus
+        pane = self._first_pane if self._drag_pane == "first" else self._second_pane
+        pane.remove_class("-drag-source")
+        preview = self._drag_preview
+        self._drag_preview = None
+        if preview is not None:
+            preview.display = False
+            preview.remove()
+        self._drag_pane = self._drag_focus = None
+        if self.app.mouse_captured is self:
+            self.release_mouse()
+        if (
+            restore_focus
+            and self.is_attached
+            and focus is not None
+            and focus.is_attached
+            and focus.focusable
+        ):
+            self.screen.set_focus(focus, scroll_visible=False)
+
+    def _on_mouse_release(self) -> None:
+        """Cancel if another widget takes over capture."""
+        if self.app.mouse_captured is not self:
+            self._cancel_swap()
+
+    def _on_hide(self, event: events.Hide) -> None:
+        """Release gestures when the split is hidden."""
+        self._cancel_resize_gesture()
+        self._cancel_swap(restore_focus=False)
+
+    def _on_unmount(self) -> None:
+        """Release a pending pane drag during teardown."""
+        self._cancel_swap(restore_focus=False)
+
+    def check_action(self, action: str, parameters: tuple[object, ...]) -> bool | None:
+        """Reserve Escape only while this split owns a pane drag."""
+        if action == "cancel_swap":
+            return self._drag_pane is not None
+        return super().check_action(action, parameters)
+
+    def action_cancel_swap(self) -> None:
+        """Cancel a pane swap without changing the layout."""
+        self._cancel_swap()
+
+    async def _swap_panes(
+        self, side: PaneSide, other: SplitPane, other_side: PaneSide
+    ) -> None:
+        """Exchange unrelated live subtrees without restarting their lifecycle."""
+        if (
+            self.is_disabled
+            or other.is_disabled
+            or not self.swappable
+            or not other.swappable
+        ):
+            return
+        pane = self.first if side == "first" else self.second
+        other_pane = other.first if other_side == "first" else other.second
+        if (
+            pane is other_pane
+            or pane in other_pane.ancestors
+            or other_pane in pane.ancestors
+        ):
+            return
+        parent, other_parent = pane.parent, other_pane.parent
+        if not isinstance(parent, Widget) or not isinstance(other_parent, Widget):
+            return
+        # Park one widget while exchanging the two slots. This also permits the
+        # content widgets to have the same ID, without unmounting either subtree.
+        parking = Widget()
+        parking.styles.width = parking.styles.height = 0
+        parking.styles.min_width = parking.styles.min_height = 0
+        parking.styles.position = "absolute"
+        with self.app.batch_update():
+            await self.screen.mount(parking)
+            try:
+                if (
+                    self._pruning
+                    or other._pruning
+                    or pane.parent is not parent
+                    or other_pane.parent is not other_parent
+                ):
+                    return
+                pane.reparent(parking)
+                other_pane.reparent(parent)
+                pane.reparent(other_parent)
+                setattr(self, side, other_pane)
+                setattr(other, other_side, pane)
+            finally:
+                await parking.remove()
+        self.post_message(self.Swapped(self, other, pane, other_pane))
+
+    def _cancel_resize_gesture(self) -> None:
+        """Cancel resizing owned by this split or one of its descendants."""
+        if self.is_attached:
+            captured = self.app.mouse_captured
+            if isinstance(captured, _SplitPaneDivider) and (
+                captured.split_pane is self or self in captured.split_pane.ancestors
+            ):
+                captured.cancel_drag()
+        self._divider.cancel_drag()
+
     def validate_orientation(self, orientation: SplitOrientation) -> SplitOrientation:
         if orientation not in {"horizontal", "vertical"}:
             raise ValueError("orientation must be 'horizontal' or 'vertical'")
@@ -275,7 +649,8 @@ class SplitPane(Widget):
         return minimum
 
     def watch_orientation(self) -> None:
-        self._divider.cancel_drag()
+        self._cancel_resize_gesture()
+        self._cancel_swap()
         vertical = self.orientation == "vertical"
         self.set_class(vertical, "-vertical")
         self._divider.set_class(vertical, "-vertical")
@@ -283,7 +658,8 @@ class SplitPane(Widget):
         self._update_sizes()
 
     def watch_show_divider(self) -> None:
-        self._divider.cancel_drag()
+        self._cancel_resize_gesture()
+        self._cancel_swap()
         self._divider.styles.position = "relative" if self.show_divider else "absolute"
         self._divider.styles.layer = (
             "split-panes" if self.show_divider else "split-divider"
@@ -303,15 +679,26 @@ class SplitPane(Widget):
     def watch_disabled(self, disabled: bool) -> None:
         super().watch_disabled(disabled)
         if disabled and hasattr(self, "_divider"):
-            self._divider.cancel_drag()
+            self._cancel_resize_gesture()
+            self._cancel_swap(restore_focus=False)
 
     def _on_mount(self) -> None:
         self._update_sizes()
 
     def _on_resize(self) -> None:
         size = self.content_size
+        captured = self.app.mouse_captured
+        if (
+            isinstance(captured, _SplitPaneDivider)
+            and captured._resize_bounds_changed()
+        ):
+            captured.cancel_drag()
         if size != self._last_content_size:
-            self._divider.cancel_drag()
+            # A modifier gesture can resize an ancestor on the other axis.
+            # Keep that capture alive while the nested content gets its new size.
+            if self._divider._drag_targets is None:
+                self._divider.cancel_drag()
+            self._cancel_swap()
         self._last_content_size = size
         self._update_sizes()
 
