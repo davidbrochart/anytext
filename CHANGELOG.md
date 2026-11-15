@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Resize bordered split panes by dragging their edges and corners without a
+  modifier. Shared corners and divider junctions can adjust both axes together.
+
 - `SplitPane` modifier gestures: Alt-right-drag resizes from inside pane content,
   and Alt-left-drag swaps live panes with a floating preview, including across nested splits. Support
   configurable modifiers, swap opt-out, and `SplitPane.Swapped` notifications.
