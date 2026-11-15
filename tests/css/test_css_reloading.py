@@ -30,15 +30,21 @@ class MyApp(App[None]):
         self.push_screen(TopScreen())
 
 
-async def test_css_reloading_applies_to_non_top_screen(monkeypatch) -> None:  # type: ignore
+async def test_css_reloading_applies_to_non_top_screen(monkeypatch, tmp_path) -> None:  # type: ignore
     """Regression test for https://github.com/Textualize/textual/issues/3931"""
 
     monkeypatch.setenv(
         "ANYTEXT", "debug"
     )  # This will make sure we create a file monitor.
 
+    # Each backend must own its file when xdist runs them concurrently.
+    css_path = tmp_path / "reload.tcss"
+
+    class IsolatedApp(MyApp):
+        CSS_PATH = css_path
+
     # Write some initial CSS.
-    Path(CSS_PATH).write_text(
+    css_path.write_text(
         """\
 Label {
     height: 5;
@@ -47,7 +53,7 @@ Label {
 """
     )
 
-    app = MyApp()
+    app = IsolatedApp()
     async with app.run_test() as pilot:
         await pilot.pause()
         first_label = pilot.app.screen_stack[-2].query(Label).first()
@@ -56,7 +62,7 @@ Label {
         assert first_label.styles.height.value == 5
 
         # Clear the CSS from the file.
-        Path(CSS_PATH).write_text("/* This file has no rules intentionally. */\n")
+        css_path.write_text("/* This file has no rules intentionally. */\n")
         await pilot.pause()
         await pilot.app._on_css_change()
         # Height should fall back to 1.

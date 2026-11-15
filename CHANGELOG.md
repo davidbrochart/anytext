@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `SplitPane` modifier gestures: Alt-right-drag resizes from inside pane content,
+  and Alt-left-drag swaps live panes with a floating preview, including across nested splits. Support
+  configurable modifiers, swap opt-out, and `SplitPane.Swapped` notifications.
+
+- `Widget.reparent()`: move mounted widgets between containers on the same screen
+  while preserving their state, workers, timers, and eligible keyboard focus.
+
 ### Changed
 
 - Replace Black and isort with Ruff, mypy with Zuban, and pytest-asyncio with
@@ -17,6 +26,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   project metadata and `uv_build` for source distributions and wheels.
 
 ### Fixed
+
+- Choose the nearest corner when modifier-resizing split panes, so left/top
+  drags adjust those boundaries instead of the opposite side.
+- Allow modifier resizing in nested split panes to adjust the nearest split on
+  each axis, so a top/bottom pane can also expand its shared column left or right.
 
 - Allow async thread workers running their own Trio loop to call back into a
   Trio application and launch nested workers.

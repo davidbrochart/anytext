@@ -35,6 +35,32 @@ and clip content that no longer fits. Set the minimum sizes to suit your widgets
 for example, a pane with a one-cell border, one-cell padding on all sides, and
 one row of text needs a minimum height of five rows.
 
+### Moving a live widget into a split
+
+Use [`Widget.reparent()`][anytext.widget.Widget.reparent] to move an already
+mounted widget into a pane without restarting its workers or timers or losing
+its state. Create pane containers explicitly so they can receive existing widgets:
+
+```python
+from anytext.containers import Vertical
+from anytext.widgets import SplitPane
+
+left = Vertical()
+right = Vertical()
+split = SplitPane(left, right)
+await self.mount(split)
+existing_editor.reparent(left)
+```
+
+The existing widget and destination must both be mounted on the same screen.
+The move does not send mount or unmount events, and messages now bubble through
+the new parent. Focus stays on the moved widget or its descendant unless the
+new ancestry makes it hidden or disabled. CSS and layout follow the new ancestry.
+
+Use `widget.reparent(container, before="#sibling")` or `after=...` to choose a
+position among the new parent's children. With no insertion point, the widget is
+appended. Reparent widgets you want to keep before removing their old container.
+
 ### Invisible divider with no gap
 
 ```python
@@ -61,6 +87,32 @@ python docs/examples/widgets/split_pane.py
 ```python
 --8<-- "docs/examples/widgets/split_pane.py"
 ```
+
+## Modifier-drag gestures
+
+Like `FloatingWindow`, split panes accept modifier gestures over their content,
+including interactive buttons and text editors:
+
+- **Alt+right-drag** inside a pane resizes from its nearest corner. Each axis
+  adjusts the nearest split bounding that edge; outside screen edges stay fixed. In nested layouts, horizontal motion can resize an ancestor's column
+  while vertical motion resizes the inner row. Panes sharing that column or row
+  resize together. Escape restores all affected split ratios.
+- **Alt+left-drag** a pane onto another pane to exchange their content widgets.
+  This works across nested splits and preserves widget state, workers, and timers.
+  Dropping back onto the same pane or outside a pane leaves the layout unchanged.
+- **Escape** cancels the current gesture. Disabling, hiding, removing, or resizing
+  a split during a drag releases mouse capture.
+
+These gestures also work when `show_divider=False`. Ordinary clicks, text
+selection, and direct divider dragging retain their usual behavior. Set
+`drag_modifier="ctrl"` or `"shift"` if Alt-mouse is reserved by the desktop.
+Set `swappable=False` to disable pane swaps while retaining modifier resizing.
+
+After a swap, `SplitPane.first` and `.second` refer to the new content widgets.
+A `SplitPane.Swapped` message identifies the source `split_pane`, destination
+`other`, and the two exchanged widgets, `pane` and `other_pane`, so hosts can
+update their own pane ordering or session models. Ancestor panes cannot be
+swapped into their own descendants.
 
 ## Interaction
 
@@ -101,3 +153,5 @@ and `split-pane--divider`. The divider highlights on focus, hover, and dragging.
     options:
       show_root_heading: true
       heading_level: 3
+
+During modifier-left-drag, a floating snapshot of the pane follows the pointer. Release over another pane to swap them, or press Escape to cancel. The live content stays mounted throughout the drag.
