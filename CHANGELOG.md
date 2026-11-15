@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [9.2.0] - 2026-11-15
+
 ### Added
 
 - Resize bordered split panes by dragging their edges and corners without a
