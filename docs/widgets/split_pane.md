@@ -88,6 +88,20 @@ python docs/examples/widgets/split_pane.py
 --8<-- "docs/examples/widgets/split_pane.py"
 ```
 
+## Border and corner dragging
+
+Drag a pane's visible border with the left mouse button to resize its adjacent
+shared boundary. Dragging a corner adjusts both axes when both edges have a
+neighbor. For example, the bottom-left corner of the demo's Top pane adjusts
+the outer column and the inner row together. The outside edges of the layout
+stay fixed. An inner divider's endpoint can also drag the adjacent perpendicular
+divider as a junction.
+
+The bordered widget must fill its pane, including when wrapped in unbordered
+host containers. Borders of smaller controls
+inside a pane keep their normal input behavior. Border resizing works with
+visible or hidden dividers; Escape restores all affected split ratios.
+
 ## Modifier-drag gestures
 
 Like `FloatingWindow`, split panes accept modifier gestures over their content,

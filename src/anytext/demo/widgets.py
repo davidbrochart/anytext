@@ -128,7 +128,8 @@ class SplitPanes(containers.VerticalGroup):
 
     def compose(self) -> ComposeResult:
         yield Markdown(
-            "## Split panes\n\nDrag a divider to resize panes. "
+            "## Split panes\n\nDrag a divider or pane border to resize; "
+            "drag a shared corner to resize both axes. "
             "Tab to a divider and use the arrow keys, or Enter to reset."
         )
         with containers.HorizontalGroup(id="split-options"):

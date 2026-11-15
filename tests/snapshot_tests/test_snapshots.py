@@ -5014,3 +5014,21 @@ def test_split_pane_floating_preview(snap_compare):
         await pilot.pause()
 
     assert snap_compare(PreviewApp(), terminal_size=(60, 16), run_before=drag)
+
+
+def test_split_pane_border_corner_drag(snap_compare):
+    """A pane's bottom-left border corner resizes both shared boundaries."""
+    from tests.test_split_pane_borders import BorderApp
+
+    async def drag(pilot):
+        """Grab the Top pane's shared corner and move it right and down."""
+        for _ in range(3):
+            await pilot.pause()
+        region = pilot.app.top.region
+        start = (region.x, region.bottom - 1)
+        await pilot.mouse_down(offset=start)
+        await pilot.hover(offset=(start[0] + 4, start[1] + 2))
+        await pilot.mouse_up(offset=(start[0] + 4, start[1] + 2))
+        await pilot.pause()
+
+    assert snap_compare(BorderApp(), terminal_size=(60, 20), run_before=drag)

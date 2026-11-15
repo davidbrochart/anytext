@@ -168,7 +168,15 @@ class _SplitPaneDivider(Widget, can_focus=True):
         self._drag_origin = event.screen_offset
         self._drag_size = self.split_pane.first_size
         self._drag_position = self.split_pane.position
-        if event.button == 3:
+        direct_targets = self.split_pane._border_resize_targets_at(event.screen_offset)
+        if event.button == 1 and direct_targets:
+            self._drag_targets = direct_targets
+            root = self.split_pane
+            for ancestor in self.split_pane.ancestors:
+                if isinstance(ancestor, SplitPane):
+                    root = ancestor
+            self._drag_bounds = (root, root.content_size, self.screen.size)
+        elif event.button == 3:
             targets = []
             axes = set()
             root = self.split_pane
@@ -434,9 +442,80 @@ class SplitPane(Widget):
                 return "first" if side == "first" else "second"
         return None
 
+    def _border_resize_targets_at(
+        self, position: Offset
+    ) -> list[tuple[SplitPane, int, float]]:
+        """Find shared boundaries touched by a pane's visible border or corner."""
+        if self.is_disabled:
+            return []
+        side = self._pane_at(position)
+        targets: list[tuple[SplitPane, int, float]]
+        if side is None:
+            # At an inner divider endpoint, include the perpendicular enclosing
+            # divider as well, so its junction can be dragged diagonally.
+            if not self._divider.region.contains(position.x, position.y):
+                return []
+            targets = [(self, self.first_size, self.position)]
+            for ancestor in self.ancestors:
+                if (
+                    isinstance(ancestor, SplitPane)
+                    and not ancestor.is_disabled
+                    and ancestor.orientation != self.orientation
+                    and ancestor.divider.region.grow((1, 1, 1, 1)).contains(
+                        position.x, position.y
+                    )
+                ):
+                    targets.append((ancestor, ancestor.first_size, ancestor.position))
+                    return targets
+            return []
+        pane = self.first if side == "first" else self.second
+        wrapper = self._first_pane if side == "first" else self._second_pane
+        region = wrapper.region
+        # Host containers may wrap the actual bordered pane (as in Anyshell).
+        # Descend only through widgets that fill the same rectangle; smaller
+        # controls' borders remain ordinary input, not shared pane boundaries.
+        while pane.region == region and not any(pane.styles.border.spacing):
+            filling_children = [
+                child for child in pane.children if child.region == region
+            ]
+            if len(filling_children) != 1:
+                return []
+            pane = filling_children[0]
+        if pane.region != region:
+            return []
+        border = pane.styles.border.spacing
+        edges: dict[SplitOrientation, PaneSide] = {}
+        if border.left and position.x == region.x:
+            edges["horizontal"] = "second"
+        elif border.right and position.x == region.right - 1:
+            edges["horizontal"] = "first"
+        if border.top and position.y == region.y:
+            edges["vertical"] = "second"
+        elif border.bottom and position.y == region.bottom - 1:
+            edges["vertical"] = "first"
+        targets = []
+        for ancestor in self.ancestors_with_self:
+            if (
+                isinstance(ancestor, SplitPane)
+                and not ancestor.is_disabled
+                and ancestor._pane_at(position) == edges.get(ancestor.orientation)
+                and ancestor.orientation in edges
+            ):
+                targets.append((ancestor, ancestor.first_size, ancestor.position))
+                del edges[ancestor.orientation]
+        return targets
+
     def _get_mouse_down_target(self, event: events.MouseDown) -> Widget | None:
-        """Own modifier gestures before a descendant can consume mouse input."""
-        if self.is_disabled or not self._modifier_active(event):
+        """Own border resizing and modifier gestures before descendant input."""
+        if self.is_disabled:
+            return None
+        if not (event.meta or event.ctrl or event.shift):
+            if event.button == 1 and self._border_resize_targets_at(
+                event.screen_offset
+            ):
+                return self._divider
+            return None
+        if not self._modifier_active(event):
             return None
         if self._pane_at(event.screen_offset) is None:
             return None
@@ -493,6 +572,30 @@ class SplitPane(Widget):
                 self._drag_preview.styles.offset = (
                     self._drag_preview_origin + event.screen_offset - self._drag_origin
                 )
+
+        else:
+            targets = self._border_resize_targets_at(event.screen_offset)
+            axes = {split.orientation for split, _, _ in targets}
+            pointer: Literal[
+                "default", "ew-resize", "ns-resize", "nwse-resize", "nesw-resize"
+            ] = "default"
+            side = self._pane_at(event.screen_offset)
+            wrapper = self._first_pane if side == "first" else self._second_pane
+            if len(axes) == 2:
+                left = event.screen_x == wrapper.region.x
+                top = event.screen_y == wrapper.region.y
+                pointer = "nwse-resize" if left == top else "nesw-resize"
+            elif "horizontal" in axes:
+                pointer = "ew-resize"
+            elif "vertical" in axes:
+                pointer = "ns-resize"
+            for pane in (self._first_pane, self._second_pane):
+                pane.styles.pointer = pointer if pane is wrapper else "default"
+
+    def _on_leave(self, event: events.Leave) -> None:
+        """Clear border pointer feedback when the mouse leaves the split."""
+        self._first_pane.styles.pointer = "default"
+        self._second_pane.styles.pointer = "default"
 
     async def _on_mouse_up(self, event: events.MouseUp) -> None:
         """Exchange content with the innermost eligible split at the drop point."""
