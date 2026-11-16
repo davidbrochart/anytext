@@ -22,6 +22,9 @@ yield SplitPane(
 
 `orientation="horizontal"` (the default) places panes side by side, with a vertical
 divider. `orientation="vertical"` stacks them, with a horizontal divider.
+Touching dividers in nested splits join with T-junctions or crossings. The joins
+follow resizing and divider visibility without reserving additional space.
+
 `position` is the preferred fraction of available space allocated to the first
 pane, excluding the one-cell divider when visible. It must be between `0` and `1`.
 

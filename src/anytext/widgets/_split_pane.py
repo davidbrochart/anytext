@@ -70,16 +70,12 @@ class _SplitPaneDivider(Widget, can_focus=True):
         min-width: 0;
         min-height: 0;
         color: $primary;
-        background: $surface;
+        background: transparent;
         pointer: ew-resize;
         &.-vertical {
             width: 1fr;
             height: 1;
             pointer: ns-resize;
-        }
-        &:hover, &:focus, &.-dragging {
-            color: $text;
-            background: $primary;
         }
     }
     """
@@ -106,9 +102,43 @@ class _SplitPaneDivider(Widget, can_focus=True):
         self.tooltip = "Drag to resize; arrows adjust, Enter resets"
 
     def render(self) -> str:
-        if self.split_pane.orientation == "horizontal":
-            return "\n".join("│" for _ in range(self.size.height))
-        return "─" * self.size.width
+        """Join rules where perpendicular dividers physically touch this one."""
+        vertical = self.split_pane.orientation == "horizontal"
+        masks = [3 if vertical else 12] * (
+            self.size.height if vertical else self.size.width
+        )
+        region = self.region
+        root = self.split_pane._split_root()
+        for split in root.walk_children(SplitPane, with_self=True):
+            if (
+                split is self.split_pane
+                or split.orientation == self.split_pane.orientation
+                or not split.show_divider
+                or any(not node.display for node in split.ancestors_with_self)
+                or not split.visible
+                or split._pruning
+                or split._split_root() is not root
+            ):
+                continue
+            other = split.divider.region
+            if not other.width or not other.height:
+                continue
+            if vertical:
+                index = other.y - region.y
+                if 0 <= index < len(masks):
+                    if other.right == region.x:
+                        masks[index] |= 4
+                    if other.x == region.right:
+                        masks[index] |= 8
+            else:
+                index = other.x - region.x
+                if 0 <= index < len(masks):
+                    if other.bottom == region.y:
+                        masks[index] |= 1
+                    if other.y == region.bottom:
+                        masks[index] |= 2
+        glyphs = {3: "│", 12: "─", 7: "┤", 11: "├", 13: "┴", 14: "┬", 15: "┼"}
+        return ("\n" if vertical else "").join(glyphs[mask] for mask in masks)
 
     @property
     def _rendering_enabled(self) -> bool:
@@ -369,6 +399,7 @@ class SplitPane(Widget):
         """Create a split with two content widgets and an initial split ratio."""
         self._drag_pane: PaneSide | None = None
         self._drag_focus: Widget | None = None
+        self._junction_refresh_pending = False
         self._drag_preview: _PaneDragPreview | None = None
         self._drag_origin = Offset()
         self._drag_preview_origin = Offset()
@@ -431,6 +462,34 @@ class SplitPane(Widget):
         return getattr(
             event, "meta" if self.drag_modifier == "alt" else self.drag_modifier
         )
+
+    def _split_root(self) -> SplitPane:
+        """Find the shared split tree without crossing a floating window."""
+        root: SplitPane = self
+        for ancestor in self.ancestors:
+            if isinstance(ancestor, FloatingWindow):
+                break
+            if isinstance(ancestor, SplitPane):
+                root = ancestor
+        return root
+
+    def _queue_junction_refresh(self) -> None:
+        """Coalesce junction repaint requests until divider positions settle."""
+        root = self._split_root()
+        if (
+            root.is_attached
+            and not root._pruning
+            and not root._junction_refresh_pending
+        ):
+            root._junction_refresh_pending = True
+            root.call_after_refresh(root._refresh_junctions)
+
+    def _refresh_junctions(self) -> None:
+        """Invalidate rules whose own size did not change with a neighbor."""
+        self._junction_refresh_pending = False
+        if self.is_attached and not self._pruning:
+            for split in self.walk_children(SplitPane, with_self=True):
+                split.divider.refresh()
 
     def _pane_at(self, position: Offset) -> PaneSide | None:
         """Find the content pane under a screen coordinate, excluding the divider."""
@@ -655,14 +714,20 @@ class SplitPane(Widget):
         if self.app.mouse_captured is not self:
             self._cancel_swap()
 
+    def _on_show(self, event: events.Show) -> None:
+        """Restore connections when a split becomes visible again."""
+        self._queue_junction_refresh()
+
     def _on_hide(self, event: events.Hide) -> None:
         """Release gestures when the split is hidden."""
         self._cancel_resize_gesture()
         self._cancel_swap(restore_focus=False)
+        self._queue_junction_refresh()
 
     def _on_unmount(self) -> None:
         """Release a pending pane drag during teardown."""
         self._cancel_swap(restore_focus=False)
+        self._queue_junction_refresh()
 
     def check_action(self, action: str, parameters: tuple[object, ...]) -> bool | None:
         """Reserve Escape only while this split owns a pane drag."""
@@ -719,6 +784,8 @@ class SplitPane(Widget):
                 setattr(other, other_side, pane)
             finally:
                 await parking.remove()
+        self._queue_junction_refresh()
+        other._queue_junction_refresh()
         self.post_message(self.Swapped(self, other, pane, other_pane))
 
     def _cancel_resize_gesture(self) -> None:
@@ -759,6 +826,7 @@ class SplitPane(Widget):
         self._divider.set_class(vertical, "-vertical")
         self._divider.refresh()
         self._update_sizes()
+        self._queue_junction_refresh()
 
     def watch_show_divider(self) -> None:
         self._cancel_resize_gesture()
@@ -769,6 +837,7 @@ class SplitPane(Widget):
         )
         self._divider.refresh()
         self._update_sizes()
+        self._queue_junction_refresh()
 
     def watch_position(self) -> None:
         self._update_sizes()
@@ -787,6 +856,7 @@ class SplitPane(Widget):
 
     def _on_mount(self) -> None:
         self._update_sizes()
+        self._queue_junction_refresh()
 
     def _on_resize(self) -> None:
         size = self.content_size
@@ -804,6 +874,7 @@ class SplitPane(Widget):
             self._cancel_swap()
         self._last_content_size = size
         self._update_sizes()
+        self._queue_junction_refresh()
 
     def _available_space(self) -> int:
         size = self.content_size
@@ -856,3 +927,4 @@ class SplitPane(Widget):
             )
         if previous != (first, second):
             self.post_message(self.Changed(self))
+            self._queue_junction_refresh()
