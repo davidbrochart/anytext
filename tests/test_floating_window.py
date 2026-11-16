@@ -153,8 +153,12 @@ async def test_capture_cleanup(change):
             app.window.display = False
         else:
             setattr(app.window, change, change == "disabled")
-        await pilot.pause()
-        assert app.mouse_captured is None
+        # Hiding takes effect during layout, which queues a Hide event. A
+        # single pause need not drain that event on a slower CI runner.
+        with anyio.fail_after(5):
+            while app.mouse_captured is not None:
+                await pilot.pause()
+                await anyio.sleep(0.01)
 
 
 def test_invalid_modifier():
