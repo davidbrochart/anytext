@@ -21,24 +21,23 @@ import socket
 import signal
 from pathlib import Path
 import anyio
-from anytext import events
 from anytext.app import App, ComposeResult
 from anytext.widgets import Button, Input
 
 # Queueing messages can wake async tasks and must be deferred out of the raw
 # Python signal handler, which can interrupt the backend's scheduler itself.
-in_resize_handler = False
+in_signal_handler = False
 original_signal = signal.signal
 def register_signal(signum, handler):
-    if signum == signal.SIGWINCH and callable(handler):
+    if signum in {signal.SIGWINCH, signal.SIGTSTP, signal.SIGCONT} and callable(handler):
         callback = handler
         def handler(*args):
-            global in_resize_handler
-            in_resize_handler = True
+            global in_signal_handler
+            in_signal_handler = True
             try:
                 callback(*args)
             finally:
-                in_resize_handler = False
+                in_signal_handler = False
     return original_signal(signum, handler)
 signal.signal = register_signal
 
@@ -102,8 +101,7 @@ class TerminalApp(App):
         self.query_one(Input).focus()
         self.record()
     def post_message(self, message):
-        if isinstance(message, events.Resize):
-            assert not in_resize_handler, "Resize was queued inside a raw signal handler"
+        assert not in_signal_handler, "A message was queued inside a raw signal handler"
         return super().post_message(message)
     def on_resize(self, event):
         self.last_size = list(event.size)
@@ -204,6 +202,8 @@ def test_terminal_io(tmp_path, backend, threads, inline):
             wait_for(lambda state: state["suspensions"] == 1)
             os.write(master, b"x")
             wait_for(lambda state: state["value"] == "x")
+        if not inline:
+            resumes = wait_for(lambda state: state["ready"])["resumes"]
             os.kill(process.pid, signal.SIGTSTP)
             deadline = time.monotonic() + 10
             while time.monotonic() < deadline:
@@ -214,9 +214,12 @@ def test_terminal_io(tmp_path, backend, threads, inline):
                     break
                 time.sleep(0.01)
             else:
-                pytest.fail("Terminal driver did not suspend the process")
+                pytest.fail(
+                    "Terminal driver did not suspend the process\n"
+                    + transcript.decode(errors="replace")
+                )
             os.kill(process.pid, signal.SIGCONT)
-            wait_for(lambda state: state["resumes"] == 2)
+            wait_for(lambda state: state["resumes"] == resumes + 1)
         # Resize through the same OS signal used by desktop terminals.
         fcntl.ioctl(slave, termios.TIOCSWINSZ, struct.pack("HHHH", 30, 100, 0, 0))
         os.kill(process.pid, signal.SIGWINCH)

@@ -261,6 +261,17 @@ class Runtime:
         finally:
             sniffio.current_async_library_cvar.reset(token)
 
+    def call_soon(self, callback: Callable, *args: Any) -> None:
+        """Defer work to the loop, including from a raw Python signal handler.
+
+        Waking AnyIO queues directly from a signal handler can interrupt the
+        backend scheduler. Submit through the backend's signal-safe entry point.
+        """
+        if self.backend == "trio":
+            self.token.native_token.run_sync_soon(callback, *args)
+        else:
+            self.token.native_token.call_soon_threadsafe(callback, *args)
+
     def run_sync_from_thread(self, callback, *args):
         """Run a sync callback on this app's loop and wait for its result."""
         if self.portal is None:

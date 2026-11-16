@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Defer Unix terminal suspend and resume callbacks out of raw signal handlers,
+  avoiding unsafe queue wakeups when a signal interrupts the async scheduler.
+
 ## [9.2.1] - 2026-11-16
 
 ### Fixed
