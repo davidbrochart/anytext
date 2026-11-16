@@ -5032,3 +5032,12 @@ def test_split_pane_border_corner_drag(snap_compare):
         await pilot.pause()
 
     assert snap_compare(BorderApp(), terminal_size=(60, 20), run_before=drag)
+
+
+def test_split_pane_junctions(snap_compare):
+    """A horizontal rule joins the vertical divider in the lower pane."""
+    from tests.test_split_pane_junctions import JunctionApp, settle
+
+    assert snap_compare(
+        JunctionApp(), terminal_size=(60, 16), run_before=settle
+    )

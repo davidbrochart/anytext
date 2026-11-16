@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Use transparent split divider backgrounds and keep their colors unchanged on
+  hover, focus, and dragging.
+
+- Join touching nested `SplitPane` dividers with T-junctions and crossings,
+  updating the joins when panes are resized, hidden, or removed.
+
 ## [9.2.0] - 2026-11-15
 
 ### Added
