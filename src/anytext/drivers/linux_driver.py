@@ -92,14 +92,14 @@ class LinuxDriver(Driver):
                 self._must_signal_resume = True
                 os.kill(os.getpid(), signal.SIGSTOP)
 
-            self._app.call_later(suspend)
+            self._runtime.call_soon(self._app.call_later, suspend)
         else:
             os.kill(os.getpid(), signal.SIGSTOP)
 
     def _sigcont_application(self, *_) -> None:
         """Resume terminal workers on the app loop."""
         if self._auto_restart:
-            self._app.call_later(self.resume_application_mode)
+            self._runtime.call_soon(self._app.call_later, self.resume_application_mode)
 
     @property
     def can_suspend(self) -> bool:
