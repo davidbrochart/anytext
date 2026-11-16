@@ -1,6 +1,6 @@
 [project]
 name = "anytext"
-version = "9.2.0"
+version = "9.2.1"
 description = "Modern Text User Interface framework"
 readme = "README.md"
 license = "MIT"

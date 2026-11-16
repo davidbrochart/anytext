@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [9.2.1] - 2026-11-16
+
 ### Fixed
 
 - Use transparent split divider backgrounds and keep their colors unchanged on
