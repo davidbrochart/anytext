@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [9.3.0] - 2026-11-17
+
 ### Added
 
 - `App(capture_output=False)` leaves process stdout and stderr untouched when
