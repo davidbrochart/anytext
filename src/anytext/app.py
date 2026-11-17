@@ -19,6 +19,7 @@ import warnings
 from contextlib import (
     asynccontextmanager,
     contextmanager,
+    nullcontext,
     redirect_stderr,
     redirect_stdout,
 )
@@ -573,6 +574,8 @@ class App(Generic[ReturnType], DOMNode):
         css_path: CSSPathType | None = None,
         watch_css: bool = False,
         ansi_color: bool | None = None,
+        *,
+        capture_output: bool = True,
     ):
         """Create an instance of an app.
 
@@ -586,9 +589,14 @@ class App(Generic[ReturnType], DOMNode):
                 you are using `textual run` with the `dev` switch.
             ansi_color: Allow ANSI colors if `True`, or convert ANSI colors to RGB if `False`, `None` to use "ansi" parameter from themes.
 
+            capture_output: Redirect process stdout and stderr to the app while it
+                runs. Set to `False` when embedding apps in an existing process,
+                including running multiple apps concurrently with callback drivers.
+
         Raises:
             CssPathError: When the supplied CSS path(s) are an unexpected type.
         """
+        self._capture_output = capture_output
         self._start_time = perf_counter()
         super().__init__(classes=self.DEFAULT_CLASSES)
         self.features: frozenset[FeatureFlag] = parse_features(os.getenv("ANYTEXT", ""))
@@ -3473,9 +3481,15 @@ class App(Generic[ReturnType], DOMNode):
                 if not self._exit:
                     await invoke(driver.start_application_mode)
                     try:
-                        with redirect_stdout(self._capture_stdout):
-                            with redirect_stderr(self._capture_stderr):
-                                await run_process_messages()
+                        with (
+                            redirect_stdout(self._capture_stdout)
+                            if self._capture_output
+                            else nullcontext(),
+                            redirect_stderr(self._capture_stderr)
+                            if self._capture_output
+                            else nullcontext(),
+                        ):
+                            await run_process_messages()
 
                     finally:
                         Reactive._clear_watchers(self)
@@ -4741,8 +4755,12 @@ class App(Generic[ReturnType], DOMNode):
             try:
                 with (
                     self._driver.no_automatic_restart(),
-                    redirect_stdout(sys.__stdout__),
-                    redirect_stderr(sys.__stderr__),
+                    redirect_stdout(sys.__stdout__)
+                    if self._capture_output
+                    else nullcontext(),
+                    redirect_stderr(sys.__stderr__)
+                    if self._capture_output
+                    else nullcontext(),
                 ):
                     yield
             finally:

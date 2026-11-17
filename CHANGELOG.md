@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `App(capture_output=False)` leaves process stdout and stderr untouched when
+  embedding apps, including across app suspension and concurrent callback drivers.
+
 ### Fixed
 
 - Defer Unix terminal suspend and resume callbacks out of raw signal handlers,

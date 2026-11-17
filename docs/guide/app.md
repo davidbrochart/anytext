@@ -11,6 +11,14 @@ The first step in building a Anytext app is to import the [App][anytext.app.App]
 ```
 
 
+### Embedding an app
+
+Pass `capture_output=False` to the app constructor when a host application owns
+stdout and stderr. The app will leave both streams untouched while it runs or is
+suspended. The default remains `True`, preserving print capture for standalone
+apps. A host can combine this option with `CallbackDriver` to route input and ANSI
+output independently for multiple apps in one process.
+
 ### The run method
 
 To run an app we create an instance and call [run()][anytext.app.App.run].
