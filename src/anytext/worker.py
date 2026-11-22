@@ -10,6 +10,7 @@ from __future__ import annotations
 import enum
 import inspect
 from contextvars import ContextVar
+from functools import partial
 from time import monotonic
 from typing import (
     TYPE_CHECKING,
@@ -173,7 +174,7 @@ class Worker(Generic[ResultType]):
             description if len(description) <= 1000 else description[:1000] + "..."
         )
         self.exit_on_error = exit_on_error
-        self.cancelled_event = _async.Event()
+        self.cancelled_event = anyio.Event()
         """An async event set when the worker is cancelled."""
         self._thread_worker = thread
         self._state = WorkerState.PENDING
@@ -405,20 +406,10 @@ class Worker(Generic[ResultType]):
         if self._task is not None:
             return
         self.state = WorkerState.RUNNING
-        self._task = _async.create_task(self._run(app))
-
-        def task_done_callback(_task: _async.Task) -> None:
-            """Run the callback.
-
-            Called by `Task.add_done_callback`.
-
-            Args:
-                The worker's task.
-            """
-            if done_callback is not None:
-                done_callback(self)
-
-        self._task.add_done_callback(task_done_callback)
+        self._task = _async.create_task(
+            self._run(app),
+            on_done=partial(done_callback, self) if done_callback is not None else None,
+        )
 
     def cancel(self) -> None:
         """Cancel the task."""

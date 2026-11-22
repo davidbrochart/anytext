@@ -160,8 +160,8 @@ class MessagePump(metaclass=_MessagePumpMeta):
         return Queue()
 
     @cached_property
-    def _mounted_event(self) -> _async.Event:
-        return _async.Event()
+    def _mounted_event(self) -> anyio.Event:
+        return anyio.Event()
 
     @property
     def _prevent_message_types_stack(self) -> list[set[type[Message]]]:
@@ -485,7 +485,7 @@ class MessagePump(metaclass=_MessagePumpMeta):
         )
         if _async.current_task() is self._task:
             return False
-        refreshed_event = _async.Event()
+        refreshed_event = anyio.Event()
         self.call_after_refresh(refreshed_event.set)
         await refreshed_event.wait()
         return True

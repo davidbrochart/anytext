@@ -13,7 +13,7 @@ class WriterThread:
     def __init__(self, file: IO[str]) -> None:
         self._file = file
         self._pending: list[str] = []
-        self._ready = _async.Event()
+        self._ready = _async.ResettableEvent()
         self._closing = False
         self._task: _async.Task | None = None
 

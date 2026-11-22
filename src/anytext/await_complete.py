@@ -3,9 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Awaitable, Generator
 
 import rich.repr
+from anyio import Future
 from typing_extensions import Self
 
-from anytext._async import Future, create_task, gather
+from anytext._async import Task, create_task, gather
 from anytext._debug import get_caller_file_and_line
 from anytext.message_pump import MessagePump
 
@@ -26,11 +27,13 @@ class AwaitComplete:
             awaitables: One or more awaitables to run concurrently.
         """
         self._awaitables = awaitables
-        self._future: Future[Any] = (
-            create_task(gather(*awaitables)) if awaitables else Future()
-        )
-        if not awaitables:
-            self._future.set_result([])
+        self._future: Future[Any] | Task[Any]
+        if awaitables:
+            self._future = create_task(gather(*awaitables))
+        else:
+            future: Future[Any] = Future()
+            future.return_value = []
+            self._future = future
         self._pre_await: CallbackType | None = pre_await
         self._caller = get_caller_file_and_line()
 
@@ -71,12 +74,15 @@ class AwaitComplete:
     @property
     def is_done(self) -> bool:
         """`True` if the task has completed."""
-        return self._future.done()
+        future = self._future
+        if isinstance(future, Task):
+            return future.done()
+        return future.status is not Future.Status.PENDING
 
     @property
     def exception(self) -> BaseException | None:
         """An exception if the awaitables failed."""
-        if self._future.done():
+        if isinstance(self._future, Task) and self._future.done():
             return self._future.exception()
         return None
 
@@ -85,5 +91,5 @@ class AwaitComplete:
         """Returns an already completed instance of AwaitComplete."""
         instance = cls()
         instance._future = Future()
-        instance._future.set_result(None)  # Mark it as completed with no result
+        instance._future.return_value = None  # Mark it as completed with no result
         return instance

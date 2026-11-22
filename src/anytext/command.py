@@ -31,12 +31,7 @@ from rich.text import Text
 from typing_extensions import Final, TypeAlias
 
 from anytext import on, work
-from anytext._async import (
-    Task,
-    create_task,
-    wait,
-    wait_for,
-)
+from anytext._async import Task, create_task
 from anytext._queue import Queue
 from anytext.binding import Binding, BindingType
 from anytext.containers import Horizontal, Vertical
@@ -832,9 +827,9 @@ class CommandPalette(SystemModalScreen[None]):
     async def _on_unmount(self) -> None:  # type: ignore[override]
         """Shutdown providers when command palette is closed."""
         if self._providers:
-            await wait(
-                [create_task(provider._shutdown()) for provider in self._providers],
-            )
+            tasks = [create_task(provider._shutdown()) for provider in self._providers]
+            for task in tasks:
+                await task.wait()
             self._providers.clear()
 
     def _stop_busy_countdown(self) -> None:
@@ -967,7 +962,9 @@ class CommandPalette(SystemModalScreen[None]):
             try:
                 # ...briefly wait for something on the stack. If we get
                 # something yield it up to our caller.
-                aborted = yield await wait_for(commands.get(), 0.1)
+                with anyio.fail_after(0.1):
+                    command = await commands.get()
+                aborted = yield command
             except TimeoutError:
                 # A timeout is fine. We're just going to go back round again
                 # and see if anything else has turned up.
