@@ -74,14 +74,15 @@ class LinuxDriver(Driver):
         self._in_band_window_resize = False
         self._mouse_pixels = False
 
-        # Put handlers for SIGTSTP and SIGCONT in place. These are necessary
-        # to support the user pressing Ctrl+Z (or whatever the dev might
-        # have bound to call the relevant action on App) to suspend the
-        # application.
-        signal.signal(signal.SIGTSTP, self._sigtstp_application)
-        signal.signal(signal.SIGCONT, self._sigcont_application)
+        # Job control stays active while terminal input and output are suspended.
+        for signum, callback in (
+            (signal.SIGTSTP, self._sigtstp_application),
+            (signal.SIGCONT, self._sigcont_application),
+        ):
+            monitor = SignalMonitor(signum, callback)
+            self._runtime.exit_stack.push_async_callback(monitor.stop)
 
-    def _sigtstp_application(self, *_) -> None:
+    def _sigtstp_application(self) -> None:
         """Handle a SIGTSTP signal."""
         # If we're supposed to auto-restart, that means we need to shut down
         # first.
@@ -92,14 +93,14 @@ class LinuxDriver(Driver):
                 self._must_signal_resume = True
                 os.kill(os.getpid(), signal.SIGSTOP)
 
-            self._runtime.call_soon(self._app.call_later, suspend)
+            self._app.call_later(suspend)
         else:
             os.kill(os.getpid(), signal.SIGSTOP)
 
-    def _sigcont_application(self, *_) -> None:
+    def _sigcont_application(self) -> None:
         """Resume terminal workers on the app loop."""
-        if self._auto_restart:
-            self._runtime.call_soon(self._app.call_later, self.resume_application_mode)
+        if self._auto_restart and self._must_signal_resume:
+            self._app.call_later(self.resume_application_mode)
 
     @property
     def can_suspend(self) -> bool:
