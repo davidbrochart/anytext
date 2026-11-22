@@ -9,10 +9,12 @@ from __future__ import annotations
 from contextlib import AsyncExitStack, asynccontextmanager
 from contextvars import ContextVar, copy_context
 from functools import wraps
-from typing import Any, Awaitable, Callable, Generic, TypeVar
+from typing import Any, Awaitable, Callable, Generic, TypeVar, cast
 
 import anyio
+import anyio.to_thread
 import sniffio
+from anyio.abc import TaskGroup
 from anyio.from_thread import BlockingPortal
 
 from anytext import constants
@@ -23,126 +25,84 @@ _task: ContextVar[Task | None] = ContextVar("anytext_task", default=None)
 sleep = anyio.sleep
 
 
-class Event:
-    """An AnyIO event that may be reset, with lazy backend selection."""
+class ResettableEvent:
+    """An AnyIO event that can be cleared for subsequent waiters."""
 
     def __init__(self) -> None:
-        self._event: anyio.Event | None = None
-        self._set = False
+        self._event = anyio.Event()
 
     def set(self) -> None:
-        self._set = True
-        if self._event is not None:
-            self._event.set()
+        self._event.set()
 
     def clear(self) -> None:
-        if self._set:
-            self._event = None
-            self._set = False
-
-    def is_set(self) -> bool:
-        return self._set
-
-    async def wait(self) -> bool:
-        if self._event is None:
+        if self._event.is_set():
             self._event = anyio.Event()
-            if self._set:
-                self._event.set()
+
+    async def wait(self) -> None:
         await self._event.wait()
-        return True
 
 
-class Future(Generic[T]):
-    """A reusable awaitable result, independent of the selected backend."""
+class Task(Generic[T]):
+    """An app task that preserves the original exception for its awaiters."""
 
-    def __init__(self) -> None:
-        self._event = Event()
-        self._result: Any = None
+    def __init__(
+        self,
+        group: TaskGroup,
+        awaitable: Awaitable[T],
+        name: str | None,
+        on_done: Callable[[], None] | None,
+    ) -> None:
+        self._native_id: int | None = None
         self._error: BaseException | None = None
-        self._callbacks: list[Callable] = []
+        self._handle = group.start_soon(self._run, awaitable, on_done, name=name)
 
     def done(self) -> bool:
-        return self._event.is_set()
-
-    def set_result(self, value: T) -> None:
-        if self.done():
-            raise RuntimeError("Result is already set")
-        self._result = value
-        self._finish()
-
-    def set_exception(self, error: BaseException) -> None:
-        if self.done():
-            raise RuntimeError("Result is already set")
-        self._error = error
-        self._finish()
-
-    def _finish(self) -> None:
-        self._event.set()
-        for callback in self._callbacks:
-            callback(self)
-        self._callbacks.clear()
-
-    def add_done_callback(self, callback: Callable) -> None:
-        if self.done():
-            callback(self)
-        else:
-            self._callbacks.append(callback)
+        return self._handle.status not in (
+            anyio.TaskHandle.Status.PENDING,
+            anyio.TaskHandle.Status.CANCELLING,
+        )
 
     def exception(self) -> BaseException | None:
         if not self.done():
             raise RuntimeError("Result is not ready")
         return self._error
 
-    def result(self) -> T:
-        if not self.done():
-            raise RuntimeError("Result is not ready")
-        if self._error is not None:
-            raise self._error
-        return self._result
+    async def wait(self) -> None:
+        """Wait for completion without retrieving the task's outcome."""
+        await self._handle.wait()
 
     async def _wait(self) -> T:
-        await self._event.wait()
-        return self.result()
+        await self.wait()
+        if self._error is not None:
+            raise self._error
+        return cast(T, self._handle.return_value)
 
     def __await__(self):
         return self._wait().__await__()
 
-
-class Task(Future[T]):
-    """A cancellable task owned by an app's task group."""
-
-    def __init__(self, awaitable: Awaitable[T], name: str | None = None) -> None:
-        super().__init__()
-        self._awaitable = awaitable
-        self._scope: anyio.CancelScope | None = None
-        self._cancel_requested = False
-        self.name = name
-        self._native_id: int | None = None
-
     def cancel(self) -> None:
-        self._cancel_requested = True
-        if self._scope is not None:
-            self._scope.cancel()
+        self._handle.cancel()
 
-    async def _run(self) -> None:
+    async def _run(
+        self, awaitable: Awaitable[T], on_done: Callable[[], None] | None
+    ) -> T | None:
         self._native_id = anyio.get_current_task().id
         token = _task.set(self)
         try:
-            with anyio.CancelScope() as scope:
-                self._scope = scope
-                if self._cancel_requested:
-                    scope.cancel()
-                try:
-                    self._result = await self._awaitable
-                except BaseException as error:
-                    self._error = error
-                    if not isinstance(
-                        error, (Exception, anyio.get_cancelled_exc_class())
-                    ):
-                        raise
+            return await awaitable
+        except BaseException as error:
+            self._error = error
+            # Ordinary errors and cancellation are delivered to awaiters.
+            # Fatal exceptions still reach the app's task group.
+            if not isinstance(error, (Exception, anyio.get_cancelled_exc_class())):
+                raise
+            return None
         finally:
-            self._finish()
-            _task.reset(token)
+            try:
+                if on_done is not None:
+                    on_done()
+            finally:
+                _task.reset(token)
 
 
 def current_task() -> Task | None:
@@ -154,19 +114,22 @@ def current_task() -> Task | None:
     )
 
 
-def create_task(awaitable: Awaitable[T], *, name: str | None = None) -> Task[T]:
+def create_task(
+    awaitable: Awaitable[T],
+    *,
+    name: str | None = None,
+    on_done: Callable[[], None] | None = None,
+) -> Task[T]:
     try:
         runtime = _runtime.get()
     except LookupError:
         if hasattr(awaitable, "close"):
             awaitable.close()
         raise RuntimeError("Background tasks require a running Anytext app") from None
-    task = Task(awaitable, name)
-    runtime.group.start_soon(task._run, name=name)
-    return task
+    return Task(runtime.group, awaitable, name, on_done)
 
 
-async def gather(*awaitables: Awaitable, return_exceptions: bool = False) -> list[Any]:
+async def gather(*awaitables: Awaitable) -> list[Any]:
     results: list[Any] = [None] * len(awaitables)
     errors: list[BaseException] = []
 
@@ -176,10 +139,7 @@ async def gather(*awaitables: Awaitable, return_exceptions: bool = False) -> lis
         except BaseException as error:
             if isinstance(error, anyio.get_cancelled_exc_class()):
                 raise
-            if return_exceptions:
-                results[index] = error
-            else:
-                errors.append(error)
+            errors.append(error)
 
     async with anyio.create_task_group() as group:
         for index, awaitable in enumerate(awaitables):
@@ -187,45 +147,6 @@ async def gather(*awaitables: Awaitable, return_exceptions: bool = False) -> lis
     if errors:
         raise errors[0]
     return results
-
-
-ALL_COMPLETED = "ALL_COMPLETED"
-FIRST_COMPLETED = "FIRST_COMPLETED"
-
-
-async def wait(tasks, *, timeout=None, return_when=ALL_COMPLETED):
-    tasks = set(tasks)
-    done = set()
-    event = anyio.Event()
-
-    async def watch(task):
-        try:
-            await task
-        except BaseException as error:
-            if isinstance(error, anyio.get_cancelled_exc_class()) and not task.done():
-                raise
-        done.add(task)
-        if return_when == FIRST_COMPLETED or len(done) == len(tasks):
-            event.set()
-
-    with anyio.move_on_after(timeout):
-        async with anyio.create_task_group() as group:
-            for task in tasks:
-                group.start_soon(watch, task)
-            if tasks:
-                await event.wait()
-            group.cancel_scope.cancel()
-    return done, tasks - done
-
-
-async def wait_for(awaitable, timeout):
-    with anyio.fail_after(timeout):
-        return await awaitable
-
-
-async def shield(awaitable):
-    with anyio.CancelScope(shield=True):
-        return await awaitable
 
 
 async def run_sync(callback: Callable[..., T], *args: Any) -> T:

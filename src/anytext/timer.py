@@ -14,7 +14,7 @@ import anyio
 from rich.repr import Result, rich_repr
 
 from anytext import _time, events
-from anytext._async import Event, Task, create_task, gather
+from anytext._async import ResettableEvent, Task, create_task, gather
 from anytext._callback import invoke
 from anytext._compat import cached_property
 from anytext._context import active_app
@@ -69,8 +69,8 @@ class Timer:
         self._original_pause = pause
 
     @cached_property
-    def _active(self) -> Event:
-        event = Event()
+    def _active(self) -> ResettableEvent:
+        event = ResettableEvent()
         if not self._original_pause:
             event.set()
         return event

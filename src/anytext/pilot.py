@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from typing import Any, Generic
 
+import anyio
 import rich.repr
 
 from anytext import _async
@@ -491,7 +492,7 @@ class Pilot(Generic[ReturnType]):
             return False
         children = [self.app, *screen.walk_children(with_self=True)]
         count = 0
-        count_zero_event = _async.Event()
+        count_zero_event = anyio.Event()
 
         def decrement_counter() -> None:
             """Decrement internal counter, and set an event if it reaches zero."""
@@ -507,28 +508,26 @@ class Pilot(Generic[ReturnType]):
                 count += 1
 
         if count:
-            # Wait for the count to return to zero, or a timeout, or an exception
-            wait_for = [
-                _async.create_task(count_zero_event.wait()),
-                _async.create_task(self.app._exception_event.wait()),
-            ]
-            _, pending = await _async.wait(
-                wait_for,
-                timeout=timeout,
-                return_when=_async.FIRST_COMPLETED,
-            )
+            # Wake when the pending messages drain or the app reports an error.
+            finished = anyio.Event()
 
-            for task in pending:
-                task.cancel()
+            async def watch(event: anyio.Event) -> None:
+                await event.wait()
+                finished.set()
 
-            timed_out = len(wait_for) == len(pending)
-            if timed_out:
+            with anyio.move_on_after(timeout):
+                async with anyio.create_task_group() as group:
+                    group.start_soon(watch, count_zero_event)
+                    group.start_soon(watch, self.app._exception_event)
+                    await finished.wait()
+                    group.cancel_scope.cancel()
+
+            if not finished.is_set():
                 raise WaitForScreenTimeout(
                     "Timed out while waiting for widgets to process pending messages."
                 )
 
-            # We've either timed out, encountered an exception, or we've finished
-            # decrementing all the counters (all events processed in children).
+            # An app exception can wake us before all messages are processed.
             if count > 0:
                 return False
 

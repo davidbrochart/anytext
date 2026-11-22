@@ -78,17 +78,14 @@ def test_results_timers_and_markdown(backend):
                 await fired.wait()
 
             async def dialog():
-                return await app.push_screen_wait(ModalScreen())
+                result = app.push_screen(ModalScreen(), wait_for_dismiss=True)
+                assert await result == 123
+                return await result
 
             dialog_worker = app.run_worker(dialog())
             await pilot.pause()
             await app.screen.dismiss(123)
             assert await dialog_worker.wait() == 123
-            # Result futures can be awaited repeatedly, including from AnyIO tasks.
-            result = _async.Future()
-            result.set_result(123)
-            assert await result == 123
-            assert await result == 123
             markdown = Markdown()
             await app.mount(markdown)
             await markdown.update("# AnyIO")
@@ -155,9 +152,10 @@ def test_task_completion_and_timeouts(backend):
     async def check():
         async with _async.task_context():
             pending = _async.create_task(anyio.sleep_forever())
-            done, remaining = await _async.wait([pending], timeout=0.001)
-            assert not done
-            assert remaining == {pending}
+            with anyio.move_on_after(0.001) as scope:
+                await pending
+            assert scope.cancelled_caught
+            assert not pending.done()
             pending.cancel()
             with pytest.raises(anyio.get_cancelled_exc_class()):
                 await pending

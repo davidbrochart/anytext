@@ -74,7 +74,6 @@ from anytext import (
 from anytext._animator import DEFAULT_EASING, Animatable, Animator, EasingFunction
 from anytext._ansi_sequences import SYNC_END, SYNC_START
 from anytext._ansi_theme import ALABASTER, MONOKAI
-from anytext._async import Future as AsyncFuture
 from anytext._async import Task, create_task
 from anytext._callback import invoke
 from anytext._compat import cached_property
@@ -911,9 +910,9 @@ class App(Generic[ReturnType], DOMNode):
         return self.devtools is not None and self.devtools.is_connected
 
     @cached_property
-    def _exception_event(self) -> _async.Event:
+    def _exception_event(self) -> anyio.Event:
         """An event that will be set when the first exception is encountered."""
-        return _async.Event()
+        return anyio.Event()
 
     def __init_subclass__(cls, *args, **kwargs) -> None:
         for variable_name, screen_collection in (
@@ -2179,7 +2178,7 @@ class App(Generic[ReturnType], DOMNode):
             app = self
             app._disable_tooltips = not tooltips
             app._disable_notifications = not notifications
-            app_ready_event = _async.Event()
+            app_ready_event = anyio.Event()
 
             def on_app_ready() -> None:
                 """Called when app is ready to process events."""
@@ -2889,7 +2888,7 @@ class App(Generic[ReturnType], DOMNode):
             wait_for_dismiss: Literal[True] = True,
             *,
             mode: str | None = None,
-        ) -> AsyncFuture[ScreenResultType]: ...
+        ) -> anyio.Future[ScreenResultType]: ...
 
     def push_screen(
         self,
@@ -2898,7 +2897,7 @@ class App(Generic[ReturnType], DOMNode):
         wait_for_dismiss: bool = False,
         *,
         mode: str | None = None,
-    ) -> AwaitMount | AsyncFuture[ScreenResultType]:
+    ) -> AwaitMount | anyio.Future[ScreenResultType]:
         """Push a new [screen](/guide/screens) on the screen stack, making it the current screen.
 
         Args:
@@ -2920,7 +2919,7 @@ class App(Generic[ReturnType], DOMNode):
                 f"push_screen requires a Screen instance or str; not {screen!r}"
             )
 
-        future: AsyncFuture[ScreenResultType] = AsyncFuture()
+        future: anyio.Future[ScreenResultType] = anyio.Future()
 
         if mode is None:
             mode = self._current_mode
@@ -2986,10 +2985,9 @@ class App(Generic[ReturnType], DOMNode):
             The screen's result.
         """
         await self._flush_next_callbacks()
-        # The shield prevents the cancellation of the current task from canceling the push_screen awaitable
-        return await _async.shield(
-            self.push_screen(screen, wait_for_dismiss=True, mode=mode)
-        )
+        result = self.push_screen(screen, wait_for_dismiss=True, mode=mode)
+        with anyio.CancelScope(shield=True):
+            return await result
 
     def switch_screen(self, screen: Screen | str) -> AwaitComplete:
         """Switch to another [screen](/guide/screens) by replacing the top of the screen stack with a new screen.

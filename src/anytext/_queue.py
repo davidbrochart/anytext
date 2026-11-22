@@ -4,7 +4,7 @@ from collections import deque
 from queue import Empty as QueueEmpty
 from typing import Generic, TypeVar
 
-from anytext._async import Event
+from anytext._async import ResettableEvent
 
 QueueType = TypeVar("QueueType")
 
@@ -18,9 +18,9 @@ class Queue(Generic[QueueType]):
 
     def __init__(self) -> None:
         self.values: deque[QueueType] = deque()
-        self.ready_event = Event()
+        self.ready_event = ResettableEvent()
         self._unfinished = 0
-        self._finished = Event()
+        self._finished = ResettableEvent()
         self._finished.set()
 
     def put_nowait(self, value: QueueType) -> None:

@@ -21,7 +21,7 @@ class ThreadWorker:
         self._target = target
         self._name = name
         self._started = False
-        self._finished = _async.Event()
+        self._finished = anyio.Event()
         self._task: _async.Task | None = None
 
     @property

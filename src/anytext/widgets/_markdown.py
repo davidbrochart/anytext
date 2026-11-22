@@ -55,7 +55,7 @@ class MarkdownStream:
         """
         self.markdown_widget = markdown_widget
         self._task: _async.Task | None = None
-        self._new_markup = _async.Event()
+        self._new_markup = _async.ResettableEvent()
         self._pending: list[str] = []
         self._stopped = False
 
@@ -96,18 +96,23 @@ class MarkdownStream:
     async def _run(self) -> None:
         """Run a task to append markdown fragments when available."""
         try:
-            while await self._new_markup.wait():
+            while True:
+                await self._new_markup.wait()
                 new_markdown = "".join(self._pending)
                 self._pending.clear()
                 self._new_markup.clear()
-                await _async.shield(self.markdown_widget.append(new_markdown))
+                append = self.markdown_widget.append(new_markdown)
+                with anyio.CancelScope(shield=True):
+                    await append
         except anyio.get_cancelled_exc_class():
             # Task has been cancelled, add any outstanding markdown
             pass
 
         new_markdown = "".join(self._pending)
         if new_markdown:
-            await _async.shield(self.markdown_widget.append(new_markdown))
+            append = self.markdown_widget.append(new_markdown)
+            with anyio.CancelScope(shield=True):
+                await append
 
 
 class Navigator:

@@ -27,6 +27,7 @@ from typing import (
 )
 
 import rich.repr
+from anyio import Future
 from rich.console import RenderableType
 from rich.style import Style
 
@@ -111,7 +112,7 @@ class ResultCallback(Generic[ScreenResultType]):
         self,
         requester: MessagePump,
         callback: ScreenResultCallbackType[ScreenResultType] | None,
-        future: _async.Future[ScreenResultType] | None = None,
+        future: Future[ScreenResultType] | None = None,
     ) -> None:
         """Initialise the result callback object.
 
@@ -137,7 +138,7 @@ class ResultCallback(Generic[ScreenResultType]):
             If the requested or the callback are `None` this will be a no-op.
         """
         if self.future is not None:
-            self.future.set_result(result)
+            self.future.return_value = result
         if self.requester is not None and self.callback is not None:
             self.requester.call_next(self.callback, result)
         self.callback = None
@@ -1285,7 +1286,7 @@ class Screen(Generic[ScreenResultType], Widget):
         self,
         requester: MessagePump,
         callback: ScreenResultCallbackType[ScreenResultType] | None,
-        future: _async.Future[ScreenResultType | None] | None = None,
+        future: Future[ScreenResultType | None] | None = None,
     ) -> None:
         """Add a result callback to the screen.
 

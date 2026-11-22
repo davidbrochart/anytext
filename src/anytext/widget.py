@@ -41,7 +41,7 @@ from rich.style import Style
 from rich.text import Text
 from typing_extensions import Self
 
-from anytext._async import create_task, gather, wait
+from anytext._async import gather
 from anytext.css.styles import StylesBase
 
 if TYPE_CHECKING:
@@ -151,17 +151,14 @@ class AwaitMount:
     def __await__(self) -> Generator[None, None, None]:
         async def await_mount() -> None:
             if self._widgets:
-                aws = [
-                    create_task(widget._mounted_event.wait(), name="await mount")
-                    for widget in self._widgets
-                ]
-                if aws:
-                    await wait(aws)
-                    self._parent.refresh(layout=True)
-                    try:
-                        self._parent.app._update_mouse_over(self._parent.screen)
-                    except NoScreen:
-                        pass
+                await gather(
+                    *(widget._mounted_event.wait() for widget in self._widgets)
+                )
+                self._parent.refresh(layout=True)
+                try:
+                    self._parent.app._update_mouse_over(self._parent.screen)
+                except NoScreen:
+                    pass
 
         return await_mount().__await__()
 
