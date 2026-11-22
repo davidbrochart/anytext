@@ -96,6 +96,7 @@ class TerminalApp(App):
         async with self.suspend():
             assert self._driver._key_thread._finished.is_set()
             assert self._driver._writer_thread._task.done()
+            self.action_suspend_process()
             print("SUSPENDED", flush=True)
         self.suspensions += 1
         self.query_one(Input).focus()
@@ -186,6 +187,21 @@ def test_terminal_io(tmp_path, backend, threads, inline):
             + transcript.decode(errors="replace")
         )
 
+    def continue_after_stop():
+        deadline = time.monotonic() + 10
+        while time.monotonic() < deadline:
+            drain()
+            pid, status = os.waitpid(process.pid, os.WUNTRACED | os.WNOHANG)
+            if pid:
+                assert os.WIFSTOPPED(status), transcript.decode(errors="replace")
+                os.kill(process.pid, signal.SIGCONT)
+                return
+            time.sleep(0.01)
+        pytest.fail(
+            "Terminal driver did not suspend the process\n"
+            + transcript.decode(errors="replace")
+        )
+
     try:
         wait_for(lambda state: state["ready"] and state.get("button", [0, 0, 0])[2])
         # Split a UTF-8 character across reads.
@@ -199,26 +215,14 @@ def test_terminal_io(tmp_path, backend, threads, inline):
         wait_for(lambda state: state["clicks"] == 1 and not state["active"])
         if threads == "1" and not inline:
             os.write(master, b"\x1bOQ")  # F2 suspends and resumes the native driver.
+            continue_after_stop()
             wait_for(lambda state: state["suspensions"] == 1)
             os.write(master, b"x")
             wait_for(lambda state: state["value"] == "x")
         if not inline:
             resumes = wait_for(lambda state: state["ready"])["resumes"]
             os.kill(process.pid, signal.SIGTSTP)
-            deadline = time.monotonic() + 10
-            while time.monotonic() < deadline:
-                drain()
-                pid, status = os.waitpid(process.pid, os.WUNTRACED | os.WNOHANG)
-                if pid:
-                    assert os.WIFSTOPPED(status), transcript.decode(errors="replace")
-                    break
-                time.sleep(0.01)
-            else:
-                pytest.fail(
-                    "Terminal driver did not suspend the process\n"
-                    + transcript.decode(errors="replace")
-                )
-            os.kill(process.pid, signal.SIGCONT)
+            continue_after_stop()
             wait_for(lambda state: state["resumes"] == resumes + 1)
         # Resize through the same OS signal used by desktop terminals.
         fcntl.ioctl(slave, termios.TIOCSWINSZ, struct.pack("HHHH", 30, 100, 0, 0))

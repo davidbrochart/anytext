@@ -166,9 +166,10 @@ async def run_sync(callback: Callable[..., T], *args: Any) -> T:
 class Runtime:
     """Own app tasks and bridge native workers to the app loop through AnyIO."""
 
-    def __init__(self, group, portal) -> None:
+    def __init__(self, group, portal, exit_stack: AsyncExitStack) -> None:
         self.group = group
         self.portal = portal
+        self.exit_stack = exit_stack
         self.token = anyio.lowlevel.current_token()
         self.backend = sniffio.current_async_library()
 
@@ -181,17 +182,6 @@ class Runtime:
             return False
         finally:
             sniffio.current_async_library_cvar.reset(token)
-
-    def call_soon(self, callback: Callable, *args: Any) -> None:
-        """Defer work to the loop, including from a raw Python signal handler.
-
-        Waking AnyIO queues directly from a signal handler can interrupt the
-        backend scheduler. Submit through the backend's signal-safe entry point.
-        """
-        if self.backend == "trio":
-            self.token.native_token.run_sync_soon(callback, *args)
-        else:
-            self.token.native_token.call_soon_threadsafe(callback, *args)
 
     def run_sync_from_thread(self, callback, *args):
         """Run a sync callback on this app's loop and wait for its result."""
@@ -282,7 +272,7 @@ async def task_context():
                 if constants.THREADS_ENABLED
                 else None
             )
-            runtime = Runtime(group, portal)
+            runtime = Runtime(group, portal, stack)
             token = _runtime.set(runtime)
             try:
                 yield runtime

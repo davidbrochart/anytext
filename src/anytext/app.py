@@ -4785,8 +4785,10 @@ class App(Generic[ReturnType], DOMNode):
             # First, ensure that the suspend signal gets published while
             # we're still in application mode.
             self._suspend_signal()
-            # With that out of the way, send the SIGTSTP signal.
-            os.kill(os.getpid(), signal.SIGTSTP)
+            # A suspend block has already released the terminal. Stop directly
+            # so synchronous code in that block can continue after SIGCONT.
+            signum = signal.SIGTSTP if self._driver._auto_restart else signal.SIGSTOP
+            os.kill(os.getpid(), signum)
             # NOTE: There is no call to publish the resume signal here, this
             # will be handled by the driver posting a SignalResume event
             # (see the event handler on App._resume_signal) above.
