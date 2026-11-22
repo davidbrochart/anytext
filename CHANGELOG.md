@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [9.4.0] - 2026-11-22
+
+### Changed
+
+- Require AnyIO 4.15 or later and use its futures, task handles, and one-shot
+  events for app runtime operations on asyncio and Trio.
+
 ## [9.3.0] - 2026-11-17
 
 ### Added
