@@ -1036,7 +1036,8 @@ class Compositor:
         """Get rendered widgets (lists of segments) in the composition.
 
         Args:
-            crop: Region to crop to, or `None` for entire screen.
+            crop: Region used to select widgets and limit rendered rows, or
+                `None` for the entire screen.
 
         Returns:
             An iterable of <region>, <clip region>, and <strips>
@@ -1049,8 +1050,12 @@ class Compositor:
 
         visible_widgets = self.visible_widgets
 
+        row_band = None
         if crop:
             crop_overlaps = crop.overlaps
+            if crop.y > 0 or crop.bottom < self.size.height:
+                # Keep the full horizontal span so strips still align with the cuts.
+                row_band = _Region(0, crop.y, self.size.width, crop.height)
             widget_regions = [
                 (widget, region, clip)
                 for widget, (region, clip) in visible_widgets.items()
@@ -1067,6 +1072,8 @@ class Compositor:
         contains_region = _Region.contains_region
 
         for widget, region, clip in widget_regions:
+            if row_band is not None:
+                clip = intersection(clip, row_band)
             if contains_region(clip, region):
                 yield (
                     region,
