@@ -11,7 +11,7 @@ from functools import lru_cache
 from typing import Any, Iterable, Iterator, Sequence
 
 import rich.repr
-from rich.cells import cell_len, set_cell_size
+from rich.cells import cell_len, get_character_cell_size, set_cell_size
 from rich.color import ColorSystem
 from rich.console import Console, ConsoleOptions, RenderResult
 from rich.measure import Measurement
@@ -572,6 +572,41 @@ class Strip:
                 strip = Strip(output_segments, end - start)
         self._crop_cache[cache_key] = strip
         return strip
+
+    def extend_crop_to_cell_boundaries(self, start: int, end: int) -> tuple[int, int]:
+        """Expand a terminal crop when an edge would split a character."""
+        last_cut = end if end < self.cell_length else start
+        offset = 0
+        for segment in self._segments:
+            text = segment.text
+            next_offset = offset + cell_len(text)
+            if not text.isascii():
+                if offset < start < next_offset:
+                    start = offset + self._terminal_crop_boundary(
+                        segment, start - offset, left=True
+                    )
+                if offset < end < next_offset:
+                    end = offset + self._terminal_crop_boundary(
+                        segment, end - offset, left=False
+                    )
+            if next_offset >= last_cut:
+                break
+            offset = next_offset
+        return start, end
+
+    @staticmethod
+    @lru_cache(maxsize=4096)
+    def _terminal_crop_boundary(segment: Segment, cut: int, left: bool) -> int:
+        before, after = segment.split_cells(cut)
+        if before.text + after.text != segment.text:
+            # Rich replaces a split double-width character with two spaces.
+            cut += -1 if left else 1
+            before, after = segment.split_cells(cut)
+        if (
+            after.text and get_character_cell_size(after.text[0]) == 0
+        ) or before.text.endswith("\u200d"):
+            return 0 if left else segment.cell_length
+        return cut
 
     def divide(self, cuts: Iterable[int]) -> Sequence[Strip]:
         """Divide the strip into multiple smaller strips by cutting at given (cell) indices.
