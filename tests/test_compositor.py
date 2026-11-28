@@ -1,9 +1,40 @@
+import pytest
+from rich.console import Console
+from rich.segment import Segment
+
 from anytext._compositor import ChopsUpdate
 from anytext.app import App, ComposeResult
 from anytext.containers import Container
 from anytext.geometry import Region
 from anytext.strip import Strip
 from anytext.widgets import Static
+
+
+@pytest.mark.parametrize(
+    ("text", "span", "expected"),
+    [
+        ("abcdef", (2, 4), "\x1b[1;3Hcd"),
+        ("abcdef", (2, 6), "\x1b[1;3Hcdef"),
+        ("ab界cd", (3, 5), "\x1b[1;3H界c"),
+        ("ab界cd", (1, 3), "\x1b[1;2Hb界"),
+        ("ab界cd", (3, 4), "\x1b[1;3H界"),
+    ],
+)
+def test_partial_update_crops_emitted_columns(text, span, expected):
+    strip = Strip([Segment(text)])
+    # The dirty span can end exactly where another strip starts.
+    update = ChopsUpdate(
+        [{0: strip, strip.cell_length: Strip([Segment("z")])}],
+        [(0, *span)],
+        [[strip.cell_length, strip.cell_length + 1]],
+    )
+    assert update.render_segments(Console()) == expected
+
+
+def test_partial_update_keeps_combining_mark():
+    strip = Strip([Segment("a\u0301bcd")])
+    update = ChopsUpdate([{0: strip}], [(0, 0, 1)], [[strip.cell_length]])
+    assert update.render_segments(Console()).startswith("\x1b[1;1Ha\u0301")
 
 
 async def test_partial_update_renders_only_the_dirty_row():

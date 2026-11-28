@@ -256,15 +256,16 @@ class ChopsUpdate(CompositorUpdate):
                 if strip is None:
                     continue
 
-                if x > x2 or end <= x1:
+                if x >= x2 or end <= x1:
                     continue
 
-                if x2 > x >= x1 and end <= x2:
-                    append(move_to(x, y).segment.text)
-                    append(strip.render(console))
-                    continue
+                if x < x1 or end > x2:
+                    start, stop = strip.extend_crop_to_cell_boundaries(
+                        max(x, x1) - x, min(end, x2) - x
+                    )
+                    strip = strip.crop(start, stop)
+                    x += start
 
-                strip = strip.crop(0, min(end, x2) - x)
                 append(move_to(x, y).segment.text)
                 append(strip.render(console))
 
